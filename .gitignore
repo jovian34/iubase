@@ -1,0 +1,4 @@
+/.venv/
+/django_project/.env
+.vscode/launch.json
+*.pyc

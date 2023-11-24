@@ -80,10 +80,19 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+if bool(int(os.environ.get("DEVELOP"))):
+    host_name = "localhost"
+else:
+    host_name = "cyllene.jovian34.com"
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "iubase",
+        "USER": "iubase",
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": host_name,
+        "PORT": "5432",
     }
 }
 

@@ -1,7 +1,7 @@
 import pytest
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
-from helium import start_firefox
+from helium import start_chrome
 import os
 
 @pytest.fixture()
@@ -20,7 +20,7 @@ def test_set_check_passphrase(user_1):
 
 class TestFirefox(LiveServerTestCase):
     def test_admin_page_renders_in_browser(self):
-        driver = start_firefox(headless=True)
+        driver = start_chrome(headless=True)
         admin_path = f"{self.live_server_url}/{os.getenv('ADMIN_WORD')}/"
         driver.get(admin_path)
         assert "Log in | Django" in driver.title

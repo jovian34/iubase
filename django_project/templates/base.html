@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+
+  <body>
+
+  <div id="contentWrapper">
+
+    <div class="column-12">
+
+        <h2>iubase.com Django apps</h2>
+
+        <br clear="both">
+
+    </div><!-- end of banner -->
+
+    <div class="column-12"><br clear="both"></div>
+
+        {% block content %}{% endblock %}
+
+
+  </div>

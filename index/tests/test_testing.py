@@ -1,10 +1,26 @@
 import pytest
 from django.contrib.auth.models import User
+from django.test import LiveServerTestCase
+from helium import start_firefox
+import os
 
-def test_pytest_works():
-    assert 1 == 1
+@pytest.fixture()
+def user_1(db):
+    user = User.objects.create_user("user_one")
+    return user
 
-@pytest.mark.django_db
-def test_user_create():
-    User.objects.create_user('test', 'test@test.com', 'test')
-    assert User.objects.count() == 1
+def test_user_one_exists_in_db(user_1):
+    assert user_1.username == "user_one"
+
+def test_set_check_passphrase(user_1):
+    user_1.set_password("This is my new passphrase")
+    assert user_1.check_password("This is my new passphrase") is True
+    assert user_1.check_password("This is NOT my new passphrase") is False
+
+
+class TestFirefox(LiveServerTestCase):
+    def test_admin_page_renders_in_browser(self):
+        driver = start_firefox(headless=True)
+        admin_path = f"{self.live_server_url}/{os.getenv('ADMIN_WORD')}/"
+        driver.get(admin_path)
+        assert "Log in | Django" in driver.title

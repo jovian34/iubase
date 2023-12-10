@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "index",
     "live_game_blog",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 if not bool(int(os.environ.get("DEVELOP"))):
     # added due to security warnings

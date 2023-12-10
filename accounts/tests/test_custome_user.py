@@ -1,12 +1,13 @@
 import pytest
-from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from helium import start_chrome
 import os
 
+from ..models import CustomUser
+
 @pytest.fixture()
 def user_1(db):
-    user = User.objects.create_user("user_one")
+    user = CustomUser.objects.create_user("user_one")
     return user
 
 def test_user_one_exists_in_db(user_1):

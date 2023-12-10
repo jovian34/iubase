@@ -18,9 +18,9 @@ def test_set_check_passphrase(user_1):
     assert user_1.check_password("This is NOT my new passphrase") is False
 
 
-class TestFirefox(LiveServerTestCase):
+class TestChrome(LiveServerTestCase):
     def test_admin_page_renders_in_browser(self):
         driver = start_chrome(headless=True)
         admin_path = f"{self.live_server_url}/{os.getenv('ADMIN_WORD')}/"
         driver.get(admin_path)
-        assert "Log in | Django" in driver.title
+        assert "Log in | jovian34_iubase" in driver.title

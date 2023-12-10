@@ -1,4 +1,6 @@
-/.venv/
+.pytest_cache
+.venv/
+.vscode/
 /django_project/.env
 .vscode/launch.json
 *.pyc

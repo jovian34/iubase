@@ -15,7 +15,7 @@ class Game(models.Model):
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="home_team_set")
     away_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="away_team_set")
     neutral_site = models.BooleanField(default=False)
-    live_stats = models.URLField()
+    live_stats = models.URLField(null=True, blank=True)
     first_pitch = models.DateTimeField()
     
     def __str__(self) -> str:

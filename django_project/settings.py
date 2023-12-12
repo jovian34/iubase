@@ -28,9 +28,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "index",
-    "live_game_blog",
-    "accounts",
+    "django_project.apps.DjangoProjectConfig",
+    "index.apps.IndexConfig",
+    "live_game_blog.apps.LiveGameBlogConfig",
+    "accounts.apps.AccountsConfig",
 ]
 
 MIDDLEWARE = [
@@ -139,5 +140,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, 'django_project/static/')
 
 
-project_version = "0.0.5" # live stats link can be null 2023-12-10
+project_version = "0.0.6" # live stats link can be null 2023-12-10
 os.environ.setdefault("PROJECT_VERSION", project_version)

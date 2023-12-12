@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+//Import a Google font
+@import url('https://fonts.googleapis.com/css2?family=Abel:wght@300;400;500;600;700&display=swap');
+
+
+// Set jovian34 brand colors
+$olive: #D7D8A8;
+$yellow: #FFCC66;
+$green: #3c652b;
+$green-lite: #669900;
+$grey: #cccccc;
+$grey-dark: #999;
+$crimson: #990000;
+$red: #8A002E;
+$black: black;
+$black-subtle: #222;
+$white: white;
+$blue: blue;
+
+
+// Set global variables
+$family-sans-serif: "Abel", sans-serif;
+$body-background-color: $grey;
+$body-text-color: $black;
+$link: $blue;
+$link-visited: $crimson;
+$link-active: $yellow;
+$footer-background-color: $grey-dark;
+$footer-text-color: $white;
+
+
+// Import other applied scss files
+@import "partial/phone-default.scss";
+@import "partial/tablet.scss";
+@import "partial/desktop.scss";
+
+
+// version 0.0.1

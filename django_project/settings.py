@@ -22,16 +22,16 @@ else:
 
 
 INSTALLED_APPS = [
+    "django_project",
+    "index",
+    "live_game_blog",
+    "accounts",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django_project.apps.DjangoProjectConfig",
-    "index.apps.IndexConfig",
-    "live_game_blog.apps.LiveGameBlogConfig",
-    "accounts.apps.AccountsConfig",
 ]
 
 MIDDLEWARE = [

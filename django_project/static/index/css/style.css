@@ -57,6 +57,14 @@ h3 {
   align-content: center;
 }
 
+#iubase-logo {
+  width: 100%;
+  border: 5pt;
+  border-color: #990000;
+  border-style: solid;
+  border-radius: 5%;
+}
+
 /*--------NAVIGATION------------*/
 .nav-buttons {
   text-align: center;

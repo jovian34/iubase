@@ -66,14 +66,17 @@ def add_blog_entry_only(request, game_pk):
     else:
         form = BlogEntryForm()
         context = { "form": form, "game_pk": game_pk }
+        print("rendering form to add blog only")
         return render(request, "live_game_blog/partials/add_blog_entry_only.html", context)
     
 
 @login_required
 def add_blog_plus_scoreboard(request, game_pk):
     if request.method == "POST":
+        print("method determined to be POST")
         form = BlogAndScoreboardForm(request.POST)
         if form.is_valid():
+            print("form is valid")
             add_scoreboard = Scoreboard(
                 game=Game.objects.get(pk=game_pk),
                 scorekeeper=request.user,
@@ -89,6 +92,7 @@ def add_blog_plus_scoreboard(request, game_pk):
                 away_errors=form.cleaned_data["away_errors"],
             )
             add_scoreboard.save()
+            print(f"{add_scoreboard} has been saved")
             this_score = Scoreboard.objects.filter(game=game_pk).last()
             add_blog = BlogEntry(
                 game=Game.objects.get(pk=game_pk),
@@ -98,8 +102,12 @@ def add_blog_plus_scoreboard(request, game_pk):
                 scoreboard=Scoreboard.objects.get(pk=this_score.pk)
             )
             add_blog.save()
+            print(f"{add_blog} has been saved")
+        else:
+            print("******form is NOT VALID*********")
         return redirect(reverse("edit_live_game_blog", args=[game_pk]))
     else:
-        form = BlogAndScoreboardForm()
+        form = BlogAndScoreboardForm()        
         context = { "form": form, "game_pk": game_pk }
+        print("rendering form to add blog and scoreboard")
         return render(request, "live_game_blog/partials/add_blog_plus_scoreboard.html", context)

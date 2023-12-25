@@ -140,5 +140,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, 'django_project/static/')
 
 
-project_version = "0.0.8" # iubase-logo added with bullets for apps 2023-12-21
+project_version = "0.0.9" # added function to form quash Dj6.0 warning ATP 2023-12-24
 os.environ.setdefault("PROJECT_VERSION", project_version)

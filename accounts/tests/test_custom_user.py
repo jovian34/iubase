@@ -1,6 +1,4 @@
 import pytest
-from django.test import LiveServerTestCase
-from helium import start_chrome
 import os
 
 from ..models import CustomUser
@@ -19,9 +17,9 @@ def test_set_check_passphrase(user_1):
     assert user_1.check_password("This is NOT my new passphrase") is False
 
 
-class TestChrome(LiveServerTestCase):
-    def test_admin_page_renders_in_browser(self):
-        driver = start_chrome(headless=True)
-        admin_path = f"{self.live_server_url}/{os.getenv('ADMIN_WORD')}/"
-        driver.get(admin_path)
-        assert "Log in | jovian34_iubase" in driver.title
+@pytest.mark.django_db
+def test_admin_page_renders(client):
+    response = client.get(f"{os.getenv('ADMIN_WORD')}/")
+    assert "Log in | jovian34_iubase" in response.title
+
+        

@@ -24,6 +24,15 @@ class GameAdmin(admin.ModelAdmin):
         "neutral_site",
         "live_stats",
         "first_pitch",
+        "inning_num",
+        "inning_part",
+        "outs",
+        "home_runs",
+        "away_runs",
+        "home_hits",
+        "away_hits",
+        "home_errors",
+        "away_errors",
     )
 
 
@@ -34,7 +43,6 @@ class GameBlogEntryAdmin(admin.ModelAdmin):
     list_display = (
         "game",
         "blog_time",
-        "inning_num",
-        "inning_part",
-        "outs",
+        "blog_entry",
+        "include_game_status",
     )

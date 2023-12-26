@@ -19,7 +19,8 @@ def test_set_check_passphrase(user_1):
 
 @pytest.mark.django_db
 def test_admin_page_renders(client):
-    response = client.get(f"{os.getenv('ADMIN_WORD')}/")
-    assert "Log in | jovian34_iubase" in response.title
+    response = client.get(f"/{os.getenv('ADMIN_WORD')}/", follow=True)
+    assert response.status_code == 200
+    assert "jovian34_iubase" in str(response.content)
 
         

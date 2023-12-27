@@ -1,8 +1,8 @@
 INNING_PART_CHOICES = [
     ("pre-game", "game not started"),
-    ("top", "top of an inning"),
-    ("bottom", "bottom of an inning"),
-    ("final", "end of inning and game concluded")
+    ("top", "top"),
+    ("bottom", "bottom"),
+    ("final", "game concluded")
 ]
 
 OUTS_CHOICES = [

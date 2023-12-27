@@ -6,7 +6,7 @@ from .models import Game, GameBlogEntry, Team
 
 def games(request):
     yesterday = timezone.now() - timedelta(days=7)
-    games = Game.objects.exclude(first_pitch__lt=yesterday).order_by("first_pitch")
+    games = Game.objects.exclude(inning_part="final").order_by("first_pitch")
 
     context = { 
         "page_title": "iubase.com Live Game Blog Games",

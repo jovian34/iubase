@@ -46,15 +46,24 @@ def games(client, teams):
         neutral_site=False,
         first_pitch=(timezone.now() + timedelta(days=2)),
     )
-    game_last_week = Game.objects.create(
+    game_last_year = Game.objects.create(
         home_team=teams.kentucky,
         away_team=teams.indiana,
         neutral_site=False,
-        first_pitch=(timezone.now() - timedelta(days=10)),
+        first_pitch=(timezone.now() - timedelta(days=300)),
+        inning_num=9,
+        inning_part="final",
+        outs=3,
+        home_runs=4,
+        away_runs=2,
+        home_hits=6,
+        away_hits=10,
+        home_errors=1,
+        away_errors=1
     )
-    GameObj = namedtuple("GameObj", "game_tomorrow game_in_two_days game_last_week")
+    GameObj = namedtuple("GameObj", "game_tomorrow game_in_two_days game_last_year")
     return GameObj(
         game_tomorrow=game_tommorrow, 
         game_in_two_days=game_in_two_days, 
-        game_last_week=game_last_week
+        game_last_year=game_last_year
     )

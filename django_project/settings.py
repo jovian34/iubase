@@ -134,5 +134,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, 'django_project/static/')
 
 
-project_version = "0.0.15" # LGB models updated with choices ATP 2023-12-27
+project_version = "0.0.16" # LGB list excludes completed games ATP 2023-12-27
 os.environ.setdefault("PROJECT_VERSION", project_version)

@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models.functions import Now
 
+from live_game_blog.choices import INNING_PART_CHOICES, OUTS_CHOICES
+
 class Team(models.Model):
     team_name = models.CharField(null=False, max_length=64)
     mascot = models.CharField(null=False, max_length=64)
@@ -18,8 +20,8 @@ class Game(models.Model):
     live_stats = models.URLField(null=True, blank=True)
     first_pitch = models.DateTimeField(null=True, blank=True)
     inning_num = models.IntegerField(db_default=1, null=False)
-    inning_part = models.CharField(db_default="top", null=False, max_length=16) # make select
-    outs = models.IntegerField(null=False, db_default=0) # make select
+    inning_part = models.CharField(choices=INNING_PART_CHOICES, db_default="pre-game", max_length=10)
+    outs = models.IntegerField(choices=OUTS_CHOICES, db_default=0)
     home_runs = models.IntegerField(null=False, db_default=0)
     away_runs = models.IntegerField(null=False, db_default=0)
     home_hits = models.IntegerField(null=False, db_default=0)

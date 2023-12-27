@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from .models import Game, GameBlogEntry, Team
+from .models import Game, GameBlogEntry, Team, GameStatus
 
 
 @admin.register(Team)
@@ -24,6 +24,13 @@ class GameAdmin(admin.ModelAdmin):
         "neutral_site",
         "live_stats",
         "first_pitch",
+    )
+
+@admin.register(GameStatus)
+class GameStatusAdmin(admin.ModelAdmin):
+    model = GameStatus
+    list_display =(
+        "game",
         "inning_num",
         "inning_part",
         "outs",

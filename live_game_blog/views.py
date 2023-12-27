@@ -22,3 +22,12 @@ def past_games(request):
     games = Game.objects.filter(inning_part="final").order_by("-first_pitch")
     context = { "games": games }
     return render(request, "live_game_blog/partials/past_games.html", context)
+
+def live_game_blog(request, game_pk):
+    game = Game.objects.get(pk=game_pk)
+    blog_entries = GameBlogEntry.objects.filter(game=game_pk).order_by("-blog_time")
+    context = {
+        "entries": blog_entries,
+        "game": game,
+    }
+    return render(request, "live_game_blog/live_game_blog.html", context)

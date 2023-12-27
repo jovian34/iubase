@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ game.away_team }}-{{ game.away_runs }}
+    {% if game.neutral_site %} vs. {% else %} at {% endif %}
+    {{ game.home_team }}-{{ game.away_runs }}
+{% endblock %}
+
+{% block header %}
+    {{ game.away_team }}-{{ game.away_runs }}
+    {% if game.neutral_site %} vs. {% else %} at {% endif %}
+    {{ game.home_team }}-{{ game.away_runs }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="column-12">
+    {% for entry in entries %}
+    <hr>
+    <div class="column-12">
+
+        {{ entry.blog_entry }}
+   
+    </div>
+    <br clear="both">
+    {% endfor %}
+</div>
+
+<div class="column-12">
+    <button hx-trigger="click" hx-get="{% url "past_games" %}" hx-target="this" hx-swap="outerHTML">Show Completed Games</button>
+</div> 
+
+{% endblock %}

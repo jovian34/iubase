@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 
-from live_game_blog.tests.fixtures import teams, games
+from live_game_blog.tests.fixtures import teams, games, user_1
 
 @pytest.mark.django_db
 def test_games_list_page_renders_road_and_neutral_future(client, teams, games):
@@ -36,3 +36,8 @@ def test_past_game_renders_partial_with_score(client, teams, games):
     assert response.status_code == 200
     assert f"team_logo/{teams.indiana.pk}/" in str(response.content)
     assert "Kentucky-4" in str(response.content)
+
+@pytest.mark.django_db
+def test_view_blog_page_renders(client, teams, games):
+    response = client.get(reverse("live_game_blog", args=[games.game_tomorrow.pk]))
+    assert response.status_code == 200

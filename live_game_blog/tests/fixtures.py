@@ -4,7 +4,14 @@ from collections import namedtuple
 from django.utils import timezone
 from datetime import timedelta
 
-from ..models import Game, Team
+from live_game_blog.models import Game, Team
+from accounts.models import CustomUser
+
+@pytest.fixture
+def user_1(client):
+    user = CustomUser.objects.create_user("user_one")
+    user.set_password("This is my new passphrase")
+    return user
 
 
 @pytest.fixture

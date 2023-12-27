@@ -19,13 +19,13 @@ class Game(models.Model):
     first_pitch = models.DateTimeField(null=True, blank=True)
     inning_num = models.IntegerField(db_default=0, null=False)
     inning_part = models.CharField(db_default="top", null=False, max_length=16) # make select
-    outs = models.IntegerField(db_default=0) # make select
-    home_runs = models.IntegerField(db_default=0)
-    away_runs = models.IntegerField(db_default=0)
-    home_hits = models.IntegerField(db_default=0)
-    away_hits = models.IntegerField(db_default=0)
-    home_errors = models.IntegerField(db_default=0)
-    away_errors = models.IntegerField(db_default=0)
+    outs = models.IntegerField(null=False, db_default=0) # make select
+    home_runs = models.IntegerField(null=False, db_default=0)
+    away_runs = models.IntegerField(null=False, db_default=0)
+    home_hits = models.IntegerField(null=False, db_default=0)
+    away_hits = models.IntegerField(null=False, db_default=0)
+    home_errors = models.IntegerField(null=False, db_default=0)
+    away_errors = models.IntegerField(null=False, db_default=0)
     
     def __str__(self) -> str:
         return f"{self.away_team.team_name} at {self.home_team.team_name} {self.first_pitch}"

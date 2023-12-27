@@ -11,30 +11,42 @@ box-sizing:border-box;
 body {
 	background-color: $body-background-color;
 	color: $body-text-color;
-	font-size:16px;
-	font-family: 'Montserrat', sans-serif;
 }
 
-p {
-	font-size: 400;
+p, button {
+	font-size:24px;
+	font-family: $font-text;
+}
+
+button {
+	border: 5pt;
+	border-color: $crimson;
+	border-style: solid;
+	border-radius: 5%;
+	background-color: $white;
+	color: $crimson;
+
 }
 
 h1 {
-	font-size: 700;
+	font-family: $font-head;
+	font-size: 36px;
 }
 
 h2 {
-	font-size: 600;
+	font-family: $font-head;
+	font-size: 32px;
 }
 
 h3 {
-	font-size: 500;
+	font-family: $font-head;
+	font-size: 28px;
 }
 
 .quote	{
 	margin: 10%;
 	font-style: italic;
-	color: $green;
+	color: $crimson;
 }
 
 .paragraph-photo {
@@ -67,7 +79,7 @@ h3 {
 
 .nav-buttons {
 	text-align: center;
-	background-color: $green-lite;
+	background-color: $cream;
 	color: $black-subtle;
 	border-style: solid;
 	border-width: 1%;
@@ -150,18 +162,12 @@ figure.col4 img, figure.col6 img, figure.col3full img, figure.col4full img, figu
 
 
 .altTable	{
-	background-color: $grey;
+	background-color: $cream;
 }
 
 #contentWrapper	{
 	padding: 1%;
 	}
-
-#contentWrapper h1 {
-	margin: 1% 1%;
-	font-size: 24px;
-	font-weight: 700;
-}
 
 table, th, td {
    border: 1px solid $black;
@@ -184,11 +190,6 @@ table, th, td {
 	height: 100%; 
 }
 
-#contentWrapper h2 {
-	margin: 1% 0;
-	font-size: 16px;
-	font-weight: 700;
-}
 
 .team-logo {
 	width: 128px;
@@ -206,16 +207,13 @@ table, th, td {
 #footerWrapper {background-color: $footer-background-color;}
 footer {
 	clear: both;
-	font-size: .7em;
+	font-size: .5em;
 	color: $footer-text-color;
 	text-align: center;
 	padding: .6em;
 }
 footer a {color: $footer-text-color;}
 
-#green	{
-	padding: 2em;
-}
 
 /*OTHER STUFF*/
 /* ---------- OTHER STUFF ------*/

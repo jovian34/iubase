@@ -1,18 +1,18 @@
 @charset "utf-8";
 
-//Import a Google font
-@import url('https://fonts.googleapis.com/css2?family=Abel:wght@300;400;500;600;700&display=swap');
-
+// Set Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Recursive:wght@500&display=swap');
 
 // Set jovian34 brand colors
 $olive: #D7D8A8;
-$yellow: #FFCC66;
+$yellow: #f0e0c0;
+$cream: #dbdfbb;
 $green: #3c652b;
 $green-lite: #669900;
 $grey: #cccccc;
 $grey-dark: #999;
 $crimson: #990000;
-$red: #8A002E;
+$red: #fa0404;
 $black: black;
 $black-subtle: #222;
 $white: white;
@@ -20,14 +20,15 @@ $blue: blue;
 
 
 // Set global variables
-$family-sans-serif: "Abel", sans-serif;
+$font-head: 'Mochiy Pop One', sans-serif;
+$font-text: 'Recursive', sans-serif;
 $body-background-color: $grey;
 $body-text-color: $black;
-$link: $blue;
+$link: $crimson;
 $link-visited: $crimson;
-$link-active: $yellow;
-$footer-background-color: $grey-dark;
-$footer-text-color: $white;
+$link-active: $red;
+$footer-background-color: $cream;
+$footer-text-color: $grey-dark;
 
 
 // Import other applied scss files
@@ -36,4 +37,4 @@ $footer-text-color: $white;
 @import "partial/desktop.scss";
 
 
-// version 0.0.1
+// version 0.0.4

@@ -12,9 +12,15 @@
     <div class="column-12">
         <div class="column-3" hx-get="{% url 'team_logo' game.away_team.pk %}" hx-target="this" hx-trigger="load">{{ game.away_team }}></div>
         <div class="column-6">
-            <a href="{% url "index" %}"><h2>
-            {{ game.away_team }} - {{ game.first_pitch }} - {{ game.home_team }}
+            <h2><a href="{% url "index" %}"><h2>
+            {{ game.away_team }}
+                {% if game.neutral_site %} versus {% else %} at {% endif %}
+            {{ game.home_team }}
             </h2></a>
+            <h3>{{ game.first_pitch }}</h3>
+            {% if user.is_authenticated %}
+            <h2><a href="{% url "index" %}">Edit or Add to Game Blog<h2>
+            {% endif %}
         </div>
         <div class="column-3" hx-get="{% url 'team_logo' game.home_team.pk %}" hx-target="this" hx-trigger="load"></div>
     </div>

@@ -190,6 +190,11 @@ table, th, td {
   font-weight: 700;
 }
 
+.team-logo {
+  width: 128px;
+  height: 128px;
+}
+
 /*----- 12 COLUMN LAYOUT -----*/
 .column-3, .column-4, .column-6, .column-9, .column-12 {
   width: 100%;
@@ -232,6 +237,10 @@ footer a {
     color: #669900;
   }
   /*--------CONTENT---------*/
+  .team-logo {
+    width: 256px;
+    height: 256px;
+  }
   figure.col4, figure.col6 {
     width: 40%;
   }

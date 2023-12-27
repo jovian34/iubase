@@ -17,7 +17,7 @@ class Game(models.Model):
     neutral_site = models.BooleanField(db_default=False)
     live_stats = models.URLField(null=True, blank=True)
     first_pitch = models.DateTimeField(null=True, blank=True)
-    inning_num = models.IntegerField(db_default=0, null=False)
+    inning_num = models.IntegerField(db_default=1, null=False)
     inning_part = models.CharField(db_default="top", null=False, max_length=16) # make select
     outs = models.IntegerField(null=False, db_default=0) # make select
     home_runs = models.IntegerField(null=False, db_default=0)

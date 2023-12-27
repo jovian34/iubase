@@ -9,6 +9,7 @@ def games(request):
     games = Game.objects.exclude(first_pitch__lt=yesterday).order_by("first_pitch")
 
     context = { 
+        "page_title": "iubase.com Live Game Blog Games",
         "games": games,
         }
     return render(request, "live_game_blog/games.html", context)

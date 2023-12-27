@@ -19,7 +19,7 @@
             </h2></a>
             <h3>{{ game.first_pitch }}</h3>
             {% if user.is_authenticated %}
-            <h2><a href="{% url "index" %}">Edit or Add to Game Blog<h2>
+            <h2><a href="{% url "index" %}">Edit or Add to Game Blog</a><h2>
             {% endif %}
         </div>
         <div class="column-3" hx-get="{% url 'team_logo' game.home_team.pk %}" hx-target="this" hx-trigger="load"></div>
@@ -27,5 +27,9 @@
     <br clear="both">
     {% endfor %}
 </div>
+
+<div class="column-12">
+    <button hx-trigger="click" hx-get="{% url "past_games" %}" hx-target="this" hx-swap="outerHTML">Show Completed Games</button>
+</div> 
 
 {% endblock %}

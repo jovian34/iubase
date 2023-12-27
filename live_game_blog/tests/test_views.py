@@ -29,3 +29,10 @@ def test_team_logo_renders_logo_partial(client, teams, games):
     response = client.get(reverse("team_logo", args=[teams.indiana.pk]))
     assert response.status_code == 200
     assert "indiana.png" in str(response.content)
+
+@pytest.mark.django_db
+def test_past_game_renders_partial_with_score(client, teams, games):
+    response = client.get(reverse("past_games"))
+    assert response.status_code == 200
+    assert f"team_logo/{teams.indiana.pk}/" in str(response.content)
+    assert "Kentucky-4" in str(response.content)

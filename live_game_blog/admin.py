@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from .models import Game, Team, Update
+from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
 
 
 @admin.register(Team)
@@ -26,13 +26,15 @@ class GameAdmin(admin.ModelAdmin):
         "first_pitch",
     )
 
-@admin.register(Update)
-class GameBlogEntryAdmin(admin.ModelAdmin):
-    model = Update
+
+@admin.register(Scoreboard)
+class ScoreboardAdmin(admin.ModelAdmin):
+    model = Scoreboard
     list_display = (
         "game",
+        "scorekeeper",
         "update_time",
-        "blog_entry",
+        "game_status",
         "inning_num",
         "inning_part",
         "outs",
@@ -42,4 +44,17 @@ class GameBlogEntryAdmin(admin.ModelAdmin):
         "away_hits",
         "home_errors",
         "away_errors",
+    )
+
+
+@admin.register(BlogEntry)
+class BlogEntryAdmin(admin.ModelAdmin):
+    model = BlogEntry
+    list_display = (
+        "game",
+        "author",
+        "blog_time",
+        "blog_entry",
+        "include_scoreboard",
+        "scoreboard",
     )

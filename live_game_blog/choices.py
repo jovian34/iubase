@@ -1,8 +1,16 @@
 INNING_PART_CHOICES = [
-    ("pre-game", "game not started"),
     ("top", "top"),
     ("bottom", "bottom"),
-    ("final", "game concluded")
+]
+
+GAME_STATUS = [
+    ("pre-game", "game not started"),
+    ("in-progress", "game in progress"),
+    ("cancelled", "cancelled"),
+    ("delay", "mid-game delay"),
+    ("final", "game concluded"),
+    ("post-game", "post-game")
+
 ]
 
 OUTS_CHOICES = [

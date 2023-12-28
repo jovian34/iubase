@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{ game.away_team }}-{{ game.away_runs }}
+    {{ game.away_team }}-{{ last_score.away_runs }}
     {% if game.neutral_site %} vs. {% else %} at {% endif %}
-    {{ game.home_team }}-{{ game.away_runs }}
+    {{ game.home_team }}-{{ last_score.away_runs }}
 {% endblock %}
 
 {% block header %}
-    {{ game.away_team }}-{{ game.away_runs }}
+    {{ game.away_team }}-{{ last_score.away_runs }}
     {% if game.neutral_site %} vs. {% else %} at {% endif %}
-    {{ game.home_team }}-{{ game.away_runs }}
+    {{ game.home_team }}-{{ last_score.away_runs }}
 {% endblock %}
 
 

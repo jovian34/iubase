@@ -1,8 +1,8 @@
 from django.db import models
 from django.db.models.functions import Now
 
-from live_game_blog.choices import INNING_PART_CHOICES, OUTS_CHOICES
-
+from live_game_blog.choices import INNING_PART_CHOICES, OUTS_CHOICES, GAME_STATUS
+from accounts.models import CustomUser
 
 class Team(models.Model):
     team_name = models.CharField(null=False, max_length=64)
@@ -26,21 +26,37 @@ class Game(models.Model):
         return f"{self.away_team.team_name} at {self.home_team.team_name} {self.first_pitch}"
     
 
-class Update(models.Model):
+class Scoreboard(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    scorekeeper = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     update_time = models.DateTimeField(db_default=Now())
-    blog_entry = models.TextField(null=True, blank=True)
-    inning_num = models.IntegerField(db_default=1, null=False)
-    inning_part = models.CharField(choices=INNING_PART_CHOICES, db_default="pre-game", max_length=10)
-    outs = models.IntegerField(choices=OUTS_CHOICES, db_default=0)
-    home_runs = models.IntegerField(null=False, db_default=0)
-    away_runs = models.IntegerField(null=False, db_default=0)
-    home_hits = models.IntegerField(null=False, db_default=0)
-    away_hits = models.IntegerField(null=False, db_default=0)
-    home_errors = models.IntegerField(null=False, db_default=0)
-    away_errors = models.IntegerField(null=False, db_default=0)
+    game_status = models.CharField(choices=GAME_STATUS, max_length=16)
+    inning_num = models.IntegerField()
+    inning_part = models.CharField(choices=INNING_PART_CHOICES, max_length=16)
+    outs = models.IntegerField(choices=OUTS_CHOICES)
+    home_runs = models.IntegerField()
+    away_runs = models.IntegerField()
+    home_hits = models.IntegerField()
+    away_hits = models.IntegerField()
+    home_errors = models.IntegerField()
+    away_errors = models.IntegerField()
 
     def __str__(self) -> str:
-        return f"{self.blog_time}"
+        home_team = self.game.home_team.team_name
+        away_team = self.game.away_team.team_name
+        return f"{away_team}-{self.away_runs}, {home_team}-{self.home_runs} | {self.inning_part} Inning: {self.inning_num}"
+    
+
+class BlogEntry(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    blog_time = models.DateTimeField(db_default=Now())
+    blog_entry = models.TextField()
+    include_scoreboard = models.BooleanField()
+    scoreboard = models.ForeignKey(Scoreboard, on_delete=models.CASCADE, null=True)
+
+
+    def __str__(self) -> str:
+        return f"{self.author}: {self.blog_time}"
 
 

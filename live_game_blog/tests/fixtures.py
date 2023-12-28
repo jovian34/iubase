@@ -4,7 +4,7 @@ from collections import namedtuple
 from django.utils import timezone
 from datetime import timedelta
 
-from live_game_blog.models import Game, Team, GameStatus
+from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
 from accounts.models import CustomUser
 
 @pytest.fixture
@@ -67,11 +67,13 @@ def games(client, teams):
     )
 
 @pytest.fixture
-def game_status(client, games):
-    status_iu_uk_mon = GameStatus.objects.create(
+def scoreboard(client, games, user_1):
+    status_iu_uk_mon = Scoreboard.objects.create(
         game=games.iu_uk_mon,
+        scorekeeper=user_1,
+        game_status="final",
         inning_num=9,
-        inning_part="final",
+        inning_part="top",
         outs=3,
         home_runs=4,
         away_runs=2,
@@ -80,5 +82,5 @@ def game_status(client, games):
         home_errors=1,
         away_errors=1,
     )
-    GameStatusObj = namedtuple("GameStatusObj", "status_iu_uk_mon")
-    return GameStatusObj(status_iu_uk_mon=status_iu_uk_mon)
+    ScoreboardObj = namedtuple("ScoreboardObj", "status_iu_uk_mon")
+    return ScoreboardObj(status_iu_uk_mon=status_iu_uk_mon)

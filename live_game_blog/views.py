@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.utils import timezone
 from datetime import timedelta
-from .models import Game, Team, Update
+from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
 
 
 def games(request):
-    games = Game.objects.exclude(inning_part="final").order_by("first_pitch")
+    finals = Scoreboard.objects.filter(game_status="final")
+    final_pks = [ final.game.pk for final in finals ]
+    games = Game.objects.exclude(pk__in=final_pks).order_by("first_pitch")[:3]
     context = { 
         "page_title": "iubase.com Live Game Blog Games",
         "games": games,
@@ -19,17 +21,19 @@ def team_logo(request, team_pk):
     return render(request, "live_game_blog/partials/team_logo.html", context)
 
 def past_games(request):
-    games = Update.objects.select_related("game").filter(inning_part="final").order_by("-update_time")
+    scoreboards = Scoreboard.objects.select_related("game").filter(game_status="final").order_by("-update_time")
     context = { 
-        "games": games,
+        "scoreboards": scoreboards,
         }
     return render(request, "live_game_blog/partials/past_games.html", context)
 
 def live_game_blog(request, game_pk):
     game = Game.objects.get(pk=game_pk)
-    blog_entries = Update.objects.filter(game=game_pk).order_by("-blog_time")
+    blog_entries = BlogEntry.objects.filter(game=game).select_related("scoreboard").order_by("-blog_time")
+    last_score = blog_entries.scoreboard.last()
     context = {
         "entries": blog_entries,
         "game": game,
+        "last_score": last_score,
     }
     return render(request, "live_game_blog/live_game_blog.html", context)

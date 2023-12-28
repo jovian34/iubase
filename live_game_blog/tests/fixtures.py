@@ -172,8 +172,8 @@ def scoreboard(client, games, user_1):
     )
 
 @pytest.fixture
-def blog_entries(client, teams, games, user_1, scoreboard):
-    blog_uk_mon_z = BlogEntry(
+def blog_entries(client, games, user_1, scoreboard):
+    blog_uk_mon_z = BlogEntry.objects.create(
         game=games.iu_uk_mon,
         author=user_1,
         blog_time=games.iu_uk_mon.first_pitch + timedelta(minutes=165),

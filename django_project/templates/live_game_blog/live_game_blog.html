@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% load markitup %}
+
+
 {% block title %}
     {{ game.away_team }}-{{ last_score.away_runs }}
     {% if game.neutral_site %} vs. {% else %} at {% endif %}
@@ -31,14 +34,16 @@
             {% endif %}
         </h3>
 
+        <p><em>Team Totals:</em></p>
         <ul>
-            <li><b>{{ game.away_team }}</b> totals: <b>{{ last_score.away_runs }}</b> runs on {{ last_score.away_hits }} hits and {{ last_score.away_errors }} errors</li>
-            <li><b>{{ game.home_team }}</b> totals: <b>{{ last_score.home_runs }}</b> runs on {{ last_score.home_hits }} hits and {{ last_score.home_errors }} errors</li>
+            <li><p><b>{{ game.away_team.mascot }}</b>: <b>{{ last_score.away_runs }}</b> runs | {{ last_score.away_hits }} hits | {{ last_score.away_errors }} errors</p></li>
+            <li><p><b>{{ game.home_team.mascot }}</b>: <b>{{ last_score.home_runs }}</b> runs | {{ last_score.home_hits }} hits | {{ last_score.home_errors }} errors</p></li>
         </ul>
 
         {% endif %}
 
-        {{ entry.blog_entry }}
+        {% autoescape off %}{{ entry.blog_entry | markitup }}{% endautoescape %}
+        
    
     </div>
     <br clear="both">

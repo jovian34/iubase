@@ -9,9 +9,6 @@ class TeamAdmin(admin.ModelAdmin):
     list_display = (
         "team_name",
         "mascot",
-        "logo",
-        "stats",
-        "roster",
     )
 
 
@@ -22,7 +19,6 @@ class GameAdmin(admin.ModelAdmin):
         "home_team",
         "away_team",
         "neutral_site",
-        "live_stats",
         "first_pitch",
     )
 
@@ -38,12 +34,7 @@ class ScoreboardAdmin(admin.ModelAdmin):
         "inning_num",
         "inning_part",
         "outs",
-        "home_runs",
-        "away_runs",
-        "home_hits",
-        "away_hits",
-        "home_errors",
-        "away_errors",
+        
     )
 
 
@@ -54,7 +45,6 @@ class BlogEntryAdmin(admin.ModelAdmin):
         "game",
         "author",
         "blog_time",
-        "blog_entry",
         "include_scoreboard",
         "scoreboard",
     )

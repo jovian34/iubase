@@ -14,12 +14,6 @@ def games(request):
         }
     return render(request, "live_game_blog/games.html", context)
 
-
-def team_logo(request, team_pk):
-    team = Team.objects.get(pk=team_pk)
-    context = { "team": team }
-    return render(request, "live_game_blog/partials/team_logo.html", context)
-
 def past_games(request):
     scoreboards = Scoreboard.objects.select_related("game").filter(game_status="final").order_by("-update_time")
     context = { 

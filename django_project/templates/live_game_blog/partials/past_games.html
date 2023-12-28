@@ -3,7 +3,7 @@
 {% for scoreboard in scoreboards %}
 <hr>
 <div class="column-12">
-    <div class="column-3" hx-get="{% url 'team_logo' scoreboard.game.away_team.pk %}" hx-target="this" hx-trigger="load">{{ scoreboard.game.away_team }}></div>
+    <div class="column-3"><img class="team-logo" src="{{ scoreboard.away_team.logo }}"></div>
     <div class="column-6">
         <h2><a href="{% url "index" %}"><h2>
         {{ scoreboard.game.away_team }}-{{ scoreboard.away_runs }}
@@ -15,7 +15,7 @@
         <h2><a href="{% url "index" %}">Edit Game Blog<h2>
         {% endif %}
     </div>
-    <div class="column-3" hx-get="{% url 'team_logo' scoreboard.game.home_team.pk %}" hx-target="this" hx-trigger="load"></div>
+    <div class="column-3"><img class="team-logo" src="{{ scoreboard.home_team.logo }}"></div>
 </div>
 <br clear="both">
 {% endfor %}

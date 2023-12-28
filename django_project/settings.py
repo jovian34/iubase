@@ -134,5 +134,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, 'django_project/static/')
 
 
-project_version = "0.0.20" # LGB functions working with new model ATP 2023-12-28
+project_version = "0.0.21" # expanded tests simplified logo rendering ATP 2023-12-28
 os.environ.setdefault("PROJECT_VERSION", project_version)

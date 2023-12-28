@@ -10,7 +10,7 @@
     {% for game in games %}
     <hr>
     <div class="column-12">
-        <div class="column-3" hx-get="{% url 'team_logo' game.away_team.pk %}" hx-target="this" hx-trigger="load">{{ game.away_team }}></div>
+        <div class="column-3"><img class="team-logo" src="{{ game.away_team.logo }}"></div>
         <div class="column-6">
             <h2><a href="{% url "index" %}"><h2>
             {{ game.away_team }}
@@ -22,7 +22,7 @@
             <h2><a href="{% url "index" %}">Edit or Add to Game Blog</a><h2>
             {% endif %}
         </div>
-        <div class="column-3" hx-get="{% url 'team_logo' game.home_team.pk %}" hx-target="this" hx-trigger="load"></div>
+        <div class="column-3"><img class="team-logo" src="{{ game.home_team.logo }}"></div>
     </div>
     <br clear="both">
     {% endfor %}

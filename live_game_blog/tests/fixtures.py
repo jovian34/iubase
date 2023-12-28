@@ -36,8 +36,28 @@ def teams(client):
         mascot="Wildcats",
         logo="https://cdn.d1baseball.com/uploads/2023/12/21143618/kentucky.png"
     )
-    TeamObj = namedtuple("TeamObj", "indiana duke coastal kentucky")
-    return TeamObj(indiana=indiana, duke=duke, coastal=coastal, kentucky=kentucky)
+    gm = Team.objects.create(
+        team_name="George Mason",
+        mascot="Patriots",
+        logo="https://cdn.d1baseball.com/uploads/2023/12/21143506/georgemas.png",
+    )
+    miami_oh = Team.objects.create(
+        team_name="Miami (Ohio)",
+        mascot="RedHawks",
+        logo="https://cdn.d1baseball.com/uploads/2023/12/21143717/miamioh.png",
+    )
+    TeamObj = namedtuple(
+        "TeamObj", 
+        "indiana duke coastal kentucky gm miami_oh"
+    )
+    return TeamObj(
+        indiana=indiana, 
+        duke=duke, 
+        coastal=coastal, 
+        kentucky=kentucky, 
+        gm=gm,
+        miami_oh=miami_oh
+    )
 
 @pytest.fixture
 def games(client, teams):
@@ -51,7 +71,19 @@ def games(client, teams):
         home_team=teams.coastal,
         away_team=teams.indiana,
         neutral_site=False,
-        first_pitch=(timezone.now() + timedelta(days=2)),
+        first_pitch=(timezone.now() + timedelta(days=2, hours=7)),
+    )
+    iu_gm = Game.objects.create(
+        home_team=teams.indiana,
+        away_team=teams.gm,
+        neutral_site=True,
+        first_pitch=(timezone.now() + timedelta(days=3)),
+    )
+    iu_mo = Game.objects.create(
+        home_team=teams.indiana,
+        away_team=teams.miami_oh,
+        neutral_site=False,
+        first_pitch=(timezone.now() + timedelta(days=5))
     )
     iu_uk_mon = Game.objects.create(
         home_team=teams.kentucky,
@@ -59,16 +91,35 @@ def games(client, teams):
         neutral_site=False,
         first_pitch=(timezone.now() - timedelta(days=300)),
     )
-    GameObj = namedtuple("GameObj", "iu_duke iu_coastal iu_uk_mon")
+    iu_uk_sun = Game.objects.create(
+        home_team=teams.indiana,
+        away_team=teams.kentucky,
+        neutral_site=True,
+        first_pitch=(timezone.now() - timedelta(days=301)),
+    )
+    iu_uk_sat = Game.objects.create(
+        home_team=teams.indiana,
+        away_team=teams.kentucky,
+        neutral_site=True,
+        first_pitch=(timezone.now() - timedelta(days=302)),
+    )
+    GameObj = namedtuple(
+        "GameObj", 
+        "iu_duke iu_coastal iu_gm iu_mo iu_uk_mon iu_uk_sun iu_uk_sat"
+    )
     return GameObj(
         iu_duke=iu_duke, 
-        iu_coastal=iu_coastal, 
+        iu_coastal=iu_coastal,
+        iu_gm=iu_gm,
+        iu_mo=iu_mo, 
         iu_uk_mon=iu_uk_mon,
+        iu_uk_sun=iu_uk_sun,
+        iu_uk_sat=iu_uk_sat,
     )
 
 @pytest.fixture
 def scoreboard(client, games, user_1):
-    status_iu_uk_mon = Scoreboard.objects.create(
+    score_uk_mon = Scoreboard.objects.create(
         game=games.iu_uk_mon,
         scorekeeper=user_1,
         game_status="final",
@@ -82,5 +133,40 @@ def scoreboard(client, games, user_1):
         home_errors=1,
         away_errors=1,
     )
-    ScoreboardObj = namedtuple("ScoreboardObj", "status_iu_uk_mon")
-    return ScoreboardObj(status_iu_uk_mon=status_iu_uk_mon)
+    score_uk_sun = Scoreboard.objects.create(
+        game=games.iu_uk_sun,
+        scorekeeper=user_1,
+        game_status="final",
+        inning_num=9,
+        inning_part="bottom",
+        outs=3,
+        home_runs=6,
+        away_runs=16,
+        home_hits=12,
+        away_hits=14,
+        home_errors=1,
+        away_errors=0,
+    )
+    score_uk_sat = Scoreboard.objects.create(
+        game=games.iu_uk_sat,
+        scorekeeper=user_1,
+        game_status="final",
+        inning_num=9,
+        inning_part="top",
+        outs=3,
+        home_runs=5,
+        away_runs=3,
+        home_hits=8,
+        away_hits=6,
+        home_errors=1,
+        away_errors=2,
+    )
+    ScoreboardObj = namedtuple(
+        "ScoreboardObj", 
+        "score_uk_mon, score_uk_sun, score_uk_sat"
+    )
+    return ScoreboardObj(
+        score_uk_mon=score_uk_mon,
+        score_uk_sun=score_uk_sun,
+        score_uk_sat=score_uk_sat,
+    )

@@ -24,7 +24,7 @@ def past_games(request):
 def live_game_blog(request, game_pk):
     game = Game.objects.get(pk=game_pk)
     blog_entries = BlogEntry.objects.filter(game=game).select_related("scoreboard").order_by("-blog_time")
-    last_score = blog_entries.scoreboard.last()
+    last_score = Scoreboard.objects.filter(game=game).last()
     context = {
         "entries": blog_entries,
         "game": game,

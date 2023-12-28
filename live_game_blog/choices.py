@@ -1,6 +1,6 @@
 INNING_PART_CHOICES = [
-    ("top", "top"),
-    ("bottom", "bottom"),
+    ("Top", "top"),
+    ("Bottom", "bottom"),
 ]
 
 GAME_STATUS = [

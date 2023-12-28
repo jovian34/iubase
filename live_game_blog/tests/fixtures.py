@@ -170,3 +170,21 @@ def scoreboard(client, games, user_1):
         score_uk_sun=score_uk_sun,
         score_uk_sat=score_uk_sat,
     )
+
+@pytest.fixture
+def blog_entries(client, teams, games, user_1, scoreboard):
+    blog_uk_mon_z = BlogEntry(
+        game=games.iu_uk_mon,
+        author=user_1,
+        blog_time=games.iu_uk_mon.first_pitch + timedelta(minutes=165),
+        blog_entry="Kentucky moves on to Super Regionals",
+        include_scoreboard=True,
+        scoreboard=scoreboard.score_uk_mon,
+    )
+    BlogEntryObj = namedtuple(
+        "BlogEntryObj",
+        "blog_uk_mon_z",
+    )
+    return BlogEntryObj(
+        blog_uk_mon_z=blog_uk_mon_z,
+    )

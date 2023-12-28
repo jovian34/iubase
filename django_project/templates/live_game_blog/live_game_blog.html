@@ -3,13 +3,13 @@
 {% block title %}
     {{ game.away_team }}-{{ last_score.away_runs }}
     {% if game.neutral_site %} vs. {% else %} at {% endif %}
-    {{ game.home_team }}-{{ last_score.away_runs }}
+    {{ game.home_team }}-{{ last_score.home_runs }}
 {% endblock %}
 
 {% block header %}
     {{ game.away_team }}-{{ last_score.away_runs }}
     {% if game.neutral_site %} vs. {% else %} at {% endif %}
-    {{ game.home_team }}-{{ last_score.away_runs }}
+    {{ game.home_team }}-{{ last_score.home_runs }}
 {% endblock %}
 
 
@@ -20,6 +20,24 @@
     <hr>
     <div class="column-12">
 
+        {% if entry.include_scoreboard %}
+
+        <h3>
+            {% if entry.scoreboard.outs == 3 %}
+                End of {{ entry.scoreboard.inning_part | lower }} of inning {{ entry.scoreboard.inning_num }}
+                    {% if entry.scoreboard.game_status == "final" %}(FINAL){% endif %}:
+            {% else %}
+                {{ entry.scoreboard.inning_part }} of inning {{ entry.scoreboard.inning_num }} with {{ entry.scoreboard.outs }} outs:
+            {% endif %}
+        </h3>
+
+        <ul>
+            <li><b>{{ game.away_team }}</b> totals: <b>{{ last_score.away_runs }}</b> runs on {{ last_score.away_hits }} hits and {{ last_score.away_errors }} errors</li>
+            <li><b>{{ game.home_team }}</b> totals: <b>{{ last_score.home_runs }}</b> runs on {{ last_score.home_hits }} hits and {{ last_score.home_errors }} errors</li>
+        </ul>
+
+        {% endif %}
+
         {{ entry.blog_entry }}
    
     </div>
@@ -27,8 +45,5 @@
     {% endfor %}
 </div>
 
-<div class="column-12">
-    <button hx-trigger="click" hx-get="{% url "past_games" %}" hx-target="this" hx-swap="outerHTML">Show Completed Games</button>
-</div> 
 
 {% endblock %}

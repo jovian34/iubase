@@ -4,15 +4,19 @@
 
 
 {% block title %}
-    {{ game.away_team }}-{{ last_score.away_runs }}
+    {{ game.away_team }}
     {% if game.neutral_site %} vs. {% else %} at {% endif %}
-    {{ game.home_team }}-{{ last_score.home_runs }}
+    {{ game.home_team }}, 
+    {{ last_score.away_runs }}-{{ last_score.home_runs }} 
+    {{ last_score.inning_part }} {{ last_score.inning_num }}
+    {% if last_score.game_status == "final" %}(FINAL){% endif %}
 {% endblock %}
 
 {% block header %}
-    {{ game.away_team }}-{{ last_score.away_runs }}
+    <h1>{{ game.away_team }}
     {% if game.neutral_site %} vs. {% else %} at {% endif %}
-    {{ game.home_team }}-{{ last_score.home_runs }}
+    {{ game.home_team }}</h1>
+    <p>{{ game.first_pitch }} first pitch</p>
 {% endblock %}
 
 
@@ -20,10 +24,10 @@
 
 <div class="column-12">
     {% for entry in entries %}
-    <hr>
     <div class="column-12">
 
         {% if entry.include_scoreboard %}
+        <hr class="thick-rule">
 
         <h3>
             {% if entry.scoreboard.outs == 3 %}
@@ -34,19 +38,19 @@
             {% endif %}
         </h3>
 
-        <p><em>Team Totals:</em></p>
+        <p class="blog-small-header"><em>Team Totals:</em></p>
         <ul>
-            <li><p><b>{{ game.away_team.mascot }}</b>: <b>{{ last_score.away_runs }}</b> runs | {{ last_score.away_hits }} hits | {{ last_score.away_errors }} errors</p></li>
-            <li><p><b>{{ game.home_team.mascot }}</b>: <b>{{ last_score.home_runs }}</b> runs | {{ last_score.home_hits }} hits | {{ last_score.home_errors }} errors</p></li>
+            <li><p><b>{{ game.away_team.mascot }}</b>: <b>{{ entry.scoreboard.away_runs }}</b> runs | {{ entry.scoreboard.away_hits }} hits | {{ entry.scoreboard.away_errors }} errors</p></li>
+            <li><p><b>{{ game.home_team.mascot }}</b>: <b>{{ entry.scoreboard.home_runs }}</b> runs | {{ entry.scoreboard.home_hits }} hits | {{ entry.scoreboard.home_errors }} errors</p></li>
         </ul>
+        {% else %}
+        <hr>
 
         {% endif %}
-
-        {% autoescape off %}{{ entry.blog_entry | markitup }}{% endautoescape %}
+                <p class="blog-small-header"><em>entry by {{ entry.author.first_name}} - {{ entry.blog_time }}</em>:</p>
+                {% autoescape off %}{{ entry.blog_entry | markitup }}{% endautoescape %}
         
-   
     </div>
-    <br clear="both">
     {% endfor %}
 </div>
 

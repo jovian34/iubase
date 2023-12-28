@@ -62,6 +62,10 @@ h3 {
   background-color: #cccccc;
 }
 
+.blog-small-header {
+  font-size: 14px;
+}
+
 /*------BANNER-----*/
 .banner {
   width: 95%;
@@ -223,6 +227,10 @@ footer a {
   content: "";
   display: table;
   clear: both;
+}
+
+.thick-rule {
+  border: 10px solid #990000;
 }
 
 @media only screen and (min-width: 900px) {

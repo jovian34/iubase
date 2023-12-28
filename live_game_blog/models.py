@@ -53,7 +53,7 @@ class BlogEntry(models.Model):
     blog_time = models.DateTimeField(db_default=Now())
     blog_entry = models.TextField()
     include_scoreboard = models.BooleanField()
-    scoreboard = models.ForeignKey(Scoreboard, on_delete=models.CASCADE, null=True)
+    scoreboard = models.ForeignKey(Scoreboard, on_delete=models.CASCADE, null=True, blank=True)
 
 
     def __str__(self) -> str:

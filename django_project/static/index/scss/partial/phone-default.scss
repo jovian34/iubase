@@ -59,6 +59,10 @@ h3 {
 	background-color: $body-background-color;
 }
 
+.blog-small-header {
+	font-size: 14px;
+}
+
 /*------BANNER-----*/
 
 .banner {
@@ -223,3 +227,6 @@ footer a {color: $footer-text-color;}
 	clear: both;
 }
 
+.thick-rule {
+	border: 10px solid $crimson;
+}

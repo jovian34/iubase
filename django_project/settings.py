@@ -134,5 +134,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, 'django_project/static/')
 
 
-project_version = "0.0.18" # LGB broke out game status into model half of tests now fail 2023-12-27
+project_version = "0.0.19" # LGB major model migration - tests broken 2023-12-28
 os.environ.setdefault("PROJECT_VERSION", project_version)

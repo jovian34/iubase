@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
 from datetime import timedelta
-from .models import Game, GameBlogEntry, Team
+from .models import Game, Team, Update
 
 
 def games(request):
@@ -19,13 +19,15 @@ def team_logo(request, team_pk):
     return render(request, "live_game_blog/partials/team_logo.html", context)
 
 def past_games(request):
-    games = Game.objects.filter(inning_part="final").order_by("-first_pitch")
-    context = { "games": games }
+    games = Update.objects.select_related("game").filter(inning_part="final").order_by("-update_time")
+    context = { 
+        "games": games,
+        }
     return render(request, "live_game_blog/partials/past_games.html", context)
 
 def live_game_blog(request, game_pk):
     game = Game.objects.get(pk=game_pk)
-    blog_entries = GameBlogEntry.objects.filter(game=game_pk).order_by("-blog_time")
+    blog_entries = Update.objects.filter(game=game_pk).order_by("-blog_time")
     context = {
         "entries": blog_entries,
         "game": game,

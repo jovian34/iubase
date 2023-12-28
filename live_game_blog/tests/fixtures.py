@@ -4,7 +4,7 @@ from collections import namedtuple
 from django.utils import timezone
 from datetime import timedelta
 
-from live_game_blog.models import Game, Team
+from live_game_blog.models import Game, Team, GameStatus
 from accounts.models import CustomUser
 
 @pytest.fixture
@@ -41,23 +41,35 @@ def teams(client):
 
 @pytest.fixture
 def games(client, teams):
-    game_tommorrow = Game.objects.create(
+    iu_duke = Game.objects.create(
         home_team=teams.duke,
         away_team=teams.indiana,
         neutral_site=True,
         first_pitch=(timezone.now() + timedelta(days=1)),
     )
-    game_in_two_days = Game.objects.create(
+    iu_coastal = Game.objects.create(
         home_team=teams.coastal,
         away_team=teams.indiana,
         neutral_site=False,
         first_pitch=(timezone.now() + timedelta(days=2)),
     )
-    game_last_year = Game.objects.create(
+    iu_uk_mon = Game.objects.create(
         home_team=teams.kentucky,
         away_team=teams.indiana,
         neutral_site=False,
         first_pitch=(timezone.now() - timedelta(days=300)),
+    )
+    GameObj = namedtuple("GameObj", "iu_duke iu_coastal iu_uk_mon")
+    return GameObj(
+        iu_duke=iu_duke, 
+        iu_coastal=iu_coastal, 
+        iu_uk_mon=iu_uk_mon,
+    )
+
+@pytest.fixture
+def game_status(client, games):
+    status_iu_uk_mon = GameStatus.objects.create(
+        game=games.iu_uk_mon,
         inning_num=9,
         inning_part="final",
         outs=3,
@@ -66,11 +78,7 @@ def games(client, teams):
         home_hits=6,
         away_hits=10,
         home_errors=1,
-        away_errors=1
+        away_errors=1,
     )
-    GameObj = namedtuple("GameObj", "game_tomorrow game_in_two_days game_last_year")
-    return GameObj(
-        game_tomorrow=game_tommorrow, 
-        game_in_two_days=game_in_two_days, 
-        game_last_year=game_last_year
-    )
+    GameStatusObj = namedtuple("GameStatusObj", "status_iu_uk_mon")
+    return GameStatusObj(status_iu_uk_mon=status_iu_uk_mon)

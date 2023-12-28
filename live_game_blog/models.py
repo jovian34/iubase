@@ -26,8 +26,10 @@ class Game(models.Model):
         return f"{self.away_team.team_name} at {self.home_team.team_name} {self.first_pitch}"
     
 
-class GameStatus(models.Model):
+class Update(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    update_time = models.DateTimeField(db_default=Now())
+    blog_entry = models.TextField(null=True, blank=True)
     inning_num = models.IntegerField(db_default=1, null=False)
     inning_part = models.CharField(choices=INNING_PART_CHOICES, db_default="pre-game", max_length=10)
     outs = models.IntegerField(choices=OUTS_CHOICES, db_default=0)
@@ -37,17 +39,6 @@ class GameStatus(models.Model):
     away_hits = models.IntegerField(null=False, db_default=0)
     home_errors = models.IntegerField(null=False, db_default=0)
     away_errors = models.IntegerField(null=False, db_default=0)
-
-    def __str__(self) -> str:
-        return f"{self.game.away_team.name}-{self.away_runs}, {self.game.home_team.name}-{self.home_runs}, {self.inning_part} inning: {self.inning_num}"
-    
-
-    
-class GameBlogEntry(models.Model):
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    blog_time = models.DateTimeField(db_default=Now())
-    blog_entry = models.TextField()
-    include_game_status = models.BooleanField(db_default=False)
 
     def __str__(self) -> str:
         return f"{self.blog_time}"

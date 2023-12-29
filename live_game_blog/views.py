@@ -6,7 +6,7 @@ from datetime import timedelta
 
 from accounts.models import CustomUser
 from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
-from live_game_blog.forms import ScoreboardForm, BlogEntryForm
+from live_game_blog.forms import BlogAndScoreboardForm, BlogEntryForm
 
 
 def games(request):
@@ -72,6 +72,34 @@ def add_blog_entry_only(request, game_pk):
 @login_required
 def add_blog_plus_scoreboard(request, game_pk):
     if request.method == "POST":
-        pass
+        form = BlogAndScoreboardForm(request.POST)
+        if form.is_valid():
+            add_scoreboard = Scoreboard(
+                game=Game.objects.get(pk=game_pk),
+                scorekeeper=request.user,
+                game_status=form.cleaned_data["game_status"],
+                inning_num=form.cleaned_data["inning_num"],
+                inning_part=form.cleaned_data["inning_part"],
+                outs=form.cleaned_data["outs"],
+                home_runs=form.cleaned_data["home_runs"],
+                away_runs=form.cleaned_data["away_runs"],
+                home_hits=form.cleaned_data["home_hits"],
+                away_hits=form.cleaned_data["away_hits"],
+                home_errors=form.cleaned_data["home_errors"],
+                away_errors=form.cleaned_data["away_errors"],
+            )
+            add_scoreboard.save()
+            this_score = Scoreboard.objects.filter(game=game_pk).last()
+            add_blog = BlogEntry(
+                game=Game.objects.get(pk=game_pk),
+                author=request.user,
+                blog_entry=form.cleaned_data["blog_entry"],
+                include_scoreboard=True,
+                scoreboard=Scoreboard.objects.get(pk=this_score.pk)
+            )
+            add_blog.save()
+        return redirect(reverse("edit_live_game_blog", args=[game_pk]))
     else:
-        return render(request, "index/index.html")
+        form = BlogAndScoreboardForm()
+        context = { "form": form, "game_pk": game_pk }
+        return render(request, "live_game_blog/partials/add_blog_plus_scoreboard.html", context)

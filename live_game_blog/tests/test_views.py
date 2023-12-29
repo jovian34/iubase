@@ -65,3 +65,27 @@ def test_add_blog_entry_only_post_form(client, logged_user_schwarbs, blog_entrie
     )
     assert response.status_code == 200
     assert "Adding to the Duke Blog" in str(response.content)
+
+@pytest.mark.django_db
+def test_add_blog_entry_plus_scoreboard_form(client, logged_user_schwarbs, blog_entries, games):
+    response = client.post(
+        reverse("add_blog_plus_scoreboard", args=[games.iu_duke.pk]),
+        {
+            "game_status": "in-progress",
+            "inning_num": "2",
+            "inning_part": "Bottom",
+            "outs": "3",
+            "home_runs": "1",
+            "away_runs": "3",
+            "home_hits": "2",
+            "away_hits": "5",
+            "home_errors": "1",
+            "away_errors": "0",
+            "blog_entry": "Indiana holds Duke to one run",            
+        },
+        follow=True                       
+    )
+    assert response.status_code == 200
+    assert "Indiana holds Duke to one run" in str(response.content)
+    assert "Kyle" in str(response.content)
+    assert "End of bottom of inning 2" in str(response.content)

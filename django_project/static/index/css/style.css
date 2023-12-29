@@ -221,6 +221,12 @@ footer a {
   color: #999;
 }
 
+/*----------------FORM-----------------*/
+textarea {
+  width: 100%;
+  font-size: 26px;
+}
+
 /*OTHER STUFF*/
 /* ---------- OTHER STUFF ------*/
 .clearfix:after {

@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from datetime import timedelta
 from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
+from live_game_blog.forms import ScoreboardForm, BlogEntryForm
 
 
 def games(request):
@@ -46,3 +47,19 @@ def edit_live_game_blog(request, game_pk):
     return render(request, "live_game_blog/edit_live_game_blog.html", context)
 
 
+@login_required
+def add_blog_entry_only(request, game_pk):
+    if request.method == "POST":
+        pass
+    else:
+        form = BlogEntryForm()
+        context = { "form": form }
+        return render(request, "live_game_blog/partials/add_blog_entry_only.html", context)
+    
+
+@login_required
+def add_blog_plus_scoreboard(request, game_pk):
+    if request.method == "POST":
+        pass
+    else:
+        return render(request, "index/index.html")

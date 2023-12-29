@@ -5,10 +5,10 @@ from live_game_blog.models import Scoreboard, BlogEntry
 
 
 class ScoreboardForm(forms.Form):
-    game_status = forms.ModelChoiceField(label="Game status")
+    game_status = forms.ChoiceField(label="Game status")
     inning_num = forms.IntegerField(label="Inning")
-    inning_part = forms.ModelChoiceField(label="Top/Bottom")
-    outs = forms.ModelChoiceField(label="Outs")
+    inning_part = forms.ChoiceField(label="Top/Bottom")
+    outs = forms.ChoiceField(label="Outs")
     home_runs = forms.IntegerField(label="Home Team Runs Scored")
     away_runs = forms.IntegerField(label="Away Team Runs Scored")
     home_hits = forms.IntegerField(label="Home Team Hits")

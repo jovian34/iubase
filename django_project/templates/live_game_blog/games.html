@@ -13,14 +13,14 @@
     <div class="column-12">
         <div class="column-3"><img class="team-logo" src="{{ game.away_team.logo }}"></div>
         <div class="column-6">
-            <h2><a href="{% url "index" %}"><h2>
+            <h2><a href="{% url "live_game_blog" game.pk %}"><h2>
             {{ game.away_team }}
                 {% if game.neutral_site %} versus {% else %} at {% endif %}
             {{ game.home_team }}
             </h2></a>
             <h3>{{ game.first_pitch }}</h3>
             {% if user.is_authenticated %}
-            <h2><a href="{% url "index" %}">Edit or Add to Game Blog</a><h2>
+            <h2><a href="{% url "edit_live_game_blog" game.pk %}">Edit or Add to Game Blog</a><h2>
             {% endif %}
         </div>
         <div class="column-3"><img class="team-logo" src="{{ game.home_team.logo }}"></div>

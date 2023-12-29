@@ -134,5 +134,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, 'django_project/static/')
 
 
-project_version = "0.0.23" # tweaked style ATP 2023-12-28
+project_version = "0.0.25" # LGB most scorecard fields are optional ATP 2023-12-28
 os.environ.setdefault("PROJECT_VERSION", project_version)

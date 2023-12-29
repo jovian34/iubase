@@ -12,7 +12,7 @@
         </h2></a>
         <h3>{{ scoreboard.game.first_pitch }}</h3>
         {% if user.is_authenticated %}
-        <h2><a href="{% url "index" %}">Edit Game Blog<h2>
+        <h2><a href="{% url "edit_live_game_blog" scoreboard.game.pk %}">Edit or Add to Game Blog<h2>
         {% endif %}
     </div>
     <div class="column-3"><img class="team-logo" src="{{ scoreboard.game.home_team.logo }}"></div>

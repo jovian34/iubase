@@ -8,10 +8,29 @@ from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
 from accounts.models import CustomUser
 
 @pytest.fixture
-def user_1(client):
-    user = CustomUser.objects.create_user("user_one")
-    user.set_password("This is my new passphrase")
-    return user
+def user_not_logged_in(client):
+    denato = CustomUser.objects.create_user(
+        username="denato",
+        first_name="Joey",
+        last_name="DeNato",
+        password="Hdbwrwbrj72478593skjhkasH72!",
+    )
+    return denato
+
+
+@pytest.fixture
+def logged_user_schwarbs(client):
+    schwarber = CustomUser.objects.create_user(
+        username="schwarber",
+        first_name="Kyle",
+        last_name="Schwarber",
+        password="Hdbwrwbrj7239293skjhkasH72!",
+    )
+    client.login(
+        username="schwarber",
+        password="Hdbwrwbrj7239293skjhkasH72!",
+    )
+    return schwarber
 
 
 @pytest.fixture
@@ -118,10 +137,10 @@ def games(client, teams):
     )
 
 @pytest.fixture
-def scoreboard(client, games, user_1):
+def scoreboard(client, games, user_not_logged_in):
     score_uk_mon = Scoreboard.objects.create(
         game=games.iu_uk_mon,
-        scorekeeper=user_1,
+        scorekeeper=user_not_logged_in,
         game_status="final",
         inning_num=9,
         inning_part="Top",
@@ -135,7 +154,7 @@ def scoreboard(client, games, user_1):
     )
     score_uk_sun = Scoreboard.objects.create(
         game=games.iu_uk_sun,
-        scorekeeper=user_1,
+        scorekeeper=user_not_logged_in,
         game_status="final",
         inning_num=9,
         inning_part="Bottom",
@@ -149,7 +168,7 @@ def scoreboard(client, games, user_1):
     )
     score_uk_sat = Scoreboard.objects.create(
         game=games.iu_uk_sat,
-        scorekeeper=user_1,
+        scorekeeper=user_not_logged_in,
         game_status="final",
         inning_num=9,
         inning_part="Top",
@@ -172,10 +191,10 @@ def scoreboard(client, games, user_1):
     )
 
 @pytest.fixture
-def blog_entries(client, games, user_1, scoreboard):
+def blog_entries(client, games, user_not_logged_in, scoreboard):
     blog_uk_mon_z = BlogEntry.objects.create(
         game=games.iu_uk_mon,
-        author=user_1,
+        author=user_not_logged_in,
         blog_time=games.iu_uk_mon.first_pitch + timedelta(minutes=165),
         blog_entry="Kentucky moves on to Super Regionals",
         include_scoreboard=True,

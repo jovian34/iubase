@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 
-from live_game_blog.tests.fixtures import teams, games, scoreboard, user_1, blog_entries
+from live_game_blog.tests.fixtures import teams, games, scoreboard, logged_user_schwarbs, blog_entries, user_not_logged_in
 
 @pytest.mark.django_db
 def test_games_list_page_renders_road_and_neutral_future(client, teams, games):
@@ -41,6 +41,17 @@ def test_past_game_renders_partial_with_score(client, teams, games, scoreboard):
 def test_live_single_game_blog_page_renders(client, games, scoreboard, blog_entries):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
-    # assert "Indiana at Kentucky" in str(response.content)
+    assert "Joey" in str(response.content)
+    assert "Indiana at Kentucky" in str(response.content)
     assert "(FINAL)" in str(response.content)
     assert "Kentucky moves on to Super Regionals" in str(response.content)
+
+@pytest.mark.django_db
+def test_edit_live_single_game_blog_page_renders(client, games, scoreboard, blog_entries, logged_user_schwarbs):
+    response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]))
+    assert response.status_code == 200
+
+@pytest.mark.django_db
+def test_edit_live_single_game_blog_page_redirects_not_logged_in(client, games, scoreboard, blog_entries):
+    response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]))
+    assert response.status_code == 302

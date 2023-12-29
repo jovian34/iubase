@@ -1,5 +1,5 @@
 
-<form action="" method="post">
+<form action="{% url "add_blog_entry_only" game_pk %}" method="post">
     {% csrf_token %}
     {{ form }}
     <button type="submit" value="Submit">Add Blog</button>

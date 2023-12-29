@@ -180,14 +180,20 @@ def scoreboard(client, games, user_not_logged_in):
         home_errors=1,
         away_errors=2,
     )
+    score_duke = Scoreboard.objects.create(
+        game=games.iu_duke,
+        scorekeeper=user_not_logged_in,
+        game_status="pre-game"
+    )
     ScoreboardObj = namedtuple(
         "ScoreboardObj", 
-        "score_uk_mon, score_uk_sun, score_uk_sat"
+        "score_uk_mon, score_uk_sun, score_uk_sat score_duke"
     )
     return ScoreboardObj(
         score_uk_mon=score_uk_mon,
         score_uk_sun=score_uk_sun,
         score_uk_sat=score_uk_sat,
+        score_duke=score_duke,
     )
 
 @pytest.fixture

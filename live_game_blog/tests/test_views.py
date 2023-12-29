@@ -55,3 +55,13 @@ def test_edit_live_single_game_blog_page_renders(client, games, scoreboard, blog
 def test_edit_live_single_game_blog_page_redirects_not_logged_in(client, games, scoreboard, blog_entries):
     response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 302
+
+@pytest.mark.django_db
+def test_add_blog_entry_only_post_form(client, logged_user_schwarbs, blog_entries, games):
+    response = client.post(
+        reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
+        { "blog_entry": "Adding to the Duke Blog" },
+        follow=True                       
+    )
+    assert response.status_code == 200
+    assert "Adding to the Duke Blog" in str(response.content)

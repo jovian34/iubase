@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from datetime import timedelta
+
+from accounts.models import CustomUser
 from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
 from live_game_blog.forms import ScoreboardForm, BlogEntryForm
 
@@ -50,10 +53,19 @@ def edit_live_game_blog(request, game_pk):
 @login_required
 def add_blog_entry_only(request, game_pk):
     if request.method == "POST":
-        pass
+        form = BlogEntryForm(request.POST)
+        if form.is_valid():
+            add_blog = BlogEntry(
+                game=Game.objects.get(pk=game_pk),
+                author=request.user,
+                blog_entry=form.cleaned_data["blog_entry"],
+                include_scoreboard=False,
+            )
+            add_blog.save()
+        return redirect(reverse("edit_live_game_blog", args=[game_pk]))
     else:
         form = BlogEntryForm()
-        context = { "form": form }
+        context = { "form": form, "game_pk": game_pk }
         return render(request, "live_game_blog/partials/add_blog_entry_only.html", context)
     
 

@@ -101,6 +101,26 @@ def add_blog_plus_scoreboard(request, game_pk):
             add_blog.save()
         return redirect(reverse("edit_live_game_blog", args=[game_pk]))
     else:
-        form = BlogAndScoreboardForm()        
+        last_score = Scoreboard.objects.filter(game=game_pk).last()
+        if last_score.outs == 3:
+            outs = 0
+            inning = last_score.inning_num + 1
+        else:
+            outs = last_score.outs
+            inning = last_score.inning_num
+        form = BlogAndScoreboardForm(
+            initial={
+                "game_status": last_score.game_status,
+                "inning_num": inning,
+                "inning_part": last_score.inning_part,
+                "outs": outs,
+                "home_runs": last_score.home_runs,
+                "away_runs": last_score.away_runs,
+                "home_hits": last_score.home_hits,
+                "away_hits": last_score.away_hits,
+                "home_errors": last_score.home_errors,
+                "away_errors": last_score.away_errors,
+            }
+        )        
         context = { "form": form, "game_pk": game_pk }
         return render(request, "live_game_blog/partials/add_blog_plus_scoreboard.html", context)

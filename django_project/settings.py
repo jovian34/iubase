@@ -134,5 +134,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, 'django_project/static/')
 
 
-project_version = "0.0.27" # LGB add blog entry w/o scoreboard works ATP 2023-12-28
+project_version = "0.0.28" # LGB add blog entry with scoreboard populates last ATP 2023-12-30
 os.environ.setdefault("PROJECT_VERSION", project_version)

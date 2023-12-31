@@ -222,9 +222,23 @@ footer a {
 }
 
 /*----------------FORM-----------------*/
-textarea {
+textarea, input {
   width: 100%;
   font-size: 26px;
+  font-family: "Recursive", sans-serif;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+label {
+  font-family: "Mochiy Pop One", sans-serif;
+}
+
+select {
+  font-size: 18px;
+  font-family: "Recursive", sans-serif;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /*OTHER STUFF*/

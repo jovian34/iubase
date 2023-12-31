@@ -222,9 +222,23 @@ footer a {color: $footer-text-color;}
 
 
 /*----------------FORM-----------------*/
-textarea {
+textarea, input {
 	width: 100%;
 	font-size: 26px;
+	font-family: $font-text;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+label {
+	font-family: $font-head;
+}
+
+select {
+	font-size: 18px;
+	font-family: $font-text;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 

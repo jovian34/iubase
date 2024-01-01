@@ -134,5 +134,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, 'django_project/static/')
 
 
-project_version = "0.0.29" # LGB improve form styling ATP 2024-01-01
+project_version = "0.0.30" # LGB allows HTML blog entries ATP 2024-01-01
 os.environ.setdefault("PROJECT_VERSION", project_version)

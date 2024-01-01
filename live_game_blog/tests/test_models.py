@@ -39,6 +39,10 @@ def test_blog_model_string_def(client, blog_entries, user_not_logged_in):
     assert "denato: " in str(blog_entries.blog_uk_mon_z)
 
 @pytest.mark.django_db
+def test_blog_model_not_html(client, blog_entries, user_not_logged_in):
+    assert not blog_entries.blog_uk_mon_z.is_raw_html
+
+@pytest.mark.django_db
 def test_blog_model_sets_default_time(client, blog_entries, user_not_logged_in):
     blog_time = blog_entries.blog_uk_mon_z.blog_time
     expected_time = (timezone.now() - timedelta(days=300)) + timedelta(minutes=165)

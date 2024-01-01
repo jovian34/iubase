@@ -49,7 +49,15 @@
 
         {% endif %}
                 <p class="blog-small-header"><em>entry by {{ entry.author.first_name}} - {{ entry.blog_time }}</em>:</p>
-                {% autoescape off %}{{ entry.blog_entry | markitup }}{% endautoescape %}
+                {% autoescape off %}
+                
+                    {% if entry.is_raw_html %} 
+                        {{ entry.blog_entry }}
+                    {% else %} 
+                        {{ entry.blog_entry | markitup }}
+                    {% endif %}
+                
+                {% endautoescape %}
         
     </div>
     {% endfor %}

@@ -59,6 +59,7 @@ def add_blog_entry_only(request, game_pk):
                 game=Game.objects.get(pk=game_pk),
                 author=request.user,
                 blog_entry=form.cleaned_data["blog_entry"],
+                is_raw_html=form.cleaned_data["is_raw_html"],
                 include_scoreboard=False,
             )
             add_blog.save()

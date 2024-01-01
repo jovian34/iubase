@@ -19,4 +19,6 @@ class BlogAndScoreboardForm(forms.Form):
     blog_entry = forms.CharField(label="Content of Blog", widget=forms.Textarea())
 
 class BlogEntryForm(forms.Form):
+    is_raw_html = forms.BooleanField(label="Entry is RAW HTML code", required=False)
     blog_entry = forms.CharField(label="Content of Blog", widget=forms.Textarea())
+    

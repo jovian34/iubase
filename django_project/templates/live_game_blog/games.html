@@ -29,6 +29,12 @@
     {% endfor %}
 </div>
 
+{% if user.is_authenticated %}
+    <div class="column-12">
+        <a href="{% url "add_game" %}"><button>Add game</button></a>
+    </div>
+{% endif %}
+
 <div class="column-12">
     <button hx-trigger="click" hx-get="{% url "past_games" %}" hx-target="this" hx-swap="outerHTML">Show Completed Games</button>
 </div> 

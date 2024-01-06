@@ -6,7 +6,7 @@ from datetime import timedelta
 
 from accounts.models import CustomUser
 from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
-from live_game_blog.forms import BlogAndScoreboardForm, BlogEntryForm
+from live_game_blog.forms import BlogAndScoreboardForm, BlogEntryForm, AddGameForm
 
 
 def games(request):
@@ -63,6 +63,10 @@ def add_blog_entry_only(request, game_pk):
                 include_scoreboard=False,
             )
             add_blog.save()
+            if form.cleaned_data["is_x_embed"]:
+                iubase17 = CustomUser.objects.get(pk=2)
+                add_blog.author=iubase17
+                add_blog.save()            
         return redirect(reverse("edit_live_game_blog", args=[game_pk]))
     else:
         form = BlogEntryForm()
@@ -128,3 +132,30 @@ def add_blog_plus_scoreboard(request, game_pk):
         )        
         context = { "form": form, "game_pk": game_pk }
         return render(request, "live_game_blog/partials/add_blog_plus_scoreboard.html", context)
+    
+
+@login_required
+def add_game(request):
+    if request.method == "POST":
+        form = AddGameForm(request.POST)
+        if form.is_valid():
+            add_game = Game(
+                home_team=form.cleaned_data["home_team"],
+                away_team=form.cleaned_data["away_team"],
+                neutral_site=form.cleaned_data["neutral_site"],
+                live_stats=form.cleaned_data["live_stats"],
+                first_pitch=form.cleaned_data["first_pitch"]
+            )
+            add_game.save()
+            this_game = Game.objects.last()
+            add_initial_scoreboard = Scoreboard(
+                game_status="pre-game",
+                game=this_game,
+                scorekeeper=request.user,
+            )
+            add_initial_scoreboard.save()
+        return redirect(reverse("edit_live_game_blog", args=[this_game.pk]))
+    else:
+        form = AddGameForm()
+        context = { "form": form, "page_title": "Add Game", }
+        return render(request, "live_game_blog/add_game.html", context)

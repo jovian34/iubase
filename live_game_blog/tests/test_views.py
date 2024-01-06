@@ -57,17 +57,7 @@ def test_edit_live_single_game_blog_page_redirects_not_logged_in(client, games, 
     assert response.status_code == 302
 
 @pytest.mark.django_db
-def test_add_blog_entry_only_post_form(client, logged_user_schwarbs, blog_entries, games):
-    response = client.post(
-        reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
-        { "blog_entry": "Adding to the Duke Blog" },
-        follow=True                       
-    )
-    assert response.status_code == 200
-    assert "Adding to the Duke Blog" in str(response.content)
-
-@pytest.mark.django_db
-def test_add_blog_entry_plus_scoreboard_form(client, logged_user_schwarbs, blog_entries, games):
+def test_add_blog_entry_plus_scoreboard_form(client, logged_user_schwarbs, games):
     response = client.post(
         reverse("add_blog_plus_scoreboard", args=[games.iu_duke.pk]),
         {
@@ -89,3 +79,17 @@ def test_add_blog_entry_plus_scoreboard_form(client, logged_user_schwarbs, blog_
     assert "Indiana holds Duke to one run" in str(response.content)
     assert "Kyle" in str(response.content)
     assert "End of bottom of inning 2" in str(response.content)
+
+@pytest.mark.django_db
+def test_add_blog_entry_only_post_form(client, logged_user_schwarbs, games, scoreboard):
+    response = client.post(
+        reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
+        { 
+            "blog_entry": "Adding to the Duke Blog",
+            "is_x_embed": False,
+        },
+        follow=True                       
+    )
+    assert response.status_code == 200
+    assert "Adding to the Duke Blog" in str(response.content)
+    assert "Kyle" in str(response.content)

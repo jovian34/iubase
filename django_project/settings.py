@@ -117,6 +117,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 
+FORMS_URLFIELD_ASSUME_HTTPS = True #remove this starting with Django 6.0
+
 if not bool(int(os.environ.get("DEVELOP"))):
     # added due to security warnings
     CSRF_COOKIE_SECURE = True
@@ -134,5 +136,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, 'django_project/static/')
 
 
-project_version = "0.0.30" # LGB allows HTML blog entries ATP 2024-01-01
+project_version = "0.0.31" # LGB add games ATP 2024-01-06
 os.environ.setdefault("PROJECT_VERSION", project_version)

@@ -24,43 +24,47 @@
 {% endblock %}
 
 <div class="column-12">
-    {% for entry in entries %}
-    <div class="column-12">
 
-        {% if entry.include_scoreboard %}
-        <hr class="thick-rule">
+    <div class="column-3"></div>
 
-        <h3>
-            {% if entry.scoreboard.outs == 3 %}
-                End of {{ entry.scoreboard.inning_part | lower }} of inning {{ entry.scoreboard.inning_num }}
-                    {% if entry.scoreboard.game_status == "final" %}(FINAL){% endif %}:
+    <div class="column-6">
+        {% for entry in entries %}    
+
+            {% if entry.include_scoreboard %}
+            <hr class="thick-rule">
+
+            <h3>
+                {% if entry.scoreboard.outs == 3 %}
+                    End of {{ entry.scoreboard.inning_part | lower }} of inning {{ entry.scoreboard.inning_num }}
+                        {% if entry.scoreboard.game_status == "final" %}(FINAL){% endif %}:
+                {% else %}
+                    {{ entry.scoreboard.inning_part }} of inning {{ entry.scoreboard.inning_num }} with {{ entry.scoreboard.outs }} outs:
+                {% endif %}
+            </h3>
+
+            <p class="blog-small-header"><em>Team Totals:</em></p>
+            <ul>
+                <li><p><b>{{ game.away_team.mascot }}</b>: <b>{{ entry.scoreboard.away_runs }}</b> runs | {{ entry.scoreboard.away_hits }} hits | {{ entry.scoreboard.away_errors }} errors</p></li>
+                <li><p><b>{{ game.home_team.mascot }}</b>: <b>{{ entry.scoreboard.home_runs }}</b> runs | {{ entry.scoreboard.home_hits }} hits | {{ entry.scoreboard.home_errors }} errors</p></li>
+            </ul>
             {% else %}
-                {{ entry.scoreboard.inning_part }} of inning {{ entry.scoreboard.inning_num }} with {{ entry.scoreboard.outs }} outs:
+            <hr>
+
             {% endif %}
-        </h3>
-
-        <p class="blog-small-header"><em>Team Totals:</em></p>
-        <ul>
-            <li><p><b>{{ game.away_team.mascot }}</b>: <b>{{ entry.scoreboard.away_runs }}</b> runs | {{ entry.scoreboard.away_hits }} hits | {{ entry.scoreboard.away_errors }} errors</p></li>
-            <li><p><b>{{ game.home_team.mascot }}</b>: <b>{{ entry.scoreboard.home_runs }}</b> runs | {{ entry.scoreboard.home_hits }} hits | {{ entry.scoreboard.home_errors }} errors</p></li>
-        </ul>
-        {% else %}
-        <hr>
-
-        {% endif %}
-                <p class="blog-small-header"><em>entry by {{ entry.author.first_name}} - {{ entry.blog_time }}</em>:</p>
-                {% autoescape off %}
-                
-                    {% if entry.is_raw_html %} 
-                        {{ entry.blog_entry }}
-                    {% else %} 
-                        {{ entry.blog_entry | markitup }}
-                    {% endif %}
-                
-                {% endautoescape %}
+                    <p class="blog-small-header"><em>entry by {{ entry.author.first_name}} - {{ entry.blog_time }}</em>:</p>
+                    {% autoescape off %}
+                    
+                        {% if entry.is_raw_html %} 
+                            {{ entry.blog_entry }}
+                        {% else %} 
+                            {{ entry.blog_entry | markitup }}
+                        {% endif %}
+                    
+                    {% endautoescape %}       
         
+        {% endfor %}
     </div>
-    {% endfor %}
+    
 </div>
 
 

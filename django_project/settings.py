@@ -117,8 +117,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 
-FORMS_URLFIELD_ASSUME_HTTPS = True #remove this starting with Django 6.0
-
 if not bool(int(os.environ.get("DEVELOP"))):
     # added due to security warnings
     CSRF_COOKIE_SECURE = True

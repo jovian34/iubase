@@ -33,5 +33,9 @@ class AddGameForm(forms.Form):
         label="Away Team",
     )
     neutral_site = forms.BooleanField(label="Is this a neutral site or host is designated away?", required=False)
-    live_stats = forms.URLField(label="Live Stats Link", required=False)
+    live_stats = forms.URLField(
+        label="Live Stats Link", 
+        required=False,
+        assume_scheme="https", # remove argument for Django 6.0
+    )
     first_pitch = forms.DateTimeField(input_formats=['%Y-%m-%d-%H%M'], label="Date and Time of First Pitch YYYY-MM-DD-HHMM in military time")

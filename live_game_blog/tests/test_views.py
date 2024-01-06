@@ -107,4 +107,4 @@ def test_add_blog_entry_only_x_embed_post_form(client, logged_user_schwarbs, use
     )
     assert response.status_code == 200
     assert "<li>Adding to the Duke Blog" in str(response.content)
-    assert "Kyle" in str(response.content)
+    assert "entry by @iubase17" in str(response.content)

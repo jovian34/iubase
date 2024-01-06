@@ -21,7 +21,7 @@ def user_not_logged_in(client):
 def user_iubase17(client):
     iubase17 = CustomUser.objects.create_user(
         username="iubase17",
-        first_name="iubase17",
+        first_name="@iubase17",
         last_name="",
         password="Idbwrwbrj72478593skjhkasH72!",
     )

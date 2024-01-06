@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 
-from live_game_blog.tests.fixtures import teams, games, scoreboard, logged_user_schwarbs, blog_entries, user_not_logged_in
+from live_game_blog.tests.fixtures import teams, games, scoreboard, logged_user_schwarbs, blog_entries, user_not_logged_in, user_iubase17
 
 @pytest.mark.django_db
 def test_games_list_page_renders_road_and_neutral_future(client, teams, games):
@@ -92,4 +92,19 @@ def test_add_blog_entry_only_post_form(client, logged_user_schwarbs, games, scor
     )
     assert response.status_code == 200
     assert "Adding to the Duke Blog" in str(response.content)
+    assert "Kyle" in str(response.content)
+
+@pytest.mark.django_db
+def test_add_blog_entry_only_x_embed_post_form(client, logged_user_schwarbs, user_iubase17, games, scoreboard):
+    response = client.post(
+        reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
+        { 
+            "blog_entry": "<li>Adding to the Duke Blog",
+            "is_raw_html": True,
+            "is_x_embed": True,
+        },
+        follow=True                       
+    )
+    assert response.status_code == 200
+    assert "<li>Adding to the Duke Blog" in str(response.content)
     assert "Kyle" in str(response.content)

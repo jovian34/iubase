@@ -64,7 +64,7 @@ def add_blog_entry_only(request, game_pk):
             )
             add_blog.save()
             if form.cleaned_data["is_x_embed"]:
-                iubase17 = CustomUser.objects.get(pk=2)
+                iubase17 = CustomUser.objects.filter(username="iubase17")[0]
                 add_blog.author=iubase17
                 add_blog.save()            
         return redirect(reverse("edit_live_game_blog", args=[game_pk]))

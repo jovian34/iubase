@@ -17,6 +17,16 @@ def user_not_logged_in(client):
     )
     return denato
 
+@pytest.fixture
+def user_iubase17(client):
+    iubase17 = CustomUser.objects.create_user(
+        username="iubase17",
+        first_name="iubase17",
+        last_name="",
+        password="Idbwrwbrj72478593skjhkasH72!",
+    )
+    return iubase17
+
 
 @pytest.fixture
 def logged_user_schwarbs(client):

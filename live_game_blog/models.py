@@ -23,7 +23,7 @@ class Game(models.Model):
     first_pitch = models.DateTimeField(null=True, blank=True)
     
     def __str__(self) -> str:
-        return f"{self.away_team.team_name} at {self.home_team.team_name} {self.first_pitch}"
+        return f"{self.first_pitch:%Y-%m-%d %H:%m} {self.away_team.team_name} at {self.home_team.team_name}"
     
 
 class Scoreboard(models.Model):

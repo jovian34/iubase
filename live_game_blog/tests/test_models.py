@@ -23,7 +23,7 @@ def test_games_stored_neutral_site(client, games):
 
 @pytest.mark.django_db
 def test_game_model_string_def(client, games):
-    assert "Indiana at Kentucky " in str(games.iu_uk_mon) 
+    assert "Indiana at Kentucky" in str(games.iu_uk_mon) 
 
 @pytest.mark.django_db
 def test_scoreboard_sets_default_time(client, scoreboard, user_not_logged_in):

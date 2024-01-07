@@ -21,6 +21,7 @@ class GameAdmin(admin.ModelAdmin):
         "neutral_site",
         "first_pitch",
     )
+    ordering = ["-first_pitch"]
 
 
 @admin.register(Scoreboard)
@@ -36,6 +37,7 @@ class ScoreboardAdmin(admin.ModelAdmin):
         "outs",
         
     )
+    ordering = ["-update_time"]
 
 
 @admin.register(BlogEntry)
@@ -48,3 +50,4 @@ class BlogEntryAdmin(admin.ModelAdmin):
         "include_scoreboard",
         "scoreboard",
     )
+    ordering = ["game", "-blog_time"]

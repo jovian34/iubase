@@ -39,3 +39,22 @@ class AddGameForm(forms.Form):
         assume_scheme="https", # remove argument for Django 6.0
     )
     first_pitch = forms.DateTimeField(input_formats=['%Y-%m-%d-%H%M'], label="Date and Time of First Pitch YYYY-MM-DD-HHMM in military time")
+
+class AddTeamForm(forms.Form):
+    team_name = forms.CharField(label="Team Name")
+    mascot = forms.CharField(label="Team Mascot")
+    logo = forms.URLField(
+        label="URL for the team's logo", 
+        required=False,
+        assume_scheme="https", # remove argument for Django 6.0
+    )
+    stats = forms.URLField(
+        label="URL for the team's stats page", 
+        required=False,
+        assume_scheme="https", # remove argument for Django 6.0
+    )
+    roster = forms.URLField(
+        label="URL for the team's roster page", 
+        required=False,
+        assume_scheme="https", # remove argument for Django 6.0
+    )

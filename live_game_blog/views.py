@@ -6,7 +6,7 @@ from datetime import timedelta
 
 from accounts.models import CustomUser
 from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
-from live_game_blog.forms import BlogAndScoreboardForm, BlogEntryForm, AddGameForm
+from live_game_blog.forms import BlogAndScoreboardForm, BlogEntryForm, AddGameForm, AddTeamForm
 
 
 def games(request):
@@ -136,6 +136,7 @@ def add_blog_plus_scoreboard(request, game_pk):
 
 @login_required
 def add_game(request):
+    print(request.POST)
     if request.method == "POST":
         form = AddGameForm(request.POST)
         if form.is_valid():
@@ -147,15 +148,34 @@ def add_game(request):
                 first_pitch=form.cleaned_data["first_pitch"]
             )
             add_game.save()
-            this_game = Game.objects.last()
             add_initial_scoreboard = Scoreboard(
                 game_status="pre-game",
-                game=this_game,
+                game=Game.objects.filter(first_pitch=form.cleaned_data["first_pitch"])[0],
                 scorekeeper=request.user,
             )
             add_initial_scoreboard.save()
-        return redirect(reverse("edit_live_game_blog", args=[this_game.pk]))
+        return redirect(reverse("edit_live_game_blog", args=[Game.objects.filter(first_pitch=form.cleaned_data["first_pitch"])[0].pk]))
     else:
         form = AddGameForm()
         context = { "form": form, "page_title": "Add Game", }
+        return render(request, "live_game_blog/add_game_or_team.html", context)
+    
+
+@login_required
+def add_team(request):
+    if request.method == "POST":
+        form = AddTeamForm(request.POST)
+        if form.is_valid():
+            add_team = Team(
+                team_name=form.cleaned_data["team_name"],
+                mascot=form.cleaned_data["mascot"],
+                logo=form.cleaned_data["logo"],
+                stats=form.cleaned_data["stats"],
+                roster=form.cleaned_data["roster"]
+            )
+            add_team.save()
+        return redirect(reverse("games"))
+    else:
+        form = AddTeamForm()
+        context = { "form": form, "page_title": "Add Team", }
         return render(request, "live_game_blog/add_game_or_team.html", context)

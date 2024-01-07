@@ -1,4 +1,6 @@
 import pytest
+
+from datetime import datetime, timedelta
 from django.urls import reverse
 
 from live_game_blog.tests.fixtures import teams, games, scoreboard, logged_user_schwarbs, blog_entries, user_not_logged_in, user_iubase17
@@ -108,3 +110,55 @@ def test_add_blog_entry_only_x_embed_post_form(client, logged_user_schwarbs, use
     assert response.status_code == 200
     assert "<li>Adding to the Duke Blog" in str(response.content)
     assert "entry by @iubase17" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_team_and_confirm_team_is_selectable_for_add_game(client, logged_user_schwarbs):
+    response = client.post(
+        reverse("add_team"),
+        {
+            "team_name": "Purdue Ft. Wayne",
+            "mascot": "Mastodons",
+            "logo": "https://cdn.d1baseball.com/uploads/2023/12/21143914/iupufw.png",
+            "stats": "https://d1baseball.com/team/iupufw/stats/",
+            "roster": "https://gomastodons.com/sports/baseball/roster",
+        }
+    )
+    assert response.status_code == 302
+    response = client.get(reverse("add_game"))
+    assert "Purdue Ft. Wayne" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_team_post_asks_for_login_when_not_logged_in(client):
+    response = client.post(
+        reverse("add_team"),
+        {
+            "team_name": "Purdue Ft. Wayne",
+            "mascot": "Mastodons",
+            "logo": "https://cdn.d1baseball.com/uploads/2023/12/21143914/iupufw.png",
+            "stats": "https://d1baseball.com/team/iupufw/stats/",
+            "roster": "https://gomastodons.com/sports/baseball/roster",
+        },
+        follow=True
+    )
+    assert response.status_code == 200
+    assert "Password:" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_game(client, logged_user_schwarbs, teams, games, scoreboard):
+    response = client.post(
+        reverse("add_game"),
+        {
+            'home_team': [str(teams.indiana.pk)],
+            'away_team': [str(teams.gm.pk)],
+            'neutral_site': ['on'],
+            'live_stats': ['https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind'],
+            'first_pitch': ['2025-02-14-1830']
+        },
+        follow=True
+    )
+    assert response.status_code == 200
+    assert "George Mason vs. Indiana" in str(response.content)
+    assert "Feb. 14, 2025, 6:30 p.m. first pitch" in str(response.content)

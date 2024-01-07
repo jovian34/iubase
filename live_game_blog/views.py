@@ -148,13 +148,14 @@ def add_game(request):
                 first_pitch=form.cleaned_data["first_pitch"]
             )
             add_game.save()
+            this_game = Game.objects.last()
             add_initial_scoreboard = Scoreboard(
                 game_status="pre-game",
-                game=Game.objects.filter(first_pitch=form.cleaned_data["first_pitch"])[0],
+                game=this_game,
                 scorekeeper=request.user,
             )
             add_initial_scoreboard.save()
-        return redirect(reverse("edit_live_game_blog", args=[Game.objects.filter(first_pitch=form.cleaned_data["first_pitch"])[0].pk]))
+        return redirect(reverse("edit_live_game_blog", args=[this_game.pk]))
     else:
         form = AddGameForm()
         context = { "form": form, "page_title": "Add Game", }

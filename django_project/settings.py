@@ -134,5 +134,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, 'django_project/static/')
 
 
-project_version = "0.0.33" # LGB refactored add_game view ATP 2024-01-07
+project_version = "0.0.33" # LGB removed unneeded print statement ATP 2024-01-07
 os.environ.setdefault("PROJECT_VERSION", project_version)

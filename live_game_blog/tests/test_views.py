@@ -162,3 +162,20 @@ def test_add_game(client, logged_user_schwarbs, teams, games, scoreboard):
     assert response.status_code == 200
     assert "George Mason vs. Indiana" in str(response.content)
     assert "Feb. 14, 2025, 6:30 p.m. first pitch" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_game_post_asks_for_login_when_not_logged_in(client, teams):
+    response = client.post(
+        reverse("add_game"),
+        {
+            'home_team': [str(teams.indiana.pk)],
+            'away_team': [str(teams.gm.pk)],
+            'neutral_site': ['on'],
+            'live_stats': ['https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind'],
+            'first_pitch': ['2025-02-14-1830']
+        },
+        follow=True
+    )
+    assert response.status_code == 200
+    assert "Password:" in str(response.content)

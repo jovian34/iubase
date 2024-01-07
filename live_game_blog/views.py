@@ -136,7 +136,6 @@ def add_blog_plus_scoreboard(request, game_pk):
 
 @login_required
 def add_game(request):
-    print(request.POST)
     if request.method == "POST":
         form = AddGameForm(request.POST)
         if form.is_valid():

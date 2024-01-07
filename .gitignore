@@ -2,5 +2,6 @@
 .venv/
 .vscode/
 /django_project/.env
+/django_project/static/admin/
 .vscode/launch.json
 *.pyc

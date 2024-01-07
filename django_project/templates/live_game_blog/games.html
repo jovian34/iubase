@@ -29,13 +29,16 @@
     {% endfor %}
 </div>
 
-{% if user.is_authenticated %}
-    <div class="column-12">
-        <a href="{% url "add_game" %}"><button>Add game</button></a>
-    </div>
-{% endif %}
 
-<div class="column-12">
+<div class="column-3">
+    {% if user.is_authenticated %}
+    <a href="{% url "add_game" %}"><button>Add game</button></a>
+    <a href="{% url "index" %}"><button>Add team</button></a>
+    {% endif %}
+</div>
+
+
+<div class="column-6">
     <button hx-trigger="click" hx-get="{% url "past_games" %}" hx-target="this" hx-swap="outerHTML">Show Completed Games</button>
 </div> 
 

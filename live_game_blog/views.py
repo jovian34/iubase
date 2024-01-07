@@ -158,4 +158,4 @@ def add_game(request):
     else:
         form = AddGameForm()
         context = { "form": form, "page_title": "Add Game", }
-        return render(request, "live_game_blog/add_game.html", context)
+        return render(request, "live_game_blog/add_game_or_team.html", context)

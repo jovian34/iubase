@@ -12,7 +12,7 @@
     <form action="{% url "add_game" %}" method="post">
         {% csrf_token %}
         {{ form }}
-        <button type="submit" value="Submit">Add Game</button>
+        <button type="submit" value="Submit">{{ page_title }}</button>
     </form>
 </div>
 

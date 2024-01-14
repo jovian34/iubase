@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "django_project",
     "index",
     "live_game_blog",
+    "player_tracking",
     "accounts",
     "django.contrib.admin",
     "django.contrib.auth",

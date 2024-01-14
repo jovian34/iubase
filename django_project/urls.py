@@ -9,6 +9,7 @@ urlpatterns = [
     path(f"accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path(f"live_game_blog/", include("live_game_blog.urls"), name="live_game_blog"),
+    path(f"player_tracking/", include("player_tracking.urls"), name="player_tracking"),
     path(f"{os.getenv('ADMIN_WORD')}/", admin.site.urls),
 ]
 

@@ -2,7 +2,10 @@
 
 {% block title %}{{ page_title }}{% endblock %}
 
-{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+{% block header %}
+    <h1>{{ page_title }}</h1>
+    <img id="player-photo" src="{{player.headshot}}">
+    {% endblock %}
 
 
 {% block content %}

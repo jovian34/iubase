@@ -7,6 +7,6 @@ def players(request):
     players = Player.objects.all()
     context = {
         "players": players,
-        "page_title": "players",
+        "page_title": "Players",
     }
     return render(request, "player_tracking/players.html", context)

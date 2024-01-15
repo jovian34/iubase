@@ -1,1 +1,14 @@
 {% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+
+
+{% block content %}
+    <ul>
+    {% for player in players%}
+        <li><h2>{{player.first}} {{player.last}}</h2></li>
+    {% endfor %}
+
+{% endblock %}

@@ -1,7 +1,7 @@
 import pytest
 
 from datetime import datetime
-from player_tracking.tests.fixtures import players, transactions, annual_roster
+from player_tracking.tests.fixtures import players, transactions, annual_rosters
 from live_game_blog.tests.fixtures import teams
 
 
@@ -31,15 +31,15 @@ def test_transaction_model_string_def(client, transactions):
 
 
 @pytest.mark.django_db
-def test_annual_roster_model_stored_all_fields(client, annual_roster, teams):
-    assert annual_roster.dt_2024.spring_year == 2024
-    assert annual_roster.dt_2023.player.first == "Devin"
-    assert annual_roster.dt_2023.jersey == 5
-    assert annual_roster.dt_2024.primary_position == "OF"
-    assert annual_roster.dt_2023.secondary_position == "1B"
-    assert not annual_roster.dt_2024.secondary_position
+def test_annual_roster_model_stored_all_fields(client, annual_rosters, teams):
+    assert annual_rosters.dt_2024.spring_year == 2024
+    assert annual_rosters.dt_2023.player.first == "Devin"
+    assert annual_rosters.dt_2023.jersey == 5
+    assert annual_rosters.dt_2024.primary_position == "OF"
+    assert annual_rosters.dt_2023.secondary_position == "1B"
+    assert not annual_rosters.dt_2024.secondary_position
 
 
 @pytest.mark.django_db
-def test_annual_roster_model_string_def(client, annual_roster, teams):
-    assert str(annual_roster.dt_2024) == "Devin Taylor 2024 - roster"
+def test_annual_roster_model_string_def(client, annual_rosters, teams):
+    assert str(annual_rosters.dt_2024) == "Devin Taylor 2024 - roster"

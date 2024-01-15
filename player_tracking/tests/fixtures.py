@@ -60,7 +60,7 @@ def transactions(client, players):
 
 
 @pytest.fixture
-def annual_roster(client, players, teams):
+def annual_rosters(client, players, teams):
     dt_2023 = AnnualRoster.objects.create(
         spring_year=2023,
         player=players.dt2022,
@@ -75,8 +75,28 @@ def annual_roster(client, players, teams):
         jersey=5,
         primary_position="OF",
     )
-    AnnualRosterObj = namedtuple("AnnualRosterObj", "dt_2023 dt_2024")
+    nm_2024 = AnnualRoster.objects.create(
+        spring_year=2024,
+        player=players.nm2021,
+        team=teams.indiana,
+        jersey=20,
+        primary_position="CF",
+        secondary_position="OF",
+    )
+    nm_2023 = AnnualRoster.objects.create(
+        spring_year=2023,
+        player=players.nm2021,
+        team=teams.miami_oh,
+        jersey=20,
+        primary_position="CF",
+    )
+    AnnualRosterObj = namedtuple(
+        "AnnualRosterObj",
+        "dt_2023 dt_2024 nm_2023 nm_2024"
+    )
     return AnnualRosterObj(
         dt_2023=dt_2023,
         dt_2024=dt_2024,
+        nm_2023=nm_2023,
+        nm_2024=nm_2024,
     )

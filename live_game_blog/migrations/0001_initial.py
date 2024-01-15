@@ -6,59 +6,95 @@ import django.utils.timezone
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Game',
+            name="Game",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('neutral_site', models.BooleanField(default=False)),
-                ('live_stats', models.URLField()),
-                ('first_pitch', models.DateTimeField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("neutral_site", models.BooleanField(default=False)),
+                ("live_stats", models.URLField()),
+                ("first_pitch", models.DateTimeField()),
             ],
         ),
         migrations.CreateModel(
-            name='Team',
+            name="Team",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('team_name', models.CharField(max_length=64)),
-                ('mascot', models.CharField(max_length=64)),
-                ('logo', models.URLField()),
-                ('stats', models.URLField()),
-                ('roster', models.URLField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("team_name", models.CharField(max_length=64)),
+                ("mascot", models.CharField(max_length=64)),
+                ("logo", models.URLField()),
+                ("stats", models.URLField()),
+                ("roster", models.URLField()),
             ],
         ),
         migrations.CreateModel(
-            name='GameBlogEntry',
+            name="GameBlogEntry",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('blog_time', models.DateTimeField(default=django.utils.timezone.now)),
-                ('inning_num', models.IntegerField()),
-                ('inning_part', models.CharField(max_length=16)),
-                ('outs', models.IntegerField()),
-                ('home_runs', models.IntegerField()),
-                ('away_runs', models.IntegerField()),
-                ('home_hits', models.IntegerField()),
-                ('away_hits', models.IntegerField()),
-                ('home_errors', models.IntegerField()),
-                ('away_errors', models.IntegerField()),
-                ('blog_entry', models.TextField()),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.game')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("blog_time", models.DateTimeField(default=django.utils.timezone.now)),
+                ("inning_num", models.IntegerField()),
+                ("inning_part", models.CharField(max_length=16)),
+                ("outs", models.IntegerField()),
+                ("home_runs", models.IntegerField()),
+                ("away_runs", models.IntegerField()),
+                ("home_hits", models.IntegerField()),
+                ("away_hits", models.IntegerField()),
+                ("home_errors", models.IntegerField()),
+                ("away_errors", models.IntegerField()),
+                ("blog_entry", models.TextField()),
+                (
+                    "game",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="live_game_blog.game",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='game',
-            name='away_team',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='away_team_set', to='live_game_blog.team'),
+            model_name="game",
+            name="away_team",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="away_team_set",
+                to="live_game_blog.team",
+            ),
         ),
         migrations.AddField(
-            model_name='game',
-            name='home_team',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='home_team_set', to='live_game_blog.team'),
+            model_name="game",
+            name="home_team",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="home_team_set",
+                to="live_game_blog.team",
+            ),
         ),
     ]

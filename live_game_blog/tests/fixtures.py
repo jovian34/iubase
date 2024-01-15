@@ -7,6 +7,7 @@ from datetime import timedelta
 from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
 from accounts.models import CustomUser
 
+
 @pytest.fixture
 def user_not_logged_in(client):
     denato = CustomUser.objects.create_user(
@@ -16,6 +17,7 @@ def user_not_logged_in(client):
         password="Hdbwrwbrj72478593skjhkasH72!",
     )
     return denato
+
 
 @pytest.fixture
 def user_iubase17(client):
@@ -53,7 +55,7 @@ def teams(client):
     duke = Team.objects.create(
         team_name="Duke",
         mascot="Blue Devils",
-        logo="https://cdn.d1baseball.com/logos/teams/256/duke.png"
+        logo="https://cdn.d1baseball.com/logos/teams/256/duke.png",
     )
     coastal = Team.objects.create(
         team_name="Coastal Carolina",
@@ -63,7 +65,7 @@ def teams(client):
     kentucky = Team.objects.create(
         team_name="Kentucky",
         mascot="Wildcats",
-        logo="https://cdn.d1baseball.com/uploads/2023/12/21143618/kentucky.png"
+        logo="https://cdn.d1baseball.com/uploads/2023/12/21143618/kentucky.png",
     )
     gm = Team.objects.create(
         team_name="George Mason",
@@ -75,18 +77,16 @@ def teams(client):
         mascot="RedHawks",
         logo="https://cdn.d1baseball.com/uploads/2023/12/21143717/miamioh.png",
     )
-    TeamObj = namedtuple(
-        "TeamObj", 
-        "indiana duke coastal kentucky gm miami_oh"
-    )
+    TeamObj = namedtuple("TeamObj", "indiana duke coastal kentucky gm miami_oh")
     return TeamObj(
-        indiana=indiana, 
-        duke=duke, 
-        coastal=coastal, 
-        kentucky=kentucky, 
+        indiana=indiana,
+        duke=duke,
+        coastal=coastal,
+        kentucky=kentucky,
         gm=gm,
-        miami_oh=miami_oh
+        miami_oh=miami_oh,
     )
+
 
 @pytest.fixture
 def games(client, teams):
@@ -112,7 +112,7 @@ def games(client, teams):
         home_team=teams.indiana,
         away_team=teams.miami_oh,
         neutral_site=False,
-        first_pitch=(timezone.now() + timedelta(days=5))
+        first_pitch=(timezone.now() + timedelta(days=5)),
     )
     iu_uk_mon = Game.objects.create(
         home_team=teams.kentucky,
@@ -133,18 +133,18 @@ def games(client, teams):
         first_pitch=(timezone.now() - timedelta(days=302)),
     )
     GameObj = namedtuple(
-        "GameObj", 
-        "iu_duke iu_coastal iu_gm iu_mo iu_uk_mon iu_uk_sun iu_uk_sat"
+        "GameObj", "iu_duke iu_coastal iu_gm iu_mo iu_uk_mon iu_uk_sun iu_uk_sat"
     )
     return GameObj(
-        iu_duke=iu_duke, 
+        iu_duke=iu_duke,
         iu_coastal=iu_coastal,
         iu_gm=iu_gm,
-        iu_mo=iu_mo, 
+        iu_mo=iu_mo,
         iu_uk_mon=iu_uk_mon,
         iu_uk_sun=iu_uk_sun,
         iu_uk_sat=iu_uk_sat,
     )
+
 
 @pytest.fixture
 def scoreboard(client, games, user_not_logged_in):
@@ -191,13 +191,10 @@ def scoreboard(client, games, user_not_logged_in):
         away_errors=2,
     )
     score_duke = Scoreboard.objects.create(
-        game=games.iu_duke,
-        scorekeeper=user_not_logged_in,
-        game_status="pre-game"
+        game=games.iu_duke, scorekeeper=user_not_logged_in, game_status="pre-game"
     )
     ScoreboardObj = namedtuple(
-        "ScoreboardObj", 
-        "score_uk_mon, score_uk_sun, score_uk_sat score_duke"
+        "ScoreboardObj", "score_uk_mon, score_uk_sun, score_uk_sat score_duke"
     )
     return ScoreboardObj(
         score_uk_mon=score_uk_mon,
@@ -205,6 +202,7 @@ def scoreboard(client, games, user_not_logged_in):
         score_uk_sat=score_uk_sat,
         score_duke=score_duke,
     )
+
 
 @pytest.fixture
 def blog_entries(client, games, user_not_logged_in, scoreboard):

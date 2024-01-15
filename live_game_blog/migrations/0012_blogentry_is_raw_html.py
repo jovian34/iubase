@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0011_alter_blogentry_scoreboard_and_more'),
+        ("live_game_blog", "0011_alter_blogentry_scoreboard_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blogentry',
-            name='is_raw_html',
+            model_name="blogentry",
+            name="is_raw_html",
             field=models.BooleanField(db_default=models.Value(False)),
         ),
     ]

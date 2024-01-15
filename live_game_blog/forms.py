@@ -18,11 +18,15 @@ class BlogAndScoreboardForm(forms.Form):
     home_errors = forms.IntegerField(label="Home Team Errors")
     blog_entry = forms.CharField(label="Content of Blog", widget=forms.Textarea())
 
+
 class BlogEntryForm(forms.Form):
     is_raw_html = forms.BooleanField(label="Entry is RAW HTML code", required=False)
-    is_x_embed = forms.BooleanField(label="Entry is @iubase17 X embed code", required=False)
+    is_x_embed = forms.BooleanField(
+        label="Entry is @iubase17 X embed code", required=False
+    )
     blog_entry = forms.CharField(label="Content of Blog", widget=forms.Textarea())
-    
+
+
 class AddGameForm(forms.Form):
     home_team = forms.ModelChoiceField(
         queryset=Team.objects.all().order_by("team_name"),
@@ -32,29 +36,35 @@ class AddGameForm(forms.Form):
         queryset=Team.objects.all().order_by("team_name"),
         label="Away Team",
     )
-    neutral_site = forms.BooleanField(label="Is this a neutral site or host is designated away?", required=False)
-    live_stats = forms.URLField(
-        label="Live Stats Link", 
-        required=False,
-        assume_scheme="https", # remove argument for Django 6.0
+    neutral_site = forms.BooleanField(
+        label="Is this a neutral site or host is designated away?", required=False
     )
-    first_pitch = forms.DateTimeField(input_formats=['%Y-%m-%d-%H%M'], label="Date and Time of First Pitch YYYY-MM-DD-HHMM in military time")
+    live_stats = forms.URLField(
+        label="Live Stats Link",
+        required=False,
+        assume_scheme="https",  # remove argument for Django 6.0
+    )
+    first_pitch = forms.DateTimeField(
+        input_formats=["%Y-%m-%d-%H%M"],
+        label="Date and Time of First Pitch YYYY-MM-DD-HHMM in military time",
+    )
+
 
 class AddTeamForm(forms.Form):
     team_name = forms.CharField(label="Team Name")
     mascot = forms.CharField(label="Team Mascot")
     logo = forms.URLField(
-        label="URL for the team's logo", 
+        label="URL for the team's logo",
         required=False,
-        assume_scheme="https", # remove argument for Django 6.0
+        assume_scheme="https",  # remove argument for Django 6.0
     )
     stats = forms.URLField(
-        label="URL for the team's stats page", 
+        label="URL for the team's stats page",
         required=False,
-        assume_scheme="https", # remove argument for Django 6.0
+        assume_scheme="https",  # remove argument for Django 6.0
     )
     roster = forms.URLField(
-        label="URL for the team's roster page", 
+        label="URL for the team's roster page",
         required=False,
-        assume_scheme="https", # remove argument for Django 6.0
+        assume_scheme="https",  # remove argument for Django 6.0
     )

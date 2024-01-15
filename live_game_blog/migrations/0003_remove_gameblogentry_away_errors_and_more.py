@@ -5,111 +5,112 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0002_alter_game_live_stats'),
+        ("live_game_blog", "0002_alter_game_live_stats"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='gameblogentry',
-            name='away_errors',
+            model_name="gameblogentry",
+            name="away_errors",
         ),
         migrations.RemoveField(
-            model_name='gameblogentry',
-            name='away_hits',
+            model_name="gameblogentry",
+            name="away_hits",
         ),
         migrations.RemoveField(
-            model_name='gameblogentry',
-            name='away_runs',
+            model_name="gameblogentry",
+            name="away_runs",
         ),
         migrations.RemoveField(
-            model_name='gameblogentry',
-            name='home_errors',
+            model_name="gameblogentry",
+            name="home_errors",
         ),
         migrations.RemoveField(
-            model_name='gameblogentry',
-            name='home_hits',
+            model_name="gameblogentry",
+            name="home_hits",
         ),
         migrations.RemoveField(
-            model_name='gameblogentry',
-            name='home_runs',
+            model_name="gameblogentry",
+            name="home_runs",
         ),
         migrations.RemoveField(
-            model_name='gameblogentry',
-            name='inning_num',
+            model_name="gameblogentry",
+            name="inning_num",
         ),
         migrations.RemoveField(
-            model_name='gameblogentry',
-            name='inning_part',
+            model_name="gameblogentry",
+            name="inning_part",
         ),
         migrations.RemoveField(
-            model_name='gameblogentry',
-            name='outs',
+            model_name="gameblogentry",
+            name="outs",
         ),
         migrations.AddField(
-            model_name='game',
-            name='away_errors',
+            model_name="game",
+            name="away_errors",
             field=models.IntegerField(db_default=models.Value(0)),
         ),
         migrations.AddField(
-            model_name='game',
-            name='away_hits',
+            model_name="game",
+            name="away_hits",
             field=models.IntegerField(db_default=models.Value(0)),
         ),
         migrations.AddField(
-            model_name='game',
-            name='away_runs',
+            model_name="game",
+            name="away_runs",
             field=models.IntegerField(db_default=models.Value(0)),
         ),
         migrations.AddField(
-            model_name='game',
-            name='home_errors',
+            model_name="game",
+            name="home_errors",
             field=models.IntegerField(db_default=models.Value(0)),
         ),
         migrations.AddField(
-            model_name='game',
-            name='home_hits',
+            model_name="game",
+            name="home_hits",
             field=models.IntegerField(db_default=models.Value(0)),
         ),
         migrations.AddField(
-            model_name='game',
-            name='home_runs',
+            model_name="game",
+            name="home_runs",
             field=models.IntegerField(db_default=models.Value(0)),
         ),
         migrations.AddField(
-            model_name='game',
-            name='inning_num',
+            model_name="game",
+            name="inning_num",
             field=models.IntegerField(db_default=models.Value(0)),
         ),
         migrations.AddField(
-            model_name='game',
-            name='inning_part',
-            field=models.CharField(db_default=models.Value('top'), max_length=16),
+            model_name="game",
+            name="inning_part",
+            field=models.CharField(db_default=models.Value("top"), max_length=16),
         ),
         migrations.AddField(
-            model_name='game',
-            name='outs',
+            model_name="game",
+            name="outs",
             field=models.IntegerField(db_default=models.Value(0)),
         ),
         migrations.AddField(
-            model_name='gameblogentry',
-            name='include_game_status',
+            model_name="gameblogentry",
+            name="include_game_status",
             field=models.BooleanField(db_default=models.Value(False)),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='first_pitch',
+            model_name="game",
+            name="first_pitch",
             field=models.DateTimeField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='neutral_site',
+            model_name="game",
+            name="neutral_site",
             field=models.BooleanField(db_default=models.Value(False)),
         ),
         migrations.AlterField(
-            model_name='gameblogentry',
-            name='blog_time',
-            field=models.DateTimeField(db_default=django.db.models.functions.datetime.Now()),
+            model_name="gameblogentry",
+            name="blog_time",
+            field=models.DateTimeField(
+                db_default=django.db.models.functions.datetime.Now()
+            ),
         ),
     ]

@@ -7,7 +7,6 @@ register = template.Library()
 
 @register.simple_tag(name="cache_bust")
 def cache_bust():
-
     if bool(int(os.environ.get("DEVELOP"))):
         version = uuid.uuid1()
     else:

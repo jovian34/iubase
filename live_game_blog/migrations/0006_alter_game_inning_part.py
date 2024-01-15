@@ -4,15 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0005_alter_game_inning_part_alter_game_outs'),
+        ("live_game_blog", "0005_alter_game_inning_part_alter_game_outs"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='game',
-            name='inning_part',
-            field=models.CharField(choices=[('pre-game', 'game not started'), ('top', 'top of an inning'), ('bottom', 'bottom of an inning'), ('final', 'end of inning and game concluded')], db_default=models.Value('pre-game'), max_length=10),
+            model_name="game",
+            name="inning_part",
+            field=models.CharField(
+                choices=[
+                    ("pre-game", "game not started"),
+                    ("top", "top of an inning"),
+                    ("bottom", "bottom of an inning"),
+                    ("final", "end of inning and game concluded"),
+                ],
+                db_default=models.Value("pre-game"),
+                max_length=10,
+            ),
         ),
     ]

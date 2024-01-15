@@ -35,7 +35,6 @@ class ScoreboardAdmin(admin.ModelAdmin):
         "inning_num",
         "inning_part",
         "outs",
-        
     )
     ordering = ["-update_time"]
 

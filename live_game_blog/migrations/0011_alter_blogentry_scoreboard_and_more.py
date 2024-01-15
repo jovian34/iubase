@@ -5,60 +5,73 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0010_scoreboard_blogentry_delete_update'),
+        ("live_game_blog", "0010_scoreboard_blogentry_delete_update"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='blogentry',
-            name='scoreboard',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.scoreboard'),
+            model_name="blogentry",
+            name="scoreboard",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="live_game_blog.scoreboard",
+            ),
         ),
         migrations.AlterField(
-            model_name='scoreboard',
-            name='away_errors',
+            model_name="scoreboard",
+            name="away_errors",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='scoreboard',
-            name='away_hits',
+            model_name="scoreboard",
+            name="away_hits",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='scoreboard',
-            name='away_runs',
+            model_name="scoreboard",
+            name="away_runs",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='scoreboard',
-            name='home_errors',
+            model_name="scoreboard",
+            name="home_errors",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='scoreboard',
-            name='home_hits',
+            model_name="scoreboard",
+            name="home_hits",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='scoreboard',
-            name='home_runs',
+            model_name="scoreboard",
+            name="home_runs",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='scoreboard',
-            name='inning_num',
+            model_name="scoreboard",
+            name="inning_num",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='scoreboard',
-            name='inning_part',
-            field=models.CharField(blank=True, choices=[('Top', 'top'), ('Bottom', 'bottom')], max_length=16, null=True),
+            model_name="scoreboard",
+            name="inning_part",
+            field=models.CharField(
+                blank=True,
+                choices=[("Top", "top"), ("Bottom", "bottom")],
+                max_length=16,
+                null=True,
+            ),
         ),
         migrations.AlterField(
-            model_name='scoreboard',
-            name='outs',
-            field=models.IntegerField(blank=True, choices=[(0, 'none'), (1, 'one'), (2, 'two'), (3, 'three')], null=True),
+            model_name="scoreboard",
+            name="outs",
+            field=models.IntegerField(
+                blank=True,
+                choices=[(0, "none"), (1, "one"), (2, "two"), (3, "three")],
+                null=True,
+            ),
         ),
     ]

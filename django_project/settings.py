@@ -18,7 +18,10 @@ if not bool(int(os.environ.get("DEVELOP"))):
         "iubase.jovian34.com",
     ]
 else:
-    ALLOWED_HOSTS = ["localhost", "127.0.0.1",]
+    ALLOWED_HOSTS = [
+        "localhost",
+        "127.0.0.1",
+    ]
 
 
 INSTALLED_APPS = [
@@ -132,8 +135,8 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
     SESSION_COOKIE_SECURE = True
 
-    STATIC_ROOT = os.path.join(BASE_DIR, 'django_project/static/')
+    STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.37" # PT model refined and tested ATP 2024-01-14
+project_version = "0.0.37"  # PT model refined and tested ATP 2024-01-14
 os.environ.setdefault("PROJECT_VERSION", project_version)

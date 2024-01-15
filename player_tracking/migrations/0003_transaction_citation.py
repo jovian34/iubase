@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('player_tracking', '0002_rename_jersey_number_annualroster_jersey_and_more'),
+        ("player_tracking", "0002_rename_jersey_number_annualroster_jersey_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='transaction',
-            name='citation',
+            model_name="transaction",
+            name="citation",
             field=models.URLField(blank=True, null=True),
         ),
     ]

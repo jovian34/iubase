@@ -9,8 +9,7 @@ GAME_STATUS = [
     ("cancelled", "cancelled"),
     ("delay", "mid-game delay"),
     ("final", "game concluded"),
-    ("post-game", "post-game")
-
+    ("post-game", "post-game"),
 ]
 
 OUTS_CHOICES = [

@@ -7,45 +7,127 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0009_remove_gamestatus_game_update_delete_gameblogentry_and_more'),
+        (
+            "live_game_blog",
+            "0009_remove_gamestatus_game_update_delete_gameblogentry_and_more",
+        ),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Scoreboard',
+            name="Scoreboard",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('update_time', models.DateTimeField(db_default=django.db.models.functions.datetime.Now())),
-                ('game_status', models.CharField(choices=[('pre-game', 'game not started'), ('in-progress', 'game in progress'), ('cancelled', 'cancelled'), ('delay', 'mid-game delay'), ('final', 'game concluded'), ('post-game', 'post-game')], max_length=16)),
-                ('inning_num', models.IntegerField()),
-                ('inning_part', models.CharField(choices=[('top', 'top'), ('bottom', 'bottom')], max_length=16)),
-                ('outs', models.IntegerField(choices=[(0, 'none'), (1, 'one'), (2, 'two'), (3, 'three')])),
-                ('home_runs', models.IntegerField()),
-                ('away_runs', models.IntegerField()),
-                ('home_hits', models.IntegerField()),
-                ('away_hits', models.IntegerField()),
-                ('home_errors', models.IntegerField()),
-                ('away_errors', models.IntegerField()),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.game')),
-                ('scorekeeper', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "update_time",
+                    models.DateTimeField(
+                        db_default=django.db.models.functions.datetime.Now()
+                    ),
+                ),
+                (
+                    "game_status",
+                    models.CharField(
+                        choices=[
+                            ("pre-game", "game not started"),
+                            ("in-progress", "game in progress"),
+                            ("cancelled", "cancelled"),
+                            ("delay", "mid-game delay"),
+                            ("final", "game concluded"),
+                            ("post-game", "post-game"),
+                        ],
+                        max_length=16,
+                    ),
+                ),
+                ("inning_num", models.IntegerField()),
+                (
+                    "inning_part",
+                    models.CharField(
+                        choices=[("top", "top"), ("bottom", "bottom")], max_length=16
+                    ),
+                ),
+                (
+                    "outs",
+                    models.IntegerField(
+                        choices=[(0, "none"), (1, "one"), (2, "two"), (3, "three")]
+                    ),
+                ),
+                ("home_runs", models.IntegerField()),
+                ("away_runs", models.IntegerField()),
+                ("home_hits", models.IntegerField()),
+                ("away_hits", models.IntegerField()),
+                ("home_errors", models.IntegerField()),
+                ("away_errors", models.IntegerField()),
+                (
+                    "game",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="live_game_blog.game",
+                    ),
+                ),
+                (
+                    "scorekeeper",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='BlogEntry',
+            name="BlogEntry",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('blog_time', models.DateTimeField(db_default=django.db.models.functions.datetime.Now())),
-                ('blog_entry', models.TextField()),
-                ('include_scoreboard', models.BooleanField()),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.game')),
-                ('scoreboard', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.scoreboard')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "blog_time",
+                    models.DateTimeField(
+                        db_default=django.db.models.functions.datetime.Now()
+                    ),
+                ),
+                ("blog_entry", models.TextField()),
+                ("include_scoreboard", models.BooleanField()),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "game",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="live_game_blog.game",
+                    ),
+                ),
+                (
+                    "scoreboard",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="live_game_blog.scoreboard",
+                    ),
+                ),
             ],
         ),
         migrations.DeleteModel(
-            name='Update',
+            name="Update",
         ),
     ]

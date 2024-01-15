@@ -6,38 +6,77 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0008_remove_game_away_errors_remove_game_away_hits_and_more'),
+        (
+            "live_game_blog",
+            "0008_remove_game_away_errors_remove_game_away_hits_and_more",
+        ),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='gamestatus',
-            name='game',
+            model_name="gamestatus",
+            name="game",
         ),
         migrations.CreateModel(
-            name='Update',
+            name="Update",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('update_time', models.DateTimeField(db_default=django.db.models.functions.datetime.Now())),
-                ('blog_entry', models.TextField(blank=True, null=True)),
-                ('inning_num', models.IntegerField(db_default=models.Value(1))),
-                ('inning_part', models.CharField(choices=[('pre-game', 'game not started'), ('top', 'top'), ('bottom', 'bottom'), ('final', 'game concluded')], db_default=models.Value('pre-game'), max_length=10)),
-                ('outs', models.IntegerField(choices=[(0, 'none'), (1, 'one'), (2, 'two'), (3, 'three')], db_default=models.Value(0))),
-                ('home_runs', models.IntegerField(db_default=models.Value(0))),
-                ('away_runs', models.IntegerField(db_default=models.Value(0))),
-                ('home_hits', models.IntegerField(db_default=models.Value(0))),
-                ('away_hits', models.IntegerField(db_default=models.Value(0))),
-                ('home_errors', models.IntegerField(db_default=models.Value(0))),
-                ('away_errors', models.IntegerField(db_default=models.Value(0))),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.game')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "update_time",
+                    models.DateTimeField(
+                        db_default=django.db.models.functions.datetime.Now()
+                    ),
+                ),
+                ("blog_entry", models.TextField(blank=True, null=True)),
+                ("inning_num", models.IntegerField(db_default=models.Value(1))),
+                (
+                    "inning_part",
+                    models.CharField(
+                        choices=[
+                            ("pre-game", "game not started"),
+                            ("top", "top"),
+                            ("bottom", "bottom"),
+                            ("final", "game concluded"),
+                        ],
+                        db_default=models.Value("pre-game"),
+                        max_length=10,
+                    ),
+                ),
+                (
+                    "outs",
+                    models.IntegerField(
+                        choices=[(0, "none"), (1, "one"), (2, "two"), (3, "three")],
+                        db_default=models.Value(0),
+                    ),
+                ),
+                ("home_runs", models.IntegerField(db_default=models.Value(0))),
+                ("away_runs", models.IntegerField(db_default=models.Value(0))),
+                ("home_hits", models.IntegerField(db_default=models.Value(0))),
+                ("away_hits", models.IntegerField(db_default=models.Value(0))),
+                ("home_errors", models.IntegerField(db_default=models.Value(0))),
+                ("away_errors", models.IntegerField(db_default=models.Value(0))),
+                (
+                    "game",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="live_game_blog.game",
+                    ),
+                ),
             ],
         ),
         migrations.DeleteModel(
-            name='GameBlogEntry',
+            name="GameBlogEntry",
         ),
         migrations.DeleteModel(
-            name='GameStatus',
+            name="GameStatus",
         ),
     ]

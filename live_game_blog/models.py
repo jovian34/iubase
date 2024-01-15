@@ -51,8 +51,7 @@ class Scoreboard(models.Model):
     def __str__(self) -> str:
         home_team = self.game.home_team.team_name
         away_team = self.game.away_team.team_name
-        inning_part = self.inning_part[0].upper() + self.inning_part[1:]
-        return f"{away_team}-{self.away_runs}, {home_team}-{self.home_runs} | {inning_part} Inning: {self.inning_num}"
+        return f"{away_team}-{self.away_runs}, {home_team}-{self.home_runs} | {self.inning_part} Inning: {self.inning_num}"
 
 
 class BlogEntry(models.Model):

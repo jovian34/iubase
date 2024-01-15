@@ -185,7 +185,7 @@ def add_game(request):
             "form": form,
             "page_title": "Add Game",
         }
-        return render(request, "live_game_blog/add_game_or_team.html", context)
+        return render(request, "live_game_blog/add_game.html", context)
 
 
 @login_required
@@ -208,4 +208,4 @@ def add_team(request):
             "form": form,
             "page_title": "Add Team",
         }
-        return render(request, "live_game_blog/add_game_or_team.html", context)
+        return render(request, "live_game_blog/add_team.html", context)

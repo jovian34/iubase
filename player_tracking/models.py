@@ -43,7 +43,7 @@ class Transaction(models.Model):
 
 
 class AnnualRoster(models.Model):
-    fall_year = models.IntegerField(null=False)
+    spring_year = models.IntegerField(null=False)
     team = models.ForeignKey(
         Team,
         on_delete=models.CASCADE,
@@ -60,5 +60,5 @@ class AnnualRoster(models.Model):
 
     def __str__(self) -> str:
         return (
-            f"{self.player.first} {self.player.last} {self.fall_year} - {self.status}"
+            f"{self.player.first} {self.player.last} {self.spring_year} - {self.status}"
         )

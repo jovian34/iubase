@@ -27,7 +27,7 @@ class TransactionAdmin(admin.ModelAdmin):
 class AnnualRosterAdmin(admin.ModelAdmin):
     model = AnnualRoster
     list_display = (
-        "fall_year",
+        "spring_year",
         "player",
         "status",
     )

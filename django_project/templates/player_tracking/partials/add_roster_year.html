@@ -1,0 +1,6 @@
+
+<form action="{% url "add_roster_year" player_id  %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" value="Submit">Add Roster Year</button>
+</form>

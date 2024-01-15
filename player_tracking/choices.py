@@ -1,34 +1,35 @@
 HAND_CHOICES = [
-    ("Left", "left"),
-    ("Right", "right"),
-    ("Both", "both"),
+    ("Left", "Left"),
+    ("Right", "Right"),
+    ("Both", "Both"),
 ]
 
 TRANSACTION_CHOICES = [
-    ("Verbal Commitment from High School", "verbal"),
-    ("Verbal Commitment from College", "transfer"),
-    ("National Letter of Intent Signed", "nli"),
-    ("Decommit", "decommit"),
-    ("Entered Transfer Portal", "in_portal"),
-    ("Signed Professional Contract", "pro"),
-    ("No Longer With Program - Other Reason", "other"),
+    ("Verbal Commitment from High School", "Verbal Commitment from High School"),
+    ("Verbal Commitment from College", "Verbal Commitment from College"),
+    ("National Letter of Intent Signed", "National Letter of Intent Signed"),
+    ("Decommit", "Decommit"),
+    ("Entered Transfer Portal", "Entered Transfer Portal"),
+    ("Signed Professional Contract", "Signed Professional Contract"),
+    ("No Longer With Program - Other Reason", "No Longer With Program - Other Reason"),
 ]
 
 POSITION_CHOICES = [
-    ("Pitcher", "P"),
-    ("Catcher", "C"),
-    ("First Base", "1B"),
-    ("Second Base", "2B"),
-    ("Third Base", "3B"),
-    ("Shortstop", "SS"),
-    ("Centerfield", "CF"),
-    ("Corner Outfield", "OF"),
-    ("Designated Hitter", "DH"),
+    ("Pitcher", "Pitcher"),
+    ("Catcher", "Catcher"),
+    ("First Base", "First Base"),
+    ("Second Base", "Second Base"),
+    ("Third Base", "Third Base"),
+    ("Shortstop", "Shortstop"),
+    ("Centerfield", "Centerfield"),
+    ("Corner Outfield", "Corner Outfield"),
+    ("Designated Hitter", "Designated Hitter"),
+    (None, "None")
 ]
 
 STATUS_CHOICES = [
-    ("Spring Roster", "roster"),
-    ("Played but granted eligibility waiver", "waiver"),
-    ("Roster not played", "redshirt"),
-    ("Not on Spring roster", "greyshirt"),
+    ("Spring Roster", "Spring Roster"),
+    ("Played but granted eligibility waiver", "Played but granted eligibility waiver"),
+    ("On Spring Roster but did not play", "On Spring Roster but did not play"),
+    ("Not on Spring roster", "Not on Spring roster"),
 ]

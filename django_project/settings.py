@@ -138,5 +138,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.37"  # PT model refined and tested ATP 2024-01-14
+project_version = "0.0.37"  # PT admin set ATP 2024-01-15
 os.environ.setdefault("PROJECT_VERSION", project_version)

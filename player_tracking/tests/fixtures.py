@@ -5,6 +5,7 @@ from django.utils import timezone
 from datetime import datetime
 
 from player_tracking.models import Player, Transaction, AnnualRoster
+from live_game_blog.tests.fixtures import teams
 
 
 @pytest.fixture
@@ -59,10 +60,11 @@ def transactions(client, players):
 
 
 @pytest.fixture
-def annual_roster(client, players):
+def annual_roster(client, players, teams):
     dt_2022 = AnnualRoster.objects.create(
         fall_year=2022,
         player=players.dt2022,
+        team=teams.indiana,
         jersey=5,
         primary_position="OF",
         secondary_position="1B",

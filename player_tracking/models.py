@@ -44,6 +44,12 @@ class Transaction(models.Model):
 
 class AnnualRoster(models.Model):
     fall_year = models.IntegerField(null=False)
+    team = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     jersey = models.IntegerField(null=True, blank=True)
     status = models.CharField(choices=STATUS_CHOICES, db_default="roster")

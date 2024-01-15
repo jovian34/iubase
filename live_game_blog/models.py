@@ -6,7 +6,7 @@ from accounts.models import CustomUser
 
 
 class Team(models.Model):
-    team_name = models.CharField(null=False, max_length=64)
+    team_name = models.CharField(null=False, max_length=64, unique=True)
     mascot = models.CharField(null=False, max_length=64)
     logo = models.URLField()
     stats = models.URLField()

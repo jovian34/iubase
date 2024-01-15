@@ -2,6 +2,7 @@ import pytest
 
 from datetime import datetime
 from player_tracking.tests.fixtures import players, transactions, annual_roster
+from live_game_blog.tests.fixtures import teams
 
 
 @pytest.mark.django_db
@@ -30,7 +31,7 @@ def test_transaction_model_string_def(client, transactions):
 
 
 @pytest.mark.django_db
-def test_annual_roster_model_stored_all_fields(client, annual_roster):
+def test_annual_roster_model_stored_all_fields(client, annual_roster, teams):
     assert annual_roster.dt_2023.fall_year == 2023
     assert annual_roster.dt_2022.player.first == "Devin"
     assert annual_roster.dt_2022.jersey == 5
@@ -40,5 +41,5 @@ def test_annual_roster_model_stored_all_fields(client, annual_roster):
 
 
 @pytest.mark.django_db
-def test_annual_roster_model_string_def(client, annual_roster):
+def test_annual_roster_model_string_def(client, annual_roster, teams):
     assert str(annual_roster.dt_2023) == "Devin Taylor 2023 - roster"

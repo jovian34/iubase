@@ -7,7 +7,6 @@ from datetime import datetime
 from player_tracking.models import Player, Transaction, AnnualRoster
 from live_game_blog.tests.fixtures import teams
 
-
 @pytest.fixture
 def players(client):
     dt2022 = Player.objects.create(

@@ -16,10 +16,10 @@ class Player(models.Model):
     hsgrad_year = models.IntegerField(null=False)
     high_school = models.CharField(null=True, blank=True)
     home_city = models.CharField(null=True, blank=True)
-    home_state = models.CharField(max_length=2, null=True, blank=True)
+    home_state = models.CharField(null=True, blank=True, max_length=8)
     home_country = models.CharField(db_default="USA")
     headshot = models.URLField(null=True, blank=True)
-    birthdate = models.DateTimeField(null=True, blank=True)
+    birthdate = models.DateField(null=True, blank=True)
     bats = models.CharField(choices=HAND_CHOICES, max_length=16, null=True, blank=True)
     throws = models.CharField(
         choices=HAND_CHOICES, max_length=16, null=True, blank=True

@@ -9,7 +9,7 @@ from player_tracking.forms import AnnualRosterForm, NewPlayerForm
 
 
 def players(request):
-    players = Player.objects.all()
+    players = Player.objects.all().order_by("last")
     context = {
         "players": players,
         "page_title": "Players",

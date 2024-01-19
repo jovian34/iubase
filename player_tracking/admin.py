@@ -28,6 +28,7 @@ class AnnualRosterAdmin(admin.ModelAdmin):
     model = AnnualRoster
     list_display = (
         "spring_year",
+        "team",
         "player",
         "status",
     )

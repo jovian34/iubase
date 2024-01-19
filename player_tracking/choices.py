@@ -28,6 +28,7 @@ POSITION_CHOICES = [
 ]
 
 STATUS_CHOICES = [
+    ("Fall Roster", "Fall Roster"),
     ("Spring Roster", "Spring Roster"),
     ("Played but granted eligibility waiver", "Played but granted eligibility waiver"),
     ("On Spring Roster but did not play", "On Spring Roster but did not play"),

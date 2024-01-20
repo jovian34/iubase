@@ -35,11 +35,11 @@ def test_annual_roster_model_stored_all_fields(client, annual_rosters, teams):
     assert annual_rosters.dt_2024.spring_year == 2024
     assert annual_rosters.dt_2023.player.first == "Devin"
     assert annual_rosters.dt_2023.jersey == 5
-    assert annual_rosters.dt_2024.primary_position == "OF"
-    assert annual_rosters.dt_2023.secondary_position == "1B"
+    assert annual_rosters.dt_2024.primary_position == "Corner Outfield"
+    assert annual_rosters.dt_2023.secondary_position == "First Base"
     assert not annual_rosters.dt_2024.secondary_position
 
 
 @pytest.mark.django_db
 def test_annual_roster_model_string_def(client, annual_rosters, teams):
-    assert str(annual_rosters.dt_2024) == "Devin Taylor 2024 - roster"
+    assert str(annual_rosters.dt_2024) == "Devin Taylor 2024 - Fall Roster"

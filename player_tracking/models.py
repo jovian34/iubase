@@ -52,7 +52,7 @@ class AnnualRoster(models.Model):
     )
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     jersey = models.IntegerField(null=True, blank=True)
-    status = models.CharField(choices=STATUS_CHOICES, db_default="roster")
+    status = models.CharField(choices=STATUS_CHOICES, db_default="Fall Roster")
     primary_position = models.CharField(choices=POSITION_CHOICES)
     secondary_position = models.CharField(
         choices=POSITION_CHOICES, null=True, blank=True

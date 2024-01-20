@@ -160,11 +160,12 @@ def fall_roster(request, fall_year):
     
 
 def spring_roster(request, spring_year):
-    players = AnnualRoster.objects.filter(spring_year=spring_year).filter(team__team_name="Indiana").filter(status="Spring Roster").order_by("jersey")
-    if players:
-        page_title = f"Spring {spring_year} Roster"
+    all_roster = ["Spring Roster", "On Spring Roster but did not play", "Played but granted eligibility waiver"]
+    players = AnnualRoster.objects.filter(spring_year=spring_year).filter(team__team_name="Indiana").filter(status__in=all_roster).order_by("jersey")
+    if len(players) < 5 and int(spring_year) >= timezone.now().date().year:
+        page_title = f"Spring {spring_year} Roster not fully announced"
     else:
-        page_title = f"Spring {spring_year} Roster not yet announced"
+        page_title = f"Spring {spring_year} Roster"
     context = {
         "players": players,
         "page_title": page_title,

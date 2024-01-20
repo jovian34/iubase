@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+
+
+{% block content %}
+<div class="column-3"></div>
+<div class="column-6">
+    {% for position in positions %}
+
+        {% if position == "Pitcher" %}
+            <h2>Left-Handed Pitcher:</h2>
+            <ul>
+            {% for player in players %}
+                {% if player.primary_position == "Pitcher" and player.player.throws == "Left" %}
+                    <li><a href="{% url "player_rosters" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+
+            
+            <h2>Right-Handed Pitcher:</h2>
+            <ul>
+            {% for player in players %}
+                {% if player.primary_position == "Pitcher" and player.player.throws == "Right" %}
+                    <li><a href="{% url "player_rosters" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+
+        {% else %}
+            {% if position and position != "Designated Hitter" %}
+                <h2>{{position}}:</h2>
+                <ul>
+                {% for player in players %}
+                    {% if player.primary_position == position or player.secondary_position == position %}
+                        <li><a href="{% url "player_rosters" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+            {% endif %}
+
+
+        {% endif %}
+
+    {% endfor %}
+</div>
+{% endblock %}

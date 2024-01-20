@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+
+
+{% block content %}
+<div class="column-3"></div>
+<div class="column-6">
+    {% if user.is_authenticated %}
+        <a href="{% url "add_player" %}"><button>Add Player</button></a></div>
+    {% endif %}
+</div>
+
+<div class="column-3"></div>
+<div class="column-6">    
+    <h3><a href="{% url "fall_roster" fall %}">Fall {{ fall }} Roster</a></h3>
+    <h3><a href="{% url "fall_depth_chart" fall %}">Fall {{ fall }} Depth Chart</a></h3>
+    <h3><a href="{% url "spring_roster" spring %}">Spring {{ spring }} Roster</a></h3>
+    <h3><a href="{% url "spring_depth_chart" spring %}">Spring {{ spring }} Depth Chart</a></h3>
+</div>
+<br clear="both">
+{% endblock %}

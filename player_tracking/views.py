@@ -6,6 +6,7 @@ from django.urls import reverse
 from player_tracking.models import Player, Transaction, AnnualRoster
 from live_game_blog.models import Team
 from player_tracking.forms import AnnualRosterForm, NewPlayerForm
+from player_tracking.choices import POSITION_CHOICES
 
 
 def players(request):
@@ -15,6 +16,21 @@ def players(request):
         "page_title": "Players",
     }
     return render(request, "player_tracking/players.html", context)
+
+def pt_index(request):
+    today = timezone.now().date()
+    if today.month < 8:
+        current_spring = today.year
+        current_fall = current_spring - 1
+    else:
+        current_fall = today.year
+        current_spring = current_fall + 1
+    context = {
+        "fall": current_fall,
+        "spring": current_spring,
+        "page_title": "Player Tracking",
+    }
+    return render(request, "player_tracking/pt_index.html", context)
 
 
 @login_required
@@ -102,3 +118,56 @@ def add_roster_year(request, player_id):
         return render(
             request, "player_tracking/partials/add_roster_year.html", context,
         )
+    
+
+def fall_depth_chart(request, fall_year):
+    spring_year = int(fall_year) + 1
+    fall_statuses = ["Fall Roster", "Spring Roster"]
+    positions = [ position[0] for position in POSITION_CHOICES]
+    players = AnnualRoster.objects.filter(spring_year=spring_year).filter(team__team_name="Indiana").filter(status__in=fall_statuses).order_by("player__last")
+    context = {
+        "players": players,
+        "page_title": f"Fall {fall_year} Available Depth Chart",
+        "positions": positions,
+    }
+    return render(request, "player_tracking/depth_chart.html", context)
+    
+
+def spring_depth_chart(request, spring_year):
+    positions = [ position[0] for position in POSITION_CHOICES]
+    players = AnnualRoster.objects.filter(spring_year=spring_year).filter(team__team_name="Indiana").filter(status="Spring Roster").order_by("player__last")
+    if players:
+        page_title = f"Spring {spring_year} Available Depth Chart"
+    else:
+        page_title = f"Spring {spring_year} Roster not yet announced"
+    context = {
+        "players": players,
+        "page_title": page_title,
+        "positions": positions,
+    }
+    return render(request, "player_tracking/depth_chart.html", context)
+    
+
+def fall_roster(request, fall_year):
+    spring_year = int(fall_year) + 1
+    players = AnnualRoster.objects.filter(spring_year=spring_year).filter(team__team_name="Indiana").order_by("jersey")
+    context = {
+        "players": players,
+        "page_title": f"Fall {fall_year} Roster",
+        "total": len(players),
+    }
+    return render(request, "player_tracking/roster.html", context)
+    
+
+def spring_roster(request, spring_year):
+    players = AnnualRoster.objects.filter(spring_year=spring_year).filter(team__team_name="Indiana").filter(status="Spring Roster").order_by("jersey")
+    if players:
+        page_title = f"Spring {spring_year} Roster"
+    else:
+        page_title = f"Spring {spring_year} Roster not yet announced"
+    context = {
+        "players": players,
+        "page_title": page_title,
+        "total": len(players),
+    }
+    return render(request, "player_tracking/roster.html", context)

@@ -10,6 +10,8 @@ class PlayerAdmin(admin.ModelAdmin):
         "first",
         "last",
         "hsgrad_year",
+        "bats",
+        "throws",
     )
 
 

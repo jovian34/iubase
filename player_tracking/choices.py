@@ -10,6 +10,7 @@ TRANSACTION_CHOICES = [
     ("National Letter of Intent Signed", "National Letter of Intent Signed"),
     ("Decommit", "Decommit"),
     ("Entered Transfer Portal", "Entered Transfer Portal"),
+    ("Verbal Commitment to Transfer College", "Verbal Commitment to Transfer College"),
     ("Signed Professional Contract", "Signed Professional Contract"),
     ("No Longer With Program - Other Reason", "No Longer With Program - Other Reason"),
 ]

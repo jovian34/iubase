@@ -18,6 +18,9 @@
                 {% if player.primary_position == "Pitcher" %}{{ player.player.throws}}-Handed{% endif %}
                 {{ player.primary_position }}
                 {% if player.secondary_position %}/ {{ player.secondary_position}}{% endif %}
+                {% if player.status != "Spring Roster" %}
+                    <em>- {{ player.status }}</em>
+                {% endif %}
             </p>
         </li>
     {% endfor %}

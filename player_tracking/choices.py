@@ -11,6 +11,8 @@ TRANSACTION_CHOICES = [
     ("Decommit", "Decommit"),
     ("Entered Transfer Portal", "Entered Transfer Portal"),
     ("Verbal Commitment to Transfer College", "Verbal Commitment to Transfer College"),
+    ("Drafted", "Drafted"),
+    ("Not Signing Professional Contract", "Not Signing Professional Contract"),
     ("Signed Professional Contract", "Signed Professional Contract"),
     ("No Longer With Program - Other Reason", "No Longer With Program - Other Reason"),
 ]

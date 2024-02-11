@@ -36,4 +36,5 @@ STATUS_CHOICES = [
     ("Played but granted eligibility waiver", "Played but granted eligibility waiver"),
     ("On Spring Roster but did not play", "On Spring Roster but did not play"),
     ("Not on Spring roster", "Not on Spring roster"),
+    ("Replaced on Spring Roster - Medical", "Replaced on Spring Roster - Medical"),
 ]

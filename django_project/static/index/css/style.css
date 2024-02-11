@@ -101,16 +101,19 @@ h3 {
 /* unvisited link */
 a:link {
   color: #990000;
+  text-decoration: none;
 }
 
 /* visited link */
 a:visited {
   color: #990000;
+  text-decoration: none;
 }
 
 /* selected link */
 a:active {
   color: #fa0404;
+  text-decoration: none;
 }
 
 /*---------COLUMNS--------*/

@@ -15,7 +15,8 @@ DEBUG = bool(int(os.environ.get("DEVELOP")))
 
 if not bool(int(os.environ.get("DEVELOP"))):
     ALLOWED_HOSTS = [
-        "iubase.jovian34.com",
+        "apps.iubase.com",
+        "159.203.11.18",
     ]
 else:
     ALLOWED_HOSTS = [

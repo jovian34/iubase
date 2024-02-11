@@ -101,11 +101,13 @@ h3 {
 /* unvisited link */
 a:link {
     color: $link;
+	text-decoration: none;
 }
 
 /* visited link */
 a:visited {
     color: $link-visited;
+	text-decoration: none;
 }
 
 
@@ -113,6 +115,7 @@ a:visited {
 /* selected link */
 a:active {
     color: $link-active;
+	text-decoration: none;
 }
 
 

@@ -15,6 +15,7 @@ DEBUG = bool(int(os.environ.get("DEVELOP")))
 
 if not bool(int(os.environ.get("DEVELOP"))):
     ALLOWED_HOSTS = [
+        "localhost",
         "apps.iubase.com",
         "159.203.11.18",
     ]
@@ -139,5 +140,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.45"  # PT add roster an depth chart ATP 2024-01-20
+project_version = "0.0.46"  # PT add localhost to allowed ATP 2024-02-24
 os.environ.setdefault("PROJECT_VERSION", project_version)

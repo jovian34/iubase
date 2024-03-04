@@ -132,12 +132,12 @@ def add_blog_plus_scoreboard(request, game_pk):
         game = Game.objects.get(pk=game_pk)
         away = game.away_team.mascot
         home = game.home_team.mascot
-        if last_score.outs == 3:
-            outs = 0
-            inning = last_score.inning_num + 1
-        else:
-            outs = last_score.outs
-            inning = last_score.inning_num
+        inning = last_score.inning_num
+        outs = last_score.outs
+        if last_score.outs == 3 and last_score.inning_part == "Bottom":
+            outs, inning = 0, last_score.inning_num + 1
+        elif last_score.outs == 3 and last_score.inning_part == "Top":
+            outs = 0         
         form = BlogAndScoreboardForm(
             initial={
                 "game_status": last_score.game_status,

@@ -25,18 +25,16 @@
       <div class="column-6">
         <a href="{% url "index" %}">
           <img id="iubase-logo" src="https://iubase.com/wp-content/uploads/2018/09/cropped-C0512953-425B-4EC2-8BF3-B372A7A47D65-2.jpeg">
-        </a>
-        {% block header %}<h1>iubase.com Apps</h1>{% endblock %}
+        </a>{% block header %}<h1>iubase.com Apps</h1>{% endblock %}
 
       </div>
-
       <div class="column-3"></div>
-
-    <br clear="both">
-
     </div><!-- end of banner -->
 
-    <div class="column-12"><br clear="both"></div>
+    <div class="column-12">
+        <button><a href="https://iubase.com">Main iubase.com site</a></button>
+        <button><a href="{% url "index" %}"></a>iubase.com Apps</button>
+        <br clear="both"></div>
 
         {% block content %}{% endblock %}
 

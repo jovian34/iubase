@@ -201,6 +201,7 @@ def test_add_game(client, logged_user_schwarbs, teams, games, scoreboard):
     assert response.status_code == 200
     assert "George Mason vs. Indiana" in str(response.content)
     assert "Feb. 14, 2025, 6:30 p.m. first pitch" in str(response.content)
+    assert "Scoreboard: George Mason-0, Indiana-0 | Top Inning: 1" in str(response.context)
 
 
 @pytest.mark.django_db

@@ -177,6 +177,15 @@ def add_game(request):
                 game_status="pre-game",
                 game=this_game,
                 scorekeeper=request.user,
+                inning_num = 1,
+                inning_part = "Top",
+                outs = 0,
+                home_runs = 0,
+                away_runs = 0,
+                home_hits = 0,
+                away_hits = 0,
+                home_errors = 0,
+                away_errors = 0,
             )
             add_initial_scoreboard.save()
         return redirect(reverse("edit_live_game_blog", args=[this_game.pk]))

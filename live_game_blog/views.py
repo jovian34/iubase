@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from datetime import timedelta
+from django.db.models import Q
 
 from accounts.models import CustomUser
 from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
@@ -15,7 +16,7 @@ from live_game_blog.forms import (
 
 
 def games(request):
-    finals = Scoreboard.objects.filter(game_status="final")
+    finals = Scoreboard.objects.filter(Q(game_status="final") | Q(game_status="cancelled") | Q(game_status="post-game"))
     final_pks = [final.game.pk for final in finals]
     games = Game.objects.exclude(pk__in=final_pks).order_by("first_pitch")[:3]
     context = {

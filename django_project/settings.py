@@ -140,5 +140,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.46"  # PT add localhost to allowed ATP 2024-02-24
+project_version = "0.0.47"  # LGB not show canc games ATP 2024-05-14
 os.environ.setdefault("PROJECT_VERSION", project_version)

@@ -24,6 +24,14 @@ def test_games_list_page_renders_road_and_neutral_future(client, teams, games):
 
 
 @pytest.mark.django_db
+def test_games_list_page_does_not_render_canc_games(client, teams, games, scoreboard):
+    response = client.get(reverse("games"))
+    assert response.status_code == 200
+    assert "Coastal Carolina" in str(response.content)
+    assert "Miami" not in str(response.content)
+
+
+@pytest.mark.django_db
 def test_games_list_page_does_not_render_past_games(client, teams, games, scoreboard):
     response = client.get(reverse("games"))
     assert response.status_code == 200

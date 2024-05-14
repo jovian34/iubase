@@ -72,6 +72,12 @@ def games(client, teams):
         neutral_site=True,
         first_pitch=(timezone.now() + timedelta(days=3)),
     )
+    iu_mo_rain = Game.objects.create(
+        home_team=teams.indiana,
+        away_team=teams.miami_oh,
+        neutral_site=False,
+        first_pitch=(timezone.now() + timedelta(days=-315)),
+    )
     iu_mo = Game.objects.create(
         home_team=teams.indiana,
         away_team=teams.miami_oh,
@@ -97,13 +103,14 @@ def games(client, teams):
         first_pitch=(timezone.now() - timedelta(days=302)),
     )
     GameObj = namedtuple(
-        "GameObj", "iu_duke iu_coastal iu_gm iu_mo iu_uk_mon iu_uk_sun iu_uk_sat"
+        "GameObj", "iu_duke iu_coastal iu_gm iu_mo iu_mo_rain iu_uk_mon iu_uk_sun iu_uk_sat"
     )
     return GameObj(
         iu_duke=iu_duke,
         iu_coastal=iu_coastal,
         iu_gm=iu_gm,
         iu_mo=iu_mo,
+        iu_mo_rain=iu_mo_rain,
         iu_uk_mon=iu_uk_mon,
         iu_uk_sun=iu_uk_sun,
         iu_uk_sat=iu_uk_sat,
@@ -125,6 +132,20 @@ def scoreboard(client, games, user_not_logged_in):
         away_hits=10,
         home_errors=1,
         away_errors=1,
+    )
+    score_miami_rain = Scoreboard.objects.create(
+        game=games.iu_mo_rain,
+        scorekeeper=user_not_logged_in,
+        game_status="cancelled",
+        inning_num=3,
+        inning_part="Bottom",
+        outs=3,
+        home_runs=6,
+        away_runs=16,
+        home_hits=12,
+        away_hits=14,
+        home_errors=1,
+        away_errors=0,
     )
     score_uk_sun = Scoreboard.objects.create(
         game=games.iu_uk_sun,
@@ -158,10 +179,11 @@ def scoreboard(client, games, user_not_logged_in):
         game=games.iu_duke, scorekeeper=user_not_logged_in, game_status="pre-game"
     )
     ScoreboardObj = namedtuple(
-        "ScoreboardObj", "score_uk_mon, score_uk_sun, score_uk_sat score_duke"
+        "ScoreboardObj", "score_uk_mon, score_miami_rain, score_uk_sun, score_uk_sat score_duke"
     )
     return ScoreboardObj(
         score_uk_mon=score_uk_mon,
+        score_miami_rain=score_miami_rain,
         score_uk_sun=score_uk_sun,
         score_uk_sat=score_uk_sat,
         score_duke=score_duke,

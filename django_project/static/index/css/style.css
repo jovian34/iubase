@@ -17,7 +17,7 @@ body {
 }
 
 p, button {
-  font-size: 24px;
+  font-size: 18px;
   font-family: "Recursive", sans-serif;
 }
 
@@ -32,17 +32,17 @@ button {
 
 h1 {
   font-family: "Mochiy Pop One", sans-serif;
-  font-size: 36px;
+  font-size: 32px;
 }
 
 h2 {
   font-family: "Mochiy Pop One", sans-serif;
-  font-size: 32px;
+  font-size: 28px;
 }
 
 h3 {
   font-family: "Mochiy Pop One", sans-serif;
-  font-size: 28px;
+  font-size: 24px;
 }
 
 .quote {

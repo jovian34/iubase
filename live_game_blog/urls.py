@@ -24,4 +24,9 @@ urlpatterns = [
         views.add_blog_plus_scoreboard,
         name="add_blog_plus_scoreboard",
     ),
+    path(
+        "edit_blog_entry/<entry_pk>/",
+        views.edit_blog_entry,
+        name="edit_blog_entry",
+    ),
 ]

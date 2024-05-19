@@ -146,6 +146,21 @@ def test_add_blog_entry_only_x_embed_post_form(
     assert "<li>Adding to the Duke Blog" in str(response.content)
     assert "entry by @iubase17" in str(response.content)
 
+@pytest.mark.django_db
+def test_edit_blog_entry_adds_text(
+    client, logged_user_schwarbs, games, blog_entries
+):
+    response = client.post(
+        reverse("edit_blog_entry", args=[blog_entries.blog_uk_mon_y.pk]),
+        {
+            "blog_entry": "Ty had a great 2nd inning",
+        },
+        follow=True
+    )
+    assert response.status_code == 200
+    assert "Bothwell walks the first batter" not in str(response.content)
+    assert "Ty had a great 2nd inning" in str(response.content)
+
 
 @pytest.mark.django_db
 def test_add_team_and_confirm_team_is_selectable_for_add_game(

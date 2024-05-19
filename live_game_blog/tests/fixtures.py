@@ -192,6 +192,13 @@ def scoreboard(client, games, user_not_logged_in):
 
 @pytest.fixture
 def blog_entries(client, games, user_not_logged_in, scoreboard):
+    blog_uk_mon_y = BlogEntry.objects.create(
+        game=games.iu_uk_mon,
+        author=user_not_logged_in,
+        blog_time=games.iu_uk_mon.first_pitch + timedelta(minutes=10),
+        blog_entry="Bothwell walks the first batter",
+        include_scoreboard=False,
+    )
     blog_uk_mon_z = BlogEntry.objects.create(
         game=games.iu_uk_mon,
         author=user_not_logged_in,
@@ -202,8 +209,9 @@ def blog_entries(client, games, user_not_logged_in, scoreboard):
     )
     BlogEntryObj = namedtuple(
         "BlogEntryObj",
-        "blog_uk_mon_z",
+        "blog_uk_mon_y blog_uk_mon_z",
     )
     return BlogEntryObj(
+        blog_uk_mon_y=blog_uk_mon_y,
         blog_uk_mon_z=blog_uk_mon_z,
     )

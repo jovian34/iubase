@@ -140,5 +140,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.49"  # reduced font sizes display more team and game info ATP 2024-05-16
+project_version = "0.0.50"  # upgrade requirements ATP 2024-05-19
 os.environ.setdefault("PROJECT_VERSION", project_version)

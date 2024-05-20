@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
-from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from datetime import timedelta
 from django.db.models import Q
 
 from accounts.models import CustomUser
@@ -130,9 +128,6 @@ def add_blog_plus_scoreboard(request, game_pk):
         return redirect(reverse("edit_live_game_blog", args=[game_pk]))
     else:
         last_score = Scoreboard.objects.filter(game=game_pk).last()
-        game = Game.objects.get(pk=game_pk)
-        away = game.away_team.mascot
-        home = game.home_team.mascot
         inning = last_score.inning_num
         outs = last_score.outs
         part = last_score.inning_part

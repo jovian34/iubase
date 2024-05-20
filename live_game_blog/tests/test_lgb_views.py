@@ -163,6 +163,32 @@ def test_edit_blog_entry_adds_text(
 
 
 @pytest.mark.django_db
+def test_edit_blog_entry_changes_hit_to_error(
+    client, logged_user_schwarbs, games, blog_entries
+):
+    response = client.post(
+        reverse("edit_blog_entry", args=[blog_entries.blog_uk_mon_z.pk]),
+        {
+            "blog_entry": "Kentucky moves on to Super Regionals",
+            "game_status": "final",
+            "inning_num": "9",
+            "inning_part": "Top",
+            "outs": "3",
+            "home_runs": "4",
+            "away_runs": "2",
+            "home_hits": "7",
+            "away_hits": "10",
+            "home_errors": "1",
+            "away_errors": "2",
+        },
+        follow=True
+    )
+    assert response.status_code == 200
+    assert "8 hits" not in str(response.content)
+    assert "2 errors" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_add_team_and_confirm_team_is_selectable_for_add_game(
     client, logged_user_schwarbs
 ):

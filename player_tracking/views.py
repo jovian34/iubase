@@ -104,7 +104,6 @@ def add_roster_year(request, player_id):
 
         return redirect(reverse("player_rosters", args=[player_id]))
     else:
-        player = Player.objects.get(pk=player_id)
         form = AnnualRosterForm(
             initial={
                 "spring_year": timezone.now().year,

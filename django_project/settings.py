@@ -140,5 +140,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.53"  # LGB better auto-increment of inning number and part ATP 2024-05-20
+project_version = "0.0.53"  # PT added intitial transaction to new players ATP 2024-05-28
 os.environ.setdefault("PROJECT_VERSION", project_version)

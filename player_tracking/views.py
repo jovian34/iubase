@@ -55,6 +55,14 @@ def add_player(request):
                 clock=form.cleaned_data["clock"],                
             )
             add_player.save()
+            this_player = Player.objects.last()
+            add_initial_transaction = Transaction(
+                player=this_player,
+                trans_event=form.cleaned_data["trans_event"],
+                trans_date=form.cleaned_data["trans_date"],
+                citation=form.cleaned_data["citation"],
+            )
+            add_initial_transaction.save()
         return redirect(reverse("players"))
     else:
         form = NewPlayerForm(

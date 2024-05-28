@@ -35,7 +35,7 @@ class Player(models.Model):
 class Transaction(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     trans_event = models.CharField(choices=TRANSACTION_CHOICES, max_length=64)
-    trans_date = models.DateTimeField(db_default=Now())
+    trans_date = models.DateField(db_default=Now())
     citation = models.URLField(null=True, blank=True)
 
     def __str__(self) -> str:

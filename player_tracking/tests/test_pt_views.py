@@ -48,11 +48,15 @@ def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs):
             "height": [72],
             "weight": [170],
             "clock": [5],
+            "trans_event": ["Verbal Commitment from College"],
+            "trans_date": ["2021-06-15"],
+            "citation": ["https://d1baseball.com/transfers/2021-22-d1baseball-transfer-tracker/"]
         },
         follow=True,                      
     )
     assert response.status_code == 200
     assert "Phillip Glasser" in str(response.content)
+    # ******NEED TO TEST TRANSACTION STORED********
 
 
 @pytest.mark.django_db

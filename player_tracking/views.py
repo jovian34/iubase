@@ -63,7 +63,7 @@ def add_player(request):
                 citation=form.cleaned_data["citation"],
             )
             add_initial_transaction.save()
-        return redirect(reverse("players"))
+        return redirect(reverse("player_rosters", args=[this_player.pk]))
     else:
         form = NewPlayerForm(
             initial={
@@ -84,10 +84,12 @@ def add_player(request):
 def player_rosters(request, player_id):
     player = Player.objects.get(pk=player_id)
     rosters = AnnualRoster.objects.filter(player=player).order_by("-spring_year")
+    transactions = Transaction.objects.filter(player=player).order_by("-trans_date")
     context = {
         "player": player,
         "page_title": f"{player.first} {player.last} rosters",
         "rosters": rosters,
+        "transactions": transactions,
     }
     return render(request, "player_tracking/player_rosters.html", context)
 

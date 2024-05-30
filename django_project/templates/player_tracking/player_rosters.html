@@ -11,19 +11,35 @@
 {% block content %}
 <div class="column-3"></div>
 <div class="column-6">
-    <button hx-get="{% url "add_roster_year" player.pk %}" hx-target="#add_roster_year">add roster year</button>
+    <button hx-get="{% url "add_roster_year" player.pk %}" hx-target="#add_roster_or_transaction">add roster year</button>
     <ul>
     {% for roster in rosters%}
         <li><h2>{{roster.spring_year}} {{roster.team.team_name}} </h2>
             <p>{{roster.status}} - {{roster.primary_position}}</p></li>
             <hr>
     {% endfor %}
+    </ul>
+
+    <hr>
+    <h3>Transactions:</h3>
+
+    <ul>
+    {% for transaction in transactions%}
+        <li><p>{{transaction.trans_date}}: 
+            {% if transaction.citation %}
+                <a href="{{ transaction.citation }}">{{transaction.trans_event}}</a></p></li>
+            {% else %}
+                {{transaction.trans_event}}</p></li>
+            {% endif %}
+            <hr>
+    {% endfor %}
+    </ul>
 </div>
 
 <br clear="both">
 
 <div class="column-3"></div>
-<div class="column-6" id="add_roster_year">
+<div class="column-6" id="add_roster_or_transaction">
 
 </div>
 

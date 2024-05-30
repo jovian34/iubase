@@ -55,8 +55,9 @@ def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs):
         follow=True,                      
     )
     assert response.status_code == 200
-    assert "Phillip Glasser" in str(response.content)
-    # ******NEED TO TEST TRANSACTION STORED********
+    assert "Phillip Glasser rosters" in str(response.content)
+    assert "Verbal Commitment from College" in str(response.content)
+    assert "June 15, 2021:" in str(response.content)
 
 
 @pytest.mark.django_db

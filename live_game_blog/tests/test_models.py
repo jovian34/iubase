@@ -34,6 +34,11 @@ def test_games_stored_neutral_site(client, games):
 @pytest.mark.django_db
 def test_game_model_string_def(client, games):
     assert "Indiana at Kentucky" in str(games.iu_uk_mon)
+    
+
+@pytest.mark.django_db
+def test_game_model_string_def_neutral(client, games):
+    assert "George Mason vs. Indiana" in str(games.iu_gm)
 
 
 @pytest.mark.django_db

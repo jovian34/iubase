@@ -20,15 +20,29 @@ class Game(models.Model):
     home_team = models.ForeignKey(
         Team, on_delete=models.CASCADE, related_name="home_team_set"
     )
+    home_rank = models.IntegerField(null=True, blank=True)
+    home_seed = models.IntegerField(null=True, blank=True)
+    home_nat_seed = models.IntegerField(null=True, blank=True)
     away_team = models.ForeignKey(
         Team, on_delete=models.CASCADE, related_name="away_team_set"
     )
+    away_rank = models.IntegerField(null=True, blank=True)
+    away_seed = models.IntegerField(null=True, blank=True)
+    away_nat_seed = models.IntegerField(null=True, blank=True)
+
     neutral_site = models.BooleanField(db_default=False)
     live_stats = models.URLField(null=True, blank=True)
     first_pitch = models.DateTimeField(null=True, blank=True)
+    video = models.CharField(null=True, blank=True)
+    video_url = models.URLField(null=True, blank=True)
+    audio_primary = models.URLField(null=True, blank=True)
+    audio_student = models.URLField(null=True, blank=True)
 
     def __str__(self) -> str:
-        return f"{self.first_pitch:%Y-%m-%d %H:%m} {self.away_team.team_name} at {self.home_team.team_name}"
+        vs = "at"
+        if self.neutral_site:
+            vs = "vs."
+        return f"{self.first_pitch:%Y-%m-%d %H:%m} {self.away_team.team_name} {vs} {self.home_team.team_name}"
 
 
 class Scoreboard(models.Model):

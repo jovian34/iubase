@@ -86,6 +86,7 @@ def games(client, teams):
     )
     iu_uk_mon = Game.objects.create(
         home_team=teams.kentucky,
+        home_seed=1,
         away_team=teams.indiana,
         neutral_site=False,
         first_pitch=(timezone.now() - timedelta(days=300)),

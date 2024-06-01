@@ -225,6 +225,21 @@ def test_add_team_post_asks_for_login_when_not_logged_in(client):
 
 
 @pytest.mark.django_db
+def test_add_game_page_renders(client, logged_user_schwarbs):
+    response = client.get(reverse("add_game"))
+    assert response.status_code == 200
+    assert "Is this a neutral site or host is designated away?" in str(response.content)
+    assert "Away team D1Baseball.com national ranking" in str(response.content)
+    assert "Away team national tournament seed" in str(response.content)
+    assert "Home team tournament seed" in str(response.content)
+    assert "Live Stats Link" in str(response.content)
+    assert "Video Stream or TV provider" in str(response.content)
+    assert "Student Audio Link" in str(response.content)
+    assert "Date and Time of First Pitch YYYY-MM-DD-HHMM in ET military time" in str(response.content)
+    assert "Primary Audio Link" in str(response.content)
+    
+
+@pytest.mark.django_db
 def test_add_game(client, logged_user_schwarbs, teams, games, scoreboard):
     response = client.post(
         reverse("add_game"),

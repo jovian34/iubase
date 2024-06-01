@@ -28,25 +28,71 @@ class BlogEntryForm(forms.Form):
 
 
 class AddGameForm(forms.Form):
-    home_team = forms.ModelChoiceField(
-        queryset=Team.objects.all().order_by("team_name"),
-        label="Home Team",
-    )
-    away_team = forms.ModelChoiceField(
-        queryset=Team.objects.all().order_by("team_name"),
-        label="Away Team",
+    first_pitch = forms.DateTimeField(
+        input_formats=["%Y-%m-%d-%H%M"],
+        label="Date and Time of First Pitch YYYY-MM-DD-HHMM in ET military time",
     )
     neutral_site = forms.BooleanField(
         label="Is this a neutral site or host is designated away?", required=False
     )
+
+    home_team = forms.ModelChoiceField(
+        queryset=Team.objects.all().order_by("team_name"),
+        label="Home Team",
+    )
+    home_rank = forms.IntegerField(
+        label="Home team D1Baseball.com national ranking", 
+        required=False,
+    )
+    home_seed = forms.IntegerField(
+        label="Home team tournament seed",
+        required=False,
+    )
+    home_nat_seed = forms.IntegerField(
+        label="Home team national tournament seed",
+        required=False,
+    )
+
+    away_team = forms.ModelChoiceField(
+        queryset=Team.objects.all().order_by("team_name"),
+        label="Away Team",
+    )
+    away_rank = forms.IntegerField(
+        label="Away team D1Baseball.com national ranking", 
+        required=False,
+    )
+    away_seed = forms.IntegerField(
+        label="Away team tournament seed",
+        required=False,
+    )
+    away_nat_seed = forms.IntegerField(
+        label="Away team national tournament seed",
+        required=False,
+    )
+
     live_stats = forms.URLField(
         label="Live Stats Link",
         required=False,
         assume_scheme="https",  # remove argument for Django 6.0
     )
-    first_pitch = forms.DateTimeField(
-        input_formats=["%Y-%m-%d-%H%M"],
-        label="Date and Time of First Pitch YYYY-MM-DD-HHMM in military time",
+    video = forms.CharField(
+        label="Video Stream or TV provider",
+        required=False,
+    )
+    video_url = forms.URLField(
+        label="Video Stream or TV link",
+        required=False,
+        assume_scheme="https",  # remove argument for Django 6.0
+    )
+    audio_primary = forms.URLField(
+        label="Primary Audio Link",
+        required=False,
+        assume_scheme="https",  # remove argument for Django 6.0
+    )
+    audio_student = forms.URLField(
+        label="Student Audio Link",
+        required=False,
+        assume_scheme="https",  # remove argument for Django 6.0
     )
 
 

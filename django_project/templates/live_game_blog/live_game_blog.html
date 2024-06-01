@@ -12,14 +12,26 @@
 
 {% block header %}
     <h1>
+    {% if game.away_rank %}no. {{ game.away_rank }}{% endif %}
     {{ game.away_team }} {% if game.away_seed %}({{ game.away_seed }}-seed){% endif %}
-    (<a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a>)
+    {% if game.away_nat_seed %}(#{{ game.away_nat_seed }} National Seed){% endif %}
+    
     {% if game.neutral_site %}vs.{% else %}at{% endif %}
+    {% if game.home_rank %}no. {{ game.home_rank }}{% endif %}
     {{ game.home_team }} {% if game.home_seed %}({{ game.home_seed }}-seed){% endif %}
-    (<a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a>)
+    {% if game.home_nat_seed %}(#{{ game.home_nat_seed }} National Seed){% endif %}
     </h1>
 
-    <p>{{ game.first_pitch }} first pitch</p>
+    <p>{{ game.first_pitch }} first pitch |
+    {% if game.video and game.video_url %}video: <a href="{{ game.video_url }}">{{ game.video }}</a> |{% endif %}
+    {% if game.audio_primary %}<a href="{{ game.audio_primary }}">audio</a> |{% endif %}
+    {% if game.audio_student %}<a href="{{ game.audio_student }}">student audio</a> |{% endif %}
+    {% if game.live_stats %}<a href="{{ game.live_stats}}">live stats</a>{% endif %}
+    </p>
+
+    <p>{{ game.away_team }}: <a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a><p>
+    <p>{{ game.home_team }}: <a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a></p>
+
 {% endblock %}
 
 {% block content %}
@@ -80,7 +92,6 @@
             </div>
         {% endfor %}
         <br>
-        <h3><a href="{{ game.live_stats}}">Live Stats</a></h3>
     </div>
     
 </div>

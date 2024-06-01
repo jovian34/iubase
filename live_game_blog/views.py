@@ -227,11 +227,19 @@ def add_game(request):
         if form.is_valid():
             add_game = Game(
                 home_team=form.cleaned_data["home_team"],
+                home_rank=form.cleaned_data["home_rank"],
                 home_seed=form.cleaned_data["home_seed"],
+                home_nat_seed=form.cleaned_data["home_nat_seed"],
                 away_team=form.cleaned_data["away_team"],
+                away_rank=form.cleaned_data["away_rank"],
                 away_seed=form.cleaned_data["away_seed"],
+                away_nat_seed=form.cleaned_data["away_nat_seed"],
                 neutral_site=form.cleaned_data["neutral_site"],
                 live_stats=form.cleaned_data["live_stats"],
+                video=form.cleaned_data["video"],
+                video_url=form.cleaned_data["video_url"],
+                audio_primary=form.cleaned_data["audio_primary"],
+                audio_student=form.cleaned_data["audio_student"],
                 first_pitch=form.cleaned_data["first_pitch"],
             )
             add_game.save()

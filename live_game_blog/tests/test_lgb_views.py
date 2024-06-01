@@ -265,7 +265,9 @@ def test_add_tourney_game(client, logged_user_schwarbs, teams, games, scoreboard
         reverse("add_game"),
         {
             "home_team": [str(teams.kentucky.pk)],
+            "home_rank": ["20"],
             "home_seed": ["1"],
+            "home_nat_seed": ["14"],
             "away_team": [str(teams.indiana.pk)],
             "away_seed": ["3"],
             "live_stats": [
@@ -278,7 +280,9 @@ def test_add_tourney_game(client, logged_user_schwarbs, teams, games, scoreboard
     assert response.status_code == 200
     assert "Indiana (3-seed)" in str(response.content)
     assert "at" in str(response.content)
+    assert "no. 20" in str(response.content)
     assert "Kentucky (1-seed)" in str(response.content)
+    assert "(#14 National Seed)" in str(response.content)
 
 
 @pytest.mark.django_db

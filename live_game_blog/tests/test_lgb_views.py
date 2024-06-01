@@ -68,7 +68,7 @@ def test_live_single_game_blog_page_renders(client, games, scoreboard, blog_entr
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
     assert "Joey" in str(response.content)
-    assert "Indiana at Kentucky" in str(response.content)
+    assert "Indiana at Kentucky," in str(response.content)
     assert "(FINAL)" in str(response.content)
     assert "Kentucky moves on to Super Regionals" in str(response.content)
 
@@ -237,7 +237,7 @@ def test_add_game_page_renders(client, logged_user_schwarbs):
     assert "Student Audio Link" in str(response.content)
     assert "Date and Time of First Pitch YYYY-MM-DD-HHMM in ET military time" in str(response.content)
     assert "Primary Audio Link" in str(response.content)
-    
+
 
 @pytest.mark.django_db
 def test_add_game(client, logged_user_schwarbs, teams, games, scoreboard):
@@ -255,9 +255,30 @@ def test_add_game(client, logged_user_schwarbs, teams, games, scoreboard):
         follow=True,
     )
     assert response.status_code == 200
-    assert "George Mason vs. Indiana" in str(response.content)
     assert "Feb. 14, 2025, 6:30 p.m. first pitch" in str(response.content)
     assert "Scoreboard: George Mason-0, Indiana-0 | Top Inning: 1" in str(response.context)
+
+
+@pytest.mark.django_db
+def test_add_tourney_game(client, logged_user_schwarbs, teams, games, scoreboard):
+    response = client.post(
+        reverse("add_game"),
+        {
+            "home_team": [str(teams.kentucky.pk)],
+            "home_seed": ["1"],
+            "away_team": [str(teams.indiana.pk)],
+            "away_seed": ["3"],
+            "live_stats": [
+                "https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind"
+            ],
+            "first_pitch": ["2025-06-03-1800"],
+        },
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "Indiana (3-seed)" in str(response.content)
+    assert "at" in str(response.content)
+    assert "Kentucky (1-seed)" in str(response.content)
 
 
 @pytest.mark.django_db

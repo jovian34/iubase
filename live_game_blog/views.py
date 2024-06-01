@@ -227,7 +227,9 @@ def add_game(request):
         if form.is_valid():
             add_game = Game(
                 home_team=form.cleaned_data["home_team"],
+                home_seed=form.cleaned_data["home_seed"],
                 away_team=form.cleaned_data["away_team"],
+                away_seed=form.cleaned_data["away_seed"],
                 neutral_site=form.cleaned_data["neutral_site"],
                 live_stats=form.cleaned_data["live_stats"],
                 first_pitch=form.cleaned_data["first_pitch"],

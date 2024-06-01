@@ -11,12 +11,14 @@
 {% endblock %}
 
 {% block header %}
-    <h1>{{ game.away_team }} 
-        (<a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a>)
-    {% if game.neutral_site %} vs. {% else %} at {% endif %}
-    {{ game.home_team }} 
-        (<a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a>)
+    <h1>
+    {{ game.away_team }} {% if game.away_seed %}({{ game.away_seed }}-seed){% endif %}
+    (<a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a>)
+    {% if game.neutral_site %}vs.{% else %}at{% endif %}
+    {{ game.home_team }} {% if game.home_seed %}({{ game.home_seed }}-seed){% endif %}
+    (<a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a>)
     </h1>
+
     <p>{{ game.first_pitch }} first pitch</p>
 {% endblock %}
 

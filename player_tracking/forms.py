@@ -44,6 +44,10 @@ class NewPlayerForm(forms.Form):
     )
     trans_date = forms.DateField(label="Transaction Date")
     citation = forms.CharField(label="Citation", required=False)
+    primary_position = forms.ChoiceField(
+        label="Primary Position",
+        choices=POSITION_CHOICES,
+    )
 
 
 class AnnualRosterForm(forms.Form):

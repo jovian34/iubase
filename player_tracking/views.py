@@ -61,6 +61,7 @@ def add_player(request):
                 trans_event=form.cleaned_data["trans_event"],
                 trans_date=form.cleaned_data["trans_date"],
                 citation=form.cleaned_data["citation"],
+                primary_position=form.cleaned_data["primary_position"],
             )
             add_initial_transaction.save()
         return redirect(reverse("player_rosters", args=[this_player.pk]))

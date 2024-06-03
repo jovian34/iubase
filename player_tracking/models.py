@@ -37,6 +37,7 @@ class Transaction(models.Model):
     trans_event = models.CharField(choices=TRANSACTION_CHOICES, max_length=64)
     trans_date = models.DateField(db_default=Now())
     citation = models.URLField(null=True, blank=True)
+    primary_position = models.CharField(null=True, blank=True, choices=POSITION_CHOICES)
 
     def __str__(self) -> str:
         return f"{self.player.first} {self.player.last} {self.trans_event} on {self.trans_date:%B %Y}"

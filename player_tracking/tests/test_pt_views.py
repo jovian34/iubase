@@ -50,6 +50,7 @@ def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs):
             "clock": [5],
             "trans_event": ["Verbal Commitment from College"],
             "trans_date": ["2021-06-15"],
+            "primary_position": ["Shortstop"],
             "citation": ["https://d1baseball.com/transfers/2021-22-d1baseball-transfer-tracker/"]
         },
         follow=True,                      

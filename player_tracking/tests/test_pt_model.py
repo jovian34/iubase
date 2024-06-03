@@ -1,7 +1,7 @@
 import pytest
 
 from datetime import datetime
-from player_tracking.tests.fixtures import players, transactions, annual_rosters
+from player_tracking.tests.fixtures import players, transactions, annual_rosters, mlb_draft_date
 from live_game_blog.tests.fixtures import teams
 
 
@@ -43,3 +43,8 @@ def test_annual_roster_model_stored_all_fields(client, annual_rosters, teams):
 @pytest.mark.django_db
 def test_annual_roster_model_string_def(client, annual_rosters, teams):
     assert str(annual_rosters.dt_2024) == "Devin Taylor 2024 - Fall Roster"
+
+
+@pytest.mark.django_db
+def test_mlb_draft_birthdate_string_def(client, mlb_draft_date):
+    assert str(mlb_draft_date.birth_2024) == "2024: Aug 1, 2003"

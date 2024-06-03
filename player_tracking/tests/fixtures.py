@@ -2,9 +2,9 @@ import pytest
 
 from collections import namedtuple
 from django.utils import timezone
-from datetime import datetime
+from datetime import datetime, date
 
-from player_tracking.models import Player, Transaction, AnnualRoster
+from player_tracking.models import Player, Transaction, AnnualRoster, MLBDraftDate
 from live_game_blog.models import Team
 from live_game_blog.tests.fixtures import teams
 
@@ -17,6 +17,7 @@ def players(client):
         first="Brayden",
         last="Risedorph",
         hsgrad_year=2022,
+        birthdate=date(2003, 7, 30),
         bats="right",
         throws="right",
     )
@@ -113,4 +114,19 @@ def annual_rosters(client, players, teams):
         nm_2023=nm_2023,
         nm_2024=nm_2024,
         br_2023=br_2023,
+    )
+
+
+@pytest.fixture
+def mlb_draft_date(client):
+    birth_2024 = MLBDraftDate.objects.create(
+        fall_year=2024,
+        latest_birthdate=date(2003, 8, 1)
+    )
+    MLBDraftDateObj = namedtuple(
+        "MLBDraftDateObj",
+        "birth_2024"
+    )
+    return MLBDraftDateObj(
+        birth_2024=birth_2024,
     )

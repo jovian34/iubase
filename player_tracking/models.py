@@ -62,3 +62,13 @@ class AnnualRoster(models.Model):
         return (
             f"{self.player.first} {self.player.last} {self.spring_year} - {self.status}"
         )
+
+
+class MLBDraftDate(models.Model):
+    fall_year = models.IntegerField(null=False)
+    latest_birthdate = models.DateField()
+
+    def __str__(self) -> str:
+        return (
+            f"{self.fall_year}: {self.latest_birthdate:%b %-d, %Y}"
+        )

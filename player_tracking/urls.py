@@ -10,6 +10,7 @@ urlpatterns = [
     path("fall_roster/<fall_year>/", views.fall_roster, name="fall_roster"),
     path("spring_roster/<spring_year>/", views.spring_roster, name="spring_roster"),
     path("add_player/", views.add_player, name="add_player"),
+    path("portal/<portal_year>/", views.portal, name="portal"),
 
     # partials
     path("add_roster_year/<player_id>/", views.add_roster_year, name="add_roster_year"),

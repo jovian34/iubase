@@ -31,32 +31,47 @@ def players(client):
         bats="left",
         throws="right",
     )
-    PlayerObj = namedtuple("PlayerOnj", "dt2022 br2022 aw2023 nm2021")
+    be2021 = Player.objects.create(
+        first="Brooks",
+        last="Ey",
+        hsgrad_year=2021,
+        bats="right",
+        throws="right",
+    )
+    PlayerObj = namedtuple("PlayerOnj", "dt2022 br2022 aw2023 nm2021 be2021")
     return PlayerObj(
         dt2022=dt2022,
         br2022=br2022,
         aw2023=aw2023,
         nm2021=nm2021,
+        be2021=be2021,
     )
 
 
 @pytest.fixture
 def transactions(client, players):
     current_tz = timezone.get_current_timezone()
+    current_dt = datetime.now()
     dt_verbal = Transaction.objects.create(
         player=players.dt2022,
-        trans_event="verbal",
+        trans_event="verbal", # need to aling with current choices
         trans_date=datetime(year=2021, month=3, day=11, hour=12, tzinfo=current_tz),
     )
     dt_nli = Transaction.objects.create(
         player=players.dt2022,
-        trans_event="nli",
+        trans_event="nli", # need to aling with current choices
         trans_date=datetime(year=2021, month=11, day=7, hour=12, tzinfo=current_tz),
     )
-    TransObj = namedtuple("TransObj", "dt_verbal dt_nli")
+    be_portal = Transaction.objects.create(
+        player=players.be2021,
+        trans_event="Entered Transfer Portal",
+        trans_date=date(current_dt.year, current_dt.month, current_dt.day)
+    )
+    TransObj = namedtuple("TransObj", "dt_verbal dt_nli be_portal")
     return TransObj(
         dt_verbal=dt_verbal,
         dt_nli=dt_nli,
+        be_portal=be_portal,
     )
 
 

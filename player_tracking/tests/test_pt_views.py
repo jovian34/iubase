@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 from django.utils import timezone
-from datetime import date
+from datetime import date, datetime
 
 from player_tracking.tests.fixtures import players, transactions, annual_rosters
 from live_game_blog.tests.fixtures import teams
@@ -250,9 +250,21 @@ def test_fall_roster_renders(client, players, teams, annual_rosters):
 @pytest.mark.django_db
 def test_spring_roster_renders(client, players, teams, annual_rosters):
     response = client.get(reverse("spring_roster", args=["2023"]))
-    print(response.content)
     assert response.status_code == 200
     assert "Total Roster Length: 2" in str(response.content)
     assert "Spring 2023 Roster" in str(response.content)
     assert "Nick Mitchell" not in str(response.content)
     assert "Devin Taylor" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_portal_page_renders(client, players, teams, annual_rosters, transactions):
+    current_dt = datetime.now()
+    response = client.get(reverse("portal", args=[str(current_dt.year)]))
+    assert response.status_code == 200
+    assert "Total Players in the Portal: 1"
+    assert "Brooks" in str(response.content)
+    assert "Brooks Ey" in str(response.content)
+    assert "Devin" not in str(response.content)
+
+

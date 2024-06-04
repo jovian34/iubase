@@ -21,7 +21,7 @@ def test_player_model_string_def(client, players):
 @pytest.mark.django_db
 def test_transaction_model_stored_all_fields(client, transactions):
     assert transactions.dt_verbal.player.last == "Taylor"
-    assert transactions.dt_nli.trans_event == "nli"
+    assert transactions.dt_nli.trans_event == "nli" # need to aling with current choices
     assert transactions.dt_nli.trans_date.year == 2021
 
 

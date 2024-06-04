@@ -215,3 +215,16 @@ def spring_roster(request, spring_year):
         "total": len(players),
     }
     return render(request, "player_tracking/roster.html", context)
+
+
+def portal(request, portal_year):
+    transactions = Transaction.objects.filter(
+        trans_event="Entered Transfer Portal",
+        trans_date__year=portal_year,
+    )
+    context = { 
+        "transactions": transactions,
+        "page_title": f"{portal_year} Transfer Portal",
+        "total": str(len(transactions)),
+    }
+    return render(request, "player_tracking/portal.html", context)

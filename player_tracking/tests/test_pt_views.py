@@ -188,6 +188,7 @@ def test_add_transaction_partial_post_adds_transaction(client, players, teams, a
     assert response.status_code == 200
     assert "Drafted" in str(response.content)
     assert "July 17" in str(response.content)
+    assert 'href="https://www.mlb.com/draft/tracker"'
 
 
 @pytest.mark.django_db

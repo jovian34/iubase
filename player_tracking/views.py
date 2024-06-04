@@ -29,6 +29,7 @@ def pt_index(request):
         "fall": current_fall,
         "spring": current_spring,
         "page_title": "Player Tracking",
+        "this_year": str(today.year),
     }
     return render(request, "player_tracking/pt_index.html", context)
 

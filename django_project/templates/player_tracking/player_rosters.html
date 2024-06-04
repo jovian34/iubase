@@ -28,7 +28,7 @@
     {% for transaction in transactions%}
         <li><p>{{transaction.trans_date}}: 
             {% if transaction.citation %}
-                <a href="{{ transaction.citation }}">{{transaction.trans_event}}</a></p></li>
+                <a target="_blank" href="{{ transaction.citation }}">{{transaction.trans_event}}</a></p></li>
             {% else %}
                 {{transaction.trans_event}}</p></li>
             {% endif %}

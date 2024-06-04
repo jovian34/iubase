@@ -60,3 +60,17 @@ class AnnualRosterForm(forms.Form):
     status = forms.ChoiceField(label="Eligibility Status", choices=STATUS_CHOICES)
     primary_position = forms.ChoiceField(label="Primary Fielding Position", choices=POSITION_CHOICES)
     secondary_position = forms.ChoiceField(label="Secondary Fielding Position", choices=POSITION_CHOICES, required=False)
+
+
+class TransactionForm(forms.Form):
+    trans_event = forms.ChoiceField(
+        label="Transaction Event",
+        choices=TRANSACTION_CHOICES,
+    )
+    trans_date = forms.DateField(label="Transaction Date")
+    citation = forms.CharField(label="Citation", required=False)
+    primary_position = forms.ChoiceField(
+        label="Primary Position",
+        choices=POSITION_CHOICES,
+        required=False,
+    )

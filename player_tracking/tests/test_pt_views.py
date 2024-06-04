@@ -1,6 +1,7 @@
 import pytest
 from django.urls import reverse
 from django.utils import timezone
+from datetime import date
 
 from player_tracking.tests.fixtures import players, transactions, annual_rosters
 from live_game_blog.tests.fixtures import teams
@@ -124,9 +125,30 @@ def test_add_roster_year_partial_get_renders_form_fields(client, players, teams,
 
 
 @pytest.mark.django_db
+def test_add_transaction_partial_get_renders_form_fields(client, players, teams, logged_user_schwarbs):
+    response = client.get(reverse(
+        "add_transaction",
+        args=[players.nm2021.pk],
+    ))
+    assert response.status_code == 200
+    assert "Transaction Event" in str(response.content)
+    assert "Transaction Date" in str(response.content)
+    assert str(timezone.now().year) in str(response.content)
+
+
+@pytest.mark.django_db
 def test_add_roster_year_partial_get_redirects_not_logged_in(client, players, teams):
     response = client.get(reverse(
         "add_roster_year",
+        args=[players.nm2021.pk],
+    ))
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_add_transaction_partial_get_redirects_not_logged_in(client, players, teams):
+    response = client.get(reverse(
+        "add_transaction",
         args=[players.nm2021.pk],
     ))
     assert response.status_code == 302
@@ -150,6 +172,22 @@ def test_add_roster_year_partial_post_adds_roster_year(client, players, teams, a
     assert "2024 Indiana" in str(response.content)
     assert "2023 Miami (Ohio)" in str(response.content)
     assert "2022 Duke" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_transaction_partial_post_adds_transaction(client, players, teams, annual_rosters, logged_user_schwarbs):
+    response = client.post(
+        reverse("add_transaction", args=[players.nm2021.pk]),
+        {
+            "trans_event": ["Drafted"],
+            "trans_date": [str(date(2024, 7, 17))],
+            "citation": ["https://www.mlb.com/draft/tracker"],
+        },
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "Drafted" in str(response.content)
+    assert "July 17" in str(response.content)
 
 
 @pytest.mark.django_db

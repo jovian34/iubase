@@ -22,6 +22,7 @@
 
     <hr>
     <h3>Transactions:</h3>
+    <button hx-get="{% url "add_transaction" player.pk %}" hx-target="#add_roster_or_transaction">add transaction</button>
 
     <ul>
     {% for transaction in transactions%}

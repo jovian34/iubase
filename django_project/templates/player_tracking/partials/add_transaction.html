@@ -1,0 +1,6 @@
+
+<form action="{% url "add_transaction" player_id  %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" value="Submit">Add Transaction</button>
+</form>

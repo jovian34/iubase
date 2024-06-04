@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from player_tracking.models import Player, Transaction, AnnualRoster
 from live_game_blog.models import Team
-from player_tracking.forms import AnnualRosterForm, NewPlayerForm
+from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm
 from player_tracking.choices import POSITION_CHOICES
 
 
@@ -128,6 +128,39 @@ def add_roster_year(request, player_id):
         return render(
             request, "player_tracking/partials/add_roster_year.html", context,
         )
+    
+@login_required
+def add_transaction(request, player_id):
+    if request.method == "POST":
+        form = TransactionForm(request.POST)
+        if form.is_valid():
+            add_transaction = Transaction.objects.create(
+                player=Player.objects.get(pk=player_id),
+                trans_event=form.cleaned_data["trans_event"],
+                trans_date=form.cleaned_data["trans_date"],
+                citation=form.cleaned_data["citation"],
+                primary_position=form.cleaned_data["primary_position"],
+            )
+            add_transaction.save()
+        else:
+            print("FORM IS NOT VALID")
+        return redirect(reverse("player_rosters", args=[player_id]))
+    else:
+        form = TransactionForm(
+            initial={
+                "trans_date": timezone.now().year,
+            },
+        )
+        context = {
+            "form": form,
+            "player_id": player_id,
+        }
+        return render(
+            request, "player_tracking/partials/add_transaction.html", context,
+        )
+
+
+
     
 
 def fall_depth_chart(request, fall_year):

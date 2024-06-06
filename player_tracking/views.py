@@ -52,8 +52,7 @@ def add_player(request):
                 bats=form.cleaned_data["bats"],
                 throws=form.cleaned_data["throws"],
                 height=form.cleaned_data["height"],
-                weight=form.cleaned_data["weight"],
-                clock=form.cleaned_data["clock"],                
+                weight=form.cleaned_data["weight"],              
             )
             add_player.save()
             this_player = Player.objects.last()
@@ -110,6 +109,7 @@ def add_roster_year(request, player_id):
                 primary_position=form.cleaned_data["primary_position"],
                 secondary_position=form.cleaned_data["secondary_position"]
             )
+            # process to increase clock
             add_roster.save()
         else:
             print("FORM IS NOT VALID")

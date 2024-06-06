@@ -36,7 +36,6 @@ class NewPlayerForm(forms.Form):
     )
     height = forms.IntegerField(label="height in Inches", required=False)
     weight = forms.IntegerField(label="Weight in Lbs.", required=False)
-    clock = forms.IntegerField(label="Years to complete eligibility - almost always 5")
     trans_event = forms.ChoiceField(
         label="Transaction",
         choices=TRANSACTION_CHOICES,

@@ -140,5 +140,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.63"  # PT removed Player clock and added last_spring ATP 2024-06-04
+project_version = "0.0.64"  # PT view to set last_spring ATP 2024-06-06
 os.environ.setdefault("PROJECT_VERSION", project_version)

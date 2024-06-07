@@ -217,7 +217,6 @@ def test_pt_index_renders(client):
 @pytest.mark.django_db
 def test_fall_depth_chart_renders(client, players, teams, annual_rosters):
     response = client.get(reverse("fall_depth_chart", args=["2023"]))
-    print(response.content)
     assert response.status_code == 200
     assert "Corner Outfield" in str(response.content)
     assert "Fall 2023 Available Depth Chart" in str(response.content)
@@ -227,7 +226,6 @@ def test_fall_depth_chart_renders(client, players, teams, annual_rosters):
 @pytest.mark.django_db
 def test_spring_depth_chart_renders(client, players, teams, annual_rosters):
     response = client.get(reverse("spring_depth_chart", args=["2023"]))
-    print(response.content)
     assert response.status_code == 200
     assert "Catcher" in str(response.context)
     assert "Spring 2023 Available Depth Chart" in str(response.content)
@@ -269,5 +267,7 @@ def test_portal_page_renders(client, players, teams, annual_rosters, transaction
 
 @pytest.mark.django_db
 def test_set_last_spring_produces_correct_values(client, players, annual_rosters, transactions, logged_user_schwarbs):
-    response = client.get(reverse("calc_last_spring"))
-    assert players.nm2021.last_spring == 2025
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
+    assert "Devin Taylor 2023-2026" in str(response.content)
+    assert "Brooks Ey 2022-2024" in str(response.content)

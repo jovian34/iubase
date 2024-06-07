@@ -259,4 +259,5 @@ def calc_last_spring(request):
                 total_years += 1
             roster_year += 1
         player.last_spring = player.hsgrad_year + total_years
-    return redirect(reverse("pt_index"))
+        player.save()
+    return redirect(reverse("players"))

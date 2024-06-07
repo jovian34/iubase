@@ -148,11 +148,12 @@ def annual_rosters(client, players, teams):
     )
     AnnualRosterObj = namedtuple(
         "AnnualRosterObj",
-        "dt_2023 dt_2024 nm_2023 nm_2024 br_2023"
+        "dt_2023 dt_2024 nm_2022 nm_2023 nm_2024 br_2023"
     )
     return AnnualRosterObj(
         dt_2023=dt_2023,
         dt_2024=dt_2024,
+        nm_2022=nm_2022,
         nm_2023=nm_2023,
         nm_2024=nm_2024,
         br_2023=br_2023,

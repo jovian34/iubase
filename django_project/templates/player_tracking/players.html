@@ -12,7 +12,7 @@
     <ul>
     {% for player in players%}
         <li>
-            <h2>{{player.first}} {{player.last}}</h2>
+            <h2>{{player.first}} {{player.last}} {{ player.hsgrad_year|add:"1" }}-{{ player.last_spring }}</h2>
             <p><a href="{% url "player_rosters" player.pk %}">List of Rosters</a></p>        
         </li>
     {% endfor %}

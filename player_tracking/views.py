@@ -6,7 +6,7 @@ from django.urls import reverse
 from player_tracking.models import Player, Transaction, AnnualRoster
 from live_game_blog.models import Team
 from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm
-from player_tracking.choices import POSITION_CHOICES, LEFT, JOINED, ROSTERED, GREY_SHIRT, RED_SHIRT
+from player_tracking.choices import POSITION_CHOICES, LEFT, JOINED, ROSTERED, GREY_SHIRT, RED_SHIRT, RED_SHIRT_PLUS_WAIVER
 
 
 def players(request):
@@ -259,6 +259,8 @@ def calc_last_spring(request):
             elif roster.status in RED_SHIRT and not red_shirt_used:
                 total_years += 1
                 red_shirt_used = True
+            elif roster.status in RED_SHIRT_PLUS_WAIVER:
+                total_years += 1
             roster_year += 1
             clock_started = True
         player.last_spring = player.hsgrad_year + total_years

@@ -266,19 +266,31 @@ def test_portal_page_renders(client, players, teams, annual_rosters, transaction
 
 
 @pytest.mark.django_db
-def test_set_last_spring_produces_correct_values(client, players, annual_rosters, transactions, logged_user_schwarbs):
+def test_set_last_spring_produces_correct_end_date_typical_case(client, players, annual_rosters, transactions, logged_user_schwarbs):
     response = client.get(reverse("calc_last_spring"), follow=True)
     assert response.status_code == 200
     assert "Devin Taylor 2023-2026" in str(response.content)
-    assert "Brooks Ey 2022-2024" in str(response.content)
-    assert "Jack Moffitt 2020-2024" in str(response.content)
 
 
 @pytest.mark.django_db
-def test_set_last_spring_limits_to_one_redshirt_year(client, players, annual_rosters, transactions, logged_user_schwarbs):
+def test_set_last_spring_ends_portal_entrant_immediately(client, players, annual_rosters, transactions, logged_user_schwarbs):
     response = client.get(reverse("calc_last_spring"), follow=True)
     assert response.status_code == 200
-    assert "Jack Moffitt 2020-2024" in str(response.content)
+    assert "Brooks Ey 2022-2024" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_set_last_spring_properly_limits_redshirt_years(client, players, annual_rosters, transactions, logged_user_schwarbs):
+    '''
+    Jack was rostered at "Duke" for four years, but was injured for the 
+    first three of those. In the fixture he is given a clock waiver in year two
+    This is often assigned retroactively by the NCAA
+    With this he would end in 2024. If the logic allowed more than one 
+    redshirt normally he would end in 2026.
+    '''    
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
+    assert "Jack Moffitt 2020-2025" in str(response.content)
 
 
 @pytest.mark.django_db

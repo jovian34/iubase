@@ -196,7 +196,7 @@ def annual_rosters(client, players, teams):
     )
     jm_2021 = AnnualRoster.objects.create(
         spring_year=2021,
-        status="On Spring Roster but did not play",
+        status="Redshirt with clock extension - Medical",
         player=players.jm2019,
         team=teams.duke,
         jersey=16,
@@ -212,7 +212,7 @@ def annual_rosters(client, players, teams):
     )      
     AnnualRosterObj = namedtuple(
         "AnnualRosterObj",
-        "dt_2023 dt_2024 nm_2022 nm_2023 nm_2024 br_2023"
+        "dt_2023 dt_2024 nm_2022 nm_2023 nm_2024 br_2023 jm2020 jm2021 jm2022 jm2023 jm2024"
     )
     return AnnualRosterObj(
         dt_2023=dt_2023,
@@ -221,6 +221,11 @@ def annual_rosters(client, players, teams):
         nm_2023=nm_2023,
         nm_2024=nm_2024,
         br_2023=br_2023,
+        jm2020=jm_2020,
+        jm2021=jm_2021,
+        jm2022=jm_2022,
+        jm2023=jm_2023,
+        jm2024=jm_2024,
     )
 
 

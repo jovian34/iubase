@@ -52,7 +52,13 @@ RED_SHIRT_TUPLES = [
     ("Replaced on Spring Roster - Medical", "Replaced on Spring Roster - Medical"),
 ]
 
-STATUS_CHOICES = ROSTERED_TUPLES + GREY_SHIRT_TUPLES + RED_SHIRT_TUPLES
+RED_SHIRT_PLUS_WAIVER_TUPLES = [
+    ("Redshirt with clock extension - Medical", "Redshirt with clock extension - Medical"),
+    ("Redshirt with clock extension - Other", "Redshirt with clock extension - Other"),
+]
+
+STATUS_CHOICES = ROSTERED_TUPLES + GREY_SHIRT_TUPLES + RED_SHIRT_TUPLES + RED_SHIRT_PLUS_WAIVER_TUPLES
 ROSTERED = [ rostered_tuple[0] for rostered_tuple in ROSTERED_TUPLES ]
 GREY_SHIRT = [ grey_shirt_tuple[0] for grey_shirt_tuple in GREY_SHIRT_TUPLES ]
 RED_SHIRT = [ red_shirt_tuple[0] for red_shirt_tuple in RED_SHIRT_TUPLES ]
+RED_SHIRT_PLUS_WAIVER = [ red_shirt_waiver_tuple[0] for red_shirt_waiver_tuple in RED_SHIRT_PLUS_WAIVER_TUPLES ]

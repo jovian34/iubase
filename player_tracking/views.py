@@ -64,7 +64,7 @@ def add_player(request):
                 primary_position=form.cleaned_data["primary_position"],
             )
             add_initial_transaction.save()
-        return redirect(reverse("player_rosters", args=[this_player.pk]))
+        return redirect(reverse("players"))
     else:
         form = NewPlayerForm(
             initial={

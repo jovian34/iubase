@@ -22,7 +22,11 @@ def players(client):
         throws="right",
     )
     aw2023 = Player.objects.create(
-        first="Andrew", last="Wiggings", hsgrad_year=2023, bats="left", throws="right"
+        first="Andrew", 
+        last="Wiggings", 
+        hsgrad_year=2023, 
+        bats="left", 
+        throws="right"
     )
     nm2021 = Player.objects.create(
         first="Nick",
@@ -38,13 +42,24 @@ def players(client):
         bats="right",
         throws="right",
     )
-    PlayerObj = namedtuple("PlayerOnj", "dt2022 br2022 aw2023 nm2021 be2021")
+    jm2019 = Player.objects.create(
+        first="Jack",
+        last="Moffitt",
+        hsgrad_year=2019,
+        bats="right",
+        throws="right",
+    )
+    PlayerObj = namedtuple(
+        "PlayerOnj", 
+        "dt2022 br2022 aw2023 nm2021 be2021 jm2019"
+    )
     return PlayerObj(
         dt2022=dt2022,
         br2022=br2022,
         aw2023=aw2023,
         nm2021=nm2021,
         be2021=be2021,
+        jm2019=jm2019,
     )
 
 
@@ -82,7 +97,15 @@ def transactions(client, players):
         trans_event="Entered Transfer Portal",
         trans_date=date(current_dt.year, current_dt.month, current_dt.day)
     )
-    TransObj = namedtuple("TransObj", "dt_verbal dt_nli be_portal br_nli nm_verbal aw_nli")
+    jm_verb_port = Transaction.objects.create(
+        player=players.jm2019,
+        trans_event="Verbal Commitment from College",
+        trans_date=date(2023, 7, 1)
+    )
+    TransObj = namedtuple(
+        "TransObj", 
+        "dt_verbal dt_nli be_portal br_nli nm_verbal aw_nli jm_verb_port"
+    )
     return TransObj(
         dt_verbal=dt_verbal,
         dt_nli=dt_nli,
@@ -90,6 +113,7 @@ def transactions(client, players):
         br_nli=br_nli,
         nm_verbal=nm_verbal,
         aw_nli=aw_nli,
+        jm_verb_port=jm_verb_port,
     )
 
 
@@ -146,6 +170,46 @@ def annual_rosters(client, players, teams):
         jersey=51,
         primary_position="Pitcher",
     )
+    jm_2024 = AnnualRoster.objects.create(
+        spring_year=2024,
+        status="Spring Roster",
+        player=players.jm2019,
+        team=teams.indiana,
+        jersey=16,
+        primary_position="Pitcher",
+    )
+    jm_2023 = AnnualRoster.objects.create(
+        spring_year=2023,
+        status="Spring Roster",
+        player=players.jm2019,
+        team=teams.duke,
+        jersey=16,
+        primary_position="Pitcher",
+    )
+    jm_2022 = AnnualRoster.objects.create(
+        spring_year=2022,
+        status="On Spring Roster but did not play",
+        player=players.jm2019,
+        team=teams.duke,
+        jersey=16,
+        primary_position="Pitcher",
+    )
+    jm_2021 = AnnualRoster.objects.create(
+        spring_year=2021,
+        status="On Spring Roster but did not play",
+        player=players.jm2019,
+        team=teams.duke,
+        jersey=16,
+        primary_position="Pitcher",
+    )
+    jm_2020 = AnnualRoster.objects.create(
+        spring_year=2020,
+        status="On Spring Roster but did not play",
+        player=players.jm2019,
+        team=teams.duke,
+        jersey=16,
+        primary_position="Pitcher",
+    )      
     AnnualRosterObj = namedtuple(
         "AnnualRosterObj",
         "dt_2023 dt_2024 nm_2022 nm_2023 nm_2024 br_2023"

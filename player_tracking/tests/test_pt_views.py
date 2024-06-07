@@ -238,7 +238,7 @@ def test_fall_roster_renders(client, players, teams, annual_rosters):
     response = client.get(reverse("fall_roster", args=["2023"]))
     print(response.content)
     assert response.status_code == 200
-    assert "Total Roster Length: 2" in str(response.content)
+    assert "Total Roster Length: 3" in str(response.content)
     assert "Fall 2023 Roster" in str(response.content)
     assert "Nick Mitchell" in str(response.content)
     assert "Brayden" not in str(response.content)
@@ -271,3 +271,18 @@ def test_set_last_spring_produces_correct_values(client, players, annual_rosters
     assert response.status_code == 200
     assert "Devin Taylor 2023-2026" in str(response.content)
     assert "Brooks Ey 2022-2024" in str(response.content)
+    assert "Jack Moffitt 2020-2024" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_set_last_spring_limits_to_one_redshirt_year(client, players, annual_rosters, transactions, logged_user_schwarbs):
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
+    assert "Jack Moffitt 2020-2024" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_set_last_spring_asks_for_password_not_logged_in(client, players, annual_rosters, transactions):
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
+    assert "Password" in str(response.content)

@@ -242,7 +242,8 @@ def calc_last_spring(request):
             player.last_spring = last_transaction.trans_date.year
             player.save()
             continue
-        clock_start = False
+        red_shirt_used = False
+        clock_started = False
         rosters = AnnualRoster.objects.filter(player=player).order_by("spring_year")
         if not rosters:
             player.last_spring = player.hsgrad_year + 4
@@ -250,14 +251,16 @@ def calc_last_spring(request):
         total_years = 4
         roster_year = player.hsgrad_year + 1
         for roster in rosters:
+            print(f"roster year {roster_year} for {player.first} {player.last}")
             if roster_year != roster.spring_year:
-                raise ValueError(f"missing {roster_year} for {player.first} {player.last}")
-            if not clock_start and roster.status in GREY_SHIRT:
+                raise ValueError(f"missing roster year {roster_year} for {player.first} {player.last}")
+            if not clock_started and roster.status in GREY_SHIRT:
                 total_years += 1
-            elif roster.status in RED_SHIRT:
-                clock_start = True
+            elif roster.status in RED_SHIRT and not red_shirt_used:
                 total_years += 1
+                red_shirt_used = True
             roster_year += 1
+            clock_started = True
         player.last_spring = player.hsgrad_year + total_years
         player.save()
     return redirect(reverse("players"))

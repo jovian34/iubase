@@ -26,7 +26,7 @@ class Player(models.Model):
     )
     height = models.IntegerField(null=True, blank=True)
     weight = models.IntegerField(null=True, blank=True)
-    last_spring = models.IntegerField(null=True)
+    last_spring = models.IntegerField(null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.first} {self.last} {self.hsgrad_year}"

@@ -11,12 +11,16 @@
     {% if user.is_authenticated %}
     <a href="{% url "add_player" %}"><button>Add Player</button></a>
     {% endif %}
+
+    <h3>Count of Players: {{ count }}</h3>
+
     <ul>
-    {% for player in players%}
+    {% for player in players %}
         <li>
             <h2>{{player.first}} {{player.last}} {{ player.hsgrad_year|add:"1" }}-{{ player.last_spring }}</h2>
             <p><a href="{% url "player_rosters" player.pk %}">List of Rosters</a></p>        
         </li>
     {% endfor %}
+    </ul>
 </div>
 {% endblock %}

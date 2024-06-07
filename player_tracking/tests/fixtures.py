@@ -49,9 +49,16 @@ def players(client):
         bats="right",
         throws="right",
     )
+    gh2024 = Player.objects.create(
+        first="Grant",
+        last="Hollister",
+        hsgrad_year=2024,
+        bats="left",
+        throws="right",
+    )
     PlayerObj = namedtuple(
         "PlayerOnj", 
-        "dt2022 br2022 aw2023 nm2021 be2021 jm2019"
+        "dt2022 br2022 aw2023 nm2021 be2021 jm2019 gh2024"
     )
     return PlayerObj(
         dt2022=dt2022,
@@ -60,6 +67,81 @@ def players(client):
         nm2021=nm2021,
         be2021=be2021,
         jm2019=jm2019,
+        gh2024=gh2024,
+    )
+
+
+@pytest.fixture
+def players_last_year_set(client):
+    dt2022 = Player.objects.create(
+        first="Devin",
+        last="Taylor",
+        hsgrad_year=2022,
+        last_spring=2026,
+        bats="left",
+        throws="left"
+    )
+    br2022 = Player.objects.create(
+        first="Brayden",
+        last="Risedorph",
+        hsgrad_year=2022,
+        last_spring=2026,
+        birthdate=date(2003, 7, 30),
+        bats="right",
+        throws="right",
+    )
+    aw2023 = Player.objects.create(
+        first="Andrew", 
+        last="Wiggings", 
+        hsgrad_year=2023,
+        last_spring=2027, 
+        bats="left", 
+        throws="right"
+    )
+    nm2021 = Player.objects.create(
+        first="Nick",
+        last="Mitchell",
+        hsgrad_year=2021,
+        last_spring=2025,
+        bats="left",
+        throws="right",
+    )
+    be2021 = Player.objects.create(
+        first="Brooks",
+        last="Ey",
+        hsgrad_year=2021,
+        last_spring=2024,
+        bats="right",
+        throws="right",
+    )
+    jm2019 = Player.objects.create(
+        first="Jack",
+        last="Moffitt",
+        hsgrad_year=2019,
+        last_spring=2025,
+        bats="right",
+        throws="right",
+    )
+    gh2024 = Player.objects.create(
+        first="Grant",
+        last="Hollister",
+        hsgrad_year=2024,
+        last_spring=2028,
+        bats="left",
+        throws="right",
+    )
+    PlayerObj = namedtuple(
+        "PlayerOnj", 
+        "dt2022 br2022 aw2023 nm2021 be2021 jm2019 gh2024"
+    )
+    return PlayerObj(
+        dt2022=dt2022,
+        br2022=br2022,
+        aw2023=aw2023,
+        nm2021=nm2021,
+        be2021=be2021,
+        jm2019=jm2019,
+        gh2024=gh2024,
     )
 
 
@@ -102,9 +184,14 @@ def transactions(client, players):
         trans_event="Verbal Commitment from College",
         trans_date=date(2023, 7, 1)
     )
+    gh_verbal = Transaction.objects.create(
+        player=players.gh2024,
+        trans_event = "Verbal Commitment from High School",
+        trans_date=date(year=2022, month=5, day=11),
+    )
     TransObj = namedtuple(
         "TransObj", 
-        "dt_verbal dt_nli be_portal br_nli nm_verbal aw_nli jm_verb_port"
+        "dt_verbal dt_nli be_portal br_nli nm_verbal aw_nli jm_verb_port gh_verbal"
     )
     return TransObj(
         dt_verbal=dt_verbal,
@@ -114,6 +201,7 @@ def transactions(client, players):
         nm_verbal=nm_verbal,
         aw_nli=aw_nli,
         jm_verb_port=jm_verb_port,
+        gh_verbal=gh_verbal,
     )
 
 

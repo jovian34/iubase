@@ -224,7 +224,7 @@ def test_fall_depth_chart_renders(client, players, teams, annual_rosters):
     assert "Brayden" not in str(response.content)
 
 @pytest.mark.django_db
-def test_spring_depth_chart_renders(client, players, teams, annual_rosters):
+def test_spring_depth_chart_renders_indiana_players(client, players, teams, annual_rosters):
     response = client.get(reverse("spring_depth_chart", args=["2023"]))
     assert response.status_code == 200
     assert "Catcher" in str(response.context)
@@ -241,6 +241,7 @@ def test_fall_roster_renders(client, players, teams, annual_rosters):
     assert "Total Roster Length: 3" in str(response.content)
     assert "Fall 2023 Roster" in str(response.content)
     assert "Nick Mitchell" in str(response.content)
+    assert "Jack Moffitt" in str(response.content)
     assert "Brayden" not in str(response.content)
 
 
@@ -260,7 +261,6 @@ def test_portal_page_renders(client, players, teams, annual_rosters, transaction
     response = client.get(reverse("portal", args=[str(current_dt.year)]))
     assert response.status_code == 200
     assert "Total Players in the Portal: 1"
-    assert "Brooks" in str(response.content)
     assert "Brooks Ey" in str(response.content)
     assert "Devin" not in str(response.content)
 
@@ -285,7 +285,7 @@ def test_set_last_spring_properly_limits_redshirt_years(client, players, annual_
     Jack was rostered at "Duke" for four years, but was injured for the 
     first three of those. In the fixture he is given a clock waiver in year two
     This is often assigned retroactively by the NCAA
-    With this he would end in 2024. If the logic allowed more than one 
+    Without this he would end in 2024. If the logic allowed more than one 
     redshirt normally he would end in 2026.
     '''    
     response = client.get(reverse("calc_last_spring"), follow=True)

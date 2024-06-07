@@ -260,6 +260,7 @@ def calc_last_spring(request):
                 red_shirt_used = True
             elif roster.status in RED_SHIRT_PLUS_WAIVER:
                 total_years += 1
+                red_shirt_used = True
             roster_year += 1
             clock_started = True
         player.last_spring = player.hsgrad_year + total_years

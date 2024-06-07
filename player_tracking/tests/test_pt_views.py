@@ -267,3 +267,7 @@ def test_portal_page_renders(client, players, teams, annual_rosters, transaction
     assert "Devin" not in str(response.content)
 
 
+@pytest.mark.django_db
+def test_set_last_spring_produces_correct_values(client, players, annual_rosters, transactions, logged_user_schwarbs):
+    response = client.get(reverse("calc_last_spring"))
+    assert players.nm2021.last_spring == 2025

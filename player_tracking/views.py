@@ -6,7 +6,7 @@ from django.urls import reverse
 from player_tracking.models import Player, Transaction, AnnualRoster
 from live_game_blog.models import Team
 from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm
-from player_tracking.choices import POSITION_CHOICES
+from player_tracking.choices import POSITION_CHOICES, LEFT, JOINED, ROSTERED, GREY_SHIRT, RED_SHIRT
 
 
 def players(request):
@@ -229,3 +229,34 @@ def portal(request, portal_year):
         "total": str(len(transactions)),
     }
     return render(request, "player_tracking/portal.html", context)
+
+
+@login_required
+def calc_last_spring(request):
+    players = Player.objects.all()
+    for player in players:
+        last_transaction = Transaction.objects.filter(player=player).order_by("-trans_date").first()
+        if not last_transaction:
+            raise ValueError(f"missing transaction for {player.first} {player.last}")
+        if last_transaction.trans_event in LEFT:
+            player.last_spring = last_transaction.trans_date.year
+            player.save()
+            continue
+        clock_start = False
+        rosters = AnnualRoster.objects.filter(player=player).order_by("spring_year")
+        if not rosters:
+            player.last_spring = player.hsgrad_year + 4
+            continue
+        total_years = 4
+        roster_year = player.hsgrad_year + 1
+        for roster in rosters:
+            if roster_year != roster.spring_year:
+                raise ValueError(f"missing {roster_year} for {player.first} {player.last}")
+            if not clock_start and roster.status in GREY_SHIRT:
+                total_years += 1
+            elif roster.status in RED_SHIRT:
+                clock_start = True
+                total_years += 1
+            roster_year += 1
+        player.last_spring = player.hsgrad_year + total_years
+    return redirect(reverse("pt_index"))

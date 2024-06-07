@@ -11,6 +11,7 @@ urlpatterns = [
     path("spring_roster/<spring_year>/", views.spring_roster, name="spring_roster"),
     path("add_player/", views.add_player, name="add_player"),
     path("portal/<portal_year>/", views.portal, name="portal"),
+    path("calc_last_spring", views.calc_last_spring, name="calc_last_spring"),
 
     # partials
     path("add_roster_year/<player_id>/", views.add_roster_year, name="add_roster_year"),

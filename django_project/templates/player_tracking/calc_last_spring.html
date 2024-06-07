@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+
+
+{% block content %}
+<div class="column-3"></div>
+<div class="column-6">
+    
+    <ul>
+    {% for error in errors %}
+        <li>
+            <p>{{ error }}</p>     
+        </li>
+    {% endfor %}
+
+    <ul>
+    {% for player in players %}
+        <li>
+            <h2>{{player.first}} {{player.last}} {{ player.hsgrad_year|add:"1" }}-{{ player.last_spring }}</h2>
+            <p><a href="{% url "player_rosters" player.pk %}">List of Rosters</a></p>        
+        </li>
+    {% endfor %}
+    </ul>
+
+    <h3>View <a href="{% url "players" %}">list of players</a></h3>
+</div>
+{% endblock %}

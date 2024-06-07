@@ -233,10 +233,11 @@ def portal(request, portal_year):
 @login_required
 def calc_last_spring(request):
     players = Player.objects.all()
+    errors = []
     for player in players:
         last_transaction = Transaction.objects.filter(player=player).order_by("-trans_date").first()
         if not last_transaction:
-            raise ValueError(f"missing transaction for {player.first} {player.last}")
+            errors.append(f"missing transaction for {player.first} {player.last}")
         if last_transaction.trans_event in LEFT:
             player.last_spring = last_transaction.trans_date.year
             player.save()
@@ -251,7 +252,7 @@ def calc_last_spring(request):
         roster_year = player.hsgrad_year + 1
         for roster in rosters:
             if roster_year != roster.spring_year:
-                raise ValueError(f"missing roster year {roster_year} for {player.first} {player.last}")
+                errors.append(f"missing roster year {roster_year} for {player.first} {player.last}")
             if not clock_started and roster.status in GREY_SHIRT:
                 total_years += 1
             elif roster.status in RED_SHIRT and not red_shirt_used:
@@ -264,7 +265,12 @@ def calc_last_spring(request):
             clock_started = True
         player.last_spring = player.hsgrad_year + total_years
         player.save()
-    return redirect(reverse("players"))
+    context = {
+        "players": players,
+        "errors": errors,
+        "page_title": "Errors From Last Spring Calculations",
+    }
+    return render(request, "player_tracking/calc_last_spring.html", context)
 
 
 def projected_players_fall(request, fall_year):
@@ -275,4 +281,4 @@ def projected_players_fall(request, fall_year):
         "page_title": f"Projected Fall Roster {fall_year}",
         "count": count,
     }
-    return render(request, "player_tracking/projected_players_fall.html", context)
+    return render(request, "player_tracking/calc_last_spring.html", context)

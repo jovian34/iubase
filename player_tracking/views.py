@@ -70,7 +70,6 @@ def add_player(request):
             initial={
                 "hsgrad_year": timezone.now().year,
                 "home_country": "USA",
-                "clock": 5,
             },
         )
         context = {

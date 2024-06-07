@@ -251,7 +251,6 @@ def calc_last_spring(request):
         total_years = 4
         roster_year = player.hsgrad_year + 1
         for roster in rosters:
-            print(f"roster year {roster_year} for {player.first} {player.last}")
             if roster_year != roster.spring_year:
                 raise ValueError(f"missing roster year {roster_year} for {player.first} {player.last}")
             if not clock_started and roster.status in GREY_SHIRT:

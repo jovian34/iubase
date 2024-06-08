@@ -10,11 +10,15 @@
 <div class="column-6">
     
     <ul>
+    {% if error %}
     {% for error in errors %}
         <li>
             <p>{{ error }}</p>     
         </li>
     {% endfor %}
+    {% else %}
+        <p>no errors recorded</p>
+    {% endif %}
 
     <ul>
     {% for player in players %}

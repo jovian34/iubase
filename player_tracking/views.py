@@ -235,18 +235,22 @@ def calc_last_spring(request):
     players = Player.objects.all()
     errors = []
     for player in players:
+        this_player = Player.objects.get(pk=player.pk)
         last_transaction = Transaction.objects.filter(player=player).order_by("-trans_date").first()
         if not last_transaction:
             errors.append(f"missing transaction for {player.first} {player.last}")
         if last_transaction.trans_event in LEFT:
-            player.last_spring = last_transaction.trans_date.year
-            player.save()
+            this_player.last_spring = last_transaction.trans_date.year
+            print(f"{this_player.last} has left the program")
+            this_player.save()
             continue
         red_shirt_used = False
         clock_started = False
         rosters = AnnualRoster.objects.filter(player=player).order_by("spring_year")
         if not rosters:
-            player.last_spring = player.hsgrad_year + 4
+            this_player.last_spring = player.hsgrad_year + 4
+            print(f"{this_player.last} is incoming")
+            this_player.save()
             continue
         total_years = 4
         roster_year = player.hsgrad_year + 1
@@ -263,10 +267,12 @@ def calc_last_spring(request):
                 red_shirt_used = True
             roster_year += 1
             clock_started = True
-        player.last_spring = player.hsgrad_year + total_years
-        player.save()
+        this_player.last_spring = player.hsgrad_year + total_years
+        print(f"{this_player.last} is returning")
+        this_player.save()
+    players_updated = Player.objects.all().order_by("last")
     context = {
-        "players": players,
+        "players": players_updated,
         "errors": errors,
         "page_title": "Errors From Last Spring Calculations",
     }

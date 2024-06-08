@@ -140,5 +140,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.67"  # PT make migration ATP 2024-06-08
+project_version = "0.0.68"  # PT fixed issue with setting last spring ATP 2024-06-08
 os.environ.setdefault("PROJECT_VERSION", project_version)

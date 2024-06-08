@@ -274,11 +274,11 @@ def calc_last_spring(request):
 
 
 def projected_players_fall(request, fall_year):
-    players = Player.objects.filter(last_spring__gte=(int(fall_year) + 1))
+    players = Player.objects.filter(last_spring__gte=(int(fall_year) + 1)).order_by("last")
     count = len(players)
     context = {
         "players": players,
         "page_title": f"Projected Fall Roster {fall_year}",
         "count": count,
     }
-    return render(request, "player_tracking/calc_last_spring.html", context)
+    return render(request, "player_tracking/projected_players_fall.html", context)

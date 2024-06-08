@@ -8,6 +8,7 @@ JOINED_TUPLES = [
     ("Verbal Commitment from High School", "Verbal Commitment from High School"),
     ("Verbal Commitment from College", "Verbal Commitment from College"),
     ("National Letter of Intent Signed", "National Letter of Intent Signed"),
+    ("Not Signing Professional Contract", "Not Signing Professional Contract"),
 ]
 
 LEFT_TUPLES = [
@@ -15,7 +16,6 @@ LEFT_TUPLES = [
     ("Entered Transfer Portal", "Entered Transfer Portal"),
     ("Verbal Commitment to Transfer College", "Verbal Commitment to Transfer College"),
     ("Drafted", "Drafted"),
-    ("Not Signing Professional Contract", "Not Signing Professional Contract"),
     ("Signed Professional Contract", "Signed Professional Contract"),
     ("No Longer With Program - Other Reason", "No Longer With Program - Other Reason"),
 ]

@@ -47,4 +47,4 @@ def test_annual_roster_model_string_def(client, annual_rosters, teams):
 
 @pytest.mark.django_db
 def test_mlb_draft_birthdate_string_def(client, mlb_draft_date):
-    assert str(mlb_draft_date.birth_2024) == "2024: Aug 1, 2003"
+    assert str(mlb_draft_date.draft_2024) == "2024: Aug 1, 2003"

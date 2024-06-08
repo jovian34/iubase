@@ -379,14 +379,16 @@ def annual_rosters(client, players, teams):
 
 @pytest.fixture
 def mlb_draft_date(client):
-    birth_2024 = MLBDraftDate.objects.create(
+    draft_2024 = MLBDraftDate.objects.create(
         fall_year=2024,
-        latest_birthdate=date(2003, 8, 1)
+        latest_birthdate=date(2003, 8, 1),
+        latest_draft_day=date(2024, 7, 16),
+        signing_deadline=date(2024, 7, 25),
     )
     MLBDraftDateObj = namedtuple(
         "MLBDraftDateObj",
-        "birth_2024"
+        "draft_2024"
     )
     return MLBDraftDateObj(
-        birth_2024=birth_2024,
+        draft_2024=draft_2024,
     )

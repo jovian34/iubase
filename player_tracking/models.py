@@ -68,6 +68,8 @@ class AnnualRoster(models.Model):
 class MLBDraftDate(models.Model):
     fall_year = models.IntegerField(null=False)
     latest_birthdate = models.DateField()
+    latest_draft_day = models.DateField()
+    signing_deadline = models.DateField()
 
     def __str__(self) -> str:
         return (

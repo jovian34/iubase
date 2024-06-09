@@ -283,7 +283,12 @@ def calc_last_spring(request):
 
 def projected_players_fall(request, fall_year):
     players = Player.objects.filter(last_spring__gte=(int(fall_year) + 1)).order_by("last")
-    draft_date = MLBDraftDate.objects.get(fall_year=fall_year)
+    
+    try:
+        draft_date = MLBDraftDate.objects.get(fall_year=fall_year)
+    except MLBDraftDate.DoesNotExist:
+        return redirect("pt_index")
+
     draft_pending = True
     if draft_date.latest_draft_day < datetime.now().date():
         draft_pending = False

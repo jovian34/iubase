@@ -311,7 +311,7 @@ def projected_players_fall(request, fall_year):
     count = len(players)
     context = {
         "players": players,
-        "page_title": f"Projected Fall Roster {fall_year}",
+        "page_title": f"Projected Players For Fall {fall_year}",
         "count": count,
     }
     return render(request, "player_tracking/projected_players_fall.html", context)

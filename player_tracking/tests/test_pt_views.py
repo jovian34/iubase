@@ -305,7 +305,7 @@ def test_set_last_spring_asks_for_password_not_logged_in(client, players, annual
 def test_projected_roster_renders_current_players(client, players_last_year_set, trans_ly_set, mlb_draft_date):
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
-    assert "Projected Fall Roster 2024" in str(response.content)
+    assert "Projected Players For Fall 2024" in str(response.content)
     assert "Devin Taylor" in str(response.content)
 
 

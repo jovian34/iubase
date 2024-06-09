@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils import timezone
 from datetime import date, datetime
 
-from player_tracking.tests.fixtures import players, players_last_year_set, transactions, trans_ly_set, annual_rosters
+from player_tracking.tests.fixtures import players, players_last_year_set, transactions, trans_ly_set, annual_rosters, mlb_draft_date
 from live_game_blog.tests.fixtures import teams
 
 from accounts.models import CustomUser
@@ -302,7 +302,7 @@ def test_set_last_spring_asks_for_password_not_logged_in(client, players, annual
 
 
 @pytest.mark.django_db
-def test_projected_roster_renders_current_players(client, players_last_year_set, trans_ly_set):
+def test_projected_roster_renders_current_players(client, players_last_year_set, trans_ly_set, mlb_draft_date):
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
     assert "Projected Fall Roster 2024" in str(response.content)
@@ -310,14 +310,14 @@ def test_projected_roster_renders_current_players(client, players_last_year_set,
 
 
 @pytest.mark.django_db
-def test_projected_roster_excludes_transfer_portal_entrants(client, players_last_year_set, trans_ly_set):
+def test_projected_roster_excludes_transfer_portal_entrants(client, players_last_year_set, trans_ly_set, mlb_draft_date):
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
     assert "Brooks Ey" not in str(response.content)
 
 
 @pytest.mark.django_db
-def test_projected_roster_includes_high_school_commit(client, players_last_year_set, trans_ly_set):
+def test_projected_roster_includes_high_school_commit(client, players_last_year_set, trans_ly_set, mlb_draft_date):
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
     assert "Grant Hollister" in str(response.content)

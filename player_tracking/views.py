@@ -3,7 +3,9 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from player_tracking.models import Player, Transaction, AnnualRoster
+from datetime import date, datetime
+
+from player_tracking.models import Player, Transaction, AnnualRoster, MLBDraftDate
 from live_game_blog.models import Team
 from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm
 from player_tracking.choices import POSITION_CHOICES, LEFT, JOINED, ROSTERED, GREY_SHIRT, RED_SHIRT, RED_SHIRT_PLUS_WAIVER
@@ -281,6 +283,31 @@ def calc_last_spring(request):
 
 def projected_players_fall(request, fall_year):
     players = Player.objects.filter(last_spring__gte=(int(fall_year) + 1)).order_by("last")
+    draft_date = MLBDraftDate.objects.get(fall_year=fall_year)
+    draft_pending = True
+    if draft_date.latest_draft_day < datetime.now().date():
+        draft_pending = False
+    for player in players:
+        roster = AnnualRoster.objects.filter(player=player, spring_year=fall_year).first()
+        if roster:         
+            if player.birthdate:
+                if player.birthdate <= draft_date.latest_birthdate and draft_pending:
+                    player.draft = f"*{fall_year} MLB Draft Eligible"
+            player.position = roster.primary_position
+            if roster.team.mascot == "Hoosiers":
+                player.group = "Returning"
+            else:
+                player.group = "Transfer"
+        else:
+            player.group = "Freshman"
+            if draft_pending:
+                player.draft = f"*{fall_year} MLB Draft Eligible from High School"
+            sep1 = date(int(fall_year), 9, 1)     
+            transactions = Transaction.objects.filter(player=player, trans_date__lte=sep1).order_by("-trans_date")
+            for transaction in transactions:
+                if transaction.primary_position:
+                    player.position = transaction.primary_position
+                    continue
     count = len(players)
     context = {
         "players": players,

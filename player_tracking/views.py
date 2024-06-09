@@ -293,6 +293,9 @@ def projected_players_fall(request, fall_year):
     if draft_date.latest_draft_day < datetime.now().date():
         draft_pending = False
     for player in players:
+        roster_draft = AnnualRoster.objects.filter(player=player)
+        if len(roster_draft) > 2 and draft_pending:
+            player.draft = f"*{fall_year} MLB Draft Eligible"
         roster = AnnualRoster.objects.filter(player=player, spring_year=fall_year).first()
         if roster:         
             if player.birthdate:

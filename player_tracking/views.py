@@ -220,14 +220,20 @@ def spring_roster(request, spring_year):
 
 
 def portal(request, portal_year):
-    transactions = Transaction.objects.filter(
+    outgoing = Transaction.objects.filter(
         trans_event="Entered Transfer Portal",
         trans_date__year=portal_year,
     )
+    incoming = Transaction.objects.filter(
+        trans_event="Verbal Commitment from College",
+        trans_date__year=portal_year,
+    )
     context = { 
-        "transactions": transactions,
+        "outgoing": outgoing,
+        "incoming": incoming,
         "page_title": f"{portal_year} Transfer Portal",
-        "total": str(len(transactions)),
+        "total_out": str(len(outgoing)),
+        "total_in": str(len(incoming)),
     }
     return render(request, "player_tracking/portal.html", context)
 

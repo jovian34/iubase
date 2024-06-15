@@ -263,11 +263,14 @@ def calc_last_spring(request):
         total_years = 4
         roster_year = player.hsgrad_year + 1
         for roster in rosters:
+            redshirt_clock = False
+            if roster.status in RED_SHIRT or roster.status in GREY_SHIRT:
+                redshirt_clock = True
             if roster_year != roster.spring_year:
                 errors.append(f"missing roster year {roster_year} for {player.first} {player.last}")
             if not clock_started and roster.status in GREY_SHIRT:
                 total_years += 1
-            elif roster.status in RED_SHIRT and not red_shirt_used:
+            elif redshirt_clock and not red_shirt_used:
                 total_years += 1
                 red_shirt_used = True
             elif roster.status in RED_SHIRT_PLUS_WAIVER:

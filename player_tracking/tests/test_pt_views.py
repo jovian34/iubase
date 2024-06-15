@@ -265,10 +265,21 @@ def test_portal_page_renders(client, players, teams, annual_rosters, transaction
 
 @pytest.mark.django_db
 def test_set_last_spring_produces_correct_end_date_typical_case(client, players, annual_rosters, transactions, logged_user_schwarbs):
+    response = client.get(reverse("players"), follow=True)
+    assert "Devin Taylor 2023-None" in str(response.content)
     response = client.get(reverse("calc_last_spring"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
     assert "Devin Taylor 2023-2026" in str(response.content)
+
+@pytest.mark.django_db
+def test_set_last_spring_produces_correct_end_date_redshirt_transfer(client, players, annual_rosters, transactions, logged_user_schwarbs):
+    response = client.get(reverse("players"), follow=True)
+    assert "Cole Gilley 2021-None" in str(response.content)
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("players"), follow=True)
+    assert "Cole Gilley 2021-2025" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -287,7 +298,9 @@ def test_set_last_spring_properly_limits_redshirt_years(client, players, annual_
     This is often assigned retroactively by the NCAA
     Without this he would end in 2024. If the logic allowed more than one 
     redshirt normally he would end in 2026.
-    '''    
+    '''
+    response = client.get(reverse("players"), follow=True)
+    assert "Jack Moffitt 2020-None" in str(response.content)
     response = client.get(reverse("calc_last_spring"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
@@ -321,3 +334,10 @@ def test_projected_roster_includes_high_school_commit(client, players_last_year_
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
     assert "Grant Hollister" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_projected_roster_includes_transfer_commit(client, players_last_year_set, trans_ly_set, mlb_draft_date):
+    response = client.get(reverse("projected_players_fall", args=["2024"]))
+    assert response.status_code == 200
+    assert "Cole Gilley" in str(response.content)

@@ -13,11 +13,13 @@
 
     <ul>
     {% for player in players %}
+        {% if player.combine %}
         <li>
             <h2><a href="{% url "player_rosters" player.pk %}">{{player.first}} {{player.last}}</a></h2>
             <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p>        
         </li>
         <hr>
+        {% endif %}
     {% endfor %}
     </ul>
 </div>

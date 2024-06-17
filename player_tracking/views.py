@@ -341,19 +341,23 @@ def draft_combine_attendees(request):
     draft_date = draft_date.latest_draft_day
     if draft_date < today:
         return redirect("pt_index")
+    
+    count = 0
     players = Player.objects.all().order_by("last")
-    combine_players = []
     for player in players:
-        last_transaction = Transaction.objects.last()
+        last_transaction = Transaction.objects.filter(player=player).last()
         if player.hsgrad_year == this_year:
             player.group = "Freshman"
         else:
             player.group = "College"
+        
+        player.combine = False
         if last_transaction.trans_event == "Attending MLB Draft Combine":
-            combine_players.append(player)
-    count = len(combine_players)
+            player.combine = True
+            count += 1
+
     context = {
-        "players": combine_players,
+        "players": players,
         "page_title": f"All players in the {this_year} MLB Draft Combine",
         "count": count,
     }

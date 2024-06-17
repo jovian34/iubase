@@ -12,6 +12,7 @@ urlpatterns = [
     path("add_player/", views.add_player, name="add_player"),
     path("portal/<portal_year>/", views.portal, name="portal"),
     path("calc_last_spring/", views.calc_last_spring, name="calc_last_spring"),
+    path("draft_combine_attendees/", views.draft_combine_attendees, name="draft_combine_attendees"),
     path("projected_players_fall/<fall_year>/", views.projected_players_fall, name="projected_players_fall"),
 
     # partials

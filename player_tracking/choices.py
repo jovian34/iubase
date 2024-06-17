@@ -8,6 +8,7 @@ JOINED_TUPLES = [
     ("Verbal Commitment from High School", "Verbal Commitment from High School"),
     ("Verbal Commitment from College", "Verbal Commitment from College"),
     ("National Letter of Intent Signed", "National Letter of Intent Signed"),
+    ("Not Drafted", "Not Drafted"),
     ("Not Signing Professional Contract", "Not Signing Professional Contract"),
 ]
 
@@ -15,6 +16,7 @@ LEFT_TUPLES = [
     ("Decommit", "Decommit"),
     ("Entered Transfer Portal", "Entered Transfer Portal"),
     ("Verbal Commitment to Transfer College", "Verbal Commitment to Transfer College"),
+    ("Attending MLB Draft Combine", "Attending MLB Draft Combine"),
     ("Drafted", "Drafted"),
     ("Signed Professional Contract", "Signed Professional Contract"),
     ("No Longer With Program - Other Reason", "No Longer With Program - Other Reason"),

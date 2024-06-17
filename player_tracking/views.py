@@ -332,3 +332,29 @@ def projected_players_fall(request, fall_year):
         "count": count,
     }
     return render(request, "player_tracking/projected_players_fall.html", context)
+
+
+def draft_combine_attendees(request):
+    today = datetime.now().date()
+    this_year = today.year
+    draft_date = MLBDraftDate.objects.get(fall_year=this_year)
+    draft_date = draft_date.latest_draft_day
+    if draft_date < today:
+        return redirect("pt_index")
+    players = Player.objects.all().order_by("last")
+    combine_players = []
+    for player in players:
+        last_transaction = Transaction.objects.last()
+        if player.hsgrad_year == this_year:
+            player.group = "Freshman"
+        else:
+            player.group = "College"
+        if last_transaction.trans_event == "Attending MLB Draft Combine":
+            combine_players.append(player)
+    count = len(combine_players)
+    context = {
+        "players": combine_players,
+        "page_title": f"All players in the {this_year} MLB Draft Combine",
+        "count": count,
+    }
+    return render(request, "player_tracking/draft_combine_attendees.html", context)

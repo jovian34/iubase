@@ -3,7 +3,12 @@ from django.urls import reverse
 from django.utils import timezone
 from datetime import date, datetime
 
-from player_tracking.tests.fixtures import players, players_last_year_set, transactions, trans_ly_set, annual_rosters, mlb_draft_date
+from player_tracking.tests.fixtures.annual_rosters import annual_rosters
+from player_tracking.tests.fixtures.mlb_draft_date import mlb_draft_date
+from player_tracking.tests.fixtures.players_ly import players_last_year_set
+from player_tracking.tests.fixtures.players import players
+from player_tracking.tests.fixtures.transactions import transactions
+from player_tracking.tests.fixtures.transactions_ly import trans_ly_set
 from live_game_blog.tests.fixtures import teams
 
 from accounts.models import CustomUser

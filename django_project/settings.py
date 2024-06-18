@@ -140,5 +140,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.73"  # BASE point HTMX to 2.0 CDN ATP 2024-06-18
+project_version = "0.0.73"  # PT expanded test fixtures into a package ATP 2024-06-18
 os.environ.setdefault("PROJECT_VERSION", project_version)

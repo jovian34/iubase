@@ -1,7 +1,10 @@
 import pytest
 
 from datetime import datetime
-from player_tracking.tests.fixtures import players, transactions, annual_rosters, mlb_draft_date
+from player_tracking.tests.fixtures.players import players
+from player_tracking.tests.fixtures.transactions import transactions
+from player_tracking.tests.fixtures.annual_rosters import annual_rosters
+from player_tracking.tests.fixtures.mlb_draft_date import mlb_draft_date
 from live_game_blog.tests.fixtures import teams
 
 

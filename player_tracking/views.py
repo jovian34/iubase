@@ -334,13 +334,9 @@ def projected_players_fall(request, fall_year):
     return render(request, "player_tracking/projected_players_fall.html", context)
 
 
-def draft_combine_attendees(request):
-    today = datetime.now().date()
-    this_year = today.year
+def draft_combine_attendees(request, this_year):
     draft_date = MLBDraftDate.objects.get(fall_year=this_year)
     draft_date = draft_date.latest_draft_day
-    if draft_date < today:
-        return redirect("pt_index")
     
     count = 0
     players = Player.objects.all().order_by("last")

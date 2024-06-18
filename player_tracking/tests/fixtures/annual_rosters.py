@@ -154,3 +154,5 @@ def annual_rosters(client, players, teams):
         cg_2023=cg_2023,
         cg_2024=cg_2024,
     )
+
+

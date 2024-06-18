@@ -24,12 +24,17 @@ def trans_ly_set(client, players_last_year_set):
     br_nli = Transaction.objects.create(
         player=players_last_year_set.br2022,
         trans_event="National Letter of Intent Signed",
-        trans_date=datetime(year=2021, month=11, day=7, hour=12, tzinfo=current_tz),
+        trans_date=date(year=2021, month=11, day=7),
     )
     nm_verbal = Transaction.objects.create(
         player=players_last_year_set.nm2021,
         trans_event="Verbal Commitment from College",
-        trans_date=datetime(year=2023, month=11, day=7, hour=12, tzinfo=current_tz),
+        trans_date=date(year=2023, month=11, day=7),
+    )
+    nm_combine = Transaction.objects.create(
+        player=players_last_year_set.nm2021,
+        trans_event="Attending MLB Draft Combine",
+        trans_date=date(year=2024, month=6, day=14),
     )
     aw_nli = Transaction.objects.create(
         player=players_last_year_set.aw2023,
@@ -58,13 +63,14 @@ def trans_ly_set(client, players_last_year_set):
     )
     TransObj = namedtuple(
         "TransObj", 
-        "dt_verbal dt_nli be_portal br_nli nm_verbal aw_nli jm_verb_port gh_verbal cg_port"
+        "dt_verbal dt_nli be_portal br_nli nm_verbal nm_combine aw_nli jm_verb_port gh_verbal cg_port"
     )
     return TransObj(
         dt_verbal=dt_verbal,
         dt_nli=dt_nli,
         be_portal=be_portal,
         nm_verbal=nm_verbal,
+        nm_combine=nm_combine,
         aw_nli=aw_nli,
         br_nli=br_nli,
         jm_verb_port=jm_verb_port,

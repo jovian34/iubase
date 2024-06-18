@@ -32,6 +32,11 @@ def transactions(client, players):
         trans_event="Verbal Commitment from College",
         trans_date=datetime(year=2023, month=11, day=7, hour=12, tzinfo=current_tz),
     )
+    nm_combine = Transaction.objects.create(
+        player=players.nm2021,
+        trans_event="Attending MLB Draft Combine",
+        trans_date=date(year=2024, month=6, day=14),
+    )
     aw_nli = Transaction.objects.create(
         player=players.aw2023,
         trans_event="National Letter of Intent Signed", # need to aling with current choices
@@ -59,7 +64,7 @@ def transactions(client, players):
     )
     TransObj = namedtuple(
         "TransObj", 
-        "dt_verbal dt_nli be_portal br_nli nm_verbal aw_nli jm_verb_port gh_verbal cg_port"
+        "dt_verbal dt_nli be_portal br_nli nm_verbal nm_combine aw_nli jm_verb_port gh_verbal cg_port"
     )
     return TransObj(
         dt_verbal=dt_verbal,
@@ -67,6 +72,7 @@ def transactions(client, players):
         be_portal=be_portal,
         br_nli=br_nli,
         nm_verbal=nm_verbal,
+        nm_combine=nm_combine,
         aw_nli=aw_nli,
         jm_verb_port=jm_verb_port,
         gh_verbal=gh_verbal,

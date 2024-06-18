@@ -48,7 +48,7 @@
         <p>Copyright &#169;{% this_year %} <a href="{% url 'index' %}">iubase.com</a></p>
           <hr>
           {% if user.is_authenticated %}
-          <p>Welcome, {{ user.first_name}}.
+          <p>Welcome, {{ user.first_name }}.
             You can <a href="{% url 'index' %}">add dynamic content</a> 
             or</p>
             <form method="post" action="{% url 'logout' %}">
@@ -62,7 +62,7 @@
     </footer>
 </div>
 
-<script src="{% static 'index/js/htmx.min.js' %}?{% cache_bust %}"></script>
+<script src="https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js"></script>
 
 </body>
 

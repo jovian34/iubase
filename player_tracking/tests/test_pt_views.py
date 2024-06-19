@@ -360,7 +360,7 @@ def test_non_existent_draft_year_redirects_to_index(client, players_last_year_se
 
 
 @pytest.mark.django_db
-def test_draft_combine_attendees_removed(client, players, transactions, annual_rosters, mlb_draft_date, logged_user_schwarbs):
+def test_draft_combine_attendees_set_to_current_last_year(client, players, transactions, annual_rosters, mlb_draft_date, logged_user_schwarbs):
     response = client.get(reverse("players"), follow=True)
     assert "Nick Mitchell 2022-None" in str(response.content)
     response = client.get(reverse("calc_last_spring"), follow=True)

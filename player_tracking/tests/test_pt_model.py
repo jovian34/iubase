@@ -66,4 +66,4 @@ def test_summer_team_string_def(client, summer_teams):
 
 @pytest.mark.django_db
 def test_summer_assign_string_def(client, summer_assign):
-    assert str(summer_assign.dt_gb_2023) == "Devin Taylor 2023 Green Bay"
+    assert str(summer_assign.dt_gb_2024) == "Devin Taylor 2024 Team USA"

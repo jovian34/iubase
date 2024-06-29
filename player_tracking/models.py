@@ -80,6 +80,7 @@ class MLBDraftDate(models.Model):
 
 class SummerLeague(models.Model):
     league = models.CharField(null=False, max_length=64)
+    url = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.league
@@ -88,6 +89,7 @@ class SummerLeague(models.Model):
 class SummerTeam(models.Model):
     name = models.CharField(null=False, max_length=64)
     mascot = models.CharField(null=False, max_length=64)
+    url = models.URLField(null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.name} {self.mascot}"
@@ -98,6 +100,7 @@ class SummerAssign(models.Model):
     summer_year = models.IntegerField(null=False)
     summer_league = models.ForeignKey(SummerLeague, on_delete=models.CASCADE)
     summer_team = models.ForeignKey(SummerTeam, on_delete=models.CASCADE)
+    citation = models.URLField(null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.player.first} {self.player.last} {self.summer_year} {self.summer_team.name}"

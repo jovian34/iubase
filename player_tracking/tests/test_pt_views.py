@@ -111,7 +111,7 @@ def test_player_rosters_renders_summer_teams(client, annual_rosters, summer_assi
     assert response.status_code == 200
     assert "Devin Taylor" in str(response.content)
     assert "Summer Ball:" in str(response.content)
-    assert "2023: Green Bay Rockers of the Northwoods League" in str(response.content)
+    assert "2024: Team USA Americans of the International Friendship League" in str(response.content)
 
 
 @pytest.mark.django_db

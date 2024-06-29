@@ -14,7 +14,7 @@ def players_last_year_set():
         hsgrad_year=2022,
         last_spring=2026,
         bats="left",
-        throws="left"
+        throws="left",
     )
     br2022 = Player.objects.create(
         first="Brayden",
@@ -26,12 +26,12 @@ def players_last_year_set():
         throws="right",
     )
     aw2023 = Player.objects.create(
-        first="Andrew", 
-        last="Wiggings", 
+        first="Andrew",
+        last="Wiggings",
         hsgrad_year=2023,
-        last_spring=2027, 
-        bats="left", 
-        throws="right"
+        last_spring=2027,
+        bats="left",
+        throws="right",
     )
     nm2021 = Player.objects.create(
         first="Nick",
@@ -74,8 +74,7 @@ def players_last_year_set():
         throws="right",
     )
     PlayerObj = namedtuple(
-        "PlayerOnj", 
-        "dt2022 br2022 aw2023 nm2021 be2021 jm2019 gh2024 cg2020"
+        "PlayerOnj", "dt2022 br2022 aw2023 nm2021 be2021 jm2019 gh2024 cg2020"
     )
     return PlayerObj(
         dt2022=dt2022,

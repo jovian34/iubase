@@ -39,22 +39,22 @@ def transactions(players):
     )
     aw_nli = Transaction.objects.create(
         player=players.aw2023,
-        trans_event="National Letter of Intent Signed", # need to aling with current choices
+        trans_event="National Letter of Intent Signed",  # need to aling with current choices
         trans_date=datetime(year=2022, month=11, day=7, hour=12, tzinfo=current_tz),
     )
     be_portal = Transaction.objects.create(
         player=players.be2021,
         trans_event="Entered Transfer Portal",
-        trans_date=date(current_dt.year, current_dt.month, current_dt.day)
+        trans_date=date(current_dt.year, current_dt.month, current_dt.day),
     )
     jm_verb_port = Transaction.objects.create(
         player=players.jm2019,
         trans_event="Verbal Commitment from College",
-        trans_date=date(2023, 7, 1)
+        trans_date=date(2023, 7, 1),
     )
     gh_verbal = Transaction.objects.create(
         player=players.gh2024,
-        trans_event = "Verbal Commitment from High School",
+        trans_event="Verbal Commitment from High School",
         trans_date=date(year=2022, month=5, day=11),
     )
     cg_port = Transaction.objects.create(
@@ -63,8 +63,8 @@ def transactions(players):
         trans_date=date(2024, 6, 14),
     )
     TransObj = namedtuple(
-        "TransObj", 
-        "dt_verbal dt_nli be_portal br_nli nm_verbal nm_combine aw_nli jm_verb_port gh_verbal cg_port"
+        "TransObj",
+        "dt_verbal dt_nli be_portal br_nli nm_verbal nm_combine aw_nli jm_verb_port gh_verbal cg_port",
     )
     return TransObj(
         dt_verbal=dt_verbal,

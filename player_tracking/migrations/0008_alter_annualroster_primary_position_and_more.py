@@ -6,38 +6,113 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('player_tracking', '0007_alter_annualroster_primary_position_and_more'),
+        ("player_tracking", "0007_alter_annualroster_primary_position_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='annualroster',
-            name='primary_position',
-            field=models.CharField(choices=[('Pitcher', 'Pitcher'), ('Catcher', 'Catcher'), ('First Base', 'First Base'), ('Second Base', 'Second Base'), ('Third Base', 'Third Base'), ('Shortstop', 'Shortstop'), ('Centerfield', 'Centerfield'), ('Corner Outfield', 'Corner Outfield'), ('Designated Hitter', 'Designated Hitter'), (None, 'None')]),
+            model_name="annualroster",
+            name="primary_position",
+            field=models.CharField(
+                choices=[
+                    ("Pitcher", "Pitcher"),
+                    ("Catcher", "Catcher"),
+                    ("First Base", "First Base"),
+                    ("Second Base", "Second Base"),
+                    ("Third Base", "Third Base"),
+                    ("Shortstop", "Shortstop"),
+                    ("Centerfield", "Centerfield"),
+                    ("Corner Outfield", "Corner Outfield"),
+                    ("Designated Hitter", "Designated Hitter"),
+                    (None, "None"),
+                ]
+            ),
         ),
         migrations.AlterField(
-            model_name='annualroster',
-            name='secondary_position',
-            field=models.CharField(blank=True, choices=[('Pitcher', 'Pitcher'), ('Catcher', 'Catcher'), ('First Base', 'First Base'), ('Second Base', 'Second Base'), ('Third Base', 'Third Base'), ('Shortstop', 'Shortstop'), ('Centerfield', 'Centerfield'), ('Corner Outfield', 'Corner Outfield'), ('Designated Hitter', 'Designated Hitter'), (None, 'None')], null=True),
+            model_name="annualroster",
+            name="secondary_position",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("Pitcher", "Pitcher"),
+                    ("Catcher", "Catcher"),
+                    ("First Base", "First Base"),
+                    ("Second Base", "Second Base"),
+                    ("Third Base", "Third Base"),
+                    ("Shortstop", "Shortstop"),
+                    ("Centerfield", "Centerfield"),
+                    ("Corner Outfield", "Corner Outfield"),
+                    ("Designated Hitter", "Designated Hitter"),
+                    (None, "None"),
+                ],
+                null=True,
+            ),
         ),
         migrations.AlterField(
-            model_name='annualroster',
-            name='status',
-            field=models.CharField(choices=[('Spring Roster', 'Spring Roster'), ('Played but granted eligibility waiver', 'Played but granted eligibility waiver'), ('On Spring Roster but did not play', 'On Spring Roster but did not play'), ('Not on Spring roster', 'Not on Spring roster')], db_default=models.Value('roster')),
+            model_name="annualroster",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("Spring Roster", "Spring Roster"),
+                    (
+                        "Played but granted eligibility waiver",
+                        "Played but granted eligibility waiver",
+                    ),
+                    (
+                        "On Spring Roster but did not play",
+                        "On Spring Roster but did not play",
+                    ),
+                    ("Not on Spring roster", "Not on Spring roster"),
+                ],
+                db_default=models.Value("roster"),
+            ),
         ),
         migrations.AlterField(
-            model_name='player',
-            name='bats',
-            field=models.CharField(blank=True, choices=[('Left', 'Left'), ('Right', 'Right'), ('Both', 'Both')], max_length=16, null=True),
+            model_name="player",
+            name="bats",
+            field=models.CharField(
+                blank=True,
+                choices=[("Left", "Left"), ("Right", "Right"), ("Both", "Both")],
+                max_length=16,
+                null=True,
+            ),
         ),
         migrations.AlterField(
-            model_name='player',
-            name='throws',
-            field=models.CharField(blank=True, choices=[('Left', 'Left'), ('Right', 'Right'), ('Both', 'Both')], max_length=16, null=True),
+            model_name="player",
+            name="throws",
+            field=models.CharField(
+                blank=True,
+                choices=[("Left", "Left"), ("Right", "Right"), ("Both", "Both")],
+                max_length=16,
+                null=True,
+            ),
         ),
         migrations.AlterField(
-            model_name='transaction',
-            name='trans_event',
-            field=models.CharField(choices=[('Verbal Commitment from High School', 'Verbal Commitment from High School'), ('Verbal Commitment from College', 'Verbal Commitment from College'), ('National Letter of Intent Signed', 'National Letter of Intent Signed'), ('Decommit', 'Decommit'), ('Entered Transfer Portal', 'Entered Transfer Portal'), ('Signed Professional Contract', 'Signed Professional Contract'), ('No Longer With Program - Other Reason', 'No Longer With Program - Other Reason')], max_length=64),
+            model_name="transaction",
+            name="trans_event",
+            field=models.CharField(
+                choices=[
+                    (
+                        "Verbal Commitment from High School",
+                        "Verbal Commitment from High School",
+                    ),
+                    (
+                        "Verbal Commitment from College",
+                        "Verbal Commitment from College",
+                    ),
+                    (
+                        "National Letter of Intent Signed",
+                        "National Letter of Intent Signed",
+                    ),
+                    ("Decommit", "Decommit"),
+                    ("Entered Transfer Portal", "Entered Transfer Portal"),
+                    ("Signed Professional Contract", "Signed Professional Contract"),
+                    (
+                        "No Longer With Program - Other Reason",
+                        "No Longer With Program - Other Reason",
+                    ),
+                ],
+                max_length=64,
+            ),
         ),
     ]

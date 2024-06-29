@@ -146,16 +146,15 @@ def test_add_blog_entry_only_x_embed_post_form(
     assert "<li>Adding to the Duke Blog" in str(response.content)
     assert "entry by @iubase17" in str(response.content)
 
+
 @pytest.mark.django_db
-def test_edit_blog_entry_adds_text(
-    client, logged_user_schwarbs, games, blog_entries
-):
+def test_edit_blog_entry_adds_text(client, logged_user_schwarbs, games, blog_entries):
     response = client.post(
         reverse("edit_blog_entry", args=[blog_entries.blog_uk_mon_y.pk]),
         {
             "blog_entry": "Ty had a great 2nd inning",
         },
-        follow=True
+        follow=True,
     )
     assert response.status_code == 200
     assert "Bothwell walks the first batter" not in str(response.content)
@@ -181,7 +180,7 @@ def test_edit_blog_entry_changes_hit_to_error(
             "home_errors": "1",
             "away_errors": "2",
         },
-        follow=True
+        follow=True,
     )
     assert response.status_code == 200
     assert "8 hits" not in str(response.content)
@@ -235,7 +234,9 @@ def test_add_game_page_renders(client, logged_user_schwarbs):
     assert "Live Stats Link" in str(response.content)
     assert "Video Stream or TV provider" in str(response.content)
     assert "Student Audio Link" in str(response.content)
-    assert "Date and Time of First Pitch YYYY-MM-DD-HHMM in ET military time" in str(response.content)
+    assert "Date and Time of First Pitch YYYY-MM-DD-HHMM in ET military time" in str(
+        response.content
+    )
     assert "Primary Audio Link" in str(response.content)
 
 
@@ -256,7 +257,9 @@ def test_add_game(client, logged_user_schwarbs, teams, games, scoreboard):
     )
     assert response.status_code == 200
     assert "Feb. 14, 2025, 6:30 p.m. first pitch" in str(response.content)
-    assert "Scoreboard: George Mason-0, Indiana-0 | Top Inning: 1" in str(response.context)
+    assert "Scoreboard: George Mason-0, Indiana-0 | Top Inning: 1" in str(
+        response.context
+    )
 
 
 @pytest.mark.django_db

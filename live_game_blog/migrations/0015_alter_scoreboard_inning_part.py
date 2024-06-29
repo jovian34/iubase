@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('live_game_blog', '0014_alter_team_team_name'),
+        ("live_game_blog", "0014_alter_team_team_name"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='scoreboard',
-            name='inning_part',
-            field=models.CharField(blank=True, choices=[('top', 'Top'), ('bottom', 'Bottom')], max_length=16, null=True),
+            model_name="scoreboard",
+            name="inning_part",
+            field=models.CharField(
+                blank=True,
+                choices=[("top", "Top"), ("bottom", "Bottom")],
+                max_length=16,
+                null=True,
+            ),
         ),
     ]

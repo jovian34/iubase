@@ -6,20 +6,62 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('player_tracking', '0022_player_primary_position'),
+        ("player_tracking", "0022_player_primary_position"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SummerLeague',
+            name="SummerLeague",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('league', models.CharField(max_length=64)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("league", models.CharField(max_length=64)),
             ],
         ),
         migrations.AlterField(
-            model_name='transaction',
-            name='trans_event',
-            field=models.CharField(choices=[('Verbal Commitment from High School', 'Verbal Commitment from High School'), ('Verbal Commitment from College', 'Verbal Commitment from College'), ('National Letter of Intent Signed', 'National Letter of Intent Signed'), ('Not Drafted', 'Not Drafted'), ('Not Signing Professional Contract', 'Not Signing Professional Contract'), ('Decommit', 'Decommit'), ('Entered Transfer Portal', 'Entered Transfer Portal'), ('Verbal Commitment to Transfer College', 'Verbal Commitment to Transfer College'), ('Attending MLB Draft Combine', 'Attending MLB Draft Combine'), ('Drafted', 'Drafted'), ('Signed Professional Contract', 'Signed Professional Contract'), ('No Longer With Program - Other Reason', 'No Longer With Program - Other Reason')], max_length=64),
+            model_name="transaction",
+            name="trans_event",
+            field=models.CharField(
+                choices=[
+                    (
+                        "Verbal Commitment from High School",
+                        "Verbal Commitment from High School",
+                    ),
+                    (
+                        "Verbal Commitment from College",
+                        "Verbal Commitment from College",
+                    ),
+                    (
+                        "National Letter of Intent Signed",
+                        "National Letter of Intent Signed",
+                    ),
+                    ("Not Drafted", "Not Drafted"),
+                    (
+                        "Not Signing Professional Contract",
+                        "Not Signing Professional Contract",
+                    ),
+                    ("Decommit", "Decommit"),
+                    ("Entered Transfer Portal", "Entered Transfer Portal"),
+                    (
+                        "Verbal Commitment to Transfer College",
+                        "Verbal Commitment to Transfer College",
+                    ),
+                    ("Attending MLB Draft Combine", "Attending MLB Draft Combine"),
+                    ("Drafted", "Drafted"),
+                    ("Signed Professional Contract", "Signed Professional Contract"),
+                    (
+                        "No Longer With Program - Other Reason",
+                        "No Longer With Program - Other Reason",
+                    ),
+                ],
+                max_length=64,
+            ),
         ),
     ]

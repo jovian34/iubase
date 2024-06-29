@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('live_game_blog', '0016_alter_scoreboard_inning_part'),
+        ("live_game_blog", "0016_alter_scoreboard_inning_part"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='game',
-            name='neutral_site',
+            model_name="game",
+            name="neutral_site",
             field=models.BooleanField(db_default=False),
         ),
     ]

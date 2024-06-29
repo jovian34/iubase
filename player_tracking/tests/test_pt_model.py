@@ -5,7 +5,11 @@ from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.transactions import transactions
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.mlb_draft_date import mlb_draft_date
-from player_tracking.tests.fixtures.summer import summer_leagues, summer_teams, summer_assign
+from player_tracking.tests.fixtures.summer import (
+    summer_leagues,
+    summer_teams,
+    summer_assign,
+)
 from live_game_blog.tests.fixtures import teams
 
 
@@ -25,13 +29,18 @@ def test_player_model_string_def(client, players):
 @pytest.mark.django_db
 def test_transaction_model_stored_all_fields(client, transactions):
     assert transactions.dt_verbal.player.last == "Taylor"
-    assert transactions.dt_nli.trans_event == "National Letter of Intent Signed" # need to aling with current choices
+    assert (
+        transactions.dt_nli.trans_event == "National Letter of Intent Signed"
+    )  # need to aling with current choices
     assert transactions.dt_nli.trans_date.year == 2021
 
 
 @pytest.mark.django_db
 def test_transaction_model_string_def(client, transactions):
-    assert str(transactions.dt_verbal) == "Devin Taylor Verbal Commitment from High School on March 2021"
+    assert (
+        str(transactions.dt_verbal)
+        == "Devin Taylor Verbal Commitment from High School on March 2021"
+    )
 
 
 @pytest.mark.django_db

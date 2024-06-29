@@ -6,53 +6,53 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('live_game_blog', '0018_game_home_seed'),
+        ("live_game_blog", "0018_game_home_seed"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='game',
-            name='audio_primary',
+            model_name="game",
+            name="audio_primary",
             field=models.URLField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='game',
-            name='audio_student',
+            model_name="game",
+            name="audio_student",
             field=models.URLField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='game',
-            name='away_nat_seed',
+            model_name="game",
+            name="away_nat_seed",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='game',
-            name='away_rank',
+            model_name="game",
+            name="away_rank",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='game',
-            name='away_seed',
+            model_name="game",
+            name="away_seed",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='game',
-            name='home_nat_seed',
+            model_name="game",
+            name="home_nat_seed",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='game',
-            name='home_rank',
+            model_name="game",
+            name="home_rank",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='game',
-            name='video',
+            model_name="game",
+            name="video",
             field=models.CharField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='game',
-            name='video_url',
+            model_name="game",
+            name="video_url",
             field=models.URLField(blank=True, null=True),
         ),
     ]

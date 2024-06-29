@@ -6,16 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('player_tracking', '0023_summerleague_alter_transaction_trans_event'),
+        ("player_tracking", "0023_summerleague_alter_transaction_trans_event"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SummerTeam',
+            name="SummerTeam",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('team', models.CharField(max_length=64)),
-                ('mascot', models.CharField(max_length=64)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("team", models.CharField(max_length=64)),
+                ("mascot", models.CharField(max_length=64)),
             ],
         ),
     ]

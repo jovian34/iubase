@@ -116,7 +116,7 @@ def annual_rosters(players, teams):
         team=teams.gm,
         jersey=32,
         primary_position="Pitcher",
-    )   
+    )
     cg_2023 = AnnualRoster.objects.create(
         spring_year=2023,
         status="Spring Roster",
@@ -124,7 +124,7 @@ def annual_rosters(players, teams):
         team=teams.gm,
         jersey=32,
         primary_position="Pitcher",
-    )   
+    )
     cg_2024 = AnnualRoster.objects.create(
         spring_year=2024,
         status="Spring Roster",
@@ -132,10 +132,10 @@ def annual_rosters(players, teams):
         team=teams.gm,
         jersey=32,
         primary_position="Pitcher",
-    )      
+    )
     AnnualRosterObj = namedtuple(
         "AnnualRosterObj",
-        "dt_2023 dt_2024 nm_2022 nm_2023 nm_2024 br_2023 jm2020 jm2021 jm2022 jm2023 jm2024 cg_2021 cg_2022 cg_2023 cg_2024"
+        "dt_2023 dt_2024 nm_2022 nm_2023 nm_2024 br_2023 jm2020 jm2021 jm2022 jm2023 jm2024 cg_2021 cg_2022 cg_2023 cg_2024",
     )
     return AnnualRosterObj(
         dt_2023=dt_2023,
@@ -154,5 +154,3 @@ def annual_rosters(players, teams):
         cg_2023=cg_2023,
         cg_2024=cg_2024,
     )
-
-

@@ -41,7 +41,7 @@ class AddGameForm(forms.Form):
         label="Home Team",
     )
     home_rank = forms.IntegerField(
-        label="Home team D1Baseball.com national ranking", 
+        label="Home team D1Baseball.com national ranking",
         required=False,
     )
     home_seed = forms.IntegerField(
@@ -58,7 +58,7 @@ class AddGameForm(forms.Form):
         label="Away Team",
     )
     away_rank = forms.IntegerField(
-        label="Away team D1Baseball.com national ranking", 
+        label="Away team D1Baseball.com national ranking",
         required=False,
     )
     away_seed = forms.IntegerField(

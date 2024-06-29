@@ -7,14 +7,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('live_game_blog', '0014_alter_team_team_name'),
-        ('player_tracking', '0004_annualroster_team'),
+        ("live_game_blog", "0014_alter_team_team_name"),
+        ("player_tracking", "0004_annualroster_team"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='annualroster',
-            name='team',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.team'),
+            model_name="annualroster",
+            name="team",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="live_game_blog.team",
+            ),
         ),
     ]

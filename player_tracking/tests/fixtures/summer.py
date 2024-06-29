@@ -8,20 +8,11 @@ from player_tracking.tests.fixtures.players import players
 
 @pytest.fixture
 def summer_leagues():
-    nw = SummerLeague.objects.create(
-        league="Northwoods"
-    )
-    in_fr = SummerLeague.objects.create(
-        league="International Friendship"
-    )
-    SummerLeagueObj = namedtuple(
-        "SummerLeagueObj",
-        "nw in_fr"
-    )
-    return SummerLeagueObj(
-        nw=nw,
-        in_fr=in_fr
-    )
+    nw = SummerLeague.objects.create(league="Northwoods")
+    in_fr = SummerLeague.objects.create(league="International Friendship")
+    SummerLeagueObj = namedtuple("SummerLeagueObj", "nw in_fr")
+    return SummerLeagueObj(nw=nw, in_fr=in_fr)
+
 
 @pytest.fixture
 def summer_teams():
@@ -33,14 +24,9 @@ def summer_teams():
         name="Team USA",
         mascot="Americans",
     )
-    SummerTeamObj = namedtuple(
-        "SummerTeamObj",
-        "gb usa"
-    )
-    return SummerTeamObj(
-        gb=gb,
-        usa=usa
-    )
+    SummerTeamObj = namedtuple("SummerTeamObj", "gb usa")
+    return SummerTeamObj(gb=gb, usa=usa)
+
 
 @pytest.fixture
 def summer_assign(players, summer_leagues, summer_teams):
@@ -50,10 +36,5 @@ def summer_assign(players, summer_leagues, summer_teams):
         summer_league=summer_leagues.in_fr,
         summer_team=summer_teams.usa,
     )
-    SummerAssignObj = namedtuple(
-        "SummerAssignObj",
-        "dt_gb_2024"
-    )
-    return SummerAssignObj(
-        dt_gb_2024=dt_gb_2024
-    )
+    SummerAssignObj = namedtuple("SummerAssignObj", "dt_gb_2024")
+    return SummerAssignObj(dt_gb_2024=dt_gb_2024)

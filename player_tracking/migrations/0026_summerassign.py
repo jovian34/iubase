@@ -7,18 +7,44 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('player_tracking', '0025_rename_team_summerteam_name'),
+        ("player_tracking", "0025_rename_team_summerteam_name"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SummerAssign',
+            name="SummerAssign",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('summer_year', models.IntegerField()),
-                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='player_tracking.player')),
-                ('summer_league', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='player_tracking.summerleague')),
-                ('summer_team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='player_tracking.summerteam')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("summer_year", models.IntegerField()),
+                (
+                    "player",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="player_tracking.player",
+                    ),
+                ),
+                (
+                    "summer_league",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="player_tracking.summerleague",
+                    ),
+                ),
+                (
+                    "summer_team",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="player_tracking.summerteam",
+                    ),
+                ),
             ],
         ),
     ]

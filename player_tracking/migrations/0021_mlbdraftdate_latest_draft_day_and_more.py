@@ -7,25 +7,57 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('player_tracking', '0020_alter_annualroster_status'),
+        ("player_tracking", "0020_alter_annualroster_status"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='mlbdraftdate',
-            name='latest_draft_day',
+            model_name="mlbdraftdate",
+            name="latest_draft_day",
             field=models.DateField(default=datetime.date(2024, 7, 16)),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='mlbdraftdate',
-            name='signing_deadline',
+            model_name="mlbdraftdate",
+            name="signing_deadline",
             field=models.DateField(default=datetime.date(2024, 7, 25)),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='transaction',
-            name='trans_event',
-            field=models.CharField(choices=[('Verbal Commitment from High School', 'Verbal Commitment from High School'), ('Verbal Commitment from College', 'Verbal Commitment from College'), ('National Letter of Intent Signed', 'National Letter of Intent Signed'), ('Not Signing Professional Contract', 'Not Signing Professional Contract'), ('Decommit', 'Decommit'), ('Entered Transfer Portal', 'Entered Transfer Portal'), ('Verbal Commitment to Transfer College', 'Verbal Commitment to Transfer College'), ('Drafted', 'Drafted'), ('Signed Professional Contract', 'Signed Professional Contract'), ('No Longer With Program - Other Reason', 'No Longer With Program - Other Reason')], max_length=64),
+            model_name="transaction",
+            name="trans_event",
+            field=models.CharField(
+                choices=[
+                    (
+                        "Verbal Commitment from High School",
+                        "Verbal Commitment from High School",
+                    ),
+                    (
+                        "Verbal Commitment from College",
+                        "Verbal Commitment from College",
+                    ),
+                    (
+                        "National Letter of Intent Signed",
+                        "National Letter of Intent Signed",
+                    ),
+                    (
+                        "Not Signing Professional Contract",
+                        "Not Signing Professional Contract",
+                    ),
+                    ("Decommit", "Decommit"),
+                    ("Entered Transfer Portal", "Entered Transfer Portal"),
+                    (
+                        "Verbal Commitment to Transfer College",
+                        "Verbal Commitment to Transfer College",
+                    ),
+                    ("Drafted", "Drafted"),
+                    ("Signed Professional Contract", "Signed Professional Contract"),
+                    (
+                        "No Longer With Program - Other Reason",
+                        "No Longer With Program - Other Reason",
+                    ),
+                ],
+                max_length=64,
+            ),
         ),
     ]

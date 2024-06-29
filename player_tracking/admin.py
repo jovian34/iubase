@@ -1,6 +1,14 @@
 from django.contrib import admin
 from django.db import models
-from player_tracking.models import Player, Transaction, AnnualRoster, MLBDraftDate, SummerLeague, SummerTeam, SummerAssign
+from player_tracking.models import (
+    Player,
+    Transaction,
+    AnnualRoster,
+    MLBDraftDate,
+    SummerLeague,
+    SummerTeam,
+    SummerAssign,
+)
 
 
 @admin.register(Player)
@@ -50,9 +58,7 @@ class MLBDraftDateAdmin(admin.ModelAdmin):
 @admin.register(SummerLeague)
 class SummerLeagueAdmin(admin.ModelAdmin):
     model = SummerLeague
-    list_display = (
-        "league",
-    )
+    list_display = ("league",)
 
 
 @admin.register(SummerTeam)

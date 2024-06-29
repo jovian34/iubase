@@ -6,13 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('player_tracking', '0016_mlbdraftdate'),
+        ("player_tracking", "0016_mlbdraftdate"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='transaction',
-            name='primary_position',
-            field=models.CharField(blank=True, choices=[('Pitcher', 'Pitcher'), ('Catcher', 'Catcher'), ('First Base', 'First Base'), ('Second Base', 'Second Base'), ('Third Base', 'Third Base'), ('Shortstop', 'Shortstop'), ('Centerfield', 'Centerfield'), ('Corner Outfield', 'Corner Outfield'), ('Designated Hitter', 'Designated Hitter'), (None, 'None')], null=True),
+            model_name="transaction",
+            name="primary_position",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("Pitcher", "Pitcher"),
+                    ("Catcher", "Catcher"),
+                    ("First Base", "First Base"),
+                    ("Second Base", "Second Base"),
+                    ("Third Base", "Third Base"),
+                    ("Shortstop", "Shortstop"),
+                    ("Centerfield", "Centerfield"),
+                    ("Corner Outfield", "Corner Outfield"),
+                    ("Designated Hitter", "Designated Hitter"),
+                    (None, "None"),
+                ],
+                null=True,
+            ),
         ),
     ]

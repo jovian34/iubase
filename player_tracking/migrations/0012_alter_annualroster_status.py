@@ -6,13 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('player_tracking', '0011_alter_annualroster_status'),
+        ("player_tracking", "0011_alter_annualroster_status"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='annualroster',
-            name='status',
-            field=models.CharField(choices=[('Fall Roster', 'Fall Roster'), ('Spring Roster', 'Spring Roster'), ('Played but granted eligibility waiver', 'Played but granted eligibility waiver'), ('On Spring Roster but did not play', 'On Spring Roster but did not play'), ('Not on Spring roster', 'Not on Spring roster')], db_default=models.Value('Fall Roster')),
+            model_name="annualroster",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("Fall Roster", "Fall Roster"),
+                    ("Spring Roster", "Spring Roster"),
+                    (
+                        "Played but granted eligibility waiver",
+                        "Played but granted eligibility waiver",
+                    ),
+                    (
+                        "On Spring Roster but did not play",
+                        "On Spring Roster but did not play",
+                    ),
+                    ("Not on Spring roster", "Not on Spring roster"),
+                ],
+                db_default=models.Value("Fall Roster"),
+            ),
         ),
     ]

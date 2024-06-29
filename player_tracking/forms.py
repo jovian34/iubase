@@ -10,6 +10,7 @@ from player_tracking.choices import (
     STATUS_CHOICES,
 )
 
+
 class NewPlayerForm(forms.Form):
     first = forms.CharField(label="First Name")
     last = forms.CharField(label="Last Name")
@@ -57,8 +58,12 @@ class AnnualRosterForm(forms.Form):
     )
     jersey = forms.IntegerField(label="Jersey Number", required=False)
     status = forms.ChoiceField(label="Eligibility Status", choices=STATUS_CHOICES)
-    primary_position = forms.ChoiceField(label="Primary Fielding Position", choices=POSITION_CHOICES)
-    secondary_position = forms.ChoiceField(label="Secondary Fielding Position", choices=POSITION_CHOICES, required=False)
+    primary_position = forms.ChoiceField(
+        label="Primary Fielding Position", choices=POSITION_CHOICES
+    )
+    secondary_position = forms.ChoiceField(
+        label="Secondary Fielding Position", choices=POSITION_CHOICES, required=False
+    )
 
 
 class TransactionForm(forms.Form):

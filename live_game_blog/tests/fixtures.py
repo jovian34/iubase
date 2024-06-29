@@ -6,7 +6,11 @@ from datetime import timedelta
 
 from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
 from accounts.models import CustomUser
-from accounts.tests.fixtures import user_not_logged_in, user_iubase17, logged_user_schwarbs
+from accounts.tests.fixtures import (
+    user_not_logged_in,
+    user_iubase17,
+    logged_user_schwarbs,
+)
 
 
 @pytest.fixture
@@ -104,7 +108,8 @@ def games(client, teams):
         first_pitch=(timezone.now() - timedelta(days=302)),
     )
     GameObj = namedtuple(
-        "GameObj", "iu_duke iu_coastal iu_gm iu_mo iu_mo_rain iu_uk_mon iu_uk_sun iu_uk_sat"
+        "GameObj",
+        "iu_duke iu_coastal iu_gm iu_mo iu_mo_rain iu_uk_mon iu_uk_sun iu_uk_sat",
     )
     return GameObj(
         iu_duke=iu_duke,
@@ -180,7 +185,8 @@ def scoreboard(client, games, user_not_logged_in):
         game=games.iu_duke, scorekeeper=user_not_logged_in, game_status="pre-game"
     )
     ScoreboardObj = namedtuple(
-        "ScoreboardObj", "score_uk_mon, score_miami_rain, score_uk_sun, score_uk_sat score_duke"
+        "ScoreboardObj",
+        "score_uk_mon, score_miami_rain, score_uk_sun, score_uk_sat score_duke",
     )
     return ScoreboardObj(
         score_uk_mon=score_uk_mon,

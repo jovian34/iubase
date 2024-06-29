@@ -14,10 +14,7 @@ def mlb_draft_date():
         latest_draft_day=date(2024, 7, 16),
         signing_deadline=date(2024, 7, 25),
     )
-    MLBDraftDateObj = namedtuple(
-        "MLBDraftDateObj",
-        "draft_2024"
-    )
+    MLBDraftDateObj = namedtuple("MLBDraftDateObj", "draft_2024")
     return MLBDraftDateObj(
         draft_2024=draft_2024,
     )

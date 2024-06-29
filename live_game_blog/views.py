@@ -14,7 +14,9 @@ from live_game_blog.forms import (
 
 
 def games(request):
-    finals = Scoreboard.objects.filter(Q(game_status="final") | Q(game_status="cancelled") | Q(game_status="post-game"))
+    finals = Scoreboard.objects.filter(
+        Q(game_status="final") | Q(game_status="cancelled") | Q(game_status="post-game")
+    )
     final_pks = [final.game.pk for final in finals]
     games = Game.objects.exclude(pk__in=final_pks).order_by("first_pitch")[:3]
     context = {
@@ -134,7 +136,7 @@ def add_blog_plus_scoreboard(request, game_pk):
         if last_score.outs == 3 and last_score.inning_part == "Bottom":
             outs, inning, part = 0, last_score.inning_num + 1, "Top"
         elif last_score.outs == 3 and last_score.inning_part == "Top":
-            outs, part = 0, "Bottom"       
+            outs, part = 0, "Bottom"
         form = BlogAndScoreboardForm(
             initial={
                 "game_status": last_score.game_status,
@@ -154,6 +156,7 @@ def add_blog_plus_scoreboard(request, game_pk):
             request, "live_game_blog/partials/add_blog_plus_scoreboard.html", context
         )
 
+
 @login_required
 def edit_blog_entry(request, entry_pk):
     edit_entry = BlogEntry.objects.get(pk=entry_pk)
@@ -162,18 +165,18 @@ def edit_blog_entry(request, entry_pk):
         if request.method == "POST":
             form = BlogAndScoreboardForm(request.POST)
             if form.is_valid():
-                edit_scoreboard.game_status=form.cleaned_data["game_status"]
-                edit_scoreboard.inning_num=form.cleaned_data["inning_num"]
-                edit_scoreboard.inning_part=form.cleaned_data["inning_part"]
-                edit_scoreboard.outs=form.cleaned_data["outs"]
-                edit_scoreboard.home_runs=form.cleaned_data["home_runs"]
-                edit_scoreboard.away_runs=form.cleaned_data["away_runs"]
-                edit_scoreboard.home_hits=form.cleaned_data["home_hits"]
-                edit_scoreboard.away_hits=form.cleaned_data["away_hits"]
-                edit_scoreboard.home_errors=form.cleaned_data["home_errors"]
-                edit_scoreboard.away_errors=form.cleaned_data["away_errors"]
+                edit_scoreboard.game_status = form.cleaned_data["game_status"]
+                edit_scoreboard.inning_num = form.cleaned_data["inning_num"]
+                edit_scoreboard.inning_part = form.cleaned_data["inning_part"]
+                edit_scoreboard.outs = form.cleaned_data["outs"]
+                edit_scoreboard.home_runs = form.cleaned_data["home_runs"]
+                edit_scoreboard.away_runs = form.cleaned_data["away_runs"]
+                edit_scoreboard.home_hits = form.cleaned_data["home_hits"]
+                edit_scoreboard.away_hits = form.cleaned_data["away_hits"]
+                edit_scoreboard.home_errors = form.cleaned_data["home_errors"]
+                edit_scoreboard.away_errors = form.cleaned_data["away_errors"]
                 edit_scoreboard.save()
-                edit_entry.blog_entry=form.cleaned_data["blog_entry"]
+                edit_entry.blog_entry = form.cleaned_data["blog_entry"]
                 edit_entry.save()
             return redirect(reverse("edit_live_game_blog", args=[edit_entry.game.pk]))
         else:
@@ -193,15 +196,13 @@ def edit_blog_entry(request, entry_pk):
                 },
             )
         context = {"form": form, "entry_pk": entry_pk}
-        return render(
-            request, "live_game_blog/partials/edit_blog_entry.html", context
-        )
+        return render(request, "live_game_blog/partials/edit_blog_entry.html", context)
     else:
         if request.method == "POST":
             form = BlogEntryForm(request.POST)
             if form.is_valid():
-                edit_entry.blog_entry=form.cleaned_data["blog_entry"]
-                edit_entry.is_raw_html=form.cleaned_data["is_raw_html"]
+                edit_entry.blog_entry = form.cleaned_data["blog_entry"]
+                edit_entry.is_raw_html = form.cleaned_data["is_raw_html"]
                 edit_entry.save()
             return redirect(reverse("edit_live_game_blog", args=[edit_entry.game.pk]))
         else:
@@ -211,13 +212,11 @@ def edit_blog_entry(request, entry_pk):
                     "is_raw_html": edit_entry.is_raw_html,
                 }
             )
-            
+
             context = {"form": form, "entry_pk": entry_pk}
             return render(
                 request, "live_game_blog/partials/edit_blog_entry.html", context
             )
-
-
 
 
 @login_required
@@ -248,15 +247,15 @@ def add_game(request):
                 game_status="pre-game",
                 game=this_game,
                 scorekeeper=request.user,
-                inning_num = 1,
-                inning_part = "Top",
-                outs = 0,
-                home_runs = 0,
-                away_runs = 0,
-                home_hits = 0,
-                away_hits = 0,
-                home_errors = 0,
-                away_errors = 0,
+                inning_num=1,
+                inning_part="Top",
+                outs=0,
+                home_runs=0,
+                away_runs=0,
+                home_hits=0,
+                away_hits=0,
+                home_errors=0,
+                away_errors=0,
             )
             add_initial_scoreboard.save()
         return redirect(reverse("edit_live_game_blog", args=[this_game.pk]))

@@ -19,7 +19,7 @@ class Player(models.Model):
     home_state = models.CharField(null=True, blank=True, max_length=8)
     home_country = models.CharField(db_default="USA")
     headshot = models.URLField(null=True, blank=True)
-    birthdate = models.DateField(null=True, blank=True)    
+    birthdate = models.DateField(null=True, blank=True)
     primary_position = models.CharField(null=True, blank=True, choices=POSITION_CHOICES)
     bats = models.CharField(choices=HAND_CHOICES, max_length=16, null=True, blank=True)
     throws = models.CharField(
@@ -73,10 +73,8 @@ class MLBDraftDate(models.Model):
     signing_deadline = models.DateField()
 
     def __str__(self) -> str:
-        return (
-            f"{self.fall_year}: {self.latest_birthdate:%b %-d, %Y}"
-        )
-    
+        return f"{self.fall_year}: {self.latest_birthdate:%b %-d, %Y}"
+
 
 class SummerLeague(models.Model):
     league = models.CharField(null=False, max_length=64)
@@ -84,7 +82,7 @@ class SummerLeague(models.Model):
 
     def __str__(self):
         return self.league
-    
+
 
 class SummerTeam(models.Model):
     name = models.CharField(null=False, max_length=64)
@@ -93,7 +91,7 @@ class SummerTeam(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name} {self.mascot}"
-    
+
 
 class SummerAssign(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)

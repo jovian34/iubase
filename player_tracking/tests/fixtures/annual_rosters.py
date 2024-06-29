@@ -9,7 +9,7 @@ from .players import players
 
 
 @pytest.fixture
-def annual_rosters(client, players, teams):
+def annual_rosters(players, teams):
     dt_2023 = AnnualRoster.objects.create(
         spring_year=2023,
         status="Spring Roster",

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from player_tracking.models import Player, Transaction, AnnualRoster, MLBDraftDate
+from player_tracking.models import Player, Transaction, AnnualRoster, MLBDraftDate, SummerLeague, SummerTeam
 
 
 @admin.register(Player)
@@ -37,11 +37,28 @@ class AnnualRosterAdmin(admin.ModelAdmin):
 
 
 @admin.register(MLBDraftDate)
-class MLBDraftDate(admin.ModelAdmin):
+class MLBDraftDateAdmin(admin.ModelAdmin):
     model = MLBDraftDate
     list_display = (
         "fall_year",
         "latest_birthdate",
         "latest_draft_day",
         "signing_deadline",
+    )
+
+
+@admin.register(SummerLeague)
+class SummerLeagueAdmin(admin.ModelAdmin):
+    model = SummerLeague
+    list_display = (
+        "league",
+    )
+
+
+@admin.register(SummerTeam)
+class SummerTeamAdmin(admin.ModelAdmin):
+    model = SummerTeam
+    list_display = (
+        "name",
+        "mascot",
     )

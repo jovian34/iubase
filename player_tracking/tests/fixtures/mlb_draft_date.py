@@ -7,7 +7,7 @@ from player_tracking.models import MLBDraftDate
 
 
 @pytest.fixture
-def mlb_draft_date(client):
+def mlb_draft_date():
     draft_2024 = MLBDraftDate.objects.create(
         fall_year=2024,
         latest_birthdate=date(2003, 8, 1),

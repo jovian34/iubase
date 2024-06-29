@@ -76,3 +76,18 @@ class MLBDraftDate(models.Model):
         return (
             f"{self.fall_year}: {self.latest_birthdate:%b %-d, %Y}"
         )
+    
+
+class SummerLeague(models.Model):
+    league = models.CharField(null=False, max_length=64)
+
+    def __str__(self):
+        return self.league
+    
+
+class SummerTeam(models.Model):
+    name = models.CharField(null=False, max_length=64)
+    mascot = models.CharField(null=False, max_length=64)
+
+    def __str__(self) -> str:
+        return f"{self.name} {self.mascot}"

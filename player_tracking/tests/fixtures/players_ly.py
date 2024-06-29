@@ -7,7 +7,7 @@ from player_tracking.models import Player
 
 
 @pytest.fixture
-def players_last_year_set(client):
+def players_last_year_set():
     dt2022 = Player.objects.create(
         first="Devin",
         last="Taylor",

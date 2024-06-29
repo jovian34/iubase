@@ -8,7 +8,7 @@ from player_tracking.models import Transaction
 from .players_ly import players_last_year_set
 
 @pytest.fixture
-def trans_ly_set(client, players_last_year_set):
+def trans_ly_set(players_last_year_set):
     current_tz = timezone.get_current_timezone()
     current_dt = datetime.now()
     dt_verbal = Transaction.objects.create(

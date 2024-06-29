@@ -7,7 +7,7 @@ from player_tracking.models import Player
 
 
 @pytest.fixture
-def players(client):
+def players():
     dt2022 = Player.objects.create(
         first="Devin", last="Taylor", hsgrad_year=2022, bats="left", throws="left"
     )

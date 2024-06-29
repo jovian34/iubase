@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from datetime import date, datetime
 
-from player_tracking.models import Player, Transaction, AnnualRoster, MLBDraftDate
+from player_tracking.models import Player, Transaction, AnnualRoster, MLBDraftDate, SummerAssign
 from live_game_blog.models import Team
 from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm
 from player_tracking.choices import POSITION_CHOICES, LEFT, JOINED, ROSTERED, GREY_SHIRT, RED_SHIRT, RED_SHIRT_PLUS_WAIVER
@@ -78,8 +78,7 @@ def add_player(request):
             "form": form,
             "page_title": "Add a New Player",
         }
-        return render(request, "player_tracking/add_player.html", context)
-    
+        return render(request, "player_tracking/add_player.html", context)  
     
 
 
@@ -87,11 +86,13 @@ def player_rosters(request, player_id):
     player = Player.objects.get(pk=player_id)
     rosters = AnnualRoster.objects.filter(player=player).order_by("-spring_year")
     transactions = Transaction.objects.filter(player=player).order_by("-trans_date")
+    summers = SummerAssign.objects.filter(player=player).order_by("-summer_year")
     context = {
         "player": player,
         "page_title": f"{player.first} {player.last} rosters",
         "rosters": rosters,
         "transactions": transactions,
+        "summers": summers,
     }
     return render(request, "player_tracking/player_rosters.html", context)
 
@@ -160,9 +161,6 @@ def add_transaction(request, player_id):
         return render(
             request, "player_tracking/partials/add_transaction.html", context,
         )
-
-
-
     
 
 def fall_depth_chart(request, fall_year):

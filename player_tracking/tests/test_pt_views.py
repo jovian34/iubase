@@ -9,6 +9,7 @@ from player_tracking.tests.fixtures.players_ly import players_last_year_set
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.transactions import transactions
 from player_tracking.tests.fixtures.transactions_ly import trans_ly_set
+from player_tracking.tests.fixtures.summer import summer_assign, summer_leagues, summer_teams
 from live_game_blog.tests.fixtures import teams
 
 from accounts.models import CustomUser
@@ -90,7 +91,6 @@ def test_add_player_form_asks_for_password_not_logged_in(client, players):
     assert "Password" in str(response.content)
 
 
-
 @pytest.mark.django_db
 def test_player_rosters_renders_one_player_only(client, annual_rosters):
     response = client.get(reverse(
@@ -100,6 +100,18 @@ def test_player_rosters_renders_one_player_only(client, annual_rosters):
     assert response.status_code == 200
     assert "Devin Taylor" in str(response.content)
     assert "Nick" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_player_rosters_renders_summer_teams(client, annual_rosters, summer_assign, summer_leagues, summer_teams):
+    response = client.get(reverse(
+        "player_rosters",
+        args=[annual_rosters.dt_2023.player.pk],
+    ))
+    assert response.status_code == 200
+    assert "Devin Taylor" in str(response.content)
+    assert "Summer Ball:" in str(response.content)
+    assert "2023: Green Bay Rockers of the Northwoods League" in str(response.content)
 
 
 @pytest.mark.django_db

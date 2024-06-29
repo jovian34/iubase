@@ -91,3 +91,13 @@ class SummerTeam(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name} {self.mascot}"
+    
+
+class SummerAssign(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    summer_year = models.IntegerField(null=False)
+    summer_league = models.ForeignKey(SummerLeague, on_delete=models.CASCADE)
+    summer_team = models.ForeignKey(SummerTeam, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.player.first} {self.player.last} {self.summer_year} {self.summer_team.name}"

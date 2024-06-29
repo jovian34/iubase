@@ -140,5 +140,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.74"  # added model for summer leagues/teams ATP 2024-06-29
+project_version = "0.0.75"  # include summer on player pages ATP 2024-06-29
 os.environ.setdefault("PROJECT_VERSION", project_version)

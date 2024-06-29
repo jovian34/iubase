@@ -5,7 +5,7 @@ from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.transactions import transactions
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.mlb_draft_date import mlb_draft_date
-from player_tracking.tests.fixtures.summer import summer_leagues, summer_teams
+from player_tracking.tests.fixtures.summer import summer_leagues, summer_teams, summer_assign
 from live_game_blog.tests.fixtures import teams
 
 
@@ -62,3 +62,8 @@ def test_summer_league_string_def(client, summer_leagues):
 @pytest.mark.django_db
 def test_summer_team_string_def(client, summer_teams):
     assert str(summer_teams.gb) == "Green Bay Rockers"
+
+
+@pytest.mark.django_db
+def test_summer_assign_string_def(client, summer_assign):
+    assert str(summer_assign.dt_gb_2023) == "Devin Taylor 2023 Green Bay"

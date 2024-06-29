@@ -35,6 +35,14 @@
             <hr>
     {% endfor %}
     </ul>
+
+    <h3>Summer Ball:</h3>
+
+    <ul>
+    {% for summer in summers %}
+        <li><p>{{ summer.summer_year }}: {{ summer.summer_team.name }} {{summer.summer_team.mascot}} of the {{ summer.summer_league.league }} League</p></li>
+    {% endfor %}
+    </ul>
 </div>
 
 <br clear="both">

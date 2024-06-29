@@ -5,3 +5,4 @@
 /django_project/static/admin/
 .vscode/launch.json
 *.pyc
+.coverage

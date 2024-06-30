@@ -7,6 +7,7 @@
 $olive: #D7D8A8;
 $yellow: #f0e0c0;
 $cream: #dbdfbb;
+$brown: #8E5B36;
 $green: #3c652b;
 $green-lite: #669900;
 $grey: #cccccc;
@@ -22,13 +23,13 @@ $blue: blue;
 // Set global variables
 $font-head: 'Mochiy Pop One', sans-serif;
 $font-text: 'Recursive', sans-serif;
-$body-background-color: $grey;
+$body-background-color: $cream;
 $body-text-color: $black;
 $link: $crimson;
 $link-visited: $crimson;
 $link-active: $red;
-$footer-background-color: $cream;
-$footer-text-color: $grey-dark;
+$footer-background-color: $grey;
+$footer-text-color: $brown;
 
 
 // Import other applied scss files

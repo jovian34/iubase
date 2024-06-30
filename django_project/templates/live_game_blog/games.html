@@ -30,15 +30,15 @@
 </div>
 
 
+{% if user.is_authenticated %}
 <div class="column-12">
     <div class="column-3"></div>
     <div class="column-6">
-        {% if user.is_authenticated %}
         <a href="{% url "add_game" %}"><button>Add game</button></a>
         <a href="{% url "add_team" %}"><button>Add team</button></a>
-        {% endif %}
     </div>
 </div>
+{% endif %}
 <br clear="both">
 
 

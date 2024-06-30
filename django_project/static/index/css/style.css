@@ -12,7 +12,8 @@ html {
 }
 
 body {
-  background-color: #cccccc;
+  background-color: #dbdfbb;
+  background-image: url("https://iubase.com/wp-content/uploads/2020/06/turf.jpg");
   color: black;
 }
 
@@ -26,8 +27,9 @@ button {
   border-color: #990000;
   border-style: solid;
   border-radius: 5%;
-  background-color: white;
+  background-color: #dbdfbb;
   color: #990000;
+  margin: 5px;
 }
 
 h1 {
@@ -59,7 +61,7 @@ h3 {
 
 /*--------HEADER---------------*/
 #headerWrapper {
-  background-color: #cccccc;
+  background-color: #dbdfbb;
 }
 
 .blog-small-header {
@@ -73,7 +75,10 @@ h3 {
 }
 
 #iubase-logo {
-  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
   border: 5pt;
   border-color: #990000;
   border-style: solid;
@@ -119,6 +124,10 @@ a:active {
 /*---------COLUMNS--------*/
 .column-12, .column-9, .column-8, .column-6, .column-4, .column-3, .column-2 {
   padding: 0.5em 2%;
+}
+
+.column-6 {
+  background-color: #dbdfbb;
 }
 
 .column-2 {
@@ -217,19 +226,19 @@ table, th, td {
 
 /*---------------FOOTER---------------*/
 #footerWrapper {
-  background-color: #dbdfbb;
+  background-color: #cccccc;
 }
 
 footer {
   clear: both;
   font-size: 0.5em;
-  color: #999;
+  color: #8E5B36;
   text-align: center;
   padding: 0.6em;
 }
 
 footer a {
-  color: #999;
+  color: #8E5B36;
 }
 
 /*----------------FORM-----------------*/

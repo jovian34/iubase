@@ -218,7 +218,7 @@ table, th, td {
 }
 
 .team-logo {
-  width: 50%;
+  width: 15%;
 }
 
 /*----- 12 COLUMN LAYOUT -----*/
@@ -283,10 +283,6 @@ select {
     color: #fa0404;
   }
   /*--------CONTENT---------*/
-  .team-logo {
-    width: 256px;
-    height: 256px;
-  }
   figure.col4, figure.col6 {
     width: 40%;
   }

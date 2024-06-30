@@ -10,8 +10,10 @@
 {% for scoreboard in scoreboards %}
 <hr>
 <div class="column-12">
-    <div class="column-3 solid-bkg"><img class="team-logo" src="{{ scoreboard.game.away_team.logo }}"></div>
+    <div class="column-3"></div>
     <div class="column-6">
+        <img class="team-logo" src="{{ scoreboard.game.away_team.logo }}">
+        <img class="team-logo" src="{{ scoreboard.game.home_team.logo }}">
         <h2><a href="{% url "live_game_blog" scoreboard.game.pk %}"><h2>
         {{ scoreboard.game.away_team }}-{{ scoreboard.away_runs }}
             {% if scoreboard.game.neutral_site %} versus {% else %} at {% endif %}
@@ -22,7 +24,7 @@
         <h2><a href="{% url "edit_live_game_blog" scoreboard.game.pk %}">Edit or Add to Game Blog<h2>
         {% endif %}
     </div>
-    <div class="column-3 solid-bkg"><img class="team-logo" src="{{ scoreboard.game.home_team.logo }}"></div>
+    <div class="column-3"></div>
 </div>
 <br clear="both">
 {% endfor %}

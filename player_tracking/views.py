@@ -445,7 +445,7 @@ def draft_combine_attendees(request, this_year):
 
 
 def summer_assignments(request, summer_year):
-    assignments = SummerAssign.objects.filter(summer_year=summer_year).order_by("player")
+    assignments = SummerAssign.objects.filter(summer_year=summer_year).order_by("player__last")
     context = {
         "page_title": f"{summer_year} College Summer League Assignments for current and former Indiana players",
         "assignments": assignments,

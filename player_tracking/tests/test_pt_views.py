@@ -478,3 +478,18 @@ def test_add_summer_assignment_get_renders_form(client, players, summer_leagues,
     )
     assert response.status_code == 200
     assert "Summer Year" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_summer_assignment_post_adds_assignment(client, players, summer_leagues, summer_teams, logged_user_schwarbs):
+    response = client.post(
+        reverse("add_summer_assignment", args=[str(players.br2022.pk)]),
+        {
+            "summer_year": [2024],
+            "summer_team": [str(summer_teams.gb.pk)],
+            "summer_league": [str(summer_leagues.nw.pk)],
+        },
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "Green Bay" in str(response.content)

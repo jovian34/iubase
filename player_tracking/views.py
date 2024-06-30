@@ -11,6 +11,8 @@ from player_tracking.models import (
     AnnualRoster,
     MLBDraftDate,
     SummerAssign,
+    SummerLeague,
+    SummerTeam,
 )
 from live_game_blog.models import Team
 from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm, SummerAssignForm
@@ -152,7 +154,18 @@ def add_roster_year(request, player_id):
 @login_required
 def add_summer_assignment(request, player_id):
     if request.method== "POST":
-        raise ValueError("This is a POST method")
+        form = SummerAssignForm(request.POST)
+        if form.is_valid():
+            add_assign = SummerAssign.objects.create(
+                player=Player.objects.get(pk=player_id),
+                summer_year=form.cleaned_data["summer_year"],
+                summer_league=form.cleaned_data["summer_league"],
+                summer_team=form.cleaned_data["summer_team"],
+                source=form.cleaned_data["source"],
+                citation=form.cleaned_data["citation"],
+            )
+            add_assign.save()
+        return redirect(reverse("player_rosters", args=[player_id]))
     else:
         form = SummerAssignForm(
             initial={

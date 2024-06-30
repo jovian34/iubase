@@ -442,3 +442,12 @@ def draft_combine_attendees(request, this_year):
         "count": count,
     }
     return render(request, "player_tracking/draft_combine_attendees.html", context)
+
+
+def summer_assignments(request, summer_year):
+    assignments = SummerAssign.objects.filter(summer_year=summer_year).order_by("player")
+    context = {
+        "page_title": f"{summer_year} College Summer League Assignments for current and former Indiana players",
+        "assignments": assignments,
+    }
+    return render(request, "player_tracking/summer_assignments.html", context)

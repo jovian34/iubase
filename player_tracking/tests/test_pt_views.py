@@ -493,3 +493,9 @@ def test_add_summer_assignment_post_adds_assignment(client, players, summer_leag
     )
     assert response.status_code == 200
     assert "Green Bay" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_summer_assignments_page_renders(client, players, summer_assign, summer_leagues, summer_teams):
+    response = client.get(reverse("summer_assignments", args=["2024"]))
+    assert response.status_code == 200

@@ -28,6 +28,11 @@ urlpatterns = [
         views.projected_players_fall,
         name="projected_players_fall",
     ),
+    path(
+        "summer_assignments/<summer_year>/",
+        views.summer_assignments,
+        name="summer_assignments",
+    ),
     # partials
     path("add_roster_year/<player_id>/", views.add_roster_year, name="add_roster_year"),
     path("add_transaction/<player_id>/", views.add_transaction, name="add_transaction"),

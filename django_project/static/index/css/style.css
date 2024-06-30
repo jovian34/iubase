@@ -12,7 +12,7 @@ html {
 }
 
 body {
-  background-color: #dbdfbb;
+  background-color: #fcfbf4;
   background-image: url("https://iubase.com/wp-content/uploads/2020/06/turf.jpg");
   color: black;
 }
@@ -27,7 +27,7 @@ button {
   border-color: #990000;
   border-style: solid;
   border-radius: 5%;
-  background-color: #dbdfbb;
+  background-color: #fcfbf4;
   color: #990000;
   margin: 5px;
 }
@@ -61,7 +61,7 @@ h3 {
 
 /*--------HEADER---------------*/
 #headerWrapper {
-  background-color: #dbdfbb;
+  background-color: #fcfbf4;
 }
 
 .blog-small-header {
@@ -96,7 +96,7 @@ h3 {
 /*--------NAVIGATION------------*/
 .nav-buttons {
   text-align: center;
-  background-color: #dbdfbb;
+  background-color: #fcfbf4;
   color: #222;
   border-style: solid;
   border-width: 1%;
@@ -127,7 +127,7 @@ a:active {
 }
 
 .column-6 {
-  background-color: #dbdfbb;
+  background-color: #fcfbf4;
 }
 
 .column-2 {
@@ -184,7 +184,7 @@ figure.col4 img, figure.col6 img, figure.col3full img, figure.col4full img, figu
 }
 
 .altTable {
-  background-color: #dbdfbb;
+  background-color: #fcfbf4;
 }
 
 #contentWrapper {
@@ -213,9 +213,12 @@ table, th, td {
   height: 100%;
 }
 
+.solid-bkg {
+  background-color: #fcfbf4;
+}
+
 .team-logo {
-  width: 128px;
-  height: 128px;
+  width: 50%;
 }
 
 /*----- 12 COLUMN LAYOUT -----*/

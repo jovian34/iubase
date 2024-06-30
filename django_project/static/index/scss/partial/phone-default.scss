@@ -213,10 +213,13 @@ table, th, td {
 	height: 100%; 
 }
 
+.solid-bkg {
+	background-color: $body-background-color;
+}
+
 
 .team-logo {
-	width: 128px;
-	height: 128px;
+	width: 50%;
 }
 
 /*----- 12 COLUMN LAYOUT -----*/

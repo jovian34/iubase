@@ -140,5 +140,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.80"  # significant style changes ATP 2024-06-30
+project_version = "0.0.81"  # significant style changes ATP 2024-06-30
 os.environ.setdefault("PROJECT_VERSION", project_version)

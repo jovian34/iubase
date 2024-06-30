@@ -31,4 +31,5 @@ urlpatterns = [
     # partials
     path("add_roster_year/<player_id>/", views.add_roster_year, name="add_roster_year"),
     path("add_transaction/<player_id>/", views.add_transaction, name="add_transaction"),
+    path("add_summer_assignment/<player_id>/", views.add_summer_assignment, name="add_summer_assignment"),
 ]

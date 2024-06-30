@@ -21,8 +21,8 @@ def summer_teams():
         mascot="Rockers",
     )
     usa = SummerTeam.objects.create(
-        name="Team USA",
-        mascot="Americans",
+        name="USA",
+        mascot="Collegiate National Team",
     )
     SummerTeamObj = namedtuple("SummerTeamObj", "gb usa")
     return SummerTeamObj(gb=gb, usa=usa)
@@ -30,11 +30,11 @@ def summer_teams():
 
 @pytest.fixture
 def summer_assign(players, summer_leagues, summer_teams):
-    dt_gb_2024 = SummerAssign.objects.create(
+    dt_usa_2024 = SummerAssign.objects.create(
         player=players.dt2022,
         summer_year=2024,
         summer_league=summer_leagues.in_fr,
         summer_team=summer_teams.usa,
     )
-    SummerAssignObj = namedtuple("SummerAssignObj", "dt_gb_2024")
-    return SummerAssignObj(dt_gb_2024=dt_gb_2024)
+    SummerAssignObj = namedtuple("SummerAssignObj", "dt_usa_2024")
+    return SummerAssignObj(dt_usa_2024=dt_usa_2024)

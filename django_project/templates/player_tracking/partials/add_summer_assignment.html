@@ -1,0 +1,6 @@
+
+<form action="{% url "add_summer_assignment" player_id  %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" value="Submit">Add Summer Assignment</button>
+</form>

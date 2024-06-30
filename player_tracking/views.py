@@ -13,7 +13,7 @@ from player_tracking.models import (
     SummerAssign,
 )
 from live_game_blog.models import Team
-from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm
+from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm, SummerAssignForm
 from player_tracking.choices import (
     POSITION_CHOICES,
     LEFT,
@@ -145,6 +145,27 @@ def add_roster_year(request, player_id):
         return render(
             request,
             "player_tracking/partials/add_roster_year.html",
+            context,
+        )
+
+
+@login_required
+def add_summer_assignment(request, player_id):
+    if request.method== "POST":
+        raise ValueError("This is a POST method")
+    else:
+        form = SummerAssignForm(
+            initial={
+                "summer_year": timezone.now().year,
+            },
+        )
+        context = {
+            "player_id": player_id,
+            "form": form,
+        }
+        return render(
+            request,
+            "player_tracking/partials/add_summer_assignment.html",
             context,
         )
 

@@ -133,7 +133,7 @@ def test_player_rosters_renders_summer_teams(
     assert response.status_code == 200
     assert "Devin Taylor" in str(response.content)
     assert "Summer Ball:" in str(response.content)
-    assert "2024: Team USA Americans of the International Friendship League" in str(
+    assert "2024: USA Collegiate National Team of the International Friendship League" in str(
         response.content
     )
 
@@ -459,3 +459,22 @@ def test_draft_combine_attendees_renders(
     assert response.status_code == 200
     assert "Nick Mitchell" in str(response.content)
     assert "Count of Players: 1" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_summer_assignment_get_redirects_not_logged_in(client, players, summer_leagues, summer_teams):
+    response = client.get(
+        reverse("add_summer_assignment", args=[players.dt2022]),
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "Password" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_summer_assignment_get_renders_form(client, players, summer_leagues, summer_teams, logged_user_schwarbs):
+    response = client.get(
+        reverse("add_summer_assignment", args=[str(players.dt2022.pk)])
+    )
+    assert response.status_code == 200
+    assert "Summer Year" in str(response.content)

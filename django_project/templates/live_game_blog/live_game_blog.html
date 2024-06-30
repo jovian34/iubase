@@ -29,8 +29,14 @@
     {% if game.live_stats %}<a href="{{ game.live_stats}}">live stats</a>{% endif %}
     </p>
 
-    <p>{{ game.away_team }}: <a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a><p>
-    <p>{{ game.home_team }}: <a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a></p>
+    <p><img class="team-logo" src="{{ game.away_team.logo }}">
+    {{ game.away_team }}: <a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a><p>
+    <p><img class="team-logo" src="{{ game.home_team.logo }}">
+    {{ game.home_team }}: <a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a></p>
+
+    
+            
+            
 
 {% endblock %}
 

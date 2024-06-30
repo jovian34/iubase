@@ -28,13 +28,14 @@
         </a>{% block header %}<h1>iubase.com Apps</h1>{% endblock %}
       </div>
 
-      <div class="column-3"></div>
+      <div class="column-3">
+        <button><a href="https://iubase.com" target="_blank">Main iubase.com site</a></button>
+        <button><a href="{% url "index" %}">iubase.com Apps</a></button>
+      </div>
       
     </div><!-- end of banner -->
 
     <div class="column-12">
-        <button><a href="https://iubase.com" target="_blank">Main iubase.com site</a></button>
-        <button><a href="{% url "index" %}">iubase.com Apps</a></button>
         <br clear="both">
     </div>
 

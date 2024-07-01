@@ -425,16 +425,18 @@ def draft_combine_attendees(request, this_year):
     count = 0
     players = Player.objects.all().order_by("last")
     for player in players:
-        last_transaction = Transaction.objects.filter(player=player).last()
-        if player.hsgrad_year == this_year:
-            player.group = "Freshman"
-        else:
-            player.group = "College"
-
         player.combine = False
+        last_transaction = Transaction.objects.filter(player=player).last()
         if last_transaction.trans_event == "Attending MLB Draft Combine":
             player.combine = True
             count += 1
+        else:
+            continue
+        
+        if player.hsgrad_year == int(this_year):
+            player.group = "Freshman"
+        else:
+            player.group = "College"
 
     context = {
         "players": players,

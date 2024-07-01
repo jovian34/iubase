@@ -54,8 +54,13 @@ def transactions(players):
     )
     gh_verbal = Transaction.objects.create(
         player=players.gh2024,
-        trans_event="Verbal Commitment from High School",
-        trans_date=date(year=2022, month=5, day=11),
+        trans_event="Attending MLB Draft Combine",
+        trans_date=date(year=2024, month=6, day=14),
+    )
+    gh_combine = Transaction.objects.create(
+        player=players.gh2024,
+        trans_event="Attending MLB Draft Combine",
+        trans_date=date(year=2024, month=6, day=14),
     )
     cg_port = Transaction.objects.create(
         player=players.cg2020,
@@ -64,7 +69,7 @@ def transactions(players):
     )
     TransObj = namedtuple(
         "TransObj",
-        "dt_verbal dt_nli be_portal br_nli nm_verbal nm_combine aw_nli jm_verb_port gh_verbal cg_port",
+        "dt_verbal dt_nli be_portal br_nli nm_verbal nm_combine aw_nli jm_verb_port gh_verbal gh_combine cg_port",
     )
     return TransObj(
         dt_verbal=dt_verbal,
@@ -76,5 +81,6 @@ def transactions(players):
         aw_nli=aw_nli,
         jm_verb_port=jm_verb_port,
         gh_verbal=gh_verbal,
+        gh_combine=gh_combine,
         cg_port=cg_port,
     )

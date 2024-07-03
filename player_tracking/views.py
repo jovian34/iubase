@@ -297,11 +297,11 @@ def portal(request, portal_year):
     outgoing = Transaction.objects.filter(
         trans_event="Entered Transfer Portal",
         trans_date__year=portal_year,
-    )
+    ).order_by("player__last")
     incoming = Transaction.objects.filter(
         trans_event="Verbal Commitment from College",
         trans_date__year=portal_year,
-    )
+    ).order_by("player__last")
     context = {
         "outgoing": outgoing,
         "incoming": incoming,
@@ -419,24 +419,24 @@ def projected_players_fall(request, fall_year):
 
 
 def draft_combine_attendees(request, this_year):
-    draft_date = MLBDraftDate.objects.get(fall_year=this_year)
+    draft_date = MLBDraftDate.objects.get(fall_year=int(this_year))
     draft_date = draft_date.latest_draft_day
 
     count = 0
     players = Player.objects.all().order_by("last")
     for player in players:
         player.combine = False
-        last_transaction = Transaction.objects.filter(player=player).last()
-        if last_transaction.trans_event == "Attending MLB Draft Combine":
-            player.combine = True
-            count += 1
-        else:
-            continue
-        
-        if player.hsgrad_year == int(this_year):
-            player.group = "Freshman"
-        else:
-            player.group = "College"
+        transactions = Transaction.objects.filter(player=player)
+        for trans in transactions:
+            if trans.trans_event == "Attending MLB Draft Combine" and trans.trans_date.year == int(this_year):
+                player.combine = True
+                player.position = trans.primary_position
+                count += 1     
+                if player.hsgrad_year == int(this_year):
+                    player.group = "Freshman"
+                else:
+                    player.group = "College"                
+                   
 
     context = {
         "players": players,

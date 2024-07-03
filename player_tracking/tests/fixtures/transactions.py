@@ -15,22 +15,22 @@ def transactions(players):
     dt_verbal = Transaction.objects.create(
         player=players.dt2022,
         trans_event="Verbal Commitment from High School",
-        trans_date=datetime(year=2021, month=3, day=11, hour=12, tzinfo=current_tz),
+        trans_date=date(year=2021, month=3, day=11),
     )
     dt_nli = Transaction.objects.create(
         player=players.dt2022,
         trans_event="National Letter of Intent Signed",
-        trans_date=datetime(year=2021, month=11, day=7, hour=12, tzinfo=current_tz),
+        trans_date=date(year=2021, month=11, day=7),
     )
     br_nli = Transaction.objects.create(
         player=players.br2022,
         trans_event="National Letter of Intent Signed",
-        trans_date=datetime(year=2021, month=11, day=7, hour=12, tzinfo=current_tz),
+        trans_date=date(year=2021, month=11, day=7),
     )
     nm_verbal = Transaction.objects.create(
         player=players.nm2021,
         trans_event="Verbal Commitment from College",
-        trans_date=datetime(year=2023, month=11, day=7, hour=12, tzinfo=current_tz),
+        trans_date=date(year=2023, month=11, day=7),
     )
     nm_combine = Transaction.objects.create(
         player=players.nm2021,
@@ -40,7 +40,7 @@ def transactions(players):
     aw_nli = Transaction.objects.create(
         player=players.aw2023,
         trans_event="National Letter of Intent Signed",  # need to aling with current choices
-        trans_date=datetime(year=2022, month=11, day=7, hour=12, tzinfo=current_tz),
+        trans_date=date(year=2022, month=11, day=7),
     )
     be_portal = Transaction.objects.create(
         player=players.be2021,
@@ -54,8 +54,8 @@ def transactions(players):
     )
     gh_verbal = Transaction.objects.create(
         player=players.gh2024,
-        trans_event="Attending MLB Draft Combine",
-        trans_date=date(year=2024, month=6, day=14),
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(year=2022, month=3, day=11),
     )
     gh_combine = Transaction.objects.create(
         player=players.gh2024,

@@ -20,6 +20,7 @@ LEFT_TUPLES = [
     ("Drafted", "Drafted"),
     ("Signed Professional Contract", "Signed Professional Contract"),
     ("No Longer With Program - Other Reason", "No Longer With Program - Other Reason"),
+    ("Not playing but with the program in another role", "Not playing but with the program in another role"),
 ]
 
 TRANSACTION_CHOICES = JOINED_TUPLES + LEFT_TUPLES

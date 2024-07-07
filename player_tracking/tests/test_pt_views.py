@@ -300,8 +300,9 @@ def test_fall_roster_renders(client, players, teams, annual_rosters):
     response = client.get(reverse("fall_roster", args=["2023"]))
     print(response.content)
     assert response.status_code == 200
-    assert "Total Roster Length: 3" in str(response.content)
+    assert "Total Roster Length: 4" in str(response.content)
     assert "Fall 2023 Roster" in str(response.content)
+    assert "Nathan Ball" in str(response.content)
     assert "Nick Mitchell" in str(response.content)
     assert "Jack Moffitt" in str(response.content)
     assert "Brayden" not in str(response.content)
@@ -378,6 +379,22 @@ def test_set_last_spring_properly_limits_redshirt_years(
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
     assert "Jack Moffitt 2020-2025" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_set_last_spring_properly_ends_eligible_player_who_is_now_staff(
+    client, players, annual_rosters, transactions, logged_user_schwarbs
+):
+    """
+    Nathan Ball is a freshman player in this test who fails to make 
+    the spring roster, and becomes a manager instead.
+    """
+    response = client.get(reverse("players"), follow=True)
+    assert "Nathan Ball 2024-None" in str(response.content)
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("players"), follow=True)
+    assert "Nathan Ball 2024-2024" in str(response.content)
 
 
 @pytest.mark.django_db

@@ -23,6 +23,10 @@ LEFT_TUPLES = [
     ("Not playing but with the program in another role", "Not playing but with the program in another role"),
 ]
 
+AFTER_TUPLES = [
+    # Make a distinction between transaction tripping event and post-leaving information
+]
+
 TRANSACTION_CHOICES = JOINED_TUPLES + LEFT_TUPLES
 LEFT = [left_tuple[0] for left_tuple in LEFT_TUPLES]
 JOINED = [joined_tuple[0] for joined_tuple in JOINED_TUPLES]

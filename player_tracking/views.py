@@ -318,7 +318,7 @@ def calc_last_spring(request):
     errors = []
     for player in players:
         this_player = Player.objects.get(pk=player.pk)
-        last_transaction = (
+        last_transaction = ( # rework to ignore "after" transactions
             Transaction.objects.filter(player=player).order_by("-trans_date").first()
         )
         if not last_transaction:

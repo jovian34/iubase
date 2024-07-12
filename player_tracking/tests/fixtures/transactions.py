@@ -38,7 +38,7 @@ def transactions(players):
     )
     aw_nli = Transaction.objects.create(
         player=players.aw2023,
-        trans_event="National Letter of Intent Signed",  # need to aling with current choices
+        trans_event="National Letter of Intent Signed",
         trans_date=date(year=2022, month=11, day=7),
     )
     be_portal = Transaction.objects.create(

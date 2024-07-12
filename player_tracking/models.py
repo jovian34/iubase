@@ -39,7 +39,13 @@ class Transaction(models.Model):
     trans_date = models.DateField(db_default=Now())
     citation = models.URLField(null=True, blank=True)
     primary_position = models.CharField(null=True, blank=True, choices=POSITION_CHOICES)
-
+    other_team = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    
     def __str__(self) -> str:
         return f"{self.player.first} {self.player.last} {self.trans_event} on {self.trans_date:%B %Y}"
 

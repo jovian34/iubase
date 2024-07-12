@@ -18,18 +18,22 @@ LEFT_TUPLES = [
     ("Verbal Commitment to Transfer College", "Verbal Commitment to Transfer College"),
     ("Attending MLB Draft Combine", "Attending MLB Draft Combine"),
     ("Drafted", "Drafted"),
-    ("Signed Professional Contract", "Signed Professional Contract"),
+    ("Signed Professional Contract - Undrafted", "Signed Professional Contract - Undrafted"),
     ("No Longer With Program - Other Reason", "No Longer With Program - Other Reason"),
     ("Not playing but with the program in another role", "Not playing but with the program in another role"),
 ]
 
 AFTER_TUPLES = [
-    # Make a distinction between transaction tripping event and post-leaving information
+    ("Drafted former IU", "Drafted former IU"),
+    ("Signed Professional Contract", "Signed Professional Contract"),
+    ("Verbal Commitment to New College", "Verbal Commitment to New College"),
+    ("Entered Transfer Portal - former IU", "Entered Transfer Portal - former IU"),
 ]
 
-TRANSACTION_CHOICES = JOINED_TUPLES + LEFT_TUPLES
+TRANSACTION_CHOICES = JOINED_TUPLES + LEFT_TUPLES + AFTER_TUPLES
 LEFT = [left_tuple[0] for left_tuple in LEFT_TUPLES]
 JOINED = [joined_tuple[0] for joined_tuple in JOINED_TUPLES]
+AFTER = [after_tuple[0] for after_tuple in AFTER_TUPLES]
 
 POSITION_CHOICES = [
     ("Pitcher", "Pitcher"),

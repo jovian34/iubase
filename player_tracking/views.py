@@ -20,6 +20,7 @@ from player_tracking.choices import (
     POSITION_CHOICES,
     LEFT,
     JOINED,
+    AFTER,
     ROSTERED,
     GREY_SHIRT,
     RED_SHIRT,
@@ -318,9 +319,14 @@ def calc_last_spring(request):
     errors = []
     for player in players:
         this_player = Player.objects.get(pk=player.pk)
-        last_transaction = ( # rework to ignore "after" transactions
-            Transaction.objects.filter(player=player).order_by("-trans_date").first()
-        )
+        players_transactions = Transaction.objects.filter(player=player).order_by("-trans_date")
+        last_transaction = None
+        for transaction in players_transactions:
+            if transaction.trans_event in AFTER:
+                continue
+            else:
+                last_transaction = transaction
+                break
         if not last_transaction:
             errors.append(f"missing transaction for {player.first} {player.last}")
         if last_transaction.trans_event in LEFT:

@@ -10,7 +10,6 @@ from .players import players
 
 @pytest.fixture
 def transactions(players):
-    current_tz = timezone.get_current_timezone()
     current_dt = datetime.now()
     dt_verbal = Transaction.objects.create(
         player=players.dt2022,

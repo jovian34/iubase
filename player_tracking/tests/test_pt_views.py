@@ -267,6 +267,7 @@ def test_add_roster_year_partial_post_asks_for_password_not_logged_in(
     assert "Password" in str(response.content)
 
 
+@pytest.mark.django_db
 def test_pt_index_renders(client):
     response = client.get(reverse("pt_index"))
     assert response.status_code == 200

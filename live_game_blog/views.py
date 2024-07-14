@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.db.models import Q
 
 from accounts.models import CustomUser
+from index.views import save_traffic_data
 from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
 from live_game_blog.forms import (
     BlogAndScoreboardForm,
@@ -23,6 +24,7 @@ def games(request):
         "page_title": "iubase.com Live Game Blog Games",
         "games": games,
     }
+    save_traffic_data(request=request, page=context["page_title"])
     return render(request, "live_game_blog/games.html", context)
 
 
@@ -51,6 +53,7 @@ def live_game_blog(request, game_pk):
         "game": game,
         "last_score": last_score,
     }
+    save_traffic_data(request=request, page=game.__str__())
     return render(request, "live_game_blog/live_game_blog.html", context)
 
 

@@ -374,15 +374,41 @@ def calc_last_spring(request):
     return render(request, "player_tracking/calc_last_spring.html", context)
 
 
-def projected_players_fall(request, fall_year):
-    players = Player.objects.filter(last_spring__gte=(int(fall_year) + 1)).order_by(
-        "last"
-    )
+def sort_by_positions(players):
+    lhp = {"position": "Left Handed Pitcher", "players": [],}
+    rhp = {"position": "Right Handed Pitcher", "players": [],}
+    catcher = {"position": "Catcher", "players": [],}
+    infielder = {"position": "Infielder", "players": [],}
+    outfielder = {"position": "Outfielder", "players": [],}
+    dh = {"position": "Designated Hitter", "players": [],}
+    for player in players:
+        if player.throws == "Left" and player.position == "Pitcher":
+            lhp["players"].append(player)
+        elif player.throws == "Right" and player.position == "Pitcher":
+            rhp["players"].append(player)
+        elif player.position == "Catcher":
+            catcher["players"].append(player)
+        elif player.position in ["First Base", "Second Base", "Third Base", "Shortstop"]:
+            infielder["players"].append(player)
+        elif player.position in ["Centerfield", "Corner Outfield"]:
+            outfielder["players"].append(player)
+        else:
+            dh["players"].append(player)
+    positions = [lhp, rhp, catcher, infielder, outfielder, dh]
+    for position in positions:
+        position["count"] = len(position["players"])
+    return positions
 
+
+def projected_players_fall(request, fall_year):
     try:
         draft_date = MLBDraftDate.objects.get(fall_year=fall_year)
     except MLBDraftDate.DoesNotExist:
         return redirect("pt_index")
+    
+    players = Player.objects.filter(last_spring__gte=(int(fall_year) + 1)).order_by(
+        "last"
+    )
 
     draft_pending = True
     if draft_date.latest_draft_day < datetime.now().date():
@@ -414,12 +440,16 @@ def projected_players_fall(request, fall_year):
             for transaction in transactions:
                 if transaction.primary_position:
                     player.position = transaction.primary_position
-                    continue
+                    break
+                else:
+                    player.position = None
     count = len(players)
+    positions = sort_by_positions(players)
     context = {
         "players": players,
         "page_title": f"Projected Players For Fall {fall_year}",
         "count": count,
+        "positions": positions,    
     }
     return render(request, "player_tracking/projected_players_fall.html", context)
 

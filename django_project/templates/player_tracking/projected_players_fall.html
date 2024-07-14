@@ -13,8 +13,40 @@
         <a href="{% url "add_player" %}"><button>Add Player</button></a>
         {% endif %}
 
-        <h3>Count of Players: {{ count }}</h3>
+        <h3>Total Players: {{ count }}</h3>
+    </div>
+</div>
+<br clear="both">
 
+
+{% for position in positions %}
+{% if position.count %}
+    <div class="column-12">
+        <div class="column-3"></div>
+        <div class="column-6">                
+            <h3>{{ position.position }}s: {{ position.count }}</h3>                
+            <ul>
+                {% for player in position.players %}
+                    <li>
+                        <h2><a href="{% url "player_rosters" player.pk %}">{{player.first}} {{player.last}}</a></h2>
+                        {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
+                        <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p>        
+                    </li>
+                    <hr>
+                {% endfor %}
+            </ul>                
+        </div>
+    </div>
+    <br clear="both">
+{% endif %}
+{% endfor %}
+
+
+<div class="column-12">
+    <div class="column-3"></div>
+    <div class="column-6">   
+
+        <h3>Alphabetical Listing</h3>
         <ul>
         {% for player in players %}
             <li>

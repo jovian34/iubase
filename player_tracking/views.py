@@ -489,7 +489,7 @@ def draft_combine_attendees(request, this_year):
         "page_title": f"All players in the {this_year} MLB Draft Combine",
         "count": count,
     }
-    save_traffic_data(request=request, page=context["page_title"])
+    # save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/draft_combine_attendees.html", context)
 
 
@@ -499,5 +499,5 @@ def summer_assignments(request, summer_year):
         "page_title": f"{summer_year} College Summer League Assignments for current and former Indiana players",
         "assignments": assignments,
     }
-    save_traffic_data(request=request, page=context["page_title"])
+    # save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/summer_assignments.html", context)

@@ -23,5 +23,5 @@ def save_traffic_data(request, page):
 
 
 def index(request):              
-    save_traffic_data(request, page="Main Index")
+    # save_traffic_data(request, page="Main Index")
     return render(request, "index/index.html")

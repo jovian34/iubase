@@ -35,7 +35,7 @@ def players(request):
         "players": players,
         "page_title": "Players",
     }
-    save_traffic_data(request=request, page=context["page_title"])
+    # save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/players.html", context)
 
 
@@ -53,7 +53,7 @@ def pt_index(request):
         "page_title": "Player Tracking",
         "this_year": str(today.year),
     }
-    save_traffic_data(request=request, page=context["page_title"])
+    # save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/pt_index.html", context)
 
 
@@ -114,7 +114,7 @@ def player_rosters(request, player_id):
         "transactions": transactions,
         "summers": summers,
     }
-    save_traffic_data(request=request, page=context["page_title"])
+    # save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/player_rosters.html", context)
 
 
@@ -236,7 +236,7 @@ def fall_depth_chart(request, fall_year):
         "page_title": f"Fall {fall_year} Available Depth Chart",
         "positions": positions,
     }
-    save_traffic_data(request=request, page=context["page_title"])
+    # save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/depth_chart.html", context)
 
 
@@ -257,7 +257,7 @@ def spring_depth_chart(request, spring_year):
         "page_title": page_title,
         "positions": positions,
     }
-    save_traffic_data(request=request, page=context["page_title"])
+    # save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/depth_chart.html", context)
 
 
@@ -273,7 +273,7 @@ def fall_roster(request, fall_year):
         "page_title": f"Fall {fall_year} Roster",
         "total": len(players),
     }
-    save_traffic_data(request=request, page=context["page_title"])
+    # save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/roster.html", context)
 
 
@@ -298,7 +298,7 @@ def spring_roster(request, spring_year):
         "page_title": page_title,
         "total": len(players),
     }
-    save_traffic_data(request=request, page=context["page_title"])
+    # save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/roster.html", context)
 
 
@@ -318,7 +318,7 @@ def portal(request, portal_year):
         "total_out": str(len(outgoing)),
         "total_in": str(len(incoming)),
     }
-    save_traffic_data(request=request, page=context["page_title"])
+    # save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/portal.html", context)
 
 

@@ -460,7 +460,7 @@ def projected_players_fall(request, fall_year):
         "count": count,
         "positions": positions,    
     }
-    save_traffic_data(request=request, page=context["page_title"])
+    # save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/projected_players_fall.html", context)
 
 

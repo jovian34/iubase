@@ -6,3 +6,4 @@
 .vscode/launch.json
 *.pyc
 .coverage
+*.log

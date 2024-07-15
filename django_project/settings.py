@@ -81,6 +81,25 @@ DATABASES = {
     }
 }
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": f"{BASE_DIR}/logging.log",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "WARNING",
+            "propagate": True,
+        },
+    },
+}
+
 
 # Password validation
 
@@ -140,5 +159,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.88"  # PT and LGB added traffic counter ATP 2024-07-11
+project_version = "0.0.89"  # comment-out all but 1 traffic count & added logger ATP 2024-07-15
 os.environ.setdefault("PROJECT_VERSION", project_version)

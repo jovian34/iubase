@@ -298,7 +298,7 @@ def spring_roster(request, spring_year):
         "page_title": page_title,
         "total": len(players),
     }
-    # save_traffic_data(request=request, page=context["page_title"])
+    save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/roster.html", context)
 
 

@@ -377,6 +377,7 @@ def calc_last_spring(request):
     players_updated = Player.objects.all().order_by("last")
     context = {
         "players": players_updated,
+        "error_exists": bool(len(errors)),
         "errors": errors,
         "page_title": "Errors From Last Spring Calculations",
     }

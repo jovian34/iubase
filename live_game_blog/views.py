@@ -24,7 +24,7 @@ def games(request):
         "page_title": "iubase.com Live Game Blog Games",
         "games": games,
     }
-    # save_traffic_data(request=request, page=context["page_title"])
+    save_traffic_data(request=request, page=context["page_title"])
     return render(request, "live_game_blog/games.html", context)
 
 
@@ -53,7 +53,7 @@ def live_game_blog(request, game_pk):
         "game": game,
         "last_score": last_score,
     }
-    # save_traffic_data(request=request, page=game.__str__())
+    save_traffic_data(request=request, page=game.__str__())
     return render(request, "live_game_blog/live_game_blog.html", context)
 
 

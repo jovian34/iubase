@@ -473,6 +473,7 @@ def draft_combine_attendees(request, this_year):
     players = Player.objects.all().order_by("last")
     for player in players:
         player.combine = False
+        player.drafted = False
         transactions = Transaction.objects.filter(player=player)
         for trans in transactions:
             if trans.trans_event == "Drafted" and trans.trans_date.year == int(this_year):

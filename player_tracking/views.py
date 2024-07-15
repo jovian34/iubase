@@ -475,6 +475,8 @@ def draft_combine_attendees(request, this_year):
         player.combine = False
         transactions = Transaction.objects.filter(player=player)
         for trans in transactions:
+            if trans.trans_event == "Drafted" and trans.trans_date.year == int(this_year):
+                player.drafted == True
             if trans.trans_event == "Attending MLB Draft Combine" and trans.trans_date.year == int(this_year):
                 player.combine = True
                 player.position = trans.primary_position
@@ -486,6 +488,7 @@ def draft_combine_attendees(request, this_year):
                    
 
     context = {
+        "this_year": this_year,
         "players": players,
         "page_title": f"All players in the {this_year} MLB Draft Combine",
         "count": count,

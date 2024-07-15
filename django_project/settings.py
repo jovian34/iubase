@@ -1,8 +1,10 @@
 from dotenv import load_dotenv
 from pathlib import Path
+from datetime import date
 import os
 
 load_dotenv()
+today = date.today()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,7 +90,7 @@ LOGGING = {
         "file": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": f"{BASE_DIR}/logging.log",
+            "filename": f"{BASE_DIR}/logs/{today}_logging.log",
         },
     },
     "loggers": {

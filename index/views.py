@@ -16,7 +16,7 @@ def save_traffic_data(request, page):
     if not request.user.is_authenticated:
         try:
             user_agent = request.headers.get("user-agent")
-        except KeyError:
+        except:
             user_agent = "Apple device"
         traffic = TrafficCounter.objects.create(
                 page=page,

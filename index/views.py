@@ -14,14 +14,9 @@ def get_client_ip(request):
 
 def save_traffic_data(request, page):
     if not request.user.is_authenticated:
-        try:
-            ip = get_client_ip(request)
-        except:
-            ip = "Apple Device"
-
         traffic = TrafficCounter.objects.create(
                 page=page,
-                ip=ip,
+                ip=get_client_ip(request),
                 user_agent=request.headers.get("user-agent"),
             )
         traffic.save()

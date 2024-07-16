@@ -2,6 +2,7 @@ import pytest
 
 from datetime import datetime
 from player_tracking.tests.fixtures.players import players
+from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.mlb_draft_date import mlb_draft_date
@@ -44,6 +45,12 @@ def test_transaction_model_string_def(client, transactions):
 
 
 @pytest.mark.django_db
+def test_transaction_model_get_prof_or(client, transactions):
+    assert transactions.nm_draft.draft_round == 4
+    assert transactions.nm_draft.prof_org.city == "Philadelphia"
+
+
+@pytest.mark.django_db
 def test_annual_roster_model_stored_all_fields(client, annual_rosters, teams):
     assert annual_rosters.dt_2024.spring_year == 2024
     assert annual_rosters.dt_2023.player.first == "Devin"
@@ -76,3 +83,14 @@ def test_summer_team_string_def(client, summer_teams):
 @pytest.mark.django_db
 def test_summer_assign_string_def(client, summer_assign):
     assert str(summer_assign.dt_usa_2024) == "Devin Taylor 2024 USA"
+
+
+@pytest.mark.django_db
+def test_prof_org_string_def(client, prof_orgs):
+    assert str(prof_orgs.d_backs) == "Arizona Diamondbacks"
+
+
+@pytest.mark.django_db
+def test_prof_org_model_stored_all_fields(client, prof_orgs):
+    assert prof_orgs.braves.city == "Atlanta"
+    assert prof_orgs.phillies.mascot == "Phillies"

@@ -5,11 +5,12 @@ from django.utils import timezone
 from datetime import datetime, date
 
 from player_tracking.models import Transaction
-from .players import players
+from player_tracking.tests.fixtures.players import players
+from player_tracking.tests.fixtures.prof_org import prof_orgs
 
 
 @pytest.fixture
-def transactions(players):
+def transactions(players, prof_orgs):
     current_dt = datetime.now()
     dt_verbal = Transaction.objects.create(
         player=players.dt2022,
@@ -35,6 +36,13 @@ def transactions(players):
         player=players.nm2021,
         trans_event="Attending MLB Draft Combine",
         trans_date=date(year=2024, month=6, day=14),
+    )
+    nm_draft = Transaction.objects.create(
+        player=players.nm2021,
+        trans_event="Drafted",
+        trans_date=date(year=2024, month=7, day=15),
+        prof_org=prof_orgs.phillies,
+        draft_round=4,
     )
     aw_nli = Transaction.objects.create(
         player=players.aw2023,
@@ -78,7 +86,7 @@ def transactions(players):
     )
     TransObj = namedtuple(
         "TransObj",
-        "dt_verbal dt_nli be_portal br_nli nm_verbal nm_combine aw_nli jm_verb_port gh_verbal gh_combine cg_port nb_verbal nb_diff_role",
+        "dt_verbal dt_nli be_portal br_nli nm_verbal nm_combine nm_draft aw_nli jm_verb_port gh_verbal gh_combine cg_port nb_verbal nb_diff_role",
     )
     return TransObj(
         dt_verbal=dt_verbal,
@@ -87,11 +95,12 @@ def transactions(players):
         br_nli=br_nli,
         nm_verbal=nm_verbal,
         nm_combine=nm_combine,
+        nm_draft=nm_draft,
         aw_nli=aw_nli,
         jm_verb_port=jm_verb_port,
         gh_verbal=gh_verbal,
         gh_combine=gh_combine,
         cg_port=cg_port,
         nb_verbal=nb_verbal,
-        nb_diff_role=nb_diff_role
+        nb_diff_role=nb_diff_role,
     )

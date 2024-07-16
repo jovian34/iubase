@@ -23,6 +23,7 @@ urlpatterns = [
         views.draft_combine_attendees,
         name="draft_combine_attendees",
     ),
+    path("drafted_players/<draft_year>/", views.drafted_players, name="drafted_players",),
     path(
         "projected_players_fall/<fall_year>/",
         views.projected_players_fall,

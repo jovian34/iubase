@@ -5,6 +5,7 @@ from player_tracking.models import (
     Transaction,
     AnnualRoster,
     MLBDraftDate,
+    ProfOrg,
     SummerLeague,
     SummerTeam,
     SummerAssign,
@@ -59,6 +60,15 @@ class MLBDraftDateAdmin(admin.ModelAdmin):
 class SummerLeagueAdmin(admin.ModelAdmin):
     model = SummerLeague
     list_display = ("league",)
+
+
+@admin.register(ProfOrg)
+class SummerTeamAdmin(admin.ModelAdmin):
+    model = ProfOrg
+    list_display = (
+        "city",
+        "mascot",
+    )
 
 
 @admin.register(SummerTeam)

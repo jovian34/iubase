@@ -473,11 +473,8 @@ def draft_combine_attendees(request, this_year):
     players = Player.objects.all().order_by("last")
     for player in players:
         player.combine = False
-        player.drafted = False
         transactions = Transaction.objects.filter(player=player)
         for trans in transactions:
-            if trans.trans_event == "Drafted" and trans.trans_date.year == int(this_year):
-                player.drafted == True
             if trans.trans_event == "Attending MLB Draft Combine" and trans.trans_date.year == int(this_year):
                 player.combine = True
                 player.position = trans.primary_position
@@ -485,8 +482,7 @@ def draft_combine_attendees(request, this_year):
                 if player.hsgrad_year == int(this_year):
                     player.group = "Freshman"
                 else:
-                    player.group = "College"                
-                   
+                    player.group = "College"
 
     context = {
         "this_year": this_year,
@@ -506,3 +502,34 @@ def summer_assignments(request, summer_year):
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/summer_assignments.html", context)
+
+
+def drafted_players(request, draft_year):
+    draft_date = MLBDraftDate.objects.get(fall_year=int(draft_year))
+    draft_date = draft_date.latest_draft_day
+
+    count = 0
+    players = Player.objects.all().order_by("last")
+    for player in players:
+        player.drafted = False
+        transactions = Transaction.objects.filter(player=player)
+        for trans in transactions:
+            if trans.trans_event == "Drafted" and trans.trans_date.year == int(draft_year):
+                player.drafted = True
+                player.position = trans.primary_position
+                player.draft_round = trans.draft_round
+                player.prof_org = trans.prof_org.__str__()
+                count += 1     
+                if player.hsgrad_year == int(draft_year):
+                    player.group = "Freshman"
+                else:
+                    player.group = "College"
+
+    context = {
+        "this_year": draft_year,
+        "players": players,
+        "page_title": f"All players selected in the {draft_year} MLB Draft",
+        "count": count,
+    }
+    save_traffic_data(request=request, page=context["page_title"])
+    return render(request, "player_tracking/drafted_players.html", context)

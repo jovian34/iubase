@@ -33,6 +33,14 @@ class Player(models.Model):
         return f"{self.first} {self.last} {self.hsgrad_year}"
 
 
+class ProfOrg(models.Model):
+    city = models.CharField(null=True, blank=True)
+    mascot = models.CharField(null=True, blank=True)
+
+    def __str__(self) -> str:
+        return f"{self.city} {self.mascot}"
+
+
 class Transaction(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     trans_event = models.CharField(choices=TRANSACTION_CHOICES, max_length=64)
@@ -45,6 +53,13 @@ class Transaction(models.Model):
         null=True,
         blank=True,
     )
+    prof_org = models.ForeignKey(
+        ProfOrg,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    draft_round = models.IntegerField(null=True, blank=True)
     
     def __str__(self) -> str:
         return f"{self.player.first} {self.player.last} {self.trans_event} on {self.trans_date:%B %Y}"

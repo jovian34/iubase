@@ -7,6 +7,7 @@ from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.mlb_draft_date import mlb_draft_date
 from player_tracking.tests.fixtures.players_ly import players_last_year_set
 from player_tracking.tests.fixtures.players import players
+from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
 from player_tracking.tests.fixtures.transactions_ly import trans_ly_set
 from player_tracking.tests.fixtures.summer import (
@@ -520,3 +521,12 @@ def test_add_summer_assignment_post_adds_assignment(client, players, summer_leag
 def test_summer_assignments_page_renders(client, players, summer_assign, summer_leagues, summer_teams):
     response = client.get(reverse("summer_assignments", args=["2024"]))
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_drafted_players_renders(
+    client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
+):
+    response = client.get(reverse("drafted_players", args=["2024"]))
+    assert response.status_code == 200
+    assert "Nick Mitchell" in str(response.content)

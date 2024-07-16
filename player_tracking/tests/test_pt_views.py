@@ -335,11 +335,11 @@ def test_set_last_spring_produces_correct_end_date_typical_case(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
-    assert "Devin Taylor 2023-None" in str(response.content)
+    assert "Devin Taylor (None-None)" in str(response.content)
     response = client.get(reverse("calc_last_spring"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
-    assert "Devin Taylor 2023-2026" in str(response.content)
+    assert "Devin Taylor (2023-2026)" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -347,21 +347,23 @@ def test_set_last_spring_produces_correct_end_date_redshirt_transfer(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
-    assert "Cole Gilley 2021-None" in str(response.content)
+    assert "Cole Gilley (None-None)" in str(response.content)
     response = client.get(reverse("calc_last_spring"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
-    assert "Cole Gilley 2021-2025" in str(response.content)
+    assert "Cole Gilley (2025-2025)" in str(response.content)
 
 
 @pytest.mark.django_db
 def test_set_last_spring_ends_portal_entrant_immediately(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
+    response = client.get(reverse("players"), follow=True)
+    assert "Brooks Ey (None-None)" in str(response.content)
     response = client.get(reverse("calc_last_spring"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
-    assert "Brooks Ey 2022-2024" in str(response.content)
+    assert "Brooks Ey (2024-2024)" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -376,11 +378,11 @@ def test_set_last_spring_properly_limits_redshirt_years(
     redshirt normally he would end in 2026.
     """
     response = client.get(reverse("players"), follow=True)
-    assert "Jack Moffitt 2020-None" in str(response.content)
+    assert "Jack Moffitt (None-None)" in str(response.content)
     response = client.get(reverse("calc_last_spring"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
-    assert "Jack Moffitt 2020-2025" in str(response.content)
+    assert "Jack Moffitt (2024-2025)" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -392,11 +394,11 @@ def test_set_last_spring_properly_ends_eligible_player_who_is_now_staff(
     the spring roster, and becomes a manager instead.
     """
     response = client.get(reverse("players"), follow=True)
-    assert "Nathan Ball 2024-None" in str(response.content)
+    assert "Nathan Ball (None-None)" in str(response.content)
     response = client.get(reverse("calc_last_spring"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
-    assert "Nathan Ball 2024-2024" in str(response.content)
+    assert "Nathan Ball (2024-2024)" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -463,11 +465,11 @@ def test_draft_combine_attendees_set_to_current_last_year(
     client, players, transactions, annual_rosters, mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
-    assert "Nick Mitchell 2022-None" in str(response.content)
+    assert "Nick Mitchell (None-None)" in str(response.content)
     response = client.get(reverse("calc_last_spring"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
-    assert "Nick Mitchell 2022-2024" in str(response.content)
+    assert "Nick Mitchell (2024-2024)" in str(response.content)
 
 
 @pytest.mark.django_db

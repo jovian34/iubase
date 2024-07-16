@@ -26,7 +26,8 @@ class Player(models.Model):
         choices=HAND_CHOICES, max_length=16, null=True, blank=True
     )
     height = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
+    weight = models.IntegerField(null=True, blank=True)    
+    first_spring = models.IntegerField(null=True, blank=True)
     last_spring = models.IntegerField(null=True, blank=True)
 
     def __str__(self) -> str:

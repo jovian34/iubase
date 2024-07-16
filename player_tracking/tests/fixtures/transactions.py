@@ -11,7 +11,6 @@ from player_tracking.tests.fixtures.prof_org import prof_orgs
 
 @pytest.fixture
 def transactions(players, prof_orgs):
-    current_dt = datetime.now()
     dt_verbal = Transaction.objects.create(
         player=players.dt2022,
         trans_event="Verbal Commitment from High School",
@@ -49,15 +48,20 @@ def transactions(players, prof_orgs):
         trans_event="National Letter of Intent Signed",
         trans_date=date(year=2022, month=11, day=7),
     )
+    be_commit = Transaction.objects.create(
+        player=players.be2021,
+        trans_event="Verbal Commitment from College",
+        trans_date=date(year=2023, month=7, day=15),
+    )
     be_portal = Transaction.objects.create(
         player=players.be2021,
         trans_event="Entered Transfer Portal",
-        trans_date=date(current_dt.year, current_dt.month, current_dt.day),
+        trans_date=date(year=2024, month=6, day=15),
     )
     jm_verb_port = Transaction.objects.create(
         player=players.jm2019,
         trans_event="Verbal Commitment from College",
-        trans_date=date(2023, 7, 1),
+        trans_date=date(year=2023, month=7, day=1),
     )
     gh_verbal = Transaction.objects.create(
         player=players.gh2024,
@@ -86,11 +90,12 @@ def transactions(players, prof_orgs):
     )
     TransObj = namedtuple(
         "TransObj",
-        "dt_verbal dt_nli be_portal br_nli nm_verbal nm_combine nm_draft aw_nli jm_verb_port gh_verbal gh_combine cg_port nb_verbal nb_diff_role",
+        "dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft aw_nli jm_verb_port gh_verbal gh_combine cg_port nb_verbal nb_diff_role",
     )
     return TransObj(
         dt_verbal=dt_verbal,
         dt_nli=dt_nli,
+        be_commit=be_commit,
         be_portal=be_portal,
         br_nli=br_nli,
         nm_verbal=nm_verbal,

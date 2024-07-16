@@ -322,8 +322,32 @@ def portal(request, portal_year):
     return render(request, "player_tracking/portal.html", context)
 
 
+def calc_first_spring():
+    players = Player.objects.all()
+    for player in players:
+        this_player = Player.objects.get(pk=player.pk)
+        players_transactions = Transaction.objects.filter(player=player).order_by("trans_date")
+        for trans in players_transactions:
+            hs = [
+                "Verbal Commitment from High School",
+                "National Letter of Intent Signed",
+            ]
+            college = [
+                "Verbal Commitment from College",
+            ]
+            if trans.trans_event in hs:
+                this_player.first_spring = this_player.hsgrad_year + 1
+                this_player.save()
+                break
+            if trans.trans_event in college:
+                this_player.first_spring = trans.trans_date.year + 1
+                this_player.save()
+                break
+
+
 @login_required
 def calc_last_spring(request):
+    calc_first_spring()
     players = Player.objects.all()
     errors = []
     for player in players:
@@ -340,7 +364,9 @@ def calc_last_spring(request):
             errors.append(f"missing transaction for {player.first} {player.last}")
         if last_transaction.trans_event in LEFT:
             this_player.last_spring = last_transaction.trans_date.year
-            print(f"{this_player.last} has left the program")
+            if this_player.hsgrad_year == last_transaction.trans_date.year:
+                this_player.first_spring = None
+                this_player.last_spring = None
             this_player.save()
             continue
         red_shirt_used = False
@@ -348,7 +374,6 @@ def calc_last_spring(request):
         rosters = AnnualRoster.objects.filter(player=player).order_by("spring_year")
         if not rosters:
             this_player.last_spring = player.hsgrad_year + 4
-            print(f"{this_player.last} is incoming")
             this_player.save()
             continue
         total_years = 4
@@ -372,7 +397,6 @@ def calc_last_spring(request):
             roster_year += 1
             clock_started = True
         this_player.last_spring = player.hsgrad_year + total_years
-        print(f"{this_player.last} is returning")
         this_player.save()
     players_updated = Player.objects.all().order_by("last")
     context = {

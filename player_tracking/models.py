@@ -92,6 +92,7 @@ class MLBDraftDate(models.Model):
     latest_birthdate = models.DateField()
     latest_draft_day = models.DateField()
     signing_deadline = models.DateField()
+    draft_complete = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return f"{self.fall_year}: {self.latest_birthdate:%b %-d, %Y}"

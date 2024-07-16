@@ -423,6 +423,8 @@ def projected_players_fall(request, fall_year):
     draft_pending = True
     if draft_date.latest_draft_day < datetime.now().date():
         draft_pending = False
+    if draft_date.draft_complete:
+        draft_pending = False
     for player in players:
         roster_draft = AnnualRoster.objects.filter(player=player)
         if len(roster_draft) > 2 and draft_pending:

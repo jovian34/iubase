@@ -521,9 +521,9 @@ def drafted_players(request, draft_year):
                 player.prof_org = trans.prof_org.__str__()
                 count += 1     
                 if player.hsgrad_year == int(draft_year):
-                    player.group = "Freshman"
+                    player.group = "High School Signee"
                 else:
-                    player.group = "College"
+                    player.group = "IU Player/Alumni"
 
     context = {
         "this_year": draft_year,

@@ -1,7 +1,7 @@
 from django import forms
 from django.db import models
 
-from player_tracking.models import Player, Transaction, AnnualRoster, SummerLeague, SummerTeam
+from player_tracking.models import Player, Transaction, AnnualRoster, SummerLeague, SummerTeam, ProfOrg
 from live_game_blog.models import Team
 from player_tracking.choices import (
     HAND_CHOICES,
@@ -78,6 +78,25 @@ class TransactionForm(forms.Form):
         choices=POSITION_CHOICES,
         required=False,
     )
+    other_team = forms.ModelChoiceField(
+        queryset=Team.objects.all().order_by("team_name"),
+        label="Transfer College",
+        required=False,
+    )
+    prof_org = forms.ModelChoiceField(
+        queryset=ProfOrg.objects.all().order_by("city"),
+        label="MLB Program",
+        required=False,
+    )
+    draft_round = forms.IntegerField(
+        label="Draft Rounds - number only ex: 4C is just 4",
+        required=False,
+    )
+    bonus_or_slot = forms.FloatField(
+        label="Bonus awarded for signing or value of the slot if drafted",
+        required=False,
+    )
+
 
 
 class SummerAssignForm(forms.Form):

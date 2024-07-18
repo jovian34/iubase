@@ -166,5 +166,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.93"  # PT players now list years at IU ATP 2024-07-15
+project_version = "0.0.94"  # PT added draft info to transfer form ATP 2024-07-18
 os.environ.setdefault("PROJECT_VERSION", project_version)

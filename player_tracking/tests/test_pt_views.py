@@ -239,6 +239,7 @@ def test_add_transaction_partial_post_adds_transaction(
             "trans_event": ["Drafted"],
             "trans_date": [str(date(2024, 7, 17))],
             "citation": ["https://www.mlb.com/draft/tracker"],
+            "other_team": [],
         },
         follow=True,
     )

@@ -199,10 +199,14 @@ def add_transaction(request, player_id):
                 trans_date=form.cleaned_data["trans_date"],
                 citation=form.cleaned_data["citation"],
                 primary_position=form.cleaned_data["primary_position"],
+                other_team=form.cleaned_data["other_team"],
+                prof_org=form.cleaned_data["prof_org"],
+                draft_round=form.cleaned_data["draft_round"],
+                bonus_or_slot=form.cleaned_data["bonus_or_slot"],
             )
             add_transaction.save()
         else:
-            print("FORM IS NOT VALID")
+            raise ValueError("FORM IS NOT VALID")
         return redirect(reverse("player_rosters", args=[player_id]))
     else:
         form = TransactionForm(

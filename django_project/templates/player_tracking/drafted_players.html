@@ -1,4 +1,8 @@
+
+
 {% extends "base.html" %}
+
+{% load humanize %}
 
 {% block title %}{{ page_title }}{% endblock %}
 
@@ -18,7 +22,11 @@
             <li>
                 <h2><a href="{% url "player_rosters" player.pk %}">{{player.first}} {{player.last}}</a></h2>
                 <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p> 
-                <p>Drafted in Round {{ player.draft_round }} by the {{ player.prof_org }} organization.</p>       
+                <p>Drafted in Round {{ player.draft_round }} by the {{ player.prof_org }} organization. 
+                The pick has a slot value of ${{ player.slot|intcomma }}</p>
+                {% if player.signed %}
+                   <em><p>{{player.first}} {{player.last}} signed a professional contract with a bonus of ${{ player.bonus|intcomma}}</p></em>
+                {% endif %}   
             </li>
             <hr>
             {% endif %}

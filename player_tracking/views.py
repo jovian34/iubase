@@ -535,26 +535,27 @@ def summer_assignments(request, summer_year):
 
 
 def drafted_players(request, draft_year):
-    draft_date = MLBDraftDate.objects.get(fall_year=int(draft_year))
-    draft_date = draft_date.latest_draft_day
-
     count = 0
     players = Player.objects.all().order_by("last")
     for player in players:
         player.drafted = False
-        transactions = Transaction.objects.filter(player=player)
+        player.signed = False
+        transactions = Transaction.objects.filter(player=player).order_by("trans_date")
         for trans in transactions:
             if trans.trans_event == "Drafted" and trans.trans_date.year == int(draft_year):
                 player.drafted = True
                 player.position = trans.primary_position
                 player.draft_round = trans.draft_round
                 player.prof_org = trans.prof_org.__str__()
+                player.slot = trans.bonus_or_slot
                 count += 1     
                 if player.hsgrad_year == int(draft_year):
                     player.group = "High School Signee"
                 else:
                     player.group = "IU Player/Alumni"
-
+            if trans.trans_event == "Signed Professional Contract" and player.drafted and trans.trans_date.year == int(draft_year):
+                player.signed = True
+                player.bonus = trans.bonus_or_slot
     context = {
         "this_year": draft_year,
         "players": players,

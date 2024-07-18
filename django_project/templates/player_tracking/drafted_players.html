@@ -23,7 +23,8 @@
                 <h2><a href="{% url "player_rosters" player.pk %}">{{player.first}} {{player.last}}</a></h2>
                 <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p> 
                 <p>Drafted in Round {{ player.draft_round }} by the {{ player.prof_org }} organization. 
-                The pick has a slot value of ${{ player.slot|intcomma }}</p>
+                With this pick he can get a bonus value of ${{ player.slot|intcomma }} before
+                the {{ player.prof_org.mascot }} incur a slot penalty.</p>
                 {% if player.signed %}
                    <em><p>{{player.first}} {{player.last}} signed a professional contract with a bonus of ${{ player.bonus|intcomma}}</p></em>
                 {% endif %}   

@@ -96,6 +96,10 @@ class TransactionForm(forms.Form):
         label="Bonus awarded for signing or value of the slot if drafted",
         required=False,
     )
+    comment = forms.CharField(
+        label="Extra information about this transaction in one complete sentence",
+        required=False,
+    )
 
 
 

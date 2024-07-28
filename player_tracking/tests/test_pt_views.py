@@ -544,4 +544,6 @@ def test_drafted_players_renders(
 ):
     response = client.get(reverse("drafted_players", args=["2024"]))
     assert response.status_code == 200
-    assert "Nick Mitchell" in str(response.content)
+    assert "$400,100.00 before" in str(response.content)
+    assert "Philadelphia Phillies incur" in str(response.content)
+    assert "Nick Mitchell signed a professional contract with a bonus of $367,000.00" in str(response.content)

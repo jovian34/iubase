@@ -42,6 +42,14 @@ def transactions(players, prof_orgs):
         trans_date=date(year=2024, month=7, day=15),
         prof_org=prof_orgs.phillies,
         draft_round=4,
+        bonus_or_slot=400100
+    )
+    nm_signed = Transaction.objects.create(
+        player=players.nm2021,
+        trans_event="Signed Professional Contract",
+        trans_date=date(year=2024, month=7, day=21),
+        prof_org=prof_orgs.phillies,
+        bonus_or_slot=367000
     )
     aw_nli = Transaction.objects.create(
         player=players.aw2023,
@@ -90,7 +98,7 @@ def transactions(players, prof_orgs):
     )
     TransObj = namedtuple(
         "TransObj",
-        "dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft aw_nli jm_verb_port gh_verbal gh_combine cg_port nb_verbal nb_diff_role",
+        "dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_combine cg_port nb_verbal nb_diff_role",
     )
     return TransObj(
         dt_verbal=dt_verbal,
@@ -101,6 +109,7 @@ def transactions(players, prof_orgs):
         nm_verbal=nm_verbal,
         nm_combine=nm_combine,
         nm_draft=nm_draft,
+        nm_signed=nm_signed,
         aw_nli=aw_nli,
         jm_verb_port=jm_verb_port,
         gh_verbal=gh_verbal,

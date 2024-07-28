@@ -344,6 +344,18 @@ def test_set_last_spring_produces_correct_end_date_typical_case(
 
 
 @pytest.mark.django_db
+def test_set_last_spring_produces_correct_end_date_drafted(
+    client, players, annual_rosters, transactions, logged_user_schwarbs
+):
+    response = client.get(reverse("players"), follow=True)
+    assert "Nick Mitchell (None-None)" in str(response.content)
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("players"), follow=True)
+    assert "Nick Mitchell (2024-2024)" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_set_last_spring_produces_correct_end_date_redshirt_transfer(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):

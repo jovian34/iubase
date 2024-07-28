@@ -49,7 +49,8 @@ def transactions(players, prof_orgs):
         trans_event="Signed Professional Contract",
         trans_date=date(year=2024, month=7, day=21),
         prof_org=prof_orgs.phillies,
-        bonus_or_slot=367000
+        bonus_or_slot=367000,
+        comment="Bonus value was reported two days after signing."
     )
     aw_nli = Transaction.objects.create(
         player=players.aw2023,

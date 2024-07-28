@@ -62,6 +62,7 @@ class Transaction(models.Model):
     )
     draft_round = models.IntegerField(null=True, blank=True)
     bonus_or_slot = models.FloatField(null=True, blank=True)
+    comment = models.CharField(null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.player.first} {self.player.last} {self.trans_event} on {self.trans_date:%B %Y}"

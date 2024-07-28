@@ -51,6 +51,11 @@ def test_transaction_model_get_prof_or(client, transactions):
 
 
 @pytest.mark.django_db
+def test_transaction_model_gets_comment(client, transactions):
+    assert transactions.nm_signed.comment == "Bonus value was reported two days after signing."
+
+
+@pytest.mark.django_db
 def test_annual_roster_model_stored_all_fields(client, annual_rosters, teams):
     assert annual_rosters.dt_2024.spring_year == 2024
     assert annual_rosters.dt_2023.player.first == "Devin"

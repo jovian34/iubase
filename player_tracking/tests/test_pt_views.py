@@ -443,6 +443,20 @@ def test_projected_roster_excludes_transfer_portal_entrants(
 
 
 @pytest.mark.django_db
+def test_projected_roster_for_bad_year_redirects_to_pt_index(client):
+    response = client.get(reverse("projected_players_fall", args=["2025"]))
+    assert response.status_code == 302
+    response = client.get(reverse("projected_players_fall", args=["2025"]), follow=True)
+    assert response.status_code == 200
+    assert f"{str(timezone.now().year)} Depth Chart" in str(response.content)
+    response = client.get(reverse("projected_players_fall", args=["2023"]))
+    assert response.status_code == 302
+    response = client.get(reverse("projected_players_fall", args=["2023"]), follow=True)
+    assert response.status_code == 200
+    assert f"{str(timezone.now().year)} Depth Chart" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_projected_roster_includes_high_school_commit(
     client, players_last_year_set, trans_ly_set, mlb_draft_date
 ):

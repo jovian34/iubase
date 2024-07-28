@@ -444,12 +444,15 @@ def projected_players_fall(request, fall_year):
     except MLBDraftDate.DoesNotExist:
         return redirect("pt_index")
     
+    if int(fall_year) < date.today().year:
+        return redirect("pt_index")
+    
     players = Player.objects.filter(last_spring__gte=(int(fall_year) + 1)).order_by(
         "last"
     )
 
     draft_pending = True
-    if draft_date.latest_draft_day < datetime.now().date():
+    if draft_date.latest_draft_day < date.today():
         draft_pending = False
     if draft_date.draft_complete:
         draft_pending = False

@@ -553,11 +553,25 @@ def test_summer_assignments_page_renders(client, players, summer_assign, summer_
 
 
 @pytest.mark.django_db
-def test_drafted_players_renders(
+def test_drafted_players_renders_drafted_not_signed(
     client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
 ):
     response = client.get(reverse("drafted_players", args=["2024"]))
     assert response.status_code == 200
-    assert "$400,100.00 before" in str(response.content)
-    assert "Philadelphia Phillies incur" in str(response.content)
-    assert "Nick Mitchell signed a professional contract with a bonus of $367,000.00" in str(response.content)
+    assert "Grant Hollister" in str(response.content)
+    assert "Count of Players: 2" in str(response.content)
+    assert "He is expected by insiders to require $500,000 to sign." in str(response.content)
+    assert "$400,100 before" not in str(response.content)
+    assert "Philadelphia Phillies incur" not in str(response.content)
+
+@pytest.mark.django_db
+def test_drafted_players_renders_signed(
+    client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
+):
+    response = client.get(reverse("drafted_players", args=["2024"]))
+    assert response.status_code == 200
+    assert "Grant Hollister" in str(response.content)
+    assert "Count of Players: 2" in str(response.content)
+    assert "Nick Mitchell signed a professional contract with a bonus of $367,000." in str(response.content)
+    assert "This bonus was 92% of the assigned value of the draft pick." in str(response.content)
+    assert "Bonus value was reported two days after signing." in str(response.content)

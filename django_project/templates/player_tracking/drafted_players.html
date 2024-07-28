@@ -22,11 +22,17 @@
             <li>
                 <h2><a href="{% url "player_rosters" player.pk %}">{{player.first}} {{player.last}}</a></h2>
                 <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p> 
-                <p>Drafted in Round {{ player.draft_round }} by the {{ player.prof_org }} organization. 
-                With this pick he can get a bonus value of ${{ player.slot|floatformat:"2g" }} before
-                the {{ player.prof_org }} incur a slot penalty.</p>
+                <p>Drafted in Round {{ player.draft_round }} by the {{ player.prof_org }} organization.
+                {% if player.draft_comment %}{{ player.draft_comment }}{% endif %}</p>
                 {% if player.signed %}
-                   <em><p>{{player.first}} {{player.last}} signed a professional contract with a bonus of ${{ player.bonus|floatformat:"2g"}}</p></em>
+                   <em><p>{{player.first}} {{player.last}} signed a professional contract with a bonus of ${{ player.bonus|floatformat:"0g"}}.
+                        This bonus was {{ player.bonus_pct|floatformat:"0g"}}% of the assigned value of the draft pick.
+                            {% if player.sign_comment %}{{ player.sign_comment }}{% endif %}
+                    </p></em>
+                {% else %} 
+                <p>With this pick he can get a bonus value of ${{ player.slot|floatformat:"0g" }} before
+                the {{ player.prof_org }} incur a slot penalty.</p>
+
                 {% endif %}   
             </li>
             <hr>

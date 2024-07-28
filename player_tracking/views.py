@@ -551,6 +551,7 @@ def drafted_players(request, draft_year):
                 player.draft_round = trans.draft_round
                 player.prof_org = trans.prof_org.__str__()
                 player.slot = trans.bonus_or_slot
+                player.draft_comment = trans.comment
                 count += 1     
                 if player.hsgrad_year == int(draft_year):
                     player.group = "High School Signee"
@@ -559,6 +560,8 @@ def drafted_players(request, draft_year):
             if trans.trans_event == "Signed Professional Contract" and player.drafted and trans.trans_date.year == int(draft_year):
                 player.signed = True
                 player.bonus = trans.bonus_or_slot
+                player.sign_comment = trans.comment
+                player.bonus_pct = 100 * player.bonus / player.slot
     context = {
         "this_year": draft_year,
         "players": players,

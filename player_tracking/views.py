@@ -203,6 +203,7 @@ def add_transaction(request, player_id):
                 prof_org=form.cleaned_data["prof_org"],
                 draft_round=form.cleaned_data["draft_round"],
                 bonus_or_slot=form.cleaned_data["bonus_or_slot"],
+                comment=form.cleaned_data["comment"],
             )
             add_transaction.save()
         else:

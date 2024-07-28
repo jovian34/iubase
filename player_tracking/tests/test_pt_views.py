@@ -231,15 +231,18 @@ def test_add_roster_year_partial_post_adds_roster_year(
 
 @pytest.mark.django_db
 def test_add_transaction_partial_post_adds_transaction(
-    client, players, teams, annual_rosters, logged_user_schwarbs
+    client, players, teams, annual_rosters, logged_user_schwarbs, prof_orgs
 ):
     response = client.post(
-        reverse("add_transaction", args=[players.nm2021.pk]),
+        reverse("add_transaction", args=[players.br2022.pk]),
         {
             "trans_event": ["Drafted"],
             "trans_date": [str(date(2024, 7, 17))],
             "citation": ["https://www.mlb.com/draft/tracker"],
             "other_team": [],
+            "prof_org": [prof_orgs.d_backs.pk],
+            "bonus_or_slot": ["150000"],
+            "comment": ["Expected to go over slot value."]
         },
         follow=True,
     )
@@ -247,6 +250,13 @@ def test_add_transaction_partial_post_adds_transaction(
     assert "Drafted" in str(response.content)
     assert "July 17" in str(response.content)
     assert 'href="https://www.mlb.com/draft/tracker"'
+    response = client.get(reverse("drafted_players", args=["2024"]))
+    assert response.status_code == 200
+    assert "Brayden Risedorph" in str(response.content)
+    assert "he can get a bonus value of $150,000" in str(response.content)
+    assert "Expected to go over slot value." in str(response.content)
+    assert "Arizona Diamondbacks" in str(response.content)
+
 
 
 @pytest.mark.django_db

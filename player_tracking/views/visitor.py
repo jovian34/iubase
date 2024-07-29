@@ -25,18 +25,17 @@ def players(request):
 
 
 def pt_index(request):
-    today = timezone.now().date()
-    if today.month < 8:
-        current_spring = today.year
+    if date.today().month < 9:
+        current_spring = date.today().year
         current_fall = current_spring - 1
     else:
-        current_fall = today.year
+        current_fall = date.today().year
         current_spring = current_fall + 1
     context = {
         "fall": current_fall,
         "spring": current_spring,
         "page_title": "Player Tracking",
-        "this_year": str(today.year),
+        "this_year": str(date.today().year),
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/pt_index.html", context)

@@ -17,7 +17,10 @@ from player_tracking.choices import (
     GREY_SHIRT,
     RED_SHIRT,
     RED_SHIRT_PLUS_WAIVER,
+    COLLEGE,
+    HS,
 )
+from player_tracking.views.changes_logic import save_transaction_form
 
 
 @login_required
@@ -156,22 +159,6 @@ def add_transaction(request, player_id):
             "player_tracking/partials/add_transaction.html",
             context,
         )
-    
-
-def save_transaction_form(player_id, form):
-    add_transaction = Transaction.objects.create(
-                player=Player.objects.get(pk=player_id),
-                trans_event=form.cleaned_data["trans_event"],
-                trans_date=form.cleaned_data["trans_date"],
-                citation=form.cleaned_data["citation"],
-                primary_position=form.cleaned_data["primary_position"],
-                other_team=form.cleaned_data["other_team"],
-                prof_org=form.cleaned_data["prof_org"],
-                draft_round=form.cleaned_data["draft_round"],
-                bonus_or_slot=form.cleaned_data["bonus_or_slot"],
-                comment=form.cleaned_data["comment"],
-            )
-    add_transaction.save()
 
 
 def calc_first_spring():
@@ -180,18 +167,11 @@ def calc_first_spring():
         this_player = Player.objects.get(pk=player.pk)
         players_transactions = Transaction.objects.filter(player=player).order_by("trans_date")
         for trans in players_transactions:
-            hs = [
-                "Verbal Commitment from High School",
-                "National Letter of Intent Signed",
-            ]
-            college = [
-                "Verbal Commitment from College",
-            ]
-            if trans.trans_event in hs:
+            if trans.trans_event in HS:
                 this_player.first_spring = this_player.hsgrad_year + 1
                 this_player.save()
                 break
-            if trans.trans_event in college:
+            if trans.trans_event in COLLEGE:
                 this_player.first_spring = trans.trans_date.year + 1
                 this_player.save()
                 break

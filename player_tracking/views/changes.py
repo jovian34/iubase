@@ -3,20 +3,15 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from datetime import date
-
 from player_tracking.models import (
     Player,
     Transaction,
     AnnualRoster,
-    MLBDraftDate,
     SummerAssign,
 )
 from live_game_blog.models import Team
-from index.views import save_traffic_data
 from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm, SummerAssignForm
 from player_tracking.choices import (
-    POSITION_CHOICES,
     LEFT,
     AFTER,
     GREY_SHIRT,
@@ -200,7 +195,7 @@ def calc_first_spring():
                 this_player.first_spring = trans.trans_date.year + 1
                 this_player.save()
                 break
-            
+
 @login_required
 def calc_last_spring(request):
     calc_first_spring()

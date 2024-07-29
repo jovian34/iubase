@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse
 
 from datetime import date
 
@@ -12,17 +10,8 @@ from player_tracking.models import (
     MLBDraftDate,
     SummerAssign,
 )
-from live_game_blog.models import Team
 from index.views import save_traffic_data
-from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm, SummerAssignForm
-from player_tracking.choices import (
-    POSITION_CHOICES,
-    LEFT,
-    AFTER,
-    GREY_SHIRT,
-    RED_SHIRT,
-    RED_SHIRT_PLUS_WAIVER,
-)
+from player_tracking.choices import POSITION_CHOICES
 
 
 def players(request):

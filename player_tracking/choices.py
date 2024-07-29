@@ -85,3 +85,4 @@ RED_SHIRT = [red_shirt_tuple[0] for red_shirt_tuple in RED_SHIRT_TUPLES]
 RED_SHIRT_PLUS_WAIVER = [
     red_shirt_waiver_tuple[0] for red_shirt_waiver_tuple in RED_SHIRT_PLUS_WAIVER_TUPLES
 ]
+ALL_ROSTER = [ROSTERED_TUPLES[1][0], RED_SHIRT_TUPLES[1][0], RED_SHIRT_TUPLES[0][0]]

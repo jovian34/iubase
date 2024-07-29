@@ -11,7 +11,7 @@ from player_tracking.models import (
     SummerAssign,
 )
 from index.views import save_traffic_data
-from player_tracking.choices import POSITION_CHOICES
+from player_tracking.choices import POSITION_CHOICES, ALL_ROSTER
 from player_tracking.views.visitor_logic import sort_by_positions
 
 
@@ -115,15 +115,10 @@ def fall_roster(request, fall_year):
 
 
 def spring_roster(request, spring_year):
-    all_roster = [
-        "Spring Roster",
-        "On Spring Roster but did not play",
-        "Played but granted eligibility waiver",
-    ]
     players = (
         AnnualRoster.objects.filter(spring_year=spring_year)
         .filter(team__team_name="Indiana")
-        .filter(status__in=all_roster)
+        .filter(status__in=ALL_ROSTER)
         .order_by("jersey")
     )
     if len(players) < 5 and int(spring_year) >= timezone.now().date().year:

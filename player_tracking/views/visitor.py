@@ -12,7 +12,7 @@ from player_tracking.models import (
 )
 from index.views import save_traffic_data
 from player_tracking.choices import POSITION_CHOICES, ALL_ROSTER
-from player_tracking.views.visitor_logic import set_drafted_player, sort_by_positions
+from player_tracking.views.visitor_logic import set_drafted_player, set_signed_player, sort_by_positions
 
 
 def players(request):
@@ -265,10 +265,7 @@ def drafted_players(request, draft_year):
                 set_drafted_player(draft_year, player, trans)
                 count += 1    
             if trans.trans_event == "Signed Professional Contract" and player.drafted and trans.trans_date.year == int(draft_year):
-                player.signed = True
-                player.bonus = trans.bonus_or_slot
-                player.sign_comment = trans.comment
-                player.bonus_pct = 100 * player.bonus / player.slot
+                set_signed_player(player, trans)
     context = {
         "this_year": draft_year,
         "players": players,
@@ -277,6 +274,8 @@ def drafted_players(request, draft_year):
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/drafted_players.html", context)
+
+
 
 
 

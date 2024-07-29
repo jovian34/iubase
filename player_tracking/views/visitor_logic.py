@@ -41,3 +41,10 @@ def set_drafted_player(draft_year, player, trans):
     player.slot = trans.bonus_or_slot
     player.draft_comment = trans.comment 
     group_drafted_player(draft_year, player)
+
+
+def set_signed_player(player, trans):
+    player.signed = True
+    player.bonus = trans.bonus_or_slot
+    player.sign_comment = trans.comment
+    player.bonus_pct = 100 * player.bonus / player.slot

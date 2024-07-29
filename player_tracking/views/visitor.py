@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from datetime import date, datetime
+from datetime import date
 
 from player_tracking.models import (
     Player,
@@ -11,8 +11,6 @@ from player_tracking.models import (
     AnnualRoster,
     MLBDraftDate,
     SummerAssign,
-    SummerLeague,
-    SummerTeam,
 )
 from live_game_blog.models import Team
 from index.views import save_traffic_data
@@ -20,9 +18,7 @@ from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionFo
 from player_tracking.choices import (
     POSITION_CHOICES,
     LEFT,
-    JOINED,
     AFTER,
-    ROSTERED,
     GREY_SHIRT,
     RED_SHIRT,
     RED_SHIRT_PLUS_WAIVER,
@@ -193,21 +189,7 @@ def add_transaction(request, player_id):
     if request.method == "POST":
         form = TransactionForm(request.POST)
         if form.is_valid():
-            add_transaction = Transaction.objects.create(
-                player=Player.objects.get(pk=player_id),
-                trans_event=form.cleaned_data["trans_event"],
-                trans_date=form.cleaned_data["trans_date"],
-                citation=form.cleaned_data["citation"],
-                primary_position=form.cleaned_data["primary_position"],
-                other_team=form.cleaned_data["other_team"],
-                prof_org=form.cleaned_data["prof_org"],
-                draft_round=form.cleaned_data["draft_round"],
-                bonus_or_slot=form.cleaned_data["bonus_or_slot"],
-                comment=form.cleaned_data["comment"],
-            )
-            add_transaction.save()
-        else:
-            raise ValueError("FORM IS NOT VALID")
+            save_transaction_form(player_id, form)
         return redirect(reverse("player_rosters", args=[player_id]))
     else:
         form = TransactionForm(
@@ -224,6 +206,21 @@ def add_transaction(request, player_id):
             "player_tracking/partials/add_transaction.html",
             context,
         )
+
+def save_transaction_form(player_id, form):
+    add_transaction = Transaction.objects.create(
+                player=Player.objects.get(pk=player_id),
+                trans_event=form.cleaned_data["trans_event"],
+                trans_date=form.cleaned_data["trans_date"],
+                citation=form.cleaned_data["citation"],
+                primary_position=form.cleaned_data["primary_position"],
+                other_team=form.cleaned_data["other_team"],
+                prof_org=form.cleaned_data["prof_org"],
+                draft_round=form.cleaned_data["draft_round"],
+                bonus_or_slot=form.cleaned_data["bonus_or_slot"],
+                comment=form.cleaned_data["comment"],
+            )
+    add_transaction.save()
 
 
 def fall_depth_chart(request, fall_year):

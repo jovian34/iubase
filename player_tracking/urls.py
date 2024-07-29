@@ -1,41 +1,41 @@
 from django.urls import path
-from player_tracking import views
+from player_tracking.views import visitor
 
 urlpatterns = [
-    path("", views.pt_index, name="pt_index"),
-    path("players/", views.players, name="players"),
-    path("player_rosters/<player_id>/", views.player_rosters, name="player_rosters"),
+    path("", visitor.pt_index, name="pt_index"),
+    path("players/", visitor.players, name="players"),
+    path("player_rosters/<player_id>/", visitor.player_rosters, name="player_rosters"),
     path(
         "spring_depth_chart/<spring_year>/",
-        views.spring_depth_chart,
+        visitor.spring_depth_chart,
         name="spring_depth_chart",
     ),
     path(
-        "fall_depth_chart/<fall_year>/", views.fall_depth_chart, name="fall_depth_chart"
+        "fall_depth_chart/<fall_year>/", visitor.fall_depth_chart, name="fall_depth_chart"
     ),
-    path("fall_roster/<fall_year>/", views.fall_roster, name="fall_roster"),
-    path("spring_roster/<spring_year>/", views.spring_roster, name="spring_roster"),
-    path("add_player/", views.add_player, name="add_player"),
-    path("portal/<portal_year>/", views.portal, name="portal"),
-    path("calc_last_spring/", views.calc_last_spring, name="calc_last_spring"),
+    path("fall_roster/<fall_year>/", visitor.fall_roster, name="fall_roster"),
+    path("spring_roster/<spring_year>/", visitor.spring_roster, name="spring_roster"),
+    path("add_player/", visitor.add_player, name="add_player"),
+    path("portal/<portal_year>/", visitor.portal, name="portal"),
+    path("calc_last_spring/", visitor.calc_last_spring, name="calc_last_spring"),
     path(
         "draft_combine_attendees/<this_year>/",
-        views.draft_combine_attendees,
+        visitor.draft_combine_attendees,
         name="draft_combine_attendees",
     ),
-    path("drafted_players/<draft_year>/", views.drafted_players, name="drafted_players",),
+    path("drafted_players/<draft_year>/", visitor.drafted_players, name="drafted_players",),
     path(
         "projected_players_fall/<fall_year>/",
-        views.projected_players_fall,
+        visitor.projected_players_fall,
         name="projected_players_fall",
     ),
     path(
         "summer_assignments/<summer_year>/",
-        views.summer_assignments,
+        visitor.summer_assignments,
         name="summer_assignments",
     ),
     # partials
-    path("add_roster_year/<player_id>/", views.add_roster_year, name="add_roster_year"),
-    path("add_transaction/<player_id>/", views.add_transaction, name="add_transaction"),
-    path("add_summer_assignment/<player_id>/", views.add_summer_assignment, name="add_summer_assignment"),
+    path("add_roster_year/<player_id>/", visitor.add_roster_year, name="add_roster_year"),
+    path("add_transaction/<player_id>/", visitor.add_transaction, name="add_transaction"),
+    path("add_summer_assignment/<player_id>/", visitor.add_summer_assignment, name="add_summer_assignment"),
 ]

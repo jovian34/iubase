@@ -167,5 +167,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.96"  # PT include bonus pct calculation for draftees ATP 2024-07-28
+project_version = "0.0.96"  # PT added comment field to transaction form ATP 2024-07-28
 os.environ.setdefault("PROJECT_VERSION", project_version)

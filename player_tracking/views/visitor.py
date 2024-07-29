@@ -12,7 +12,7 @@ from player_tracking.models import (
 )
 from index.views import save_traffic_data
 from player_tracking.choices import POSITION_CHOICES, ALL_ROSTER
-from player_tracking.views.visitor_logic import sort_by_positions
+from player_tracking.views.visitor_logic import set_drafted_player, sort_by_positions
 
 
 def players(request):
@@ -262,17 +262,8 @@ def drafted_players(request, draft_year):
         transactions = Transaction.objects.filter(player=player).order_by("trans_date")
         for trans in transactions:
             if trans.trans_event == "Drafted" and trans.trans_date.year == int(draft_year):
-                player.drafted = True
-                player.position = trans.primary_position
-                player.draft_round = trans.draft_round
-                player.prof_org = trans.prof_org.__str__()
-                player.slot = trans.bonus_or_slot
-                player.draft_comment = trans.comment
-                count += 1     
-                if player.hsgrad_year == int(draft_year):
-                    player.group = "High School Signee"
-                else:
-                    player.group = "IU Player/Alumni"
+                set_drafted_player(draft_year, player, trans)
+                count += 1    
             if trans.trans_event == "Signed Professional Contract" and player.drafted and trans.trans_date.year == int(draft_year):
                 player.signed = True
                 player.bonus = trans.bonus_or_slot
@@ -286,3 +277,6 @@ def drafted_players(request, draft_year):
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/drafted_players.html", context)
+
+
+

@@ -24,3 +24,20 @@ def sort_by_positions(players):
     for position in positions:
         position["count"] = len(position["players"])
     return positions
+
+
+def group_drafted_player(draft_year, player):
+    if player.hsgrad_year == int(draft_year):
+        player.group = "High School Signee"
+    else:
+        player.group = "IU Player/Alumni"
+
+
+def set_drafted_player(draft_year, player, trans):
+    player.drafted = True
+    player.position = trans.primary_position
+    player.draft_round = trans.draft_round
+    player.prof_org = trans.prof_org.__str__()
+    player.slot = trans.bonus_or_slot
+    player.draft_comment = trans.comment 
+    group_drafted_player(draft_year, player)

@@ -1,5 +1,5 @@
 from django.urls import path
-from player_tracking.views import visitor
+from player_tracking.views import visitor, changes
 
 urlpatterns = [
     path("", visitor.pt_index, name="pt_index"),
@@ -15,9 +15,9 @@ urlpatterns = [
     ),
     path("fall_roster/<fall_year>/", visitor.fall_roster, name="fall_roster"),
     path("spring_roster/<spring_year>/", visitor.spring_roster, name="spring_roster"),
-    path("add_player/", visitor.add_player, name="add_player"),
+    path("add_player/", changes.add_player, name="add_player"),
     path("portal/<portal_year>/", visitor.portal, name="portal"),
-    path("calc_last_spring/", visitor.calc_last_spring, name="calc_last_spring"),
+    path("calc_last_spring/", changes.calc_last_spring, name="calc_last_spring"),
     path(
         "draft_combine_attendees/<this_year>/",
         visitor.draft_combine_attendees,
@@ -35,7 +35,7 @@ urlpatterns = [
         name="summer_assignments",
     ),
     # partials
-    path("add_roster_year/<player_id>/", visitor.add_roster_year, name="add_roster_year"),
-    path("add_transaction/<player_id>/", visitor.add_transaction, name="add_transaction"),
-    path("add_summer_assignment/<player_id>/", visitor.add_summer_assignment, name="add_summer_assignment"),
+    path("add_roster_year/<player_id>/", changes.add_roster_year, name="add_roster_year"),
+    path("add_transaction/<player_id>/", changes.add_transaction, name="add_transaction"),
+    path("add_summer_assignment/<player_id>/", changes.add_summer_assignment, name="add_summer_assignment"),
 ]

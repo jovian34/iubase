@@ -3,12 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from player_tracking.models import (
-    Player,
-    Transaction,
-    AnnualRoster,
-    SummerAssign,
-)
+from player_tracking.models import Player, Transaction, AnnualRoster
 from live_game_blog.models import Team
 from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm, SummerAssignForm
 from player_tracking.choices import LEFT
@@ -51,9 +46,6 @@ def add_roster_year(request, player_id):
         form = AnnualRosterForm(request.POST)
         if form.is_valid():
             save_roster_year(player_id, form)
-        else:
-            print("FORM IS NOT VALID")
-
         return redirect(reverse("player_rosters", args=[player_id]))
     else:
         form = AnnualRosterForm(

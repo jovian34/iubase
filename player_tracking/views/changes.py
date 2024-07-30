@@ -12,10 +12,7 @@ from player_tracking.views.changes_logic import (
     save_transaction_form,
     save_roster_year,
     save_summer_assign,
-    set_leaving_player, 
-    determine_last_effective_transaction, 
-    calc_total_years_eligible,
-    calc_first_spring,
+    set_spring_years_at_indiana,
 )
 
 
@@ -24,6 +21,7 @@ def add_player(request):
     if request.method == "POST":
         form = NewPlayerForm(request.POST)
         if form.is_valid():
+            save_new_player_and_init_transaction(form)
             save_new_player_and_init_transaction(form)
         return redirect(reverse("players"))
     else:
@@ -46,6 +44,7 @@ def add_roster_year(request, player_id):
         form = AnnualRosterForm(request.POST)
         if form.is_valid():
             save_roster_year(player_id, form)
+            set_spring_years_at_indiana()
         return redirect(reverse("player_rosters", args=[player_id]))
     else:
         form = AnnualRosterForm(
@@ -88,12 +87,14 @@ def add_summer_assignment(request, player_id):
             context,
         )
     
+    
 @login_required
 def add_transaction(request, player_id):
     if request.method == "POST":
         form = TransactionForm(request.POST)
         if form.is_valid():
             save_transaction_form(player_id, form)
+            set_spring_years_at_indiana()
         return redirect(reverse("player_rosters", args=[player_id]))
     else:
         form = TransactionForm(
@@ -114,26 +115,7 @@ def add_transaction(request, player_id):
 
 @login_required
 def calc_last_spring(request):
-    calc_first_spring()
-    players = Player.objects.all()
-    errors = []
-    for player in players:
-        this_player = Player.objects.get(pk=player.pk)
-        players_transactions = Transaction.objects.filter(player=player).order_by("-trans_date")
-        last_effective_transaction = determine_last_effective_transaction(players_transactions)
-        if not last_effective_transaction:
-            errors.append(f"missing transaction for {player.first} {player.last}")
-        if last_effective_transaction.trans_event in LEFT:
-            set_leaving_player(this_player, last_effective_transaction)
-            continue
-        rosters = AnnualRoster.objects.filter(player=player).order_by("spring_year")
-        if not rosters:
-            this_player.last_spring = player.hsgrad_year + 4
-            this_player.save()
-            continue
-        total_years = calc_total_years_eligible(errors, player, rosters)
-        this_player.last_spring = player.hsgrad_year + total_years
-        this_player.save()
+    errors = set_spring_years_at_indiana()
     players_updated = Player.objects.all().order_by("last")
     context = {
         "players": players_updated,

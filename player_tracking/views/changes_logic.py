@@ -1,5 +1,5 @@
 from player_tracking.models import AnnualRoster, Player, SummerAssign, Transaction
-from player_tracking.choices import AFTER, GREY_SHIRT, RED_SHIRT, RED_SHIRT_PLUS_WAIVER, HS, COLLEGE
+from player_tracking.choices import AFTER, GREY_SHIRT, RED_SHIRT, RED_SHIRT_PLUS_WAIVER, HS, COLLEGE, LEFT
 
 
 def save_new_player_and_init_transaction(form):
@@ -129,3 +129,27 @@ def calc_first_spring():
                 this_player.first_spring = trans.trans_date.year + 1
                 this_player.save()
                 break
+
+def set_spring_years_at_indiana():
+    calc_first_spring()
+    players = Player.objects.all()
+    errors = []
+    for player in players:
+        this_player = Player.objects.get(pk=player.pk)
+        players_transactions = Transaction.objects.filter(player=player).order_by("-trans_date")
+        last_effective_transaction = determine_last_effective_transaction(players_transactions)
+        if not last_effective_transaction:
+            errors.append(f"missing transaction for {player.first} {player.last}")
+            continue
+        if last_effective_transaction.trans_event in LEFT:
+            set_leaving_player(this_player, last_effective_transaction)
+            continue
+        rosters = AnnualRoster.objects.filter(player=player).order_by("spring_year")
+        if not rosters:
+            this_player.last_spring = player.hsgrad_year + 4
+            this_player.save()
+            continue
+        total_years = calc_total_years_eligible(errors, player, rosters)
+        this_player.last_spring = player.hsgrad_year + total_years
+        this_player.save()
+    return errors

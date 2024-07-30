@@ -1,5 +1,3 @@
-
-
 def sort_by_positions(players):
     lhp = {"position": "Left Handed Pitcher", "players": [],}
     rhp = {"position": "Right Handed Pitcher", "players": [],}
@@ -48,3 +46,12 @@ def set_signed_player(player, trans):
     player.bonus = trans.bonus_or_slot
     player.sign_comment = trans.comment
     player.bonus_pct = 100 * player.bonus / player.slot
+
+
+def set_draft_combine_player_props(draft_year, player, trans):
+    player.combine = True
+    player.position = trans.primary_position   
+    if player.hsgrad_year == int(draft_year):
+        player.group = "Freshman"
+    else:
+        player.group = "College"

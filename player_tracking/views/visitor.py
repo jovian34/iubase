@@ -12,7 +12,7 @@ from player_tracking.models import (
 )
 from index.views import save_traffic_data
 from player_tracking.choices import POSITION_CHOICES, ALL_ROSTER
-from player_tracking.views.visitor_logic import set_drafted_player, set_signed_player, sort_by_positions
+from player_tracking.views.visitor_logic import set_draft_combine_player_props, set_drafted_player, set_signed_player, sort_by_positions
 
 
 def players(request):
@@ -214,29 +214,19 @@ def projected_players_fall(request, fall_year):
     return render(request, "player_tracking/projected_players_fall.html", context)
 
 
-def draft_combine_attendees(request, this_year):
-    draft_date = MLBDraftDate.objects.get(fall_year=int(this_year))
-    draft_date = draft_date.latest_draft_day
-
+def draft_combine_attendees(request, draft_year):
     count = 0
     players = Player.objects.all().order_by("last")
     for player in players:
         player.combine = False
         transactions = Transaction.objects.filter(player=player)
         for trans in transactions:
-            if trans.trans_event == "Attending MLB Draft Combine" and trans.trans_date.year == int(this_year):
-                player.combine = True
-                player.position = trans.primary_position
-                count += 1     
-                if player.hsgrad_year == int(this_year):
-                    player.group = "Freshman"
-                else:
-                    player.group = "College"
-
+            if trans.trans_event == "Attending MLB Draft Combine" and trans.trans_date.year == int(draft_year):
+                count += 1  
+                set_draft_combine_player_props(draft_year, player, trans)
     context = {
-        "this_year": this_year,
         "players": players,
-        "page_title": f"All players in the {this_year} MLB Draft Combine",
+        "page_title": f"All players in the {draft_year} MLB Draft Combine",
         "count": count,
     }
     save_traffic_data(request=request, page=context["page_title"])

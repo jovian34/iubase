@@ -19,7 +19,7 @@ urlpatterns = [
     path("portal/<portal_year>/", visitor.portal, name="portal"),
     path("calc_last_spring/", changes.calc_last_spring, name="calc_last_spring"),
     path(
-        "draft_combine_attendees/<this_year>/",
+        "draft_combine_attendees/<draft_year>/",
         visitor.draft_combine_attendees,
         name="draft_combine_attendees",
     ),

@@ -3,10 +3,9 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from player_tracking.models import Player, Transaction, AnnualRoster
+from player_tracking.models import Player
 from live_game_blog.models import Team
 from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm, SummerAssignForm
-from player_tracking.choices import LEFT
 from player_tracking.views.changes_logic import (
     save_new_player_and_init_transaction,
     save_transaction_form,
@@ -22,7 +21,7 @@ def add_player(request):
         form = NewPlayerForm(request.POST)
         if form.is_valid():
             save_new_player_and_init_transaction(form)
-            save_new_player_and_init_transaction(form)
+            set_spring_years_at_indiana()
         return redirect(reverse("players"))
     else:
         form = NewPlayerForm(

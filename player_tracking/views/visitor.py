@@ -192,9 +192,8 @@ def projected_players_fall(request, fall_year):
             player.group = "Freshman"
             if draft_pending:
                 player.draft = f"*{fall_year} MLB Draft Eligible from High School"
-            sep1 = date(int(fall_year), 9, 1)
             transactions = Transaction.objects.filter(
-                player=player, trans_date__lte=sep1
+                player=player, trans_date__lte=date(int(fall_year), 9, 1)
             ).order_by("-trans_date")
             for transaction in transactions:
                 if transaction.primary_position:

@@ -129,6 +129,7 @@ def calc_first_spring():
                 this_player.first_spring = trans.trans_date.year + 1
                 this_player.save()
                 break
+            
 
 def set_spring_years_at_indiana():
     calc_first_spring()

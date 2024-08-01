@@ -12,7 +12,13 @@ from player_tracking.models import (
 )
 from index.views import save_traffic_data
 from player_tracking.choices import POSITION_CHOICES, ALL_ROSTER
-from player_tracking.views.visitor_logic import set_draft_combine_player_props, set_drafted_player, set_signed_player, sort_by_positions
+from player_tracking.views.visitor_logic import (
+    set_draft_combine_player_props, 
+    set_drafted_player, 
+    set_signed_player, 
+    sort_by_positions,
+    set_not_signed_player,
+)
 
 
 def players(request):
@@ -247,14 +253,16 @@ def drafted_players(request, draft_year):
     players = Player.objects.all().order_by("last")
     for player in players:
         player.drafted = False
-        player.signed = False
+        player.signed = "no"
         transactions = Transaction.objects.filter(player=player).order_by("trans_date")
         for trans in transactions:
             if trans.trans_event == "Drafted" and trans.trans_date.year == int(draft_year):
                 set_drafted_player(draft_year, player, trans)
-                count += 1    
+                count += 1
             if trans.trans_event == "Signed Professional Contract" and player.drafted and trans.trans_date.year == int(draft_year):
                 set_signed_player(player, trans)
+            if trans.trans_event == "Not Signing Professional Contract" and player.drafted and trans.trans_date.year == int(draft_year):
+                set_not_signed_player(player, trans)
     context = {
         "this_year": draft_year,
         "players": players,

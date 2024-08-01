@@ -24,9 +24,13 @@
                 <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p> 
                 <p>Drafted in Round {{ player.draft_round }} by the {{ player.prof_org }} organization.
                 {% if player.draft_comment %}{{ player.draft_comment }}{% endif %}</p>
-                {% if player.signed %}
+                {% if player.signed == "yes" %}
                    <em><p>{{player.first}} {{player.last}} signed a professional contract with a bonus of ${{ player.bonus|floatformat:"0g"}}.
                         This bonus was {{ player.bonus_pct|floatformat:"0g"}}% of the assigned value of the draft pick.
+                            {% if player.sign_comment %}{{ player.sign_comment }}{% endif %}
+                    </p></em>
+                {% elif player.signed == "refused" %}
+                   <em><p>{{player.first}} {{player.last}} did not sign and will be on campus in the fall.
                             {% if player.sign_comment %}{{ player.sign_comment }}{% endif %}
                     </p></em>
                 {% else %} 

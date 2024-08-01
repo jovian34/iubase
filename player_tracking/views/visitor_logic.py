@@ -42,10 +42,15 @@ def set_drafted_player(draft_year, player, trans):
 
 
 def set_signed_player(player, trans):
-    player.signed = True
+    player.signed = "yes"
     player.bonus = trans.bonus_or_slot
     player.sign_comment = trans.comment
     player.bonus_pct = 100 * player.bonus / player.slot
+
+
+def set_not_signed_player(player, trans):
+    player.signed = "refused"
+    player.sign_comment = trans.comment
 
 
 def set_draft_combine_player_props(draft_year, player, trans):

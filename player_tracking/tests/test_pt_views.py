@@ -425,6 +425,18 @@ def test_set_last_spring_properly_ends_eligible_player_who_is_now_staff(
 
 
 @pytest.mark.django_db
+def test_set_last_spring_properly_resets_drafted_not_signed(
+    client, players, annual_rosters, transactions, logged_user_schwarbs
+):
+    response = client.get(reverse("players"), follow=True)
+    assert "Grant Hollister (None-None)" in str(response.content)
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("players"), follow=True)
+    assert "Grant Hollister (2025-2028)" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_set_last_spring_asks_for_password_not_logged_in(
     client, players, annual_rosters, transactions
 ):
@@ -580,8 +592,19 @@ def test_drafted_players_renders_signed(
 ):
     response = client.get(reverse("drafted_players", args=["2024"]))
     assert response.status_code == 200
-    assert "Grant Hollister" in str(response.content)
     assert "Count of Players: 2" in str(response.content)
     assert "Nick Mitchell signed a professional contract with a bonus of $367,000." in str(response.content)
     assert "This bonus was 92% of the assigned value of the draft pick." in str(response.content)
     assert "Bonus value was reported two days after signing." in str(response.content)
+
+
+@pytest.mark.django_db
+def test_drafted_players_renders_unsigned(
+    client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
+):
+    response = client.get(reverse("drafted_players", args=["2024"]))
+    assert response.status_code == 200
+    assert "Grant Hollister did not sign and will be on campus in the fall." in str(response.content)
+
+
+    

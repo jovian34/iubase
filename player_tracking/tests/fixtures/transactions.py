@@ -89,6 +89,11 @@ def transactions(players, prof_orgs):
         trans_date=date(year=2024, month=7, day=14),
         comment="He is expected by insiders to require $500,000 to sign."
     )
+    gh_not_sign = Transaction.objects.create(
+        player=players.gh2024,
+        trans_event="Not Signing Professional Contract",
+        trans_date=date(year=2024, month=8, day=1),
+    )
     cg_port = Transaction.objects.create(
         player=players.cg2020,
         trans_event="Verbal Commitment from College",
@@ -106,7 +111,7 @@ def transactions(players, prof_orgs):
     )
     TransObj = namedtuple(
         "TransObj",
-        "dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_combine cg_port nb_verbal nb_diff_role",
+        "dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role",
     )
     return TransObj(
         dt_verbal=dt_verbal,
@@ -123,6 +128,7 @@ def transactions(players, prof_orgs):
         gh_verbal=gh_verbal,
         gh_draft=gh_draft,
         gh_combine=gh_combine,
+        gh_not_sign=gh_not_sign,
         cg_port=cg_port,
         nb_verbal=nb_verbal,
         nb_diff_role=nb_diff_role,

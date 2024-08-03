@@ -126,7 +126,10 @@ def calc_first_spring():
                 this_player.save()
                 break
             if trans.trans_event in COLLEGE:
-                this_player.first_spring = trans.trans_date.year + 1
+                if trans.trans_date.month > 8:
+                    this_player.first_spring = trans.trans_date.year + 2
+                else:
+                    this_player.first_spring = trans.trans_date.year + 1
                 this_player.save()
                 break
             

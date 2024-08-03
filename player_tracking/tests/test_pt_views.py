@@ -437,6 +437,18 @@ def test_set_last_spring_properly_resets_drafted_not_signed(
 
 
 @pytest.mark.django_db
+def test_set_last_spring_properly_sets_start_for_early_juco_commit(
+    client, players, annual_rosters, transactions, logged_user_schwarbs
+):
+    response = client.get(reverse("players"), follow=True)
+    assert "Holton Compton (None-None)" in str(response.content)
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("players"), follow=True)
+    assert "Holton Compton (2025-2026)" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_set_last_spring_asks_for_password_not_logged_in(
     client, players, annual_rosters, transactions
 ):

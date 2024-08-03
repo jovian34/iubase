@@ -29,7 +29,7 @@ def transactions(players, prof_orgs):
     nm_verbal = Transaction.objects.create(
         player=players.nm2021,
         trans_event="Verbal Commitment from College",
-        trans_date=date(year=2023, month=11, day=7),
+        trans_date=date(year=2023, month=6, day=7),
     )
     nm_combine = Transaction.objects.create(
         player=players.nm2021,
@@ -109,9 +109,14 @@ def transactions(players, prof_orgs):
         trans_event="Not playing but with the program in another role",
         trans_date=date(year=2024, month=2, day=15),
     )
+    hc_verbal = Transaction.objects.create(
+        player=players.hc2022,
+        trans_event="Verbal Commitment from College",
+        trans_date=date(year=2023, month=10, day=23),
+    )
     TransObj = namedtuple(
         "TransObj",
-        "dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role",
+        "dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal",
     )
     return TransObj(
         dt_verbal=dt_verbal,
@@ -132,4 +137,5 @@ def transactions(players, prof_orgs):
         cg_port=cg_port,
         nb_verbal=nb_verbal,
         nb_diff_role=nb_diff_role,
+        hc_verbal=hc_verbal,
     )

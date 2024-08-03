@@ -64,8 +64,15 @@ def players():
         bats="right",
         throws="right",
     )
+    hc2022 = Player.objects.create(
+        first="Holton",
+        last="Compton",
+        hsgrad_year=2022,
+        bats="right",
+        throws="right",
+    )
     PlayerObj = namedtuple(
-        "PlayerOnj", "dt2022 br2022 aw2023 nm2021 be2021 jm2019 gh2024 cg2020 nb2023"
+        "PlayerOnj", "dt2022 br2022 aw2023 nm2021 be2021 jm2019 gh2024 cg2020 nb2023 hc2022"
     )
     return PlayerObj(
         dt2022=dt2022,
@@ -77,4 +84,5 @@ def players():
         gh2024=gh2024,
         cg2020=cg2020,
         nb2023=nb2023,
+        hc2022=hc2022,
     )

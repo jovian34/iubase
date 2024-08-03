@@ -167,5 +167,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.97"  # PT showing unsigned draftees ATP 2024-07-28
+project_version = "0.0.98"  # PT transfer commits after August start in the second spring ATP 2024-08-02
 os.environ.setdefault("PROJECT_VERSION", project_version)

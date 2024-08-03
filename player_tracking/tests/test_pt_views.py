@@ -5,11 +5,9 @@ from datetime import date, datetime
 
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.mlb_draft_date import mlb_draft_date
-from player_tracking.tests.fixtures.players_ly import players_last_year_set
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
-from player_tracking.tests.fixtures.transactions_ly import trans_ly_set
 from player_tracking.tests.fixtures.summer import (
     summer_assign,
     summer_leagues,
@@ -459,8 +457,10 @@ def test_set_last_spring_asks_for_password_not_logged_in(
 
 @pytest.mark.django_db
 def test_projected_roster_renders_current_players(
-    client, players_last_year_set, trans_ly_set, mlb_draft_date
+    client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
     assert "Projected Players For Fall 2024" in str(response.content)
@@ -469,8 +469,10 @@ def test_projected_roster_renders_current_players(
 
 @pytest.mark.django_db
 def test_projected_roster_excludes_transfer_portal_entrants(
-    client, players_last_year_set, trans_ly_set, mlb_draft_date
+    client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
     assert "Brooks Ey" not in str(response.content)
@@ -492,8 +494,10 @@ def test_projected_roster_for_bad_year_redirects_to_pt_index(client):
 
 @pytest.mark.django_db
 def test_projected_roster_includes_high_school_commit(
-    client, players_last_year_set, trans_ly_set, mlb_draft_date
+    client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
     assert "Grant Hollister" in str(response.content)
@@ -501,23 +505,27 @@ def test_projected_roster_includes_high_school_commit(
 
 @pytest.mark.django_db
 def test_projected_roster_includes_transfer_commit(
-    client, players_last_year_set, trans_ly_set, mlb_draft_date
+    client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
-    assert "Cole Gilley" in str(response.content)
+    assert "Holton Compton" in str(response.content)
 
 
 @pytest.mark.django_db
 def test_non_existent_draft_year_redirects_to_index(
-    client, players_last_year_set, trans_ly_set, mlb_draft_date
+    client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
+    response = client.get(reverse("calc_last_spring"), follow=True)
+    assert response.status_code == 200
     response = client.get(
         reverse("projected_players_fall", args=["2023"]),
         follow=True,
     )
     assert response.status_code == 200
-    assert "Cole Gilley" not in str(response.content)
+    assert "Grant Hollister" not in str(response.content)
     assert "Player Tracking" in str(response.content)
 
 

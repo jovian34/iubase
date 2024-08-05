@@ -96,7 +96,7 @@ LOGGING = {
         "file": {
             "level": log_level,
             "class": "logging.FileHandler",
-            "filename": f"{BASE_DIR}/logs/{today}_logging.log",
+            "filename": f"{BASE_DIR}/logs/{today.year}_{today.strftime("%m")}_logging.log",
         },
     },
     "loggers": {

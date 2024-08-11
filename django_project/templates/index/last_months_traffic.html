@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}}}{% endblock %}
+
+{% block content %}
+
+<div class="column-12">
+
+    <div class="column-3"></div>
+
+    <div class="column-6">
+        <table>
+
+        {% for traf in traffic %}
+
+        <tr>
+            <td>{{ traf.page }}</td>
+            <td>{{ traf.timestamp }}</td>
+            <td>{{ traf.ip }}</td>
+            <td>{{ traf.user_agent }}</td>
+        </tr>
+
+        {% endfor %}
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

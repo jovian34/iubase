@@ -191,10 +191,20 @@ figure.col4 img, figure.col6 img, figure.col3full img, figure.col4full img, figu
   padding: 1%;
 }
 
-table, th, td {
-  border: 1px solid black;
-  width: 100%;
+table {
+  border: 3px solid black;
+  width: 96%;
+  margin: 2%;
+}
+
+tr {
+  border: 2px solid black;
+}
+
+td {
   padding: 5px;
+  border: 2px solid black;
+  word-break: break-all;
 }
 
 .embed-container {

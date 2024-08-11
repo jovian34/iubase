@@ -1,14 +1,11 @@
 
-<div class="column-12" id="past-button">
-    <div class="column-3"></div>
-    <div class="column-6">
-        <a href="{% url "games" %}"><button>Hide Completed Games</button></a>
-    </div>
-</div> 
+<div class="column-3"></div>
+<div class="column-6" id="past-button">
+    <a href="{% url "games" %}"><button>Hide Completed Games</button></a>
+</div>
 <br clear="both">
 
 {% for scoreboard in scoreboards %}
-<div class="column-12">
     <div class="column-3"></div>
     <div class="column-6">
         <img class="team-logo" src="{{ scoreboard.game.away_team.logo }}">
@@ -20,10 +17,9 @@
         </h2></a>
         <h3>{{ scoreboard.game.first_pitch }}</h3>
         {% if user.is_authenticated %}
-        <h2><a href="{% url "edit_live_game_blog" scoreboard.game.pk %}">Edit or Add to Game Blog<h2>
+        <h2><a href="{% url "edit_live_game_blog" scoreboard.game.pk %}">Edit or Add to Game Blog</a></h2>
         {% endif %}
+        <hr class="crimson">
     </div>
-    <div class="column-3"></div>
-</div>
 <br clear="both">
 {% endfor %}

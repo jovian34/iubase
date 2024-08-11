@@ -9,9 +9,27 @@
 
     <div class="column-6">
         <ul>
-            <li><h2><a href="../live_game_blog/">Live Game Blogs</a></h2></li>
-            <li><h2><a href="../player_tracking/">Player Tracking</a></h2></li>
+            <li><h2><a href="{% url "games" %}">Live Game Blogs</a></h2></li>
+            <li><h2><a href="{% url "pt_index" %}">Player Tracking</a></h2></li>
+
+            {% if user.is_authenticated %}
+            <li><h2><a href="{% url "current_months_traffic" %}">Current Month's Traffic</h2></li>
+            {% endif %}
+
+
+
         </ul>
+
+            {% if user.is_authenticated %}
+            <br>
+            <br>
+            <hr>
+            <h2><a href="{% url "last_months_traffic" %}">DELETE Last Month's Traffic</h2>
+            <p><em>this is not reversible</em></p>
+            <hr>
+            {% endif %}
+
+
 
     </div>
 

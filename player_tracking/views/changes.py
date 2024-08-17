@@ -11,7 +11,7 @@ from player_tracking.views.changes_logic import (
     save_transaction_form,
     save_roster_year,
     save_summer_assign,
-    set_spring_years_at_indiana,
+    set_player_props_get_errors,
 )
 
 
@@ -21,7 +21,7 @@ def add_player(request):
         form = NewPlayerForm(request.POST)
         if form.is_valid():
             save_new_player_and_init_transaction(form)
-            set_spring_years_at_indiana()
+            set_player_props_get_errors()
         return redirect(reverse("players"))
     else:
         form = NewPlayerForm(
@@ -43,7 +43,7 @@ def add_roster_year(request, player_id):
         form = AnnualRosterForm(request.POST)
         if form.is_valid():
             save_roster_year(player_id, form)
-            set_spring_years_at_indiana()
+            set_player_props_get_errors()
         return redirect(reverse("player_rosters", args=[player_id]))
     else:
         form = AnnualRosterForm(
@@ -93,7 +93,7 @@ def add_transaction(request, player_id):
         form = TransactionForm(request.POST)
         if form.is_valid():
             save_transaction_form(player_id, form)
-            set_spring_years_at_indiana()
+            set_player_props_get_errors()
         return redirect(reverse("player_rosters", args=[player_id]))
     else:
         form = TransactionForm(
@@ -114,7 +114,7 @@ def add_transaction(request, player_id):
 
 @login_required
 def set_player_properties(request):
-    errors = set_spring_years_at_indiana()
+    errors = set_player_props_get_errors()
     players_updated = Player.objects.all().order_by("last")
     context = {
         "players": players_updated,

@@ -157,7 +157,7 @@ def calc_last_spring():
     return errors
             
 
-def set_spring_years_at_indiana():
+def set_player_props_get_errors():
     calc_first_spring()
     errors = calc_last_spring()
     return errors

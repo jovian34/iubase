@@ -132,10 +132,8 @@ def calc_first_spring():
                     this_player.first_spring = trans.trans_date.year + 1
                 this_player.save()
                 break
-            
 
-def set_spring_years_at_indiana():
-    calc_first_spring()
+def calc_last_spring():
     players = Player.objects.all()
     errors = []
     for player in players:
@@ -156,4 +154,10 @@ def set_spring_years_at_indiana():
         total_years = calc_total_years_eligible(errors, player, rosters)
         this_player.last_spring = player.hsgrad_year + total_years
         this_player.save()
+    return errors
+            
+
+def set_spring_years_at_indiana():
+    calc_first_spring()
+    errors = calc_last_spring()
     return errors

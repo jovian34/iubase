@@ -13,7 +13,7 @@ def annual_rosters(players, teams):
     dt_2023 = AnnualRoster.objects.create(
         spring_year=2023,
         status="Spring Roster",
-        player=players.dt2022,
+        player=players.devin_taylor,
         team=teams.indiana,
         jersey=5,
         primary_position="Corner Outfield",
@@ -23,7 +23,7 @@ def annual_rosters(players, teams):
         spring_year=2024,
         status="Fall Roster",
         team=teams.indiana,
-        player=players.dt2022,
+        player=players.devin_taylor,
         jersey=5,
         primary_position="Corner Outfield",
     )
@@ -72,7 +72,7 @@ def annual_rosters(players, teams):
     br_2023 = AnnualRoster.objects.create(
         spring_year=2023,
         status="Spring Roster",
-        player=players.br2022,
+        player=players.brayden_risedorph,
         team=teams.indiana,
         jersey=51,
         primary_position="Pitcher",

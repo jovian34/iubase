@@ -31,7 +31,7 @@ def summer_teams():
 @pytest.fixture
 def summer_assign(players, summer_leagues, summer_teams):
     dt_usa_2024 = SummerAssign.objects.create(
-        player=players.dt2022,
+        player=players.devin_taylor,
         summer_year=2024,
         summer_league=summer_leagues.in_fr,
         summer_team=summer_teams.usa,

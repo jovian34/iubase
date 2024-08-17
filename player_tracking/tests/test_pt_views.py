@@ -233,7 +233,7 @@ def test_add_transaction_partial_post_adds_transaction(
     client, players, teams, annual_rosters, logged_user_schwarbs, prof_orgs
 ):
     response = client.post(
-        reverse("add_transaction", args=[players.br2022.pk]),
+        reverse("add_transaction", args=[players.brayden_risedorph.pk]),
         {
             "trans_event": ["Drafted"],
             "trans_date": [str(date(2024, 7, 17))],
@@ -558,7 +558,7 @@ def test_draft_combine_attendees_renders(
 @pytest.mark.django_db
 def test_add_summer_assignment_get_redirects_not_logged_in(client, players, summer_leagues, summer_teams):
     response = client.get(
-        reverse("add_summer_assignment", args=[players.dt2022]),
+        reverse("add_summer_assignment", args=[players.devin_taylor]),
         follow=True,
     )
     assert response.status_code == 200
@@ -568,7 +568,7 @@ def test_add_summer_assignment_get_redirects_not_logged_in(client, players, summ
 @pytest.mark.django_db
 def test_add_summer_assignment_get_renders_form(client, players, summer_leagues, summer_teams, logged_user_schwarbs):
     response = client.get(
-        reverse("add_summer_assignment", args=[str(players.dt2022.pk)])
+        reverse("add_summer_assignment", args=[str(players.devin_taylor.pk)])
     )
     assert response.status_code == 200
     assert "Summer Year" in str(response.content)
@@ -577,7 +577,7 @@ def test_add_summer_assignment_get_renders_form(client, players, summer_leagues,
 @pytest.mark.django_db
 def test_add_summer_assignment_post_adds_assignment(client, players, summer_leagues, summer_teams, logged_user_schwarbs):
     response = client.post(
-        reverse("add_summer_assignment", args=[str(players.br2022.pk)]),
+        reverse("add_summer_assignment", args=[str(players.brayden_risedorph.pk)]),
         {
             "summer_year": [2024],
             "summer_team": [str(summer_teams.gb.pk)],

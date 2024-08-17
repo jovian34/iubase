@@ -12,17 +12,17 @@ from player_tracking.tests.fixtures.prof_org import prof_orgs
 @pytest.fixture
 def transactions(players, prof_orgs):
     dt_verbal = Transaction.objects.create(
-        player=players.dt2022,
+        player=players.devin_taylor,
         trans_event="Verbal Commitment from High School",
         trans_date=date(year=2021, month=3, day=11),
     )
     dt_nli = Transaction.objects.create(
-        player=players.dt2022,
+        player=players.devin_taylor,
         trans_event="National Letter of Intent Signed",
         trans_date=date(year=2021, month=11, day=7),
     )
     br_nli = Transaction.objects.create(
-        player=players.br2022,
+        player=players.brayden_risedorph,
         trans_event="National Letter of Intent Signed",
         trans_date=date(year=2021, month=11, day=7),
     )

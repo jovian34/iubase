@@ -16,15 +16,15 @@ from live_game_blog.tests.fixtures import teams
 
 @pytest.mark.django_db
 def test_player_model_stored_all_fields(client, players):
-    assert players.dt2022.first == "Devin"
-    assert players.br2022.throws == "right"
+    assert players.devin_taylor.first == "Devin"
+    assert players.brayden_risedorph.throws == "right"
     assert players.aw2023.hsgrad_year == 2023
-    assert players.dt2022.home_country == "USA"
+    assert players.devin_taylor.home_country == "USA"
 
 
 @pytest.mark.django_db
 def test_player_model_string_def(client, players):
-    assert str(players.dt2022) == "Devin Taylor 2022"
+    assert str(players.devin_taylor) == "Devin Taylor 2022"
 
 
 @pytest.mark.django_db

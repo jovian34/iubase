@@ -11,5 +11,5 @@ def test_group_drafted_player_groups_high_school(players):
 
 @pytest.mark.django_db
 def test_group_drafted_player_groups_iu(players):
-    group_drafted_player(draft_year="2024", player=players.br2022)
-    assert players.br2022.group == "IU Player/Alumni"
+    group_drafted_player(draft_year="2024", player=players.brayden_risedorph)
+    assert players.brayden_risedorph.group == "IU Player/Alumni"

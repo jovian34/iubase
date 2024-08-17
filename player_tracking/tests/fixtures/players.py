@@ -8,10 +8,10 @@ from player_tracking.models import Player
 
 @pytest.fixture
 def players():
-    dt2022 = Player.objects.create(
+    devin_taylor = Player.objects.create(
         first="Devin", last="Taylor", hsgrad_year=2022, bats="left", throws="left"
     )
-    br2022 = Player.objects.create(
+    brayden_risedorph = Player.objects.create(
         first="Brayden",
         last="Risedorph",
         hsgrad_year=2022,
@@ -72,11 +72,11 @@ def players():
         throws="right",
     )
     PlayerObj = namedtuple(
-        "PlayerOnj", "dt2022 br2022 aw2023 nm2021 be2021 jm2019 gh2024 cg2020 nb2023 hc2022"
+        "PlayerOnj", "devin_taylor brayden_risedorph aw2023 nm2021 be2021 jm2019 gh2024 cg2020 nb2023 hc2022"
     )
     return PlayerObj(
-        dt2022=dt2022,
-        br2022=br2022,
+        devin_taylor=devin_taylor,
+        brayden_risedorph=brayden_risedorph,
         aw2023=aw2023,
         nm2021=nm2021,
         be2021=be2021,

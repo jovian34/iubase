@@ -113,7 +113,7 @@ def add_transaction(request, player_id):
 
 
 @login_required
-def calc_last_spring(request):
+def set_player_properties(request):
     errors = set_spring_years_at_indiana()
     players_updated = Player.objects.all().order_by("last")
     context = {

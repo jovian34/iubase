@@ -17,7 +17,7 @@ urlpatterns = [
     path("spring_roster/<spring_year>/", visitor.spring_roster, name="spring_roster"),
     path("add_player/", changes.add_player, name="add_player"),
     path("portal/<portal_year>/", visitor.portal, name="portal"),
-    path("calc_last_spring/", changes.calc_last_spring, name="calc_last_spring"),
+    path("set_player_properties/", changes.set_player_properties, name="set_player_properties"),
     path(
         "draft_combine_attendees/<draft_year>/",
         visitor.draft_combine_attendees,

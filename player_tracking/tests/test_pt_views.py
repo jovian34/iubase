@@ -346,7 +346,7 @@ def test_set_last_spring_produces_correct_end_date_typical_case(
 ):
     response = client.get(reverse("players"), follow=True)
     assert "Devin Taylor (None-None)" in str(response.content)
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
     assert "Devin Taylor (2023-2026)" in str(response.content)
@@ -358,7 +358,7 @@ def test_set_last_spring_produces_correct_end_date_drafted(
 ):
     response = client.get(reverse("players"), follow=True)
     assert "Nick Mitchell (None-None)" in str(response.content)
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
     assert "Nick Mitchell (2024-2024)" in str(response.content)
@@ -370,7 +370,7 @@ def test_set_last_spring_produces_correct_end_date_redshirt_transfer(
 ):
     response = client.get(reverse("players"), follow=True)
     assert "Cole Gilley (None-None)" in str(response.content)
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
     assert "Cole Gilley (2025-2025)" in str(response.content)
@@ -382,7 +382,7 @@ def test_set_last_spring_ends_portal_entrant_immediately(
 ):
     response = client.get(reverse("players"), follow=True)
     assert "Brooks Ey (None-None)" in str(response.content)
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
     assert "Brooks Ey (2024-2024)" in str(response.content)
@@ -401,7 +401,7 @@ def test_set_last_spring_properly_limits_redshirt_years(
     """
     response = client.get(reverse("players"), follow=True)
     assert "Jack Moffitt (None-None)" in str(response.content)
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
     assert "Jack Moffitt (2024-2025)" in str(response.content)
@@ -417,7 +417,7 @@ def test_set_last_spring_properly_ends_eligible_player_who_is_now_staff(
     """
     response = client.get(reverse("players"), follow=True)
     assert "Nathan Ball (None-None)" in str(response.content)
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
     assert "Nathan Ball (2024-2024)" in str(response.content)
@@ -429,7 +429,7 @@ def test_set_last_spring_properly_resets_drafted_not_signed(
 ):
     response = client.get(reverse("players"), follow=True)
     assert "Grant Hollister (None-None)" in str(response.content)
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
     assert "Grant Hollister (2025-2028)" in str(response.content)
@@ -441,7 +441,7 @@ def test_set_last_spring_properly_sets_start_for_early_juco_commit(
 ):
     response = client.get(reverse("players"), follow=True)
     assert "Holton Compton (None-None)" in str(response.content)
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
     assert "Holton Compton (2025-2026)" in str(response.content)
@@ -451,7 +451,7 @@ def test_set_last_spring_properly_sets_start_for_early_juco_commit(
 def test_set_last_spring_asks_for_password_not_logged_in(
     client, players, annual_rosters, transactions
 ):
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     assert "Password" in str(response.content)
 
@@ -460,7 +460,7 @@ def test_set_last_spring_asks_for_password_not_logged_in(
 def test_projected_roster_renders_current_players(
     client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
@@ -472,7 +472,7 @@ def test_projected_roster_renders_current_players(
 def test_projected_roster_excludes_transfer_portal_entrants(
     client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
@@ -497,7 +497,7 @@ def test_projected_roster_for_bad_year_redirects_to_pt_index(client):
 def test_projected_roster_includes_high_school_commit(
     client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
@@ -508,7 +508,7 @@ def test_projected_roster_includes_high_school_commit(
 def test_projected_roster_includes_transfer_commit(
     client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("projected_players_fall", args=["2024"]))
     assert response.status_code == 200
@@ -519,7 +519,7 @@ def test_projected_roster_includes_transfer_commit(
 def test_non_existent_draft_year_redirects_to_index(
     client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(
         reverse("projected_players_fall", args=["2023"]),
@@ -536,7 +536,7 @@ def test_draft_combine_attendees_set_to_current_last_year(
 ):
     response = client.get(reverse("players"), follow=True)
     assert "Nick Mitchell (None-None)" in str(response.content)
-    response = client.get(reverse("calc_last_spring"), follow=True)
+    response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
     assert "Nick Mitchell (2024-2024)" in str(response.content)

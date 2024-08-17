@@ -24,6 +24,7 @@ from accounts.tests.fixtures import (
 )
 
 
+
 @pytest.mark.django_db
 def test_index(client, players):
     response = client.get(reverse("players"))
@@ -602,6 +603,8 @@ def test_drafted_players_renders_drafted_not_signed(
     assert response.status_code == 200
     assert "Grant Hollister" in str(response.content)
     assert "Count of Players: 2" in str(response.content)
+    assert "High School Signee" in str(response.content)
+    assert "IU Player/Alumni" in str(response.content)
     assert "He is expected by insiders to require $500,000 to sign." in str(response.content)
     assert "$400,100 before" not in str(response.content)
     assert "Philadelphia Phillies incur" not in str(response.content)

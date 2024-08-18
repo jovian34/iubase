@@ -370,7 +370,7 @@ def test_set_player_properties_produces_correct_html_output(
 
 
 @pytest.mark.django_db
-def test_set_last_spring_produces_correct_end_date_drafted(
+def test_set_player_properties_produces_correct_end_date_drafted(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
@@ -384,7 +384,7 @@ def test_set_last_spring_produces_correct_end_date_drafted(
 
 
 @pytest.mark.django_db
-def test_set_last_spring_produces_correct_end_date_redshirt_transfer(
+def test_set_player_properties_produces_correct_end_date_redshirt_transfer(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
@@ -398,7 +398,7 @@ def test_set_last_spring_produces_correct_end_date_redshirt_transfer(
 
 
 @pytest.mark.django_db
-def test_set_last_spring_ends_portal_entrant_immediately(
+def test_set_player_properties_ends_portal_entrant_immediately(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
@@ -412,7 +412,7 @@ def test_set_last_spring_ends_portal_entrant_immediately(
 
 
 @pytest.mark.django_db
-def test_set_last_spring_properly_limits_redshirt_years(
+def test_set_player_properties_properly_limits_redshirt_years(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     """
@@ -433,7 +433,7 @@ def test_set_last_spring_properly_limits_redshirt_years(
 
 
 @pytest.mark.django_db
-def test_set_last_spring_properly_ends_eligible_player_who_is_now_staff(
+def test_set_player_properties_properly_ends_eligible_player_who_is_now_staff(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     """
@@ -451,31 +451,35 @@ def test_set_last_spring_properly_ends_eligible_player_who_is_now_staff(
 
 
 @pytest.mark.django_db
-def test_set_last_spring_properly_resets_drafted_not_signed(
+def test_set_player_properties_properly_resets_drafted_not_signed(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
-    assert "Grant Hollister (None-None)" in str(response.content)
+    grant = Player.objects.get(pk=players.grant_hollister.pk)
+    assert not grant.first_spring or grant.last_spring
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("players"), follow=True)
-    assert "Grant Hollister (2025-2028)" in str(response.content)
+    grant = Player.objects.get(pk=players.grant_hollister.pk)
+    assert grant.first_spring == this_year + 1
+    assert grant.last_spring == this_year + 4
 
 
 @pytest.mark.django_db
-def test_set_last_spring_properly_sets_start_for_early_juco_commit(
+def test_set_player_properties_properly_sets_start_for_early_juco_commit(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
-    assert "Holton Compton (None-None)" in str(response.content)
+    holton = Player.objects.get(pk=players.holton_compton.pk)
+    assert not holton.first_spring or holton.last_spring
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("players"), follow=True)
-    assert "Holton Compton (2025-2026)" in str(response.content)
+    holton = Player.objects.get(pk=players.holton_compton.pk)
+    assert holton.first_spring == this_year + 1
+    assert holton.last_spring == this_year + 2
 
 
 @pytest.mark.django_db
-def test_set_last_spring_asks_for_password_not_logged_in(
+def test_set_player_properties_asks_for_password_not_logged_in(
     client, players, annual_rosters, transactions
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
@@ -489,9 +493,9 @@ def test_projected_roster_renders_current_players(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall", args=["2024"]))
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
     assert response.status_code == 200
-    assert "Projected Players For Fall 2024" in str(response.content)
+    assert f"Projected Players For Fall {this_year}" in str(response.content)
     assert "Devin Taylor" in str(response.content)
 
 
@@ -501,21 +505,21 @@ def test_projected_roster_excludes_transfer_portal_entrants(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall", args=["2024"]))
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Brooks Ey" not in str(response.content)
 
 
 @pytest.mark.django_db
 def test_projected_roster_for_bad_year_redirects_to_pt_index(client):
-    response = client.get(reverse("projected_players_fall", args=["2025"]))
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year + 1}"]))
     assert response.status_code == 302
-    response = client.get(reverse("projected_players_fall", args=["2025"]), follow=True)
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year + 1}"]), follow=True)
     assert response.status_code == 200
     assert f"{str(timezone.now().year)} Depth Chart" in str(response.content)
-    response = client.get(reverse("projected_players_fall", args=["2023"]))
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]))
     assert response.status_code == 302
-    response = client.get(reverse("projected_players_fall", args=["2023"]), follow=True)
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]), follow=True)
     assert response.status_code == 200
     assert f"{str(timezone.now().year)} Depth Chart" in str(response.content)
 
@@ -526,7 +530,7 @@ def test_projected_roster_includes_high_school_commit(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall", args=["2024"]))
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Grant Hollister" in str(response.content)
 
@@ -537,7 +541,7 @@ def test_projected_roster_includes_transfer_commit(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall", args=["2024"]))
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Holton Compton" in str(response.content)
 
@@ -549,7 +553,7 @@ def test_non_existent_draft_year_redirects_to_index(
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(
-        reverse("projected_players_fall", args=["2023"]),
+        reverse("projected_players_fall", args=[f"{this_year - 1}"]),
         follow=True,
     )
     assert response.status_code == 200
@@ -562,21 +566,24 @@ def test_draft_combine_attendees_set_to_current_last_year(
     client, players, transactions, annual_rosters, mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
-    assert "Nick Mitchell (None-None)" in str(response.content)
+    nick = Player.objects.get(pk=players.nick_mitchell.pk)
+    assert not nick.first_spring or nick.last_spring
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
-    assert "Nick Mitchell (2024-2024)" in str(response.content)
+    nick = Player.objects.get(pk=players.nick_mitchell.pk)
+    assert nick.first_spring == this_year
+    assert nick.last_spring == this_year
 
 
 @pytest.mark.django_db
 def test_draft_combine_attendees_renders(
     client, players, transactions, annual_rosters, mlb_draft_date
 ):
-    response = client.get(reverse("draft_combine_attendees", args=["2024"]))
+    response = client.get(reverse("draft_combine_attendees", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Nick Mitchell" in str(response.content)
-    assert "Count of Players: 2" in str(response.content)
+    assert response.context["count"] == 2
     assert "College" in str(response.content)
     assert "Hollister" in str(response.content)
     assert "Freshman" in str(response.content)
@@ -606,7 +613,7 @@ def test_add_summer_assignment_post_adds_assignment(client, players, summer_leag
     response = client.post(
         reverse("add_summer_assignment", args=[str(players.brayden_risedorph.pk)]),
         {
-            "summer_year": [2024],
+            "summer_year": [f"{this_year}"],
             "summer_team": [str(summer_teams.gb.pk)],
             "summer_league": [str(summer_leagues.nw.pk)],
         },
@@ -618,7 +625,7 @@ def test_add_summer_assignment_post_adds_assignment(client, players, summer_leag
 
 @pytest.mark.django_db
 def test_summer_assignments_page_renders(client, players, summer_assign, summer_leagues, summer_teams):
-    response = client.get(reverse("summer_assignments", args=["2024"]))
+    response = client.get(reverse("summer_assignments", args=[f"{this_year}"]))
     assert response.status_code == 200
 
 
@@ -626,10 +633,10 @@ def test_summer_assignments_page_renders(client, players, summer_assign, summer_
 def test_drafted_players_renders_drafted_not_signed(
     client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
 ):
-    response = client.get(reverse("drafted_players", args=["2024"]))
+    response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Grant Hollister" in str(response.content)
-    assert "Count of Players: 2" in str(response.content)
+    assert response.context["count"] == 2
     assert "High School Signee" in str(response.content)
     assert "IU Player/Alumni" in str(response.content)
     assert "He is expected by insiders to require $500,000 to sign." in str(response.content)
@@ -640,9 +647,9 @@ def test_drafted_players_renders_drafted_not_signed(
 def test_drafted_players_renders_signed(
     client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
 ):
-    response = client.get(reverse("drafted_players", args=["2024"]))
+    response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
-    assert "Count of Players: 2" in str(response.content)
+    assert response.context["count"] == 2
     assert "Nick Mitchell signed a professional contract with a bonus of $367,000." in str(response.content)
     assert "This bonus was 92% of the assigned value of the draft pick." in str(response.content)
     assert "Bonus value was reported two days after signing." in str(response.content)
@@ -652,7 +659,7 @@ def test_drafted_players_renders_signed(
 def test_drafted_players_renders_unsigned(
     client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
 ):
-    response = client.get(reverse("drafted_players", args=["2024"]))
+    response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Grant Hollister did not sign and will be on campus in the fall." in str(response.content)
 

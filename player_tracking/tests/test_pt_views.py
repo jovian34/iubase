@@ -13,6 +13,7 @@ from player_tracking.tests.fixtures.summer import (
     summer_leagues,
     summer_teams,
 )
+from player_tracking.models import Player
 
 from live_game_blog.tests.fixtures import teams
 
@@ -87,7 +88,7 @@ def test_add_player_form_asks_for_password_not_logged_in(client, players):
         {
             "first": ["Phillip"],
             "last": ["Glasser"],
-            "hsgrad_year": ["2018"],
+            "hsgrad_year": [f"{this_year - 6}"],
             "high_school": ["Tallmadge"],
             "home_city": ["Tallmadge"],
             "home_state": ["OH"],
@@ -95,7 +96,7 @@ def test_add_player_form_asks_for_password_not_logged_in(client, players):
             "headshot": [
                 "https://www.prepbaseballreport.com/passets/photo/OH/8542307196-PhillipGlasser.png"
             ],
-            "birthdate": ["1999-12-03"],
+            "birthdate": [f"{this_year - 25}-12-03"],
             "bats": ["Left"],
             "throws": ["Right"],
             "height": [72],
@@ -134,7 +135,7 @@ def test_player_rosters_renders_summer_teams(
     assert response.status_code == 200
     assert "Devin Taylor" in str(response.content)
     assert "Summer Ball:" in str(response.content)
-    assert "2024: USA Collegiate National Team of the International Friendship League" in str(
+    assert f"{this_year}: USA Collegiate National Team of the International Friendship League" in str(
         response.content
     )
 
@@ -214,9 +215,9 @@ def test_add_roster_year_partial_post_adds_roster_year(
     response = client.post(
         reverse("add_roster_year", args=[players.nick_mitchell.pk]),
         {
-            "spring_year": [2022],
+            "spring_year": [f"{this_year - 2}"],
             "team": [str(teams.duke.pk)],
-            "jersey": [29],
+            "jersey": ["29"],
             "status": ["Spring Roster"],
             "primary_position": ["Centerfield"],
             "secondary_position": [],
@@ -224,9 +225,9 @@ def test_add_roster_year_partial_post_adds_roster_year(
         follow=True,
     )
     assert response.status_code == 200
-    assert "2024 Indiana" in str(response.content)
-    assert "2023 Miami (Ohio)" in str(response.content)
-    assert "2022 Duke" in str(response.content)
+    assert f"{this_year} Indiana" in str(response.content)
+    assert f"{this_year - 1} Miami (Ohio)" in str(response.content)
+    assert f"{this_year - 2} Duke" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -237,7 +238,7 @@ def test_add_transaction_partial_post_adds_transaction(
         reverse("add_transaction", args=[players.brayden_risedorph.pk]),
         {
             "trans_event": ["Drafted"],
-            "trans_date": [str(date(2024, 7, 17))],
+            "trans_date": [str(date(this_year, 7, 17))],
             "citation": ["https://www.mlb.com/draft/tracker"],
             "other_team": [],
             "prof_org": [prof_orgs.d_backs.pk],
@@ -250,7 +251,7 @@ def test_add_transaction_partial_post_adds_transaction(
     assert "Drafted" in str(response.content)
     assert "July 17" in str(response.content)
     assert 'href="https://www.mlb.com/draft/tracker"'
-    response = client.get(reverse("drafted_players", args=["2024"]))
+    response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Brayden Risedorph" in str(response.content)
     assert "he can get a bonus value of $150,000" in str(response.content)
@@ -266,7 +267,7 @@ def test_add_roster_year_partial_post_asks_for_password_not_logged_in(
     response = client.post(
         reverse("add_roster_year", args=[players.nick_mitchell.pk]),
         {
-            "spring_year": [2022],
+            "spring_year": [f"{this_year - 2}"],
             "team": [str(teams.duke.pk)],
             "jersey": [29],
             "status": ["Spring Roster"],
@@ -288,10 +289,10 @@ def test_pt_index_renders(client):
 
 @pytest.mark.django_db
 def test_fall_depth_chart_renders(client, players, teams, annual_rosters):
-    response = client.get(reverse("fall_depth_chart", args=["2023"]))
+    response = client.get(reverse("fall_depth_chart", args=[f"{this_year - 1}"]))
     assert response.status_code == 200
     assert "Corner Outfield" in str(response.content)
-    assert "Fall 2023 Available Depth Chart" in str(response.content)
+    assert f"Fall {this_year - 1} Available Depth Chart" in str(response.content)
     assert "Devin Taylor" in str(response.content)
     assert "Brayden" not in str(response.content)
 
@@ -300,21 +301,21 @@ def test_fall_depth_chart_renders(client, players, teams, annual_rosters):
 def test_spring_depth_chart_renders_indiana_players(
     client, players, teams, annual_rosters
 ):
-    response = client.get(reverse("spring_depth_chart", args=["2023"]))
+    response = client.get(reverse("spring_depth_chart", args=[f"{this_year - 1}"]))
     assert response.status_code == 200
     assert "Catcher" in str(response.context)
-    assert "Spring 2023 Available Depth Chart" in str(response.content)
+    assert f"Spring {this_year - 1} Available Depth Chart" in str(response.content)
     assert "Devin Taylor" in str(response.content)
     assert "Nick" not in str(response.content)  # on different team
 
 
 @pytest.mark.django_db
 def test_fall_roster_renders(client, players, teams, annual_rosters):
-    response = client.get(reverse("fall_roster", args=["2023"]))
+    response = client.get(reverse("fall_roster", args=[f"{this_year - 1}"]))
     print(response.content)
     assert response.status_code == 200
     assert "Total Roster Length: 4" in str(response.content)
-    assert "Fall 2023 Roster" in str(response.content)
+    assert f"Fall {this_year - 1} Roster" in str(response.content)
     assert "Nathan Ball" in str(response.content)
     assert "Nick Mitchell" in str(response.content)
     assert "Jack Moffitt" in str(response.content)
@@ -323,10 +324,10 @@ def test_fall_roster_renders(client, players, teams, annual_rosters):
 
 @pytest.mark.django_db
 def test_spring_roster_renders(client, players, teams, annual_rosters):
-    response = client.get(reverse("spring_roster", args=["2023"]))
+    response = client.get(reverse("spring_roster", args=[f"{this_year - 1}"]))
     assert response.status_code == 200
     assert "Total Roster Length: 2" in str(response.content)
-    assert "Spring 2023 Roster" in str(response.content)
+    assert f"Spring {this_year - 1} Roster" in str(response.content)
     assert "Nick Mitchell" not in str(response.content)
     assert "Devin Taylor" in str(response.content)
 
@@ -342,7 +343,21 @@ def test_portal_page_renders(client, players, teams, annual_rosters, transaction
 
 
 @pytest.mark.django_db
-def test_set_last_spring_produces_correct_end_date_typical_case(
+def test_set_player_properties_produces_correct_end_date_typical_case(
+    client, players, annual_rosters, transactions, logged_user_schwarbs
+):
+    response = client.get(reverse("players"), follow=True)
+    devin = Player.objects.get(pk=players.devin_taylor.pk)
+    assert not devin.first_spring or devin.last_spring
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    devin = Player.objects.get(pk=players.devin_taylor.pk)
+    assert devin.first_spring == this_year - 1
+    assert devin.last_spring == this_year + 2
+
+
+@pytest.mark.django_db
+def test_set_player_properties_produces_correct_html_output(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
@@ -350,7 +365,8 @@ def test_set_last_spring_produces_correct_end_date_typical_case(
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(reverse("players"), follow=True)
-    assert "Devin Taylor (2023-2026)" in str(response.content)
+    # see test_set_player_properties_produces_correct_end_date_typical_case for correct year values
+    assert f"Devin Taylor ({this_year - 1}-{this_year + 2})" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -358,11 +374,13 @@ def test_set_last_spring_produces_correct_end_date_drafted(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
-    assert "Nick Mitchell (None-None)" in str(response.content)
+    nick = Player.objects.get(pk=players.nick_mitchell.pk)
+    assert not nick.first_spring or nick.last_spring
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("players"), follow=True)
-    assert "Nick Mitchell (2024-2024)" in str(response.content)
+    nick = Player.objects.get(pk=players.nick_mitchell.pk)
+    assert nick.first_spring == this_year
+    assert nick.last_spring == this_year
 
 
 @pytest.mark.django_db
@@ -370,11 +388,13 @@ def test_set_last_spring_produces_correct_end_date_redshirt_transfer(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
-    assert "Cole Gilley (None-None)" in str(response.content)
+    cole = Player.objects.get(pk=players.cole_gilley.pk)
+    assert not cole.first_spring or cole.last_spring
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("players"), follow=True)
-    assert "Cole Gilley (2025-2025)" in str(response.content)
+    cole = Player.objects.get(pk=players.cole_gilley.pk)
+    assert cole.first_spring == this_year + 1
+    assert cole.last_spring == this_year + 1
 
 
 @pytest.mark.django_db
@@ -382,11 +402,13 @@ def test_set_last_spring_ends_portal_entrant_immediately(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     response = client.get(reverse("players"), follow=True)
-    assert "Brooks Ey (None-None)" in str(response.content)
+    brooks = Player.objects.get(pk=players.brooks_ey.pk)
+    assert not brooks.first_spring or brooks.last_spring
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("players"), follow=True)
-    assert "Brooks Ey (2024-2024)" in str(response.content)
+    brooks = Player.objects.get(pk=players.brooks_ey.pk)
+    assert brooks.first_spring == this_year
+    assert brooks.last_spring == this_year
 
 
 @pytest.mark.django_db
@@ -397,15 +419,17 @@ def test_set_last_spring_properly_limits_redshirt_years(
     Jack was rostered at "Duke" for four years, but was injured for the
     first three of those. In the fixture he is given a clock waiver in year two
     This is often assigned retroactively by the NCAA
-    Without this he would end in 2024. If the logic allowed more than one
-    redshirt normally he would end in 2026.
+    Without this he would end this year. If the logic allowed more than one
+    redshirt normally he would end in two years.
     """
     response = client.get(reverse("players"), follow=True)
-    assert "Jack Moffitt (None-None)" in str(response.content)
+    jack = Player.objects.get(pk=players.jack_moffitt.pk)
+    assert not jack.first_spring or jack.last_spring
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("players"), follow=True)
-    assert "Jack Moffitt (2024-2025)" in str(response.content)
+    jack = Player.objects.get(pk=players.jack_moffitt.pk)
+    assert jack.first_spring == this_year
+    assert jack.last_spring == this_year + 1
 
 
 @pytest.mark.django_db
@@ -417,11 +441,13 @@ def test_set_last_spring_properly_ends_eligible_player_who_is_now_staff(
     the spring roster, and becomes a manager instead.
     """
     response = client.get(reverse("players"), follow=True)
-    assert "Nathan Ball (None-None)" in str(response.content)
+    nate = Player.objects.get(pk=players.nate_ball.pk)
+    assert not nate.first_spring or nate.last_spring
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("players"), follow=True)
-    assert "Nathan Ball (2024-2024)" in str(response.content)
+    nate = Player.objects.get(pk=players.nate_ball.pk)
+    assert nate.first_spring == this_year
+    assert nate.last_spring == this_year
 
 
 @pytest.mark.django_db

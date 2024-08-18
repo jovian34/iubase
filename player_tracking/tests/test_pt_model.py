@@ -57,17 +57,17 @@ def test_transaction_model_gets_comment(client, transactions):
 
 @pytest.mark.django_db
 def test_annual_roster_model_stored_all_fields(client, annual_rosters, teams):
-    assert annual_rosters.dt_2024.spring_year == 2024
-    assert annual_rosters.dt_2023.player.first == "Devin"
-    assert annual_rosters.dt_2023.jersey == 5
-    assert annual_rosters.dt_2024.primary_position == "Corner Outfield"
-    assert annual_rosters.dt_2023.secondary_position == "First Base"
-    assert not annual_rosters.dt_2024.secondary_position
+    assert annual_rosters.dt_soph.spring_year == 2024
+    assert annual_rosters.dt_fresh.player.first == "Devin"
+    assert annual_rosters.dt_fresh.jersey == 5
+    assert annual_rosters.dt_soph.primary_position == "Corner Outfield"
+    assert annual_rosters.dt_fresh.secondary_position == "First Base"
+    assert not annual_rosters.dt_soph.secondary_position
 
 
 @pytest.mark.django_db
 def test_annual_roster_model_string_def(client, annual_rosters, teams):
-    assert str(annual_rosters.dt_2024) == "Devin Taylor 2024 - Fall Roster"
+    assert str(annual_rosters.dt_soph) == "Devin Taylor 2024 - Fall Roster"
 
 
 @pytest.mark.django_db

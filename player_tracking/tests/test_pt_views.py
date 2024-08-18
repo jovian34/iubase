@@ -112,7 +112,7 @@ def test_player_rosters_renders_one_player_only(client, annual_rosters):
     response = client.get(
         reverse(
             "player_rosters",
-            args=[annual_rosters.dt_2023.player.pk],
+            args=[annual_rosters.dt_fresh.player.pk],
         )
     )
     assert response.status_code == 200
@@ -127,7 +127,7 @@ def test_player_rosters_renders_summer_teams(
     response = client.get(
         reverse(
             "player_rosters",
-            args=[annual_rosters.dt_2023.player.pk],
+            args=[annual_rosters.dt_fresh.player.pk],
         )
     )
     assert response.status_code == 200
@@ -143,7 +143,7 @@ def test_player_rosters_renders_transfer_player_old_team(client, annual_rosters)
     response = client.get(
         reverse(
             "player_rosters",
-            args=[annual_rosters.nm_2023.player.pk],
+            args=[annual_rosters.nm_soph.player.pk],
         )
     )
     assert response.status_code == 200

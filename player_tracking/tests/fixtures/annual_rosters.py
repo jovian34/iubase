@@ -1,16 +1,19 @@
 import pytest
 
 from collections import namedtuple
+from datetime import date
 
 from player_tracking.models import AnnualRoster
 from live_game_blog.models import Team
 from live_game_blog.tests.fixtures import teams
 from .players import players
 
+this_year = date.today().year
+
 @pytest.fixture
 def annual_rosters(players, teams):
-    dt_2023 = AnnualRoster.objects.create(
-        spring_year=2023,
+    dt_fresh = AnnualRoster.objects.create(
+        spring_year=this_year - 1,
         status="Spring Roster",
         player=players.devin_taylor,
         team=teams.indiana,
@@ -18,24 +21,24 @@ def annual_rosters(players, teams):
         primary_position="Corner Outfield",
         secondary_position="First Base",
     )
-    dt_2024 = AnnualRoster.objects.create(
-        spring_year=2024,
+    dt_soph = AnnualRoster.objects.create(
+        spring_year=this_year,
         status="Fall Roster",
         team=teams.indiana,
         player=players.devin_taylor,
         jersey=5,
         primary_position="Corner Outfield",
     )
-    nm_2024 = AnnualRoster.objects.create(
-        spring_year=2024,
+    nm_jr = AnnualRoster.objects.create(
+        spring_year=this_year,
         status="Fall Roster",
         player=players.nick_mitchell,
         team=teams.indiana,
         jersey=20,
         primary_position="Centerfield",
     )
-    nm_2023 = AnnualRoster.objects.create(
-        spring_year=2023,
+    nm_soph = AnnualRoster.objects.create(
+        spring_year=this_year - 1,
         status="Spring Roster",
         player=players.nick_mitchell,
         team=teams.miami_oh,
@@ -43,8 +46,8 @@ def annual_rosters(players, teams):
         primary_position="Centerfield",
         secondary_position="Corner Outfield",
     )
-    nm_2022 = AnnualRoster.objects.create(
-        spring_year=2022,
+    nm_fresh = AnnualRoster.objects.create(
+        spring_year=this_year - 2,
         status="Spring Roster",
         player=players.nick_mitchell,
         team=teams.miami_oh,
@@ -52,24 +55,24 @@ def annual_rosters(players, teams):
         primary_position="Centerfield",
         secondary_position="Corner Outfield",
     )
-    hc_2023 = AnnualRoster.objects.create(
-        spring_year=2023,
+    hc_fresh = AnnualRoster.objects.create(
+        spring_year=this_year - 1,
         status="Spring Roster",
         player=players.holton_compton,
         team=teams.miami_oh,
         jersey=35,
         primary_position="Pitcher",
     )
-    hc_2024 = AnnualRoster.objects.create(
-        spring_year=2024,
+    hc_soph = AnnualRoster.objects.create(
+        spring_year=this_year,
         status="Spring Roster",
         player=players.holton_compton,
         team=teams.miami_oh,
         jersey=35,
         primary_position="Pitcher",
     )
-    br_2023 = AnnualRoster.objects.create(
-        spring_year=2023,
+    br_fresh = AnnualRoster.objects.create(
+        spring_year=this_year - 1,
         status="Spring Roster",
         player=players.brayden_risedorph,
         team=teams.indiana,
@@ -158,17 +161,17 @@ def annual_rosters(players, teams):
     )
     AnnualRosterObj = namedtuple(
         "AnnualRosterObj",
-        "dt_2023 dt_2024 nm_2022 nm_2023 nm_2024 hc_2023 hc_2024 br_2023 jm2020 jm2021 jm2022 jm2023 jm2024 cg_2021 cg_2022 cg_2023 cg_2024 nb_2024",
+        "dt_fresh dt_soph nm_fresh nm_soph nm_jr hc_fresh hc_soph br_fresh jm2020 jm2021 jm2022 jm2023 jm2024 cg_2021 cg_2022 cg_2023 cg_2024 nb_2024",
     )
     return AnnualRosterObj(
-        dt_2023=dt_2023,
-        dt_2024=dt_2024,
-        nm_2022=nm_2022,
-        nm_2023=nm_2023,
-        nm_2024=nm_2024,
-        hc_2023=hc_2023,
-        hc_2024=hc_2024,
-        br_2023=br_2023,
+        dt_fresh=dt_fresh,
+        dt_soph=dt_soph,
+        nm_fresh=nm_fresh,
+        nm_soph=nm_soph,
+        nm_jr=nm_jr,
+        hc_fresh=hc_fresh,
+        hc_soph=hc_soph,
+        br_fresh=br_fresh,
         jm2020=jm_2020,
         jm2021=jm_2021,
         jm2022=jm_2022,

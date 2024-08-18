@@ -9,37 +9,40 @@ from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 
 
+this_year = date.today().year
+
+
 @pytest.fixture
 def transactions(players, prof_orgs):
     dt_verbal = Transaction.objects.create(
         player=players.devin_taylor,
         trans_event="Verbal Commitment from High School",
-        trans_date=date(year=2021, month=3, day=11),
+        trans_date=date(year=this_year - 3, month=3, day=11),
     )
     dt_nli = Transaction.objects.create(
         player=players.devin_taylor,
         trans_event="National Letter of Intent Signed",
-        trans_date=date(year=2021, month=11, day=7),
+        trans_date=date(year=this_year - 3, month=11, day=7),
     )
     br_nli = Transaction.objects.create(
         player=players.brayden_risedorph,
         trans_event="National Letter of Intent Signed",
-        trans_date=date(year=2021, month=11, day=7),
+        trans_date=date(year=this_year - 3, month=11, day=7),
     )
     nm_verbal = Transaction.objects.create(
         player=players.nick_mitchell,
         trans_event="Verbal Commitment from College",
-        trans_date=date(year=2023, month=6, day=7),
+        trans_date=date(year=this_year - 1, month=6, day=7),
     )
     nm_combine = Transaction.objects.create(
         player=players.nick_mitchell,
         trans_event="Attending MLB Draft Combine",
-        trans_date=date(year=2024, month=6, day=14),
+        trans_date=date(year=this_year, month=6, day=14),
     )
     nm_draft = Transaction.objects.create(
         player=players.nick_mitchell,
         trans_event="Drafted",
-        trans_date=date(year=2024, month=7, day=15),
+        trans_date=date(year=this_year, month=7, day=15),
         prof_org=prof_orgs.phillies,
         draft_round=4,
         bonus_or_slot=400100,
@@ -48,7 +51,7 @@ def transactions(players, prof_orgs):
     nm_signed = Transaction.objects.create(
         player=players.nick_mitchell,
         trans_event="Signed Professional Contract",
-        trans_date=date(year=2024, month=7, day=21),
+        trans_date=date(year=this_year, month=7, day=21),
         prof_org=prof_orgs.phillies,
         bonus_or_slot=367000,
         comment="Bonus value was reported two days after signing."
@@ -56,63 +59,63 @@ def transactions(players, prof_orgs):
     aw_nli = Transaction.objects.create(
         player=players.andrew_wiggins,
         trans_event="National Letter of Intent Signed",
-        trans_date=date(year=2022, month=11, day=7),
+        trans_date=date(year=this_year - 2, month=11, day=7),
     )
     be_commit = Transaction.objects.create(
         player=players.brooks_ey,
         trans_event="Verbal Commitment from College",
-        trans_date=date(year=2023, month=7, day=15),
+        trans_date=date(year=this_year - 1, month=7, day=15),
     )
     be_portal = Transaction.objects.create(
         player=players.brooks_ey,
         trans_event="Entered Transfer Portal",
-        trans_date=date(year=2024, month=6, day=15),
+        trans_date=date(year=this_year, month=6, day=15),
     )
     jm_verb_port = Transaction.objects.create(
         player=players.jack_moffitt,
         trans_event="Verbal Commitment from College",
-        trans_date=date(year=2023, month=7, day=1),
+        trans_date=date(year=this_year - 1, month=7, day=1),
     )
     gh_verbal = Transaction.objects.create(
         player=players.grant_hollister,
         trans_event="Verbal Commitment from High School",
-        trans_date=date(year=2022, month=3, day=11),
+        trans_date=date(year=this_year - 2, month=3, day=11),
     )
     gh_combine = Transaction.objects.create(
         player=players.grant_hollister,
         trans_event="Attending MLB Draft Combine",
-        trans_date=date(year=2024, month=6, day=14),
+        trans_date=date(year=this_year, month=6, day=14),
     )
     gh_draft = Transaction.objects.create(
         player=players.grant_hollister,
         trans_event="Drafted",
-        trans_date=date(year=2024, month=7, day=14),
+        trans_date=date(year=this_year, month=7, day=14),
         comment="He is expected by insiders to require $500,000 to sign."
     )
     gh_not_sign = Transaction.objects.create(
         player=players.grant_hollister,
         trans_event="Not Signing Professional Contract",
-        trans_date=date(year=2024, month=8, day=1),
+        trans_date=date(year=this_year, month=8, day=1),
     )
     cg_port = Transaction.objects.create(
         player=players.cole_gilley,
         trans_event="Verbal Commitment from College",
-        trans_date=date(2024, 6, 14),
+        trans_date=date(year=this_year, month=6, day=14),
     )
     nb_verbal = Transaction.objects.create(
         player=players.nate_ball,
         trans_event="Verbal Commitment from High School",
-        trans_date=date(year=2022, month=3, day=17),
+        trans_date=date(year=this_year - 1, month=3, day=17),
     )
     nb_diff_role = Transaction.objects.create(
         player=players.nate_ball,
         trans_event="Not playing but with the program in another role",
-        trans_date=date(year=2024, month=2, day=15),
+        trans_date=date(year=this_year, month=2, day=15),
     )
     hc_verbal = Transaction.objects.create(
         player=players.holton_compton,
         trans_event="Verbal Commitment from College",
-        trans_date=date(year=2023, month=10, day=23),
+        trans_date=date(year=this_year - 1, month=10, day=23),
     )
     TransObj = namedtuple(
         "TransObj",

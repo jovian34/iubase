@@ -7,7 +7,6 @@ from live_game_blog.models import Team
 from live_game_blog.tests.fixtures import teams
 from .players import players
 
-
 @pytest.fixture
 def annual_rosters(players, teams):
     dt_2023 = AnnualRoster.objects.create(
@@ -56,7 +55,7 @@ def annual_rosters(players, teams):
     hc_2023 = AnnualRoster.objects.create(
         spring_year=2023,
         status="Spring Roster",
-        player=players.hc2022,
+        player=players.holton_compton,
         team=teams.miami_oh,
         jersey=35,
         primary_position="Pitcher",
@@ -64,7 +63,7 @@ def annual_rosters(players, teams):
     hc_2024 = AnnualRoster.objects.create(
         spring_year=2024,
         status="Spring Roster",
-        player=players.hc2022,
+        player=players.holton_compton,
         team=teams.miami_oh,
         jersey=35,
         primary_position="Pitcher",
@@ -80,7 +79,7 @@ def annual_rosters(players, teams):
     jm_2024 = AnnualRoster.objects.create(
         spring_year=2024,
         status="Spring Roster",
-        player=players.jm2019,
+        player=players.jack_moffitt,
         team=teams.indiana,
         jersey=16,
         primary_position="Pitcher",
@@ -88,7 +87,7 @@ def annual_rosters(players, teams):
     jm_2023 = AnnualRoster.objects.create(
         spring_year=2023,
         status="Spring Roster",
-        player=players.jm2019,
+        player=players.jack_moffitt,
         team=teams.duke,
         jersey=16,
         primary_position="Pitcher",
@@ -96,7 +95,7 @@ def annual_rosters(players, teams):
     jm_2022 = AnnualRoster.objects.create(
         spring_year=2022,
         status="On Spring Roster but did not play",
-        player=players.jm2019,
+        player=players.jack_moffitt,
         team=teams.duke,
         jersey=16,
         primary_position="Pitcher",
@@ -104,7 +103,7 @@ def annual_rosters(players, teams):
     jm_2021 = AnnualRoster.objects.create(
         spring_year=2021,
         status="Redshirt with clock extension - Medical",
-        player=players.jm2019,
+        player=players.jack_moffitt,
         team=teams.duke,
         jersey=16,
         primary_position="Pitcher",
@@ -112,7 +111,7 @@ def annual_rosters(players, teams):
     jm_2020 = AnnualRoster.objects.create(
         spring_year=2020,
         status="On Spring Roster but did not play",
-        player=players.jm2019,
+        player=players.jack_moffitt,
         team=teams.duke,
         jersey=16,
         primary_position="Pitcher",
@@ -120,7 +119,7 @@ def annual_rosters(players, teams):
     cg_2021 = AnnualRoster.objects.create(
         spring_year=2021,
         status="Spring Roster",
-        player=players.cg2020,
+        player=players.cole_gilley,
         team=teams.gm,
         jersey=32,
         primary_position="Pitcher",
@@ -128,7 +127,7 @@ def annual_rosters(players, teams):
     cg_2022 = AnnualRoster.objects.create(
         spring_year=2022,
         status="Not on Spring roster",
-        player=players.cg2020,
+        player=players.cole_gilley,
         team=teams.gm,
         jersey=32,
         primary_position="Pitcher",
@@ -136,7 +135,7 @@ def annual_rosters(players, teams):
     cg_2023 = AnnualRoster.objects.create(
         spring_year=2023,
         status="Spring Roster",
-        player=players.cg2020,
+        player=players.cole_gilley,
         team=teams.gm,
         jersey=32,
         primary_position="Pitcher",
@@ -144,7 +143,7 @@ def annual_rosters(players, teams):
     cg_2024 = AnnualRoster.objects.create(
         spring_year=2024,
         status="Spring Roster",
-        player=players.cg2020,
+        player=players.cole_gilley,
         team=teams.gm,
         jersey=32,
         primary_position="Pitcher",
@@ -152,7 +151,7 @@ def annual_rosters(players, teams):
     nb_2024 = AnnualRoster.objects.create(
         spring_year=2024,
         status="Not on Spring roster",
-        player=players.nb2023,
+        player=players.nate_ball,
         team=teams.indiana,
         jersey=67,
         primary_position="Pitcher",

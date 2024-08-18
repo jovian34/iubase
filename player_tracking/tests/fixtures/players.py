@@ -36,35 +36,35 @@ def players():
         bats="right",
         throws="right",
     )
-    jm2019 = Player.objects.create(
+    jack_moffitt = Player.objects.create(
         first="Jack",
         last="Moffitt",
         hsgrad_year=2019,
         bats="right",
         throws="right",
     )
-    gh2024 = Player.objects.create(
+    grant_hollister = Player.objects.create(
         first="Grant",
         last="Hollister",
         hsgrad_year=2024,
         bats="left",
         throws="right",
     )
-    cg2020 = Player.objects.create(
+    cole_gilley = Player.objects.create(
         first="Cole",
         last="Gilley",
         hsgrad_year=2020,
         bats="right",
         throws="right",
     )
-    nb2023 = Player.objects.create(
+    nate_ball = Player.objects.create(
         first="Nathan",
         last="Ball",
         hsgrad_year=2023,
         bats="right",
         throws="right",
     )
-    hc2022 = Player.objects.create(
+    holton_compton = Player.objects.create(
         first="Holton",
         last="Compton",
         hsgrad_year=2022,
@@ -72,7 +72,7 @@ def players():
         throws="right",
     )
     PlayerObj = namedtuple(
-        "PlayerOnj", "devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jm2019 gh2024 cg2020 nb2023 hc2022"
+        "PlayerOnj", "devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jack_moffitt grant_hollister cole_gilley nate_ball holton_compton"
     )
     return PlayerObj(
         devin_taylor=devin_taylor,
@@ -80,9 +80,9 @@ def players():
         andrew_wiggins=andrew_wiggins,
         nick_mitchell=nick_mitchell,
         brooks_ey=brooks_ey,
-        jm2019=jm2019,
-        gh2024=gh2024,
-        cg2020=cg2020,
-        nb2023=nb2023,
-        hc2022=hc2022,
+        jack_moffitt=jack_moffitt,
+        grant_hollister=grant_hollister,
+        cole_gilley=cole_gilley,
+        nate_ball=nate_ball,
+        holton_compton=holton_compton,
     )

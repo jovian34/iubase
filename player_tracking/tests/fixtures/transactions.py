@@ -69,48 +69,48 @@ def transactions(players, prof_orgs):
         trans_date=date(year=2024, month=6, day=15),
     )
     jm_verb_port = Transaction.objects.create(
-        player=players.jm2019,
+        player=players.jack_moffitt,
         trans_event="Verbal Commitment from College",
         trans_date=date(year=2023, month=7, day=1),
     )
     gh_verbal = Transaction.objects.create(
-        player=players.gh2024,
+        player=players.grant_hollister,
         trans_event="Verbal Commitment from High School",
         trans_date=date(year=2022, month=3, day=11),
     )
     gh_combine = Transaction.objects.create(
-        player=players.gh2024,
+        player=players.grant_hollister,
         trans_event="Attending MLB Draft Combine",
         trans_date=date(year=2024, month=6, day=14),
     )
     gh_draft = Transaction.objects.create(
-        player=players.gh2024,
+        player=players.grant_hollister,
         trans_event="Drafted",
         trans_date=date(year=2024, month=7, day=14),
         comment="He is expected by insiders to require $500,000 to sign."
     )
     gh_not_sign = Transaction.objects.create(
-        player=players.gh2024,
+        player=players.grant_hollister,
         trans_event="Not Signing Professional Contract",
         trans_date=date(year=2024, month=8, day=1),
     )
     cg_port = Transaction.objects.create(
-        player=players.cg2020,
+        player=players.cole_gilley,
         trans_event="Verbal Commitment from College",
         trans_date=date(2024, 6, 14),
     )
     nb_verbal = Transaction.objects.create(
-        player=players.nb2023,
+        player=players.nate_ball,
         trans_event="Verbal Commitment from High School",
         trans_date=date(year=2022, month=3, day=17),
     )
     nb_diff_role = Transaction.objects.create(
-        player=players.nb2023,
+        player=players.nate_ball,
         trans_event="Not playing but with the program in another role",
         trans_date=date(year=2024, month=2, day=15),
     )
     hc_verbal = Transaction.objects.create(
-        player=players.hc2022,
+        player=players.holton_compton,
         trans_event="Verbal Commitment from College",
         trans_date=date(year=2023, month=10, day=23),
     )

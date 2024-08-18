@@ -23,6 +23,7 @@ from accounts.tests.fixtures import (
     logged_user_schwarbs,
 )
 
+this_year = date.today().year
 
 
 @pytest.mark.django_db
@@ -53,7 +54,7 @@ def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs):
         {
             "first": ["Phillip"],
             "last": ["Glasser"],
-            "hsgrad_year": ["2018"],
+            "hsgrad_year": [f"{this_year - 6}"],
             "high_school": ["Tallmadge"],
             "home_city": ["Tallmadge"],
             "home_state": ["OH"],
@@ -61,13 +62,13 @@ def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs):
             "headshot": [
                 "https://www.prepbaseballreport.com/passets/photo/OH/8542307196-PhillipGlasser.png"
             ],
-            "birthdate": ["1999-12-03"],
+            "birthdate": [f"{this_year - 25}-12-03"],
             "bats": ["Left"],
             "throws": ["Right"],
             "height": [72],
             "weight": [170],
             "trans_event": ["Verbal Commitment from College"],
-            "trans_date": ["2021-06-15"],
+            "trans_date": [f"{this_year - 3}-06-15"],
             "primary_position": ["Shortstop"],
             "citation": [
                 "https://d1baseball.com/transfers/2021-22-d1baseball-transfer-tracker/"

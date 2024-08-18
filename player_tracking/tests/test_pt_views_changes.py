@@ -1,7 +1,6 @@
 import pytest
 from django.urls import reverse
-from django.utils import timezone
-from datetime import date, datetime
+from datetime import date
 
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.forms import forms
@@ -77,7 +76,7 @@ def test_add_roster_year_partial_get_renders_form_fields(
     assert response.status_code == 200
     assert "Spring Year" in str(response.content)
     assert "Indiana" in str(response.content)
-    assert str(timezone.now().year) in str(response.content)
+    assert f"{this_year}" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -93,7 +92,7 @@ def test_add_transaction_partial_get_renders_form_fields(
     assert response.status_code == 200
     assert "Transaction Event" in str(response.content)
     assert "Transaction Date" in str(response.content)
-    assert str(timezone.now().year) in str(response.content)
+    assert f"{this_year}" in str(response.content)
 
 
 @pytest.mark.django_db

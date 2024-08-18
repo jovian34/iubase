@@ -6,68 +6,71 @@ from datetime import date
 from player_tracking.models import Player
 
 
+this_year = date.today().year
+
+
 @pytest.fixture
 def players():
     devin_taylor = Player.objects.create(
-        first="Devin", last="Taylor", hsgrad_year=2022, bats="left", throws="left"
+        first="Devin", last="Taylor", hsgrad_year=this_year - 2, bats="left", throws="left"
     )
     brayden_risedorph = Player.objects.create(
         first="Brayden",
         last="Risedorph",
-        hsgrad_year=2022,
-        birthdate=date(2003, 7, 30),
+        hsgrad_year=this_year - 2,
+        birthdate=date(this_year - 21, 7, 30),
         bats="right",
         throws="right",
     )
     andrew_wiggins = Player.objects.create(
-        first="Andrew", last="Wiggings", hsgrad_year=2023, bats="left", throws="right"
+        first="Andrew", last="Wiggings", hsgrad_year=this_year -1, bats="left", throws="right"
     )
     nick_mitchell = Player.objects.create(
         first="Nick",
         last="Mitchell",
-        hsgrad_year=2021,
+        hsgrad_year=this_year - 3,
         bats="left",
         throws="right",
     )
     brooks_ey = Player.objects.create(
         first="Brooks",
         last="Ey",
-        hsgrad_year=2021,
+        hsgrad_year=this_year - 3,
         bats="right",
         throws="right",
     )
     jack_moffitt = Player.objects.create(
         first="Jack",
         last="Moffitt",
-        hsgrad_year=2019,
+        hsgrad_year=this_year - 5,
         bats="right",
         throws="right",
     )
     grant_hollister = Player.objects.create(
         first="Grant",
         last="Hollister",
-        hsgrad_year=2024,
+        hsgrad_year=this_year,
         bats="left",
         throws="right",
     )
     cole_gilley = Player.objects.create(
         first="Cole",
         last="Gilley",
-        hsgrad_year=2020,
+        hsgrad_year=this_year - 4,
         bats="right",
         throws="right",
     )
     nate_ball = Player.objects.create(
         first="Nathan",
         last="Ball",
-        hsgrad_year=2023,
+        hsgrad_year=this_year - 1,
         bats="right",
         throws="right",
     )
     holton_compton = Player.objects.create(
         first="Holton",
         last="Compton",
-        hsgrad_year=2022,
+        hsgrad_year=this_year - 2,
         bats="right",
         throws="right",
     )

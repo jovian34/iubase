@@ -8,7 +8,9 @@ from live_game_blog.models import Team
 from live_game_blog.tests.fixtures import teams
 from .players import players
 
+
 this_year = date.today().year
+
 
 @pytest.fixture
 def annual_rosters(players, teams):
@@ -79,80 +81,80 @@ def annual_rosters(players, teams):
         jersey=51,
         primary_position="Pitcher",
     )
-    jm_2024 = AnnualRoster.objects.create(
-        spring_year=2024,
+    jm_grad = AnnualRoster.objects.create(
+        spring_year=this_year,
         status="Spring Roster",
         player=players.jack_moffitt,
         team=teams.indiana,
         jersey=16,
         primary_position="Pitcher",
     )
-    jm_2023 = AnnualRoster.objects.create(
-        spring_year=2023,
+    jm_sr = AnnualRoster.objects.create(
+        spring_year=this_year - 1,
         status="Spring Roster",
         player=players.jack_moffitt,
         team=teams.duke,
         jersey=16,
         primary_position="Pitcher",
     )
-    jm_2022 = AnnualRoster.objects.create(
-        spring_year=2022,
+    jm_jr = AnnualRoster.objects.create(
+        spring_year=this_year - 2,
         status="On Spring Roster but did not play",
         player=players.jack_moffitt,
         team=teams.duke,
         jersey=16,
         primary_position="Pitcher",
     )
-    jm_2021 = AnnualRoster.objects.create(
-        spring_year=2021,
+    jm_soph = AnnualRoster.objects.create(
+        spring_year=this_year - 3,
         status="Redshirt with clock extension - Medical",
         player=players.jack_moffitt,
         team=teams.duke,
         jersey=16,
         primary_position="Pitcher",
     )
-    jm_2020 = AnnualRoster.objects.create(
-        spring_year=2020,
+    jm_fresh = AnnualRoster.objects.create(
+        spring_year=this_year - 4,
         status="On Spring Roster but did not play",
         player=players.jack_moffitt,
         team=teams.duke,
         jersey=16,
         primary_position="Pitcher",
     )
-    cg_2021 = AnnualRoster.objects.create(
-        spring_year=2021,
+    cg_fresh = AnnualRoster.objects.create(
+        spring_year=this_year - 3,
         status="Spring Roster",
         player=players.cole_gilley,
         team=teams.gm,
         jersey=32,
         primary_position="Pitcher",
     )
-    cg_2022 = AnnualRoster.objects.create(
-        spring_year=2022,
+    cg_soph = AnnualRoster.objects.create(
+        spring_year=this_year - 2,
         status="Not on Spring roster",
         player=players.cole_gilley,
         team=teams.gm,
         jersey=32,
         primary_position="Pitcher",
     )
-    cg_2023 = AnnualRoster.objects.create(
-        spring_year=2023,
+    cg_jr = AnnualRoster.objects.create(
+        spring_year=this_year - 1,
         status="Spring Roster",
         player=players.cole_gilley,
         team=teams.gm,
         jersey=32,
         primary_position="Pitcher",
     )
-    cg_2024 = AnnualRoster.objects.create(
-        spring_year=2024,
+    cg_sr = AnnualRoster.objects.create(
+        spring_year=this_year,
         status="Spring Roster",
         player=players.cole_gilley,
         team=teams.gm,
         jersey=32,
         primary_position="Pitcher",
     )
-    nb_2024 = AnnualRoster.objects.create(
-        spring_year=2024,
+    nb_fresh = AnnualRoster.objects.create(
+        spring_year=this_year,
         status="Not on Spring roster",
         player=players.nate_ball,
         team=teams.indiana,
@@ -161,7 +163,7 @@ def annual_rosters(players, teams):
     )
     AnnualRosterObj = namedtuple(
         "AnnualRosterObj",
-        "dt_fresh dt_soph nm_fresh nm_soph nm_jr hc_fresh hc_soph br_fresh jm2020 jm2021 jm2022 jm2023 jm2024 cg_2021 cg_2022 cg_2023 cg_2024 nb_2024",
+        "dt_fresh dt_soph nm_fresh nm_soph nm_jr hc_fresh hc_soph br_fresh jm_fresh jm_soph jm_jr jm_sr jm2024 cg_fresh cg_soph cg_jr cg_sr nb_fresh",
     )
     return AnnualRosterObj(
         dt_fresh=dt_fresh,
@@ -172,14 +174,14 @@ def annual_rosters(players, teams):
         hc_fresh=hc_fresh,
         hc_soph=hc_soph,
         br_fresh=br_fresh,
-        jm2020=jm_2020,
-        jm2021=jm_2021,
-        jm2022=jm_2022,
-        jm2023=jm_2023,
-        jm2024=jm_2024,
-        cg_2021=cg_2021,
-        cg_2022=cg_2022,
-        cg_2023=cg_2023,
-        cg_2024=cg_2024,
-        nb_2024=nb_2024,
+        jm_fresh=jm_fresh,
+        jm_soph=jm_soph,
+        jm_jr=jm_jr,
+        jm_sr=jm_sr,
+        jm2024=jm_grad,
+        cg_fresh=cg_fresh,
+        cg_soph=cg_soph,
+        cg_jr=cg_jr,
+        cg_sr=cg_sr,
+        nb_fresh=nb_fresh,
     )

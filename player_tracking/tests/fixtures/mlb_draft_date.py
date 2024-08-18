@@ -6,15 +6,18 @@ from datetime import date
 from player_tracking.models import MLBDraftDate
 
 
+this_year = date.today().year
+
+
 @pytest.fixture
 def mlb_draft_date():
-    draft_2024 = MLBDraftDate.objects.create(
-        fall_year=2024,
-        latest_birthdate=date(2003, 8, 1),
-        latest_draft_day=date(2024, 7, 16),
-        signing_deadline=date(2024, 7, 25),
+    draft_this_year = MLBDraftDate.objects.create(
+        fall_year=this_year,
+        latest_birthdate=date(this_year - 21, 8, 1),
+        latest_draft_day=date(this_year, 7, 16),
+        signing_deadline=date(this_year, 7, 25),
     )
-    MLBDraftDateObj = namedtuple("MLBDraftDateObj", "draft_2024")
+    MLBDraftDateObj = namedtuple("MLBDraftDateObj", "draft_this_year")
     return MLBDraftDateObj(
-        draft_2024=draft_2024,
+        draft_this_year=draft_this_year,
     )

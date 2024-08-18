@@ -1,6 +1,6 @@
 import pytest
+from datetime import datetime, date
 
-from datetime import datetime
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
@@ -13,18 +13,19 @@ from player_tracking.tests.fixtures.summer import (
 )
 from live_game_blog.tests.fixtures import teams
 
+this_year = date.today().year
 
 @pytest.mark.django_db
 def test_player_model_stored_all_fields(client, players):
     assert players.devin_taylor.first == "Devin"
     assert players.brayden_risedorph.throws == "right"
-    assert players.andrew_wiggins.hsgrad_year == 2023
+    assert players.andrew_wiggins.hsgrad_year == this_year - 1
     assert players.devin_taylor.home_country == "USA"
 
 
 @pytest.mark.django_db
 def test_player_model_string_def(client, players):
-    assert str(players.devin_taylor) == "Devin Taylor 2022"
+    assert str(players.devin_taylor) == f"Devin Taylor {this_year - 2}"
 
 
 @pytest.mark.django_db
@@ -33,14 +34,14 @@ def test_transaction_model_stored_all_fields(client, transactions):
     assert (
         transactions.dt_nli.trans_event == "National Letter of Intent Signed"
     )  # need to aling with current choices
-    assert transactions.dt_nli.trans_date.year == 2021
+    assert transactions.dt_nli.trans_date.year == this_year - 3
 
 
 @pytest.mark.django_db
 def test_transaction_model_string_def(client, transactions):
     assert (
         str(transactions.dt_verbal)
-        == "Devin Taylor Verbal Commitment from High School on March 2021"
+        == f"Devin Taylor Verbal Commitment from High School on March {this_year - 3}"
     )
 
 
@@ -57,7 +58,7 @@ def test_transaction_model_gets_comment(client, transactions):
 
 @pytest.mark.django_db
 def test_annual_roster_model_stored_all_fields(client, annual_rosters, teams):
-    assert annual_rosters.dt_soph.spring_year == 2024
+    assert annual_rosters.dt_soph.spring_year == this_year
     assert annual_rosters.dt_fresh.player.first == "Devin"
     assert annual_rosters.dt_fresh.jersey == 5
     assert annual_rosters.dt_soph.primary_position == "Corner Outfield"
@@ -67,12 +68,12 @@ def test_annual_roster_model_stored_all_fields(client, annual_rosters, teams):
 
 @pytest.mark.django_db
 def test_annual_roster_model_string_def(client, annual_rosters, teams):
-    assert str(annual_rosters.dt_soph) == "Devin Taylor 2024 - Fall Roster"
+    assert str(annual_rosters.dt_soph) == f"Devin Taylor {this_year} - Fall Roster"
 
 
 @pytest.mark.django_db
 def test_mlb_draft_birthdate_string_def(client, mlb_draft_date):
-    assert str(mlb_draft_date.draft_2024) == "2024: Aug 1, 2003"
+    assert str(mlb_draft_date.draft_this_year) == f"{this_year}: Aug 1, {this_year - 21}"
 
 
 @pytest.mark.django_db
@@ -87,7 +88,7 @@ def test_summer_team_string_def(client, summer_teams):
 
 @pytest.mark.django_db
 def test_summer_assign_string_def(client, summer_assign):
-    assert str(summer_assign.dt_usa_2024) == "Devin Taylor 2024 USA"
+    assert str(summer_assign.dt_usa_2024) == f"Devin Taylor {this_year} USA"
 
 
 @pytest.mark.django_db

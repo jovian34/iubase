@@ -75,7 +75,7 @@ def players():
         throws="right",
     )
     PlayerObj = namedtuple(
-        "PlayerOnj", "devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jack_moffitt grant_hollister cole_gilley nate_ball holton_compton"
+        "PlayerObj", "devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jack_moffitt grant_hollister cole_gilley nate_ball holton_compton"
     )
     return PlayerObj(
         devin_taylor=devin_taylor,

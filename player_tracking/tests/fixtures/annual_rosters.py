@@ -30,7 +30,7 @@ def annual_rosters(players, teams):
     nm_2024 = AnnualRoster.objects.create(
         spring_year=2024,
         status="Fall Roster",
-        player=players.nm2021,
+        player=players.nick_mitchell,
         team=teams.indiana,
         jersey=20,
         primary_position="Centerfield",
@@ -38,7 +38,7 @@ def annual_rosters(players, teams):
     nm_2023 = AnnualRoster.objects.create(
         spring_year=2023,
         status="Spring Roster",
-        player=players.nm2021,
+        player=players.nick_mitchell,
         team=teams.miami_oh,
         jersey=20,
         primary_position="Centerfield",
@@ -47,7 +47,7 @@ def annual_rosters(players, teams):
     nm_2022 = AnnualRoster.objects.create(
         spring_year=2022,
         status="Spring Roster",
-        player=players.nm2021,
+        player=players.nick_mitchell,
         team=teams.miami_oh,
         jersey=20,
         primary_position="Centerfield",

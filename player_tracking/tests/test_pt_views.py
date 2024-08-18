@@ -159,7 +159,7 @@ def test_add_roster_year_partial_get_renders_form_fields(
     response = client.get(
         reverse(
             "add_roster_year",
-            args=[players.nm2021.pk],
+            args=[players.nick_mitchell.pk],
         )
     )
     assert response.status_code == 200
@@ -175,7 +175,7 @@ def test_add_transaction_partial_get_renders_form_fields(
     response = client.get(
         reverse(
             "add_transaction",
-            args=[players.nm2021.pk],
+            args=[players.nick_mitchell.pk],
         )
     )
     assert response.status_code == 200
@@ -189,7 +189,7 @@ def test_add_roster_year_partial_get_redirects_not_logged_in(client, players, te
     response = client.get(
         reverse(
             "add_roster_year",
-            args=[players.nm2021.pk],
+            args=[players.nick_mitchell.pk],
         )
     )
     assert response.status_code == 302
@@ -200,7 +200,7 @@ def test_add_transaction_partial_get_redirects_not_logged_in(client, players, te
     response = client.get(
         reverse(
             "add_transaction",
-            args=[players.nm2021.pk],
+            args=[players.nick_mitchell.pk],
         )
     )
     assert response.status_code == 302
@@ -211,7 +211,7 @@ def test_add_roster_year_partial_post_adds_roster_year(
     client, players, teams, annual_rosters, logged_user_schwarbs
 ):
     response = client.post(
-        reverse("add_roster_year", args=[players.nm2021.pk]),
+        reverse("add_roster_year", args=[players.nick_mitchell.pk]),
         {
             "spring_year": [2022],
             "team": [str(teams.duke.pk)],
@@ -263,7 +263,7 @@ def test_add_roster_year_partial_post_asks_for_password_not_logged_in(
     client, players, teams, annual_rosters
 ):
     response = client.post(
-        reverse("add_roster_year", args=[players.nm2021.pk]),
+        reverse("add_roster_year", args=[players.nick_mitchell.pk]),
         {
             "spring_year": [2022],
             "team": [str(teams.duke.pk)],

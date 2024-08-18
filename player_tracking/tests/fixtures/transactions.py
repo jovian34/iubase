@@ -27,17 +27,17 @@ def transactions(players, prof_orgs):
         trans_date=date(year=2021, month=11, day=7),
     )
     nm_verbal = Transaction.objects.create(
-        player=players.nm2021,
+        player=players.nick_mitchell,
         trans_event="Verbal Commitment from College",
         trans_date=date(year=2023, month=6, day=7),
     )
     nm_combine = Transaction.objects.create(
-        player=players.nm2021,
+        player=players.nick_mitchell,
         trans_event="Attending MLB Draft Combine",
         trans_date=date(year=2024, month=6, day=14),
     )
     nm_draft = Transaction.objects.create(
-        player=players.nm2021,
+        player=players.nick_mitchell,
         trans_event="Drafted",
         trans_date=date(year=2024, month=7, day=15),
         prof_org=prof_orgs.phillies,
@@ -46,7 +46,7 @@ def transactions(players, prof_orgs):
         comment="Clarification: This pick was actually in a Competitive Balance round between the 4th and 5th rounds.",
     )
     nm_signed = Transaction.objects.create(
-        player=players.nm2021,
+        player=players.nick_mitchell,
         trans_event="Signed Professional Contract",
         trans_date=date(year=2024, month=7, day=21),
         prof_org=prof_orgs.phillies,
@@ -54,17 +54,17 @@ def transactions(players, prof_orgs):
         comment="Bonus value was reported two days after signing."
     )
     aw_nli = Transaction.objects.create(
-        player=players.aw2023,
+        player=players.andrew_wiggins,
         trans_event="National Letter of Intent Signed",
         trans_date=date(year=2022, month=11, day=7),
     )
     be_commit = Transaction.objects.create(
-        player=players.be2021,
+        player=players.brooks_ey,
         trans_event="Verbal Commitment from College",
         trans_date=date(year=2023, month=7, day=15),
     )
     be_portal = Transaction.objects.create(
-        player=players.be2021,
+        player=players.brooks_ey,
         trans_event="Entered Transfer Portal",
         trans_date=date(year=2024, month=6, day=15),
     )

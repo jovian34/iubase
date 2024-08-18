@@ -582,11 +582,9 @@ def test_draft_combine_attendees_renders(
 ):
     response = client.get(reverse("draft_combine_attendees", args=[f"{this_year}"]))
     assert response.status_code == 200
-    assert "Nick Mitchell" in str(response.content)
     assert response.context["count"] == 2
-    assert "College" in str(response.content)
-    assert "Hollister" in str(response.content)
-    assert "Freshman" in str(response.content)
+    for item in ["Nick Mitchell", "College", "Hollister", "Freshman"]:
+        assert item in str(response.content)
 
 
 @pytest.mark.django_db

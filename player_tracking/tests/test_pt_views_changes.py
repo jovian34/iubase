@@ -3,7 +3,7 @@ from django.urls import reverse
 from datetime import date
 
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
-from player_tracking.tests.fixtures.forms import forms
+from player_tracking.tests.fixtures.form_data import forms
 from player_tracking.tests.fixtures.mlb_draft_date import mlb_draft_date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs

@@ -50,6 +50,9 @@ def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs, 
     )
     assert response.status_code == 200
     assert "Phillip Glasser" in str(response.content)
+    phillip = Player.objects.filter(high_school="Tallmadge").last()
+    assert phillip.last == "Glasser"
+    assert phillip.birthdate == date(year=this_year - 25, month=12, day=3)
 
 
 @pytest.mark.django_db
@@ -61,6 +64,8 @@ def test_add_player_form_asks_for_password_not_logged_in(client, players, forms)
     )
     assert response.status_code == 200
     assert "Password" in str(response.content)
+    phillip = Player.objects.filter(first="Phillip")
+    assert not phillip
 
 
 @pytest.mark.django_db

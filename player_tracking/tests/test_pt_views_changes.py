@@ -119,18 +119,11 @@ def test_add_transaction_partial_get_redirects_not_logged_in(client, players, te
 
 @pytest.mark.django_db
 def test_add_roster_year_partial_post_adds_roster_year(
-    client, players, teams, annual_rosters, logged_user_schwarbs
+    client, players, teams, annual_rosters, logged_user_schwarbs, forms
 ):
     response = client.post(
         reverse("add_roster_year", args=[players.nick_mitchell.pk]),
-        {
-            "spring_year": [f"{this_year - 2}"],
-            "team": [str(teams.duke.pk)],
-            "jersey": ["29"],
-            "status": ["Spring Roster"],
-            "primary_position": ["Centerfield"],
-            "secondary_position": [],
-        },
+        forms.nick_mitchell_two_years_past,
         follow=True,
     )
     assert response.status_code == 200
@@ -141,19 +134,11 @@ def test_add_roster_year_partial_post_adds_roster_year(
 
 @pytest.mark.django_db
 def test_add_transaction_partial_post_adds_transaction(
-    client, players, teams, annual_rosters, logged_user_schwarbs, prof_orgs
+    client, players, teams, annual_rosters, logged_user_schwarbs, prof_orgs, forms
 ):
     response = client.post(
         reverse("add_transaction", args=[players.brayden_risedorph.pk]),
-        {
-            "trans_event": ["Drafted"],
-            "trans_date": [str(date(this_year, 7, 17))],
-            "citation": ["https://www.mlb.com/draft/tracker"],
-            "other_team": [],
-            "prof_org": [prof_orgs.d_backs.pk],
-            "bonus_or_slot": ["150000"],
-            "comment": ["Expected to go over slot value."]
-        },
+        forms.risedorph_drafted,
         follow=True,
     )
     assert response.status_code == 200
@@ -171,18 +156,11 @@ def test_add_transaction_partial_post_adds_transaction(
 
 @pytest.mark.django_db
 def test_add_roster_year_partial_post_asks_for_password_not_logged_in(
-    client, players, teams, annual_rosters
+    client, players, teams, annual_rosters, forms
 ):
     response = client.post(
         reverse("add_roster_year", args=[players.nick_mitchell.pk]),
-        {
-            "spring_year": [f"{this_year - 2}"],
-            "team": [str(teams.duke.pk)],
-            "jersey": [29],
-            "status": ["Spring Roster"],
-            "primary_position": ["Centerfield"],
-            "secondary_position": [],
-        },
+        forms.nick_mitchell_two_years_past,
         follow=True,
     )
     assert response.status_code == 200

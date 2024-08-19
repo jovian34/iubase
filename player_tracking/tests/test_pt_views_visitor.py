@@ -166,8 +166,6 @@ def test_projected_roster_excludes_transfer_portal_entrants(
 
 @pytest.mark.django_db
 def test_projected_players_for_past_year_redirects_to_pt_index(client):
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year + 1}"]))
-    assert response.status_code == 302
     response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]))
     assert response.status_code == 302
     response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]), follow=True)

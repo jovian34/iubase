@@ -165,17 +165,23 @@ def test_projected_roster_excludes_transfer_portal_entrants(
 
 
 @pytest.mark.django_db
-def test_projected_roster_for_bad_year_redirects_to_pt_index(client):
+def test_projected_players_for_past_year_redirects_to_pt_index(client):
     response = client.get(reverse("projected_players_fall", args=[f"{this_year + 1}"]))
     assert response.status_code == 302
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year + 1}"]), follow=True)
-    assert response.status_code == 200
-    assert f"{str(timezone.now().year)} Depth Chart" in str(response.content)
     response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]))
     assert response.status_code == 302
     response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]), follow=True)
     assert response.status_code == 200
-    assert f"{str(timezone.now().year)} Depth Chart" in str(response.content)
+    assert f"{this_year} Depth Chart" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_projected_players_for_future_year_redirects_to_future(client):
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year + 1}"]))
+    assert response.status_code == 302
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year + 1}"]), follow=True)
+    assert response.status_code == 200
+    assert f"All Eligible Players For Fall {this_year + 1}" in str(response.content)
 
 
 @pytest.mark.django_db

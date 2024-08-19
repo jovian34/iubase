@@ -160,11 +160,24 @@ def portal(request, portal_year):
     return render(request, "player_tracking/portal.html", context)
 
 
+def projected_players_future_fall(request, fall_year):
+    players = Player.objects.filter(first_spring__lte=fall_year).filter(last_spring__gte=fall_year).order_by("last")
+    context = {
+        "players": players,
+        "page_title": f"All Eligible Players For Fall {fall_year}",
+        "count": len(players),
+    }
+    return render(request, "player_tracking/projected_players_future_fall.html", context)
+
+
 def projected_players_fall(request, fall_year):
     try:
         draft_date = MLBDraftDate.objects.get(fall_year=fall_year)
     except MLBDraftDate.DoesNotExist:
         return redirect("pt_index")
+    
+    if int(fall_year) > date.today().year:
+        return redirect("projected_players_future_fall", args=[f"{fall_year}"])
     
     if int(fall_year) < date.today().year:
         return redirect("pt_index")

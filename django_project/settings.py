@@ -178,5 +178,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.101"  # PT testing changes making forms a fixture and splitting out changes views ATP 2024-08-18
+project_version = "0.0.102"  # PT added future year eligible list of players ATP 2024-08-18
 os.environ.setdefault("PROJECT_VERSION", project_version)

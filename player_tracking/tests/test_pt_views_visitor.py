@@ -282,4 +282,12 @@ def test_drafted_players_renders_unsigned(
     assert "Grant Hollister did not sign and will be on campus in the fall." in str(response.content)
 
 
+@pytest.mark.django_db
+def test_projected_players_future_fall_renders(
+    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    response = client.get(reverse("projected_players_future_fall", args=[f"{this_year + 1}"]))
+    assert "Grant Hollister" in str(response.content)
+    assert "Jack Moffitt" not in str(response.content)
     

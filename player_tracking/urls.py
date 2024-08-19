@@ -30,6 +30,11 @@ urlpatterns = [
         name="projected_players_fall",
     ),
     path(
+        "projected_players_future_fall/<fall_year>/",
+        visitor.projected_players_future_fall,
+        name="projected_players_future_fall",
+    ),
+    path(
         "summer_assignments/<summer_year>/",
         visitor.summer_assignments,
         name="summer_assignments",

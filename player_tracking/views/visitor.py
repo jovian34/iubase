@@ -23,7 +23,7 @@ from player_tracking.views.visitor_logic import (
 
 
 def players(request):
-    players = Player.objects.all().order_by("last")
+    players = Player.objects.all().order_by(Lower("last"))
     context = {
         "players": players,
         "page_title": "Players",
@@ -73,7 +73,7 @@ def fall_depth_chart(request, fall_year):
         AnnualRoster.objects.filter(spring_year=spring_year)
         .filter(team__team_name="Indiana")
         .filter(status__in=fall_statuses)
-        .order_by("player__last")
+        .order_by(Lower("player__last"))
     )
     context = {
         "players": players,
@@ -90,7 +90,7 @@ def spring_depth_chart(request, spring_year):
         AnnualRoster.objects.filter(spring_year=spring_year)
         .filter(team__team_name="Indiana")
         .filter(status="Spring Roster")
-        .order_by("player__last")
+        .order_by(Lower("player__last"))
     )
     if players:
         page_title = f"Spring {spring_year} Available Depth Chart"
@@ -149,7 +149,7 @@ def portal(request, portal_year):
     incoming = Transaction.objects.filter(
         trans_event="Verbal Commitment from College",
         trans_date__year=portal_year,
-    ).order_by("player__last")
+    ).order_by(Lower("player__last"))
     context = {
         "outgoing": outgoing,
         "incoming": incoming,
@@ -163,7 +163,7 @@ def portal(request, portal_year):
 
 def projected_players_future_fall(request, fall_year):
     spring_year = int(fall_year) + 1
-    players = Player.objects.filter(first_spring__lte=spring_year).filter(last_spring__gte=spring_year).order_by("last")
+    players = Player.objects.filter(first_spring__lte=spring_year).filter(last_spring__gte=spring_year).order_by(Lower("last"))
     context = {
         "players": players,
         "page_title": f"All Eligible Players For Fall {fall_year}",
@@ -256,7 +256,7 @@ def draft_combine_attendees(request, draft_year):
 
 
 def summer_assignments(request, summer_year):
-    assignments = SummerAssign.objects.filter(summer_year=summer_year).order_by("player__last")
+    assignments = SummerAssign.objects.filter(summer_year=summer_year).order_by(Lower("player__last"))
     context = {
         "page_title": f"{summer_year} College Summer League Assignments for current and former Indiana players",
         "assignments": assignments,
@@ -267,7 +267,7 @@ def summer_assignments(request, summer_year):
 
 def drafted_players(request, draft_year):
     count = 0
-    players = Player.objects.all().order_by("last")
+    players = Player.objects.all().order_by(Lower("last"))
     for player in players:
         player.drafted = False
         player.signed = "no"

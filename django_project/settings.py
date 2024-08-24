@@ -178,5 +178,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.0.104"  # PT made ordering all players case insensitive ATP 2024-08-24
+project_version = "0.0.104"  # PT made ordering all player views case insensitive ATP 2024-08-24
 os.environ.setdefault("PROJECT_VERSION", project_version)

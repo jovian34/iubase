@@ -186,6 +186,20 @@ def test_set_player_properties_produces_correct_html_output(
 
 
 @pytest.mark.django_db
+def test_set_player_properties_produces_correct_end_date_future_commit(
+    client, players, annual_rosters, transactions, logged_user_schwarbs
+):
+    response = client.get(reverse("players"), follow=True)
+    xavier = Player.objects.get(pk=players.xavier_carrera.pk)
+    assert not xavier.first_spring or xavier.last_spring
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    xavier = Player.objects.get(pk=players.xavier_carrera.pk)
+    assert xavier.first_spring == this_year + 2
+    assert xavier.last_spring == this_year + 5
+
+
+@pytest.mark.django_db
 def test_set_player_properties_produces_correct_end_date_drafted(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):

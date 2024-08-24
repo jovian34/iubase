@@ -184,7 +184,7 @@ def projected_players_fall(request, fall_year):
         return redirect("projected_players_future_fall", args=[f"{fall_year}"])
     
     
-    players = Player.objects.filter(last_spring__gte=(int(fall_year) + 1)).order_by(
+    players = Player.objects.filter(first_spring__lte=(int(fall_year)+1)).filter(last_spring__gte=(int(fall_year) + 1)).order_by(
         "last"
     )
 
@@ -194,6 +194,7 @@ def projected_players_fall(request, fall_year):
     if draft_date.draft_complete:
         draft_pending = False
     for player in players:
+        player.draft = None
         roster_draft = AnnualRoster.objects.filter(player=player)
         if len(roster_draft) > 2 and draft_pending:
             player.draft = f"*{fall_year} MLB Draft Eligible"

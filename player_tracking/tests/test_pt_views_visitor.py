@@ -183,7 +183,7 @@ def test_projected_players_for_future_year_redirects_to_future(client):
 
 
 @pytest.mark.django_db
-def test_projected_roster_includes_high_school_commit(
+def test_projected_roster_includes_incoming_high_school_commit(
     client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
@@ -191,6 +191,17 @@ def test_projected_roster_includes_high_school_commit(
     response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Grant Hollister" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_projected_roster_excludes_future_high_school_commit(
+    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
+    assert response.status_code == 200
+    assert "Xavier" not in str(response.content)
 
 
 @pytest.mark.django_db

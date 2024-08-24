@@ -122,9 +122,14 @@ def transactions(players, prof_orgs):
         trans_event="Verbal Commitment from High School",
         trans_date=date(year=this_year - 1, month=8, day=6),
     )
+    oo_verbal = Transaction.objects.create(
+        player=players.owen_ten_oever,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(year=this_year - 1, month=8, day=11),
+    )
     TransObj = namedtuple(
         "TransObj",
-        "dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal xc_verbal",
+        "dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal xc_verbal oo_verbal",
     )
     return TransObj(
         dt_verbal=dt_verbal,
@@ -147,4 +152,5 @@ def transactions(players, prof_orgs):
         nb_diff_role=nb_diff_role,
         hc_verbal=hc_verbal,
         xc_verbal=xc_verbal,
+        oo_verbal=oo_verbal,
     )

@@ -30,7 +30,6 @@
         {% for player in players %}
             <li>
                 <h2><a href="{% url "player_rosters" player.pk %}">{{player.first}} {{player.last}}</a></h2>
-                {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
                 <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.primary_position }}</p>        
             </li>
             <hr>

@@ -60,6 +60,19 @@ def test_all_players_renders_in_alpha_order_by_case_insensitive_last_name(client
 
 
 @pytest.mark.django_db
+def test_all_eligible_players_includes_only_committs_four_years_out(
+    client, players, transactions, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("all_eligible_players_fall", args=[f"{this_year + 4}"]))
+    assert response.status_code == 200
+    assert "Owen ten Oever" in str(response.content)
+    assert "Xavier Carrera" in str(response.content)
+    assert "Andrew Wiggins" not in str(response.content)
+
+
+@pytest.mark.django_db
 def test_player_rosters_renders_one_player_only(client, annual_rosters):
     response = client.get(
         reverse(
@@ -226,7 +239,7 @@ def test_projected_players_for_past_year_redirects_to_pt_index(client):
 
 
 @pytest.mark.django_db
-def test_projected_players_for_future_year_redirects_to_future(client):
+def test_projected_players_for_future_year_redirects_to_all_eligible(client):
     response = client.get(reverse("projected_players_fall", args=[f"{this_year + 1}"]))
     assert response.status_code == 302
     response = client.get(reverse("projected_players_fall", args=[f"{this_year + 1}"]), follow=True)
@@ -350,11 +363,11 @@ def test_drafted_players_renders_unsigned(
 
 
 @pytest.mark.django_db
-def test_projected_players_future_fall_renders(
+def test_all_eligible_players_fall_renders(
     client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
-    response = client.get(reverse("projected_players_future_fall", args=[f"{this_year + 1}"]))
+    response = client.get(reverse("all_eligible_players_fall", args=[f"{this_year + 1}"]))
     assert "Grant Hollister" in str(response.content)
     assert "Jack Moffitt" not in str(response.content)
     

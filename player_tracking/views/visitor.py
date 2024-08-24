@@ -173,23 +173,19 @@ def projected_players_future_fall(request, fall_year):
 
 
 def projected_players_fall(request, fall_year):
+    spring_year = int(fall_year) + 1
+    if AnnualRoster.objects.filter(spring_year=spring_year):
+        return redirect("fall_roster", fall_year=fall_year)
     if int(fall_year) < date.today().year:
         return redirect("pt_index")
-    
-    if int(fall_year) > date.today().year:
+    if int(fall_year) > date.today().year or not MLBDraftDate.objects.get(fall_year=fall_year):
         return redirect("projected_players_future_fall", fall_year=fall_year)
     
-    try:
-        draft_date = MLBDraftDate.objects.get(fall_year=fall_year)
-    except MLBDraftDate.DoesNotExist:
-        return redirect("projected_players_future_fall", args=[f"{fall_year}"])
-    
-    
+    draft_date = MLBDraftDate.objects.get(fall_year=fall_year)
+    draft_pending = True
     players = Player.objects.filter(first_spring__lte=(int(fall_year)+1)).filter(last_spring__gte=(int(fall_year) + 1)).order_by(
         Lower("last")
     )
-
-    draft_pending = True
     if draft_date.latest_draft_day < date.today():
         draft_pending = False
     if draft_date.draft_complete:

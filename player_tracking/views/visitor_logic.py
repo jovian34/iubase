@@ -1,3 +1,6 @@
+from player_tracking.models import AnnualRoster
+
+
 def sort_by_positions(players):
     lhp = {"position": "Left Handed Pitcher", "players": [],}
     rhp = {"position": "Right Handed Pitcher", "players": [],}

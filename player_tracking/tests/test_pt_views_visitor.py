@@ -136,7 +136,20 @@ def test_spring_depth_chart_renders_indiana_players(
 @pytest.mark.django_db
 def test_fall_roster_renders(client, players, teams, annual_rosters):
     response = client.get(reverse("fall_roster", args=[f"{this_year - 1}"]))
-    print(response.content)
+    assert response.status_code == 200
+    assert "Total Roster Length: 4" in str(response.content)
+    assert f"Fall {this_year - 1} Roster" in str(response.content)
+    assert "Nathan Ball" in str(response.content)
+    assert "Nick Mitchell" in str(response.content)
+    assert "Jack Moffitt" in str(response.content)
+    assert "Brayden" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_fall_roster_fw_to_instead_of_projection(client, players, teams, annual_rosters):
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]))
+    assert response.status_code == 302
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]), follow=True)
     assert response.status_code == 200
     assert "Total Roster Length: 4" in str(response.content)
     assert f"Fall {this_year - 1} Roster" in str(response.content)

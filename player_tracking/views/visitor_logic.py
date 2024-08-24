@@ -1,4 +1,11 @@
-from player_tracking.models import AnnualRoster
+from django.shortcuts import redirect
+
+from datetime import date
+
+from player_tracking.models import (
+    AnnualRoster,
+    MLBDraftDate,
+)
 
 
 def sort_by_positions(players):
@@ -63,3 +70,15 @@ def set_draft_combine_player_props(draft_year, player, trans):
         player.group = "Freshman"
     else:
         player.group = "College"
+
+
+def fall_redirects(request, fall_year):
+    spring_year = int(fall_year) + 1
+    if AnnualRoster.objects.filter(spring_year=spring_year):
+        return redirect("fall_roster", fall_year=fall_year)
+    elif int(fall_year) < date.today().year:
+        return redirect("pt_index")
+    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(fall_year=fall_year):
+        return redirect("projected_players_future_fall", fall_year=fall_year)
+    else:
+        return redirect("projected_players_fall", fall_year=fall_year)

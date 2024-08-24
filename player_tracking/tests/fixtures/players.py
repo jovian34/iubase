@@ -23,7 +23,7 @@ def players():
         throws="right",
     )
     andrew_wiggins = Player.objects.create(
-        first="Andrew", last="Wiggings", hsgrad_year=this_year -1, bats="left", throws="right"
+        first="Andrew", last="Wiggins", hsgrad_year=this_year -1, bats="left", throws="right"
     )
     nick_mitchell = Player.objects.create(
         first="Nick",
@@ -81,8 +81,15 @@ def players():
         bats="right",
         throws="right",
     )
+    owen_ten_oever = Player.objects.create(
+        first="Owen",
+        last="ten Oever",
+        hsgrad_year=this_year + 1,
+        bats="right",
+        throws="right",
+    )
     PlayerObj = namedtuple(
-        "PlayerObj", "devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jack_moffitt grant_hollister cole_gilley nate_ball holton_compton xavier_carrera"
+        "PlayerObj", "devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jack_moffitt grant_hollister cole_gilley nate_ball holton_compton xavier_carrera owen_ten_oever"
     )
     return PlayerObj(
         devin_taylor=devin_taylor,
@@ -96,4 +103,5 @@ def players():
         nate_ball=nate_ball,
         holton_compton=holton_compton,
         xavier_carrera=xavier_carrera,
+        owen_ten_oever=owen_ten_oever,
     )

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from django.db.models.functions import Lower
 
 from datetime import date
 
@@ -185,7 +186,7 @@ def projected_players_fall(request, fall_year):
     
     
     players = Player.objects.filter(first_spring__lte=(int(fall_year)+1)).filter(last_spring__gte=(int(fall_year) + 1)).order_by(
-        "last"
+        Lower("last")
     )
 
     draft_pending = True

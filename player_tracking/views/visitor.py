@@ -44,6 +44,7 @@ def pt_index(request):
         "spring": current_spring,
         "page_title": "Player Tracking",
         "this_year": str(date.today().year),
+        "last_year": str(date.today().year - 1),
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/pt_index.html", context)
@@ -172,15 +173,27 @@ def projected_players_future_fall(request, fall_year):
     return render(request, "player_tracking/projected_players_future_fall.html", context)
 
 
+def fall_players(request, fall_year):
+    spring_year = int(fall_year) + 1
+    if AnnualRoster.objects.filter(spring_year=spring_year):
+        return redirect("fall_roster", fall_year=fall_year)
+    elif int(fall_year) < date.today().year:
+        return redirect("pt_index")
+    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(fall_year=fall_year):
+        return redirect("projected_players_future_fall", fall_year=fall_year)
+    else:
+        return redirect("projected_players_fall", fall_year=fall_year)
+
+
 def projected_players_fall(request, fall_year):
     spring_year = int(fall_year) + 1
     if AnnualRoster.objects.filter(spring_year=spring_year):
         return redirect("fall_roster", fall_year=fall_year)
-    if int(fall_year) < date.today().year:
+    elif int(fall_year) < date.today().year:
         return redirect("pt_index")
-    if int(fall_year) > date.today().year or not MLBDraftDate.objects.get(fall_year=fall_year):
+    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(fall_year=fall_year):
         return redirect("projected_players_future_fall", fall_year=fall_year)
-    
+        
     draft_date = MLBDraftDate.objects.get(fall_year=fall_year)
     draft_pending = True
     players = Player.objects.filter(first_spring__lte=(int(fall_year)+1)).filter(last_spring__gte=(int(fall_year) + 1)).order_by(

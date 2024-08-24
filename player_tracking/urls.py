@@ -35,6 +35,11 @@ urlpatterns = [
         name="projected_players_future_fall",
     ),
     path(
+        "fall_players/<fall_year>/",
+        visitor.fall_players,
+        name="fall_players",
+    ),
+    path(
         "summer_assignments/<summer_year>/",
         visitor.summer_assignments,
         name="summer_assignments",

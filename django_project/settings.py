@@ -178,5 +178,5 @@ if not bool(int(os.environ.get("DEVELOP"))):
     STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
 
 
-project_version = "0.1.0"  # PT complete refactoring of view and view_logic ATP 2024-08-24
+project_version = "0.1.1"  # PT shortened PT description as all commits are now keyed ATP 2024-08-24
 os.environ.setdefault("PROJECT_VERSION", project_version)

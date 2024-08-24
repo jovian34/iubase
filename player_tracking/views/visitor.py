@@ -19,7 +19,6 @@ from player_tracking.views.visitor_logic import (
     set_signed_player, 
     sort_by_positions,
     set_not_signed_player,
-    fall_redirects,
 )
 
 
@@ -175,7 +174,15 @@ def projected_players_future_fall(request, fall_year):
 
 
 def fall_players(request, fall_year):
-    return fall_redirects(request, fall_year)
+    spring_year = int(fall_year) + 1
+    if AnnualRoster.objects.filter(spring_year=spring_year):
+        return redirect("fall_roster", fall_year=fall_year)
+    elif int(fall_year) < date.today().year:
+        return redirect("pt_index")
+    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(fall_year=fall_year):
+        return redirect("projected_players_future_fall", fall_year=fall_year)
+    else:
+        return redirect("projected_players_fall", fall_year=fall_year)
 
 
 def projected_players_fall(request, fall_year):

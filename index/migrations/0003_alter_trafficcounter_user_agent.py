@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('index', '0002_alter_trafficcounter_ip'),
+        ("index", "0002_alter_trafficcounter_ip"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='trafficcounter',
-            name='user_agent',
+            model_name="trafficcounter",
+            name="user_agent",
             field=models.CharField(max_length=256, null=True),
         ),
     ]

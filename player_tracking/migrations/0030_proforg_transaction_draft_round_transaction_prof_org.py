@@ -7,26 +7,42 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('player_tracking', '0029_transaction_other_team_alter_transaction_trans_event'),
+        (
+            "player_tracking",
+            "0029_transaction_other_team_alter_transaction_trans_event",
+        ),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ProfOrg',
+            name="ProfOrg",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('city', models.CharField(blank=True, null=True)),
-                ('mascot', models.CharField(blank=True, null=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("city", models.CharField(blank=True, null=True)),
+                ("mascot", models.CharField(blank=True, null=True)),
             ],
         ),
         migrations.AddField(
-            model_name='transaction',
-            name='draft_round',
+            model_name="transaction",
+            name="draft_round",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='transaction',
-            name='prof_org',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='player_tracking.proforg'),
+            model_name="transaction",
+            name="prof_org",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="player_tracking.proforg",
+            ),
         ),
     ]

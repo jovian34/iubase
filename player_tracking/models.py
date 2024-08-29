@@ -26,7 +26,7 @@ class Player(models.Model):
         choices=HAND_CHOICES, max_length=16, null=True, blank=True
     )
     height = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)    
+    weight = models.IntegerField(null=True, blank=True)
     first_spring = models.IntegerField(null=True, blank=True)
     last_spring = models.IntegerField(null=True, blank=True)
 
@@ -66,7 +66,6 @@ class Transaction(models.Model):
 
     def __str__(self) -> str:
         return f"{self.player.first} {self.player.last} {self.trans_event} on {self.trans_date:%B %Y}"
-    
 
 
 class AnnualRoster(models.Model):

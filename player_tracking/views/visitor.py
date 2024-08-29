@@ -18,7 +18,7 @@ from player_tracking.views.visitor_logic import (
     sort_by_positions,
     set_fall_player_projection_info,
     set_drafted_player_info,
-    set_combine_attendee_count_and_info
+    set_combine_attendee_count_and_info,
 )
 
 
@@ -129,7 +129,7 @@ def spring_roster(request, spring_year):
         .filter(status__in=ALL_ROSTER)
         .order_by("jersey")
     )
-    if len(players) < 5 and int(spring_year) >= timezone.now().date().year:
+    if len(players) < 5 and int(spring_year) >= date.today().year:
         page_title = f"Spring {spring_year} Roster not fully announced"
     else:
         page_title = f"Spring {spring_year} Roster"
@@ -164,7 +164,11 @@ def portal(request, portal_year):
 
 def all_eligible_players_fall(request, fall_year):
     spring_year = int(fall_year) + 1
-    players = Player.objects.filter(first_spring__lte=spring_year).filter(last_spring__gte=spring_year).order_by(Lower("last"))
+    players = (
+        Player.objects.filter(first_spring__lte=spring_year)
+        .filter(last_spring__gte=spring_year)
+        .order_by(Lower("last"))
+    )
     context = {
         "players": players,
         "page_title": f"All Eligible Players For Fall {fall_year}",
@@ -173,13 +177,15 @@ def all_eligible_players_fall(request, fall_year):
     return render(request, "player_tracking/all_eligible_players_fall.html", context)
 
 
-def fall_players(request, fall_year):
+def fall_players(request, fall_year=date.today().year):
     spring_year = int(fall_year) + 1
     if AnnualRoster.objects.filter(spring_year=spring_year):
         return redirect("fall_roster", fall_year=fall_year)
     elif int(fall_year) < date.today().year:
         return redirect("pt_index")
-    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(fall_year=fall_year):
+    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(
+        fall_year=fall_year
+    ):
         return redirect("all_eligible_players_fall", fall_year=fall_year)
     else:
         return redirect("projected_players_fall", fall_year=fall_year)
@@ -191,9 +197,11 @@ def projected_players_fall(request, fall_year):
         return redirect("fall_roster", fall_year=fall_year)
     elif int(fall_year) < date.today().year:
         return redirect("pt_index")
-    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(fall_year=fall_year):
+    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(
+        fall_year=fall_year
+    ):
         return redirect("all_eligible_players_fall", fall_year=fall_year)
-        
+
     players = set_fall_player_projection_info(fall_year)
     count = len(players)
     positions = sort_by_positions(players)
@@ -201,7 +209,7 @@ def projected_players_fall(request, fall_year):
         "players": players,
         "page_title": f"Projected Players For Fall {fall_year}",
         "count": count,
-        "positions": positions,    
+        "positions": positions,
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/projected_players_fall.html", context)
@@ -219,7 +227,9 @@ def draft_combine_attendees(request, draft_year):
 
 
 def summer_assignments(request, summer_year):
-    assignments = SummerAssign.objects.filter(summer_year=summer_year).order_by(Lower("player__last"))
+    assignments = SummerAssign.objects.filter(summer_year=summer_year).order_by(
+        Lower("player__last")
+    )
     context = {
         "page_title": f"{summer_year} College Summer League Assignments for current and former Indiana players",
         "assignments": assignments,
@@ -238,8 +248,3 @@ def drafted_players(request, draft_year):
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/drafted_players.html", context)
-
-
-
-
-

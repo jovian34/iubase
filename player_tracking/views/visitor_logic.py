@@ -11,12 +11,30 @@ from player_tracking.models import (
 
 
 def sort_by_positions(players):
-    lhp = {"position": "Left Handed Pitcher", "players": [],}
-    rhp = {"position": "Right Handed Pitcher", "players": [],}
-    catcher = {"position": "Catcher", "players": [],}
-    infielder = {"position": "Infielder", "players": [],}
-    outfielder = {"position": "Outfielder", "players": [],}
-    dh = {"position": "Designated Hitter", "players": [],}
+    lhp = {
+        "position": "Left Handed Pitcher",
+        "players": [],
+    }
+    rhp = {
+        "position": "Right Handed Pitcher",
+        "players": [],
+    }
+    catcher = {
+        "position": "Catcher",
+        "players": [],
+    }
+    infielder = {
+        "position": "Infielder",
+        "players": [],
+    }
+    outfielder = {
+        "position": "Outfielder",
+        "players": [],
+    }
+    dh = {
+        "position": "Designated Hitter",
+        "players": [],
+    }
     for player in players:
         if player.throws == "Left" and player.position == "Pitcher":
             lhp["players"].append(player)
@@ -24,7 +42,12 @@ def sort_by_positions(players):
             rhp["players"].append(player)
         elif player.position == "Catcher":
             catcher["players"].append(player)
-        elif player.position in ["First Base", "Second Base", "Third Base", "Shortstop"]:
+        elif player.position in [
+            "First Base",
+            "Second Base",
+            "Third Base",
+            "Shortstop",
+        ]:
             infielder["players"].append(player)
         elif player.position in ["Centerfield", "Corner Outfield"]:
             outfielder["players"].append(player)
@@ -45,7 +68,7 @@ def group_drafted_player(draft_year, player):
 
 def set_draft_combine_player_props(draft_year, player, trans):
     player.combine = True
-    player.position = trans.primary_position   
+    player.position = trans.primary_position
     if player.hsgrad_year == int(draft_year):
         player.group = "Freshman"
     else:
@@ -59,10 +82,13 @@ def set_combine_attendee_count_and_info(draft_year):
         player.combine = False
         transactions = Transaction.objects.filter(player=player)
         for trans in transactions:
-            if trans.trans_event == "Attending MLB Draft Combine" and trans.trans_date.year == int(draft_year):
-                count += 1  
+            if (
+                trans.trans_event == "Attending MLB Draft Combine"
+                and trans.trans_date.year == int(draft_year)
+            ):
+                count += 1
                 set_draft_combine_player_props(draft_year, player, trans)
-    return count,players
+    return count, players
 
 
 def is_draft_pending(draft_date):
@@ -90,8 +116,8 @@ def set_freshman(fall_year, draft_pending, player):
     if draft_pending:
         player.draft = f"*{fall_year} MLB Draft Eligible from High School"
     transactions = Transaction.objects.filter(
-                player=player, trans_date__lte=date(int(fall_year), 9, 1)
-            ).order_by("-trans_date")
+        player=player, trans_date__lte=date(int(fall_year), 9, 1)
+    ).order_by("-trans_date")
     for transaction in transactions:
         if transaction.primary_position:
             player.position = transaction.primary_position
@@ -117,8 +143,10 @@ def set_player_info(fall_year, draft_date, draft_pending, players):
 
 def set_fall_player_projection_info(fall_year):
     draft_date = MLBDraftDate.objects.get(fall_year=fall_year)
-    players = Player.objects.filter(first_spring__lte=(int(fall_year)+1)).filter(last_spring__gte=(int(fall_year) + 1)).order_by(
-        Lower("last")
+    players = (
+        Player.objects.filter(first_spring__lte=(int(fall_year) + 1))
+        .filter(last_spring__gte=(int(fall_year) + 1))
+        .order_by(Lower("last"))
     )
     draft_pending = is_draft_pending(draft_date)
     set_player_info(fall_year, draft_date, draft_pending, players)
@@ -131,7 +159,7 @@ def set_drafted_player(draft_year, player, trans):
     player.draft_round = trans.draft_round
     player.prof_org = trans.prof_org.__str__()
     player.slot = trans.bonus_or_slot
-    player.draft_comment = trans.comment 
+    player.draft_comment = trans.comment
     group_drafted_player(draft_year, player)
 
 
@@ -152,14 +180,24 @@ def set_drafted_player_info(draft_year):
     count = 0
     for player in players:
         player.drafted = False
-        player.signed = "no"        
+        player.signed = "no"
         transactions = Transaction.objects.filter(player=player).order_by("trans_date")
         for trans in transactions:
-            if trans.trans_event == "Drafted" and trans.trans_date.year == int(draft_year):
+            if trans.trans_event == "Drafted" and trans.trans_date.year == int(
+                draft_year
+            ):
                 set_drafted_player(draft_year, player, trans)
                 count += 1
-            if trans.trans_event == "Signed Professional Contract" and player.drafted and trans.trans_date.year == int(draft_year):
+            if (
+                trans.trans_event == "Signed Professional Contract"
+                and player.drafted
+                and trans.trans_date.year == int(draft_year)
+            ):
                 set_signed_player(player, trans)
-            if trans.trans_event == "Not Signing Professional Contract" and player.drafted and trans.trans_date.year == int(draft_year):
+            if (
+                trans.trans_event == "Not Signing Professional Contract"
+                and player.drafted
+                and trans.trans_date.year == int(draft_year)
+            ):
                 set_not_signed_player(player, trans)
     return players, count

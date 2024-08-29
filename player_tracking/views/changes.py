@@ -5,7 +5,12 @@ from django.urls import reverse
 
 from player_tracking.models import Player
 from live_game_blog.models import Team
-from player_tracking.forms import AnnualRosterForm, NewPlayerForm, TransactionForm, SummerAssignForm
+from player_tracking.forms import (
+    AnnualRosterForm,
+    NewPlayerForm,
+    TransactionForm,
+    SummerAssignForm,
+)
 from player_tracking.views.changes_logic import (
     save_new_player_and_init_transaction,
     save_transaction_form,
@@ -65,7 +70,7 @@ def add_roster_year(request, player_id):
 
 @login_required
 def add_summer_assignment(request, player_id):
-    if request.method== "POST":
+    if request.method == "POST":
         form = SummerAssignForm(request.POST)
         if form.is_valid():
             save_summer_assign(player_id, form)
@@ -85,8 +90,8 @@ def add_summer_assignment(request, player_id):
             "player_tracking/partials/add_summer_assignment.html",
             context,
         )
-    
-    
+
+
 @login_required
 def add_transaction(request, player_id):
     if request.method == "POST":
@@ -123,4 +128,3 @@ def set_player_properties(request):
         "page_title": "Errors From Last Spring Calculations",
     }
     return render(request, "player_tracking/calc_last_spring.html", context)
-

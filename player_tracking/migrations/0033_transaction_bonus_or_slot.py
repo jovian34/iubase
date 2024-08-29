@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('player_tracking', '0032_player_first_spring'),
+        ("player_tracking", "0032_player_first_spring"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='transaction',
-            name='bonus_or_slot',
+            model_name="transaction",
+            name="bonus_or_slot",
             field=models.FloatField(blank=True, null=True),
         ),
     ]

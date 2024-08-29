@@ -54,7 +54,7 @@ def transactions(players, prof_orgs):
         trans_date=date(year=this_year, month=7, day=21),
         prof_org=prof_orgs.phillies,
         bonus_or_slot=367000,
-        comment="Bonus value was reported two days after signing."
+        comment="Bonus value was reported two days after signing.",
     )
     aw_nli = Transaction.objects.create(
         player=players.andrew_wiggins,
@@ -90,7 +90,7 @@ def transactions(players, prof_orgs):
         player=players.grant_hollister,
         trans_event="Drafted",
         trans_date=date(year=this_year, month=7, day=14),
-        comment="He is expected by insiders to require $500,000 to sign."
+        comment="He is expected by insiders to require $500,000 to sign.",
     )
     gh_not_sign = Transaction.objects.create(
         player=players.grant_hollister,

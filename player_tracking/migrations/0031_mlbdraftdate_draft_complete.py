@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('player_tracking', '0030_proforg_transaction_draft_round_transaction_prof_org'),
+        (
+            "player_tracking",
+            "0030_proforg_transaction_draft_round_transaction_prof_org",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='mlbdraftdate',
-            name='draft_complete',
+            model_name="mlbdraftdate",
+            name="draft_complete",
             field=models.BooleanField(default=False),
         ),
     ]

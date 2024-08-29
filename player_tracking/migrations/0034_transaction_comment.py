@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('player_tracking', '0033_transaction_bonus_or_slot'),
+        ("player_tracking", "0033_transaction_bonus_or_slot"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='transaction',
-            name='comment',
+            model_name="transaction",
+            name="comment",
             field=models.CharField(blank=True, null=True),
         ),
     ]

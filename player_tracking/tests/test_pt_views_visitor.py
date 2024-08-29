@@ -45,12 +45,14 @@ def test_all_players_renders_in_alpha_order_by_last_name(client, players):
 
 
 @pytest.mark.django_db
-def test_all_players_renders_in_alpha_order_by_case_insensitive_last_name(client, players):
-    '''
+def test_all_players_renders_in_alpha_order_by_case_insensitive_last_name(
+    client, players
+):
+    """
     Edge case where player's last name starts with a lower case letter
     The order_by function normally orders capital letters before lower case
     a Lower() method is applied to make the ordering case insensative
-    '''
+    """
     response = client.get(reverse("players"))
     assert response.status_code == 200
     output = str(response.content)
@@ -65,7 +67,9 @@ def test_all_eligible_players_includes_only_committs_four_years_out(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("all_eligible_players_fall", args=[f"{this_year + 4}"]))
+    response = client.get(
+        reverse("all_eligible_players_fall", args=[f"{this_year + 4}"])
+    )
     assert response.status_code == 200
     assert "Owen ten Oever" in str(response.content)
     assert "Xavier Carrera" in str(response.content)
@@ -98,8 +102,9 @@ def test_player_rosters_renders_summer_teams(
     assert response.status_code == 200
     assert "Devin Taylor" in str(response.content)
     assert "Summer Ball:" in str(response.content)
-    assert f"{this_year}: USA Collegiate National Team of the International Friendship League" in str(
-        response.content
+    assert (
+        f"{this_year}: USA Collegiate National Team of the International Friendship League"
+        in str(response.content)
     )
 
 
@@ -159,10 +164,14 @@ def test_fall_roster_renders(client, players, teams, annual_rosters):
 
 
 @pytest.mark.django_db
-def test_fall_roster_fw_to_instead_of_projection(client, players, teams, annual_rosters):
+def test_fall_roster_fw_to_instead_of_projection(
+    client, players, teams, annual_rosters
+):
     response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]))
     assert response.status_code == 302
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]), follow=True)
+    response = client.get(
+        reverse("projected_players_fall", args=[f"{this_year - 1}"]), follow=True
+    )
     assert response.status_code == 200
     assert "Total Roster Length: 4" in str(response.content)
     assert f"Fall {this_year - 1} Roster" in str(response.content)
@@ -173,10 +182,14 @@ def test_fall_roster_fw_to_instead_of_projection(client, players, teams, annual_
 
 
 @pytest.mark.django_db
-def test_fall_players_fw_to_fall_roster_if_exists(client, players, teams, annual_rosters):
+def test_fall_players_fw_to_fall_roster_if_exists(
+    client, players, teams, annual_rosters
+):
     response = client.get(reverse("fall_players", args=[f"{this_year - 1}"]))
     assert response.status_code == 302
-    response = client.get(reverse("fall_players", args=[f"{this_year - 1}"]), follow=True)
+    response = client.get(
+        reverse("fall_players", args=[f"{this_year - 1}"]), follow=True
+    )
     assert response.status_code == 200
     assert "Total Roster Length: 4" in str(response.content)
     assert f"Fall {this_year - 1} Roster" in str(response.content)
@@ -233,7 +246,9 @@ def test_projected_roster_excludes_transfer_portal_entrants(
 def test_projected_players_for_past_year_redirects_to_pt_index(client):
     response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]))
     assert response.status_code == 302
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]), follow=True)
+    response = client.get(
+        reverse("projected_players_fall", args=[f"{this_year - 1}"]), follow=True
+    )
     assert response.status_code == 200
     assert f"{this_year} Depth Chart" in str(response.content)
 
@@ -242,7 +257,9 @@ def test_projected_players_for_past_year_redirects_to_pt_index(client):
 def test_projected_players_for_future_year_redirects_to_all_eligible(client):
     response = client.get(reverse("projected_players_fall", args=[f"{this_year + 1}"]))
     assert response.status_code == 302
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year + 1}"]), follow=True)
+    response = client.get(
+        reverse("projected_players_fall", args=[f"{this_year + 1}"]), follow=True
+    )
     assert response.status_code == 200
     assert f"All Eligible Players For Fall {this_year + 1}" in str(response.content)
 
@@ -322,7 +339,9 @@ def test_draft_combine_attendees_renders(
 
 
 @pytest.mark.django_db
-def test_summer_assignments_page_renders(client, players, summer_assign, summer_leagues, summer_teams):
+def test_summer_assignments_page_renders(
+    client, players, summer_assign, summer_leagues, summer_teams
+):
     response = client.get(reverse("summer_assignments", args=[f"{this_year}"]))
     assert response.status_code == 200
 
@@ -337,9 +356,12 @@ def test_drafted_players_renders_drafted_not_signed(
     assert response.context["count"] == 2
     assert "High School Signee" in str(response.content)
     assert "IU Player/Alumni" in str(response.content)
-    assert "He is expected by insiders to require $500,000 to sign." in str(response.content)
+    assert "He is expected by insiders to require $500,000 to sign." in str(
+        response.content
+    )
     assert "$400,100 before" not in str(response.content)
     assert "Philadelphia Phillies incur" not in str(response.content)
+
 
 @pytest.mark.django_db
 def test_drafted_players_renders_signed(
@@ -348,8 +370,13 @@ def test_drafted_players_renders_signed(
     response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert response.context["count"] == 2
-    assert "Nick Mitchell signed a professional contract with a bonus of $367,000." in str(response.content)
-    assert "This bonus was 92% of the assigned value of the draft pick." in str(response.content)
+    assert (
+        "Nick Mitchell signed a professional contract with a bonus of $367,000."
+        in str(response.content)
+    )
+    assert "This bonus was 92% of the assigned value of the draft pick." in str(
+        response.content
+    )
     assert "Bonus value was reported two days after signing." in str(response.content)
 
 
@@ -359,7 +386,9 @@ def test_drafted_players_renders_unsigned(
 ):
     response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
-    assert "Grant Hollister did not sign and will be on campus in the fall." in str(response.content)
+    assert "Grant Hollister did not sign and will be on campus in the fall." in str(
+        response.content
+    )
 
 
 @pytest.mark.django_db
@@ -367,7 +396,32 @@ def test_all_eligible_players_fall_renders(
     client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
-    response = client.get(reverse("all_eligible_players_fall", args=[f"{this_year + 1}"]))
+    response = client.get(
+        reverse("all_eligible_players_fall", args=[f"{this_year + 1}"])
+    )
     assert "Grant Hollister" in str(response.content)
     assert "Jack Moffitt" not in str(response.content)
-    
+
+
+@pytest.mark.django_db
+def test_fall_players_renders_with_this_year_specified(
+    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("fall_players", args=[f"{this_year}"]), follow=True)
+    assert response.status_code == 200
+    assert f"Projected Players For Fall {this_year}" in str(response.content)
+    assert "Devin Taylor" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_fall_players_renders_without_year_specified(
+    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("fall_players"), follow=True)
+    assert response.status_code == 200
+    assert f"Projected Players For Fall {this_year}" in str(response.content)
+    assert "Devin Taylor" in str(response.content)

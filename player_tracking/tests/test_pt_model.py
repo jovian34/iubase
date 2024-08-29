@@ -15,6 +15,7 @@ from live_game_blog.tests.fixtures import teams
 
 this_year = date.today().year
 
+
 @pytest.mark.django_db
 def test_player_model_stored_all_fields(client, players):
     assert players.devin_taylor.first == "Devin"
@@ -53,7 +54,10 @@ def test_transaction_model_get_prof_or(client, transactions):
 
 @pytest.mark.django_db
 def test_transaction_model_gets_comment(client, transactions):
-    assert transactions.nm_signed.comment == "Bonus value was reported two days after signing."
+    assert (
+        transactions.nm_signed.comment
+        == "Bonus value was reported two days after signing."
+    )
 
 
 @pytest.mark.django_db
@@ -73,7 +77,9 @@ def test_annual_roster_model_string_def(client, annual_rosters, teams):
 
 @pytest.mark.django_db
 def test_mlb_draft_birthdate_string_def(client, mlb_draft_date):
-    assert str(mlb_draft_date.draft_this_year) == f"{this_year}: Aug 1, {this_year - 21}"
+    assert (
+        str(mlb_draft_date.draft_this_year) == f"{this_year}: Aug 1, {this_year - 21}"
+    )
 
 
 @pytest.mark.django_db

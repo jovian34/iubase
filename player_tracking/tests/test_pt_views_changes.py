@@ -58,7 +58,7 @@ def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs, 
 @pytest.mark.django_db
 def test_add_player_form_asks_for_password_not_logged_in(client, players, forms):
     response = client.post(
-        reverse("add_player"),        
+        reverse("add_player"),
         forms.phillip_glasser_new,
         follow=True,
     )
@@ -156,7 +156,6 @@ def test_add_transaction_partial_post_adds_transaction(
     assert "he can get a bonus value of $150,000" in str(response.content)
     assert "Expected to go over slot value." in str(response.content)
     assert "Arizona Diamondbacks" in str(response.content)
-
 
 
 @pytest.mark.django_db
@@ -267,7 +266,7 @@ def test_set_player_properties_properly_ends_eligible_player_who_is_now_staff(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
     """
-    Nathan Ball is a freshman player in this test who fails to make 
+    Nathan Ball is a freshman player in this test who fails to make
     the spring roster, and becomes a manager instead.
     """
     response = client.get(reverse("players"), follow=True)
@@ -332,7 +331,9 @@ def test_set_player_properties_produces_correct_end_date_typical_case(
 
 
 @pytest.mark.django_db
-def test_add_summer_assignment_get_redirects_not_logged_in(client, players, summer_leagues, summer_teams):
+def test_add_summer_assignment_get_redirects_not_logged_in(
+    client, players, summer_leagues, summer_teams
+):
     response = client.get(
         reverse("add_summer_assignment", args=[players.devin_taylor]),
         follow=True,
@@ -342,7 +343,9 @@ def test_add_summer_assignment_get_redirects_not_logged_in(client, players, summ
 
 
 @pytest.mark.django_db
-def test_add_summer_assignment_get_renders_form(client, players, summer_leagues, summer_teams, logged_user_schwarbs):
+def test_add_summer_assignment_get_renders_form(
+    client, players, summer_leagues, summer_teams, logged_user_schwarbs
+):
     response = client.get(
         reverse("add_summer_assignment", args=[str(players.devin_taylor.pk)])
     )
@@ -351,7 +354,9 @@ def test_add_summer_assignment_get_renders_form(client, players, summer_leagues,
 
 
 @pytest.mark.django_db
-def test_add_summer_assignment_post_adds_assignment(client, players, summer_leagues, summer_teams, logged_user_schwarbs, forms):
+def test_add_summer_assignment_post_adds_assignment(
+    client, players, summer_leagues, summer_teams, logged_user_schwarbs, forms
+):
     response = client.post(
         reverse("add_summer_assignment", args=[str(players.brayden_risedorph.pk)]),
         forms.summer_assignment_new,
@@ -359,4 +364,3 @@ def test_add_summer_assignment_post_adds_assignment(client, players, summer_leag
     )
     assert response.status_code == 200
     assert "Green Bay" in str(response.content)
-

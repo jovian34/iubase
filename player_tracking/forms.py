@@ -1,7 +1,14 @@
 from django import forms
 from django.db import models
 
-from player_tracking.models import Player, Transaction, AnnualRoster, SummerLeague, SummerTeam, ProfOrg
+from player_tracking.models import (
+    Player,
+    Transaction,
+    AnnualRoster,
+    SummerLeague,
+    SummerTeam,
+    ProfOrg,
+)
 from live_game_blog.models import Team
 from player_tracking.choices import (
     HAND_CHOICES,
@@ -102,7 +109,6 @@ class TransactionForm(forms.Form):
     )
 
 
-
 class SummerAssignForm(forms.Form):
     summer_year = forms.IntegerField(label="Summer Year")
     summer_league = forms.ModelChoiceField(
@@ -110,12 +116,11 @@ class SummerAssignForm(forms.Form):
         label="League",
     )
     summer_team = forms.ModelChoiceField(
-        queryset=SummerTeam.objects.all().order_by("name"),
-        label="Summer Team"
+        queryset=SummerTeam.objects.all().order_by("name"), label="Summer Team"
     )
     source = forms.CharField(required=False, label="Source")
     citation = forms.URLField(
-        required=False, 
+        required=False,
         label="Citation",
         assume_scheme="https",  # remove argument for Django 6.0
     )

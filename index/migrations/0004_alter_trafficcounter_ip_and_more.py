@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('index', '0003_alter_trafficcounter_user_agent'),
+        ("index", "0003_alter_trafficcounter_user_agent"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='trafficcounter',
-            name='ip',
+            model_name="trafficcounter",
+            name="ip",
             field=models.CharField(max_length=64, null=True),
         ),
         migrations.AlterField(
-            model_name='trafficcounter',
-            name='user_agent',
+            model_name="trafficcounter",
+            name="user_agent",
             field=models.CharField(null=True),
         ),
     ]

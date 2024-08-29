@@ -12,7 +12,11 @@ this_year = date.today().year
 @pytest.fixture
 def players():
     devin_taylor = Player.objects.create(
-        first="Devin", last="Taylor", hsgrad_year=this_year - 2, bats="left", throws="left"
+        first="Devin",
+        last="Taylor",
+        hsgrad_year=this_year - 2,
+        bats="left",
+        throws="left",
     )
     brayden_risedorph = Player.objects.create(
         first="Brayden",
@@ -23,7 +27,11 @@ def players():
         throws="right",
     )
     andrew_wiggins = Player.objects.create(
-        first="Andrew", last="Wiggins", hsgrad_year=this_year -1, bats="left", throws="right"
+        first="Andrew",
+        last="Wiggins",
+        hsgrad_year=this_year - 1,
+        bats="left",
+        throws="right",
     )
     nick_mitchell = Player.objects.create(
         first="Nick",
@@ -89,7 +97,8 @@ def players():
         throws="right",
     )
     PlayerObj = namedtuple(
-        "PlayerObj", "devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jack_moffitt grant_hollister cole_gilley nate_ball holton_compton xavier_carrera owen_ten_oever"
+        "PlayerObj",
+        "devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jack_moffitt grant_hollister cole_gilley nate_ball holton_compton xavier_carrera owen_ten_oever",
     )
     return PlayerObj(
         devin_taylor=devin_taylor,

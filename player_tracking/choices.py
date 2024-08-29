@@ -18,9 +18,15 @@ LEFT_TUPLES = [
     ("Verbal Commitment to Transfer College", "Verbal Commitment to Transfer College"),
     ("Attending MLB Draft Combine", "Attending MLB Draft Combine"),
     ("Drafted", "Drafted"),
-    ("Signed Professional Contract - Undrafted", "Signed Professional Contract - Undrafted"),
+    (
+        "Signed Professional Contract - Undrafted",
+        "Signed Professional Contract - Undrafted",
+    ),
     ("No Longer With Program - Other Reason", "No Longer With Program - Other Reason"),
-    ("Not playing but with the program in another role", "Not playing but with the program in another role"),
+    (
+        "Not playing but with the program in another role",
+        "Not playing but with the program in another role",
+    ),
 ]
 
 AFTER_TUPLES = [
@@ -35,7 +41,7 @@ LEFT = [left_tuple[0] for left_tuple in LEFT_TUPLES]
 JOINED = [joined_tuple[0] for joined_tuple in JOINED_TUPLES]
 AFTER = [after_tuple[0] for after_tuple in AFTER_TUPLES]
 COLLEGE = [JOINED_TUPLES[1][0]]
-HS = [JOINED_TUPLES[0][0], JOINED_TUPLES[2],[0]]
+HS = [JOINED_TUPLES[0][0], JOINED_TUPLES[2], [0]]
 
 POSITION_CHOICES = [
     ("Pitcher", "Pitcher"),

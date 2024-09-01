@@ -1,6 +1,5 @@
 import pytest
 from django.urls import reverse
-from django.utils import timezone
 from datetime import date, datetime
 
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
@@ -126,7 +125,7 @@ def test_player_rosters_renders_transfer_player_old_team(client, annual_rosters)
 def test_pt_index_renders(client):
     response = client.get(reverse("pt_index"))
     assert response.status_code == 200
-    assert f"{str(timezone.now().year)} Depth Chart" in str(response.content)
+    assert f"{this_year} Depth Chart" in str(response.content)
 
 
 @pytest.mark.django_db

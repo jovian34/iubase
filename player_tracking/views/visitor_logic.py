@@ -59,13 +59,6 @@ def sort_by_positions(players):
     return positions
 
 
-def group_drafted_player(draft_year, player):
-    if player.hsgrad_year == int(draft_year):
-        player.group = "High School Signee"
-    else:
-        player.group = "IU Player/Alumni"
-
-
 def set_draft_combine_player_props(draft_year, player, trans):
     player.combine = True
     player.position = trans.primary_position
@@ -151,53 +144,3 @@ def set_fall_player_projection_info(fall_year):
     draft_pending = is_draft_pending(draft_date)
     set_player_info(fall_year, draft_date, draft_pending, players)
     return players
-
-
-def set_drafted_player(draft_year, player, trans):
-    player.drafted = True
-    player.position = trans.primary_position
-    player.draft_round = trans.draft_round
-    player.prof_org = trans.prof_org.__str__()
-    player.slot = trans.bonus_or_slot
-    player.draft_comment = trans.comment
-    group_drafted_player(draft_year, player)
-
-
-def set_signed_player(player, trans):
-    player.signed = "yes"
-    player.bonus = trans.bonus_or_slot
-    player.sign_comment = trans.comment
-    player.bonus_pct = 100 * player.bonus / player.slot
-
-
-def set_not_signed_player(player, trans):
-    player.signed = "refused"
-    player.sign_comment = trans.comment
-
-
-def set_drafted_player_info(draft_year):
-    players = Player.objects.all().order_by(Lower("last"))
-    count = 0
-    for player in players:
-        player.drafted = False
-        player.signed = "no"
-        transactions = Transaction.objects.filter(player=player).order_by("trans_date")
-        for trans in transactions:
-            if trans.trans_event == "Drafted" and trans.trans_date.year == int(
-                draft_year
-            ):
-                set_drafted_player(draft_year, player, trans)
-                count += 1
-            if (
-                trans.trans_event == "Signed Professional Contract"
-                and player.drafted
-                and trans.trans_date.year == int(draft_year)
-            ):
-                set_signed_player(player, trans)
-            if (
-                trans.trans_event == "Not Signing Professional Contract"
-                and player.drafted
-                and trans.trans_date.year == int(draft_year)
-            ):
-                set_not_signed_player(player, trans)
-    return players, count

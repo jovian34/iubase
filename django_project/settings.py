@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.1"  # PT shortened PT description as all commits are now keyed ATP 2024-08-24
+    "0.1.2"  # PT moved drafted_players view to its own module with logic ATP 2024-09-01
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

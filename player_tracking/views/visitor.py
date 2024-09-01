@@ -14,10 +14,8 @@ from player_tracking.models import (
 from index.views import save_traffic_data
 from player_tracking.choices import POSITION_CHOICES, ALL_ROSTER
 from player_tracking.views.visitor_logic import (
-    set_draft_combine_player_props,
     sort_by_positions,
     set_fall_player_projection_info,
-    set_drafted_player_info,
     set_combine_attendee_count_and_info,
 )
 
@@ -33,12 +31,8 @@ def players(request):
 
 
 def pt_index(request):
-    if date.today().month < 9:
-        current_spring = date.today().year
-        current_fall = current_spring - 1
-    else:
-        current_fall = date.today().year
-        current_spring = current_fall + 1
+    current_spring = date.today().year
+    current_fall = current_spring - 1
     context = {
         "fall": current_fall,
         "spring": current_spring,
@@ -236,15 +230,3 @@ def summer_assignments(request, summer_year):
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/summer_assignments.html", context)
-
-
-def drafted_players(request, draft_year):
-    players, count = set_drafted_player_info(draft_year)
-    context = {
-        "this_year": draft_year,
-        "players": players,
-        "page_title": f"All players selected in the {draft_year} MLB Draft",
-        "count": count,
-    }
-    save_traffic_data(request=request, page=context["page_title"])
-    return render(request, "player_tracking/drafted_players.html", context)

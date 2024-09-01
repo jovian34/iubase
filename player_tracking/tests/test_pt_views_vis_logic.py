@@ -2,7 +2,7 @@ import pytest
 from datetime import date
 
 from player_tracking.tests.fixtures.players import players
-from player_tracking.views.visitor_logic import group_drafted_player
+from player_tracking.views.drafted_players import group_drafted_player
 
 
 this_year = date.today().year

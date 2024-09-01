@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.2"  # PT moved drafted_players tests to its own module with logic ATP 2024-09-01
+    "0.1.3"  # PT moved draft_combine to its own module with logic ATP 2024-09-01
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

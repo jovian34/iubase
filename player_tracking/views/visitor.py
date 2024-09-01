@@ -15,7 +15,6 @@ from player_tracking.choices import POSITION_CHOICES, ALL_ROSTER
 from player_tracking.views.visitor_logic import (
     sort_by_positions,
     set_fall_player_projection_info,
-    set_combine_attendee_count_and_info,
 )
 
 
@@ -166,14 +165,3 @@ def projected_players_fall(request, fall_year):
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/projected_players_fall.html", context)
-
-
-def draft_combine_attendees(request, draft_year):
-    count, players = set_combine_attendee_count_and_info(draft_year)
-    context = {
-        "players": players,
-        "page_title": f"All players in the {draft_year} MLB Draft Combine",
-        "count": count,
-    }
-    save_traffic_data(request=request, page=context["page_title"])
-    return render(request, "player_tracking/draft_combine_attendees.html", context)

@@ -290,32 +290,6 @@ def test_non_existent_draft_year_redirects_to_index(
 
 
 @pytest.mark.django_db
-def test_draft_combine_attendees_set_to_current_last_year(
-    client, players, transactions, annual_rosters, mlb_draft_date, logged_user_schwarbs
-):
-    response = client.get(reverse("players"), follow=True)
-    nick = Player.objects.get(pk=players.nick_mitchell.pk)
-    assert not nick.first_spring or nick.last_spring
-    response = client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
-    response = client.get(reverse("players"), follow=True)
-    nick = Player.objects.get(pk=players.nick_mitchell.pk)
-    assert nick.first_spring == this_year
-    assert nick.last_spring == this_year
-
-
-@pytest.mark.django_db
-def test_draft_combine_attendees_renders(
-    client, players, transactions, annual_rosters, mlb_draft_date
-):
-    response = client.get(reverse("draft_combine_attendees", args=[f"{this_year}"]))
-    assert response.status_code == 200
-    assert response.context["count"] == 2
-    for item in ["Nick Mitchell", "College", "Hollister", "Freshman"]:
-        assert item in str(response.content)
-
-
-@pytest.mark.django_db
 def test_summer_assignments_page_renders(
     client, players, summer_assign, summer_leagues, summer_teams
 ):

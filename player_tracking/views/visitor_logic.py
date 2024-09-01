@@ -59,31 +59,6 @@ def sort_by_positions(players):
     return positions
 
 
-def set_draft_combine_player_props(draft_year, player, trans):
-    player.combine = True
-    player.position = trans.primary_position
-    if player.hsgrad_year == int(draft_year):
-        player.group = "Freshman"
-    else:
-        player.group = "College"
-
-
-def set_combine_attendee_count_and_info(draft_year):
-    count = 0
-    players = Player.objects.all().order_by("last")
-    for player in players:
-        player.combine = False
-        transactions = Transaction.objects.filter(player=player)
-        for trans in transactions:
-            if (
-                trans.trans_event == "Attending MLB Draft Combine"
-                and trans.trans_date.year == int(draft_year)
-            ):
-                count += 1
-                set_draft_combine_player_props(draft_year, player, trans)
-    return count, players
-
-
 def is_draft_pending(draft_date):
     draft_pending = True
     if draft_date.latest_draft_day < date.today():

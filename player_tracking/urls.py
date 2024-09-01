@@ -1,5 +1,5 @@
 from django.urls import path
-from player_tracking.views import visitor, changes, drafted_players
+from player_tracking.views import visitor, changes, drafted_players, summer_assignments
 
 urlpatterns = [
     path("", visitor.pt_index, name="pt_index"),
@@ -56,7 +56,7 @@ urlpatterns = [
     ),
     path(
         "summer_assignments/<summer_year>/",
-        visitor.summer_assignments,
+        summer_assignments.view,
         name="summer_assignments",
     ),
     # partials

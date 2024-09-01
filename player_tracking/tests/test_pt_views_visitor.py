@@ -347,51 +347,6 @@ def test_summer_assignments_page_renders(
 
 
 @pytest.mark.django_db
-def test_drafted_players_renders_drafted_not_signed(
-    client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
-):
-    response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
-    assert response.status_code == 200
-    assert "Grant Hollister" in str(response.content)
-    assert response.context["count"] == 2
-    assert "High School Signee" in str(response.content)
-    assert "IU Player/Alumni" in str(response.content)
-    assert "He is expected by insiders to require $500,000 to sign." in str(
-        response.content
-    )
-    assert "$400,100 before" not in str(response.content)
-    assert "Philadelphia Phillies incur" not in str(response.content)
-
-
-@pytest.mark.django_db
-def test_drafted_players_renders_signed(
-    client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
-):
-    response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
-    assert response.status_code == 200
-    assert response.context["count"] == 2
-    assert (
-        "Nick Mitchell signed a professional contract with a bonus of $367,000."
-        in str(response.content)
-    )
-    assert "This bonus was 92% of the assigned value of the draft pick." in str(
-        response.content
-    )
-    assert "Bonus value was reported two days after signing." in str(response.content)
-
-
-@pytest.mark.django_db
-def test_drafted_players_renders_unsigned(
-    client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
-):
-    response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
-    assert response.status_code == 200
-    assert "Grant Hollister did not sign and will be on campus in the fall." in str(
-        response.content
-    )
-
-
-@pytest.mark.django_db
 def test_all_eligible_players_fall_renders(
     client, players, transactions, mlb_draft_date, logged_user_schwarbs
 ):

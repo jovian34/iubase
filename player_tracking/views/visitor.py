@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.utils import timezone
 from django.db.models.functions import Lower
 
 from datetime import date

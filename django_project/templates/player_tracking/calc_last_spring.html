@@ -23,7 +23,7 @@
     <ul>
     {% for player in players %}
         <li>
-                <h2><a href="{% url "player_rosters" player.pk %}">
+                <h2><a href="{% url "single_player_page" player.pk %}">
                     {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
                 </a></h2> 
         </li>

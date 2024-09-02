@@ -14,7 +14,7 @@
         <ul>
         {% for transaction in incoming %}
             <li>
-                <h3><a href="{% url "player_rosters" transaction.player.pk %}">{{transaction.player.first}} {{transaction.player.last}}</a></h3>
+                <h3><a href="{% url "single_player_page" transaction.player.pk %}">{{transaction.player.first}} {{transaction.player.last}}</a></h3>
             </li>
         {% endfor %}
         </ul>
@@ -30,7 +30,7 @@
         <ul>
         {% for transaction in outgoing %}
             <li>
-                <h3><a href="{% url "player_rosters" transaction.player.pk %}">{{transaction.player.first}} {{transaction.player.last}}</a></h3>
+                <h3><a href="{% url "single_player_page" transaction.player.pk %}">{{transaction.player.first}} {{transaction.player.last}}</a></h3>
             </li>
         {% endfor %}
         </ul>

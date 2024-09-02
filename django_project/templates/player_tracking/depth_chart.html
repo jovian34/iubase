@@ -16,7 +16,7 @@
                 <ul>
                 {% for player in players %}
                     {% if player.primary_position == "Pitcher" and player.player.throws == "Left" %}
-                        <li><a href="{% url "player_rosters" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></li>
+                        <li><a href="{% url "single_player_page" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></li>
                     {% endif %}
                 {% endfor %}
                 </ul>
@@ -26,7 +26,7 @@
                 <ul>
                 {% for player in players %}
                     {% if player.primary_position == "Pitcher" and player.player.throws == "Right" %}
-                        <li><a href="{% url "player_rosters" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></li>
+                        <li><a href="{% url "single_player_page" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></li>
                     {% endif %}
                 {% endfor %}
                 </ul>
@@ -37,7 +37,7 @@
                     <ul>
                     {% for player in players %}
                         {% if player.primary_position == position or player.secondary_position == position %}
-                            <li><a href="{% url "player_rosters" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></li>
+                            <li><a href="{% url "single_player_page" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></li>
                         {% endif %}
                     {% endfor %}
                     </ul>

@@ -12,7 +12,7 @@
         <ul>
         {% for assign in assignments %}
             <li>
-                <h3><a href="{% url "player_rosters" assign.player.pk %}">{{ assign.player.first }} {{ assign.player.last }}</a></h3>
+                <h3><a href="{% url "single_player_page" assign.player.pk %}">{{ assign.player.first }} {{ assign.player.last }}</a></h3>
                 <p>{{ assign.summer_team.name }} {{assign.summer_team.mascot}} 
                 of <a href="{{ assign.summer_league.website }}">{{ assign.summer_league.league }} League</a></p>
 

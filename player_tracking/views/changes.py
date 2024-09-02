@@ -49,7 +49,7 @@ def add_roster_year(request, player_id):
         if form.is_valid():
             save_roster_year(player_id, form)
             set_player_props_get_errors()
-        return redirect(reverse("player_rosters", args=[player_id]))
+        return redirect(reverse("single_player_page", args=[player_id]))
     else:
         form = AnnualRosterForm(
             initial={
@@ -74,7 +74,7 @@ def add_summer_assignment(request, player_id):
         form = SummerAssignForm(request.POST)
         if form.is_valid():
             save_summer_assign(player_id, form)
-        return redirect(reverse("player_rosters", args=[player_id]))
+        return redirect(reverse("single_player_page", args=[player_id]))
     else:
         form = SummerAssignForm(
             initial={
@@ -99,7 +99,7 @@ def add_transaction(request, player_id):
         if form.is_valid():
             save_transaction_form(player_id, form)
             set_player_props_get_errors()
-        return redirect(reverse("player_rosters", args=[player_id]))
+        return redirect(reverse("single_player_page", args=[player_id]))
     else:
         form = TransactionForm(
             initial={

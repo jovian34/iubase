@@ -59,7 +59,7 @@ def test_all_players_renders_in_alpha_order_by_case_insensitive_last_name(
 def test_player_rosters_renders_one_player_only(client, annual_rosters):
     response = client.get(
         reverse(
-            "player_rosters",
+            "single_player_page",
             args=[annual_rosters.dt_fresh.player.pk],
         )
     )
@@ -74,7 +74,7 @@ def test_player_rosters_renders_summer_teams(
 ):
     response = client.get(
         reverse(
-            "player_rosters",
+            "single_player_page",
             args=[annual_rosters.dt_fresh.player.pk],
         )
     )
@@ -91,7 +91,7 @@ def test_player_rosters_renders_summer_teams(
 def test_player_rosters_renders_transfer_player_old_team(client, annual_rosters):
     response = client.get(
         reverse(
-            "player_rosters",
+            "single_player_page",
             args=[annual_rosters.nm_soph.player.pk],
         )
     )

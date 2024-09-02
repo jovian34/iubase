@@ -29,7 +29,7 @@
         <ul>
         {% for player in players %}
             <li>
-                <h2><a href="{% url "player_rosters" player.pk %}">{{player.first}} {{player.last}}</a></h2>
+                <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
                 <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.primary_position }}</p>        
             </li>
             <hr>

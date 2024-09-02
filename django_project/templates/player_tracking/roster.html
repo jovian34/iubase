@@ -13,7 +13,7 @@
         <ul>
         {% for player in players%}
             <li>
-                <h3>{{ player.jersey }}. <a href="{% url "player_rosters" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></h3>
+                <h3>{{ player.jersey }}. <a href="{% url "single_player_page" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></h3>
                     
                 <p>
                     {% if player.primary_position == "Pitcher" %}{{ player.player.throws}}-Handed{% endif %}

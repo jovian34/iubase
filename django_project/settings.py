@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.4"  # PT moved fall_players to its own module with logic ATP 2024-09-01
+    "0.1.5"  # PT moved portal to its own module with logic ATP 2024-09-01
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

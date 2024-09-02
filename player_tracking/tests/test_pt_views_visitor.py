@@ -149,16 +149,6 @@ def test_spring_roster_renders(client, players, teams, annual_rosters):
 
 
 @pytest.mark.django_db
-def test_portal_page_renders(client, players, teams, annual_rosters, transactions):
-    current_dt = datetime.now()
-    response = client.get(reverse("portal", args=[str(current_dt.year)]))
-    assert response.status_code == 200
-    assert "Total Players in the Portal: 1"
-    assert "Brooks Ey" in str(response.content)
-    assert "Devin" not in str(response.content)
-
-
-@pytest.mark.django_db
 def test_summer_assignments_page_renders(
     client, players, summer_assign, summer_leagues, summer_teams
 ):

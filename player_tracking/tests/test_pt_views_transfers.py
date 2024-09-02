@@ -2,7 +2,7 @@ import pytest
 from django.urls import reverse
 from datetime import date
 
-from live_game_blog.tests.fixtures.fixtures import teams
+from live_game_blog.tests.fixtures.teams import teams
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.transactions import transactions

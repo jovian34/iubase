@@ -3,12 +3,12 @@ import pytest
 from datetime import timedelta
 from django.utils import timezone
 from live_game_blog.tests.fixtures.fixtures import (
-    teams,
     games,
     scoreboard,
     blog_entries,
     user_not_logged_in,
 )
+from live_game_blog.tests.fixtures.teams import teams
 
 
 @pytest.mark.django_db

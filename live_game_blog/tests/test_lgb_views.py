@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 from django.urls import reverse
 
 from live_game_blog.tests.fixtures.fixtures import (
-    teams,
     games,
     scoreboard,
     logged_user_schwarbs,
@@ -12,6 +11,7 @@ from live_game_blog.tests.fixtures.fixtures import (
     user_not_logged_in,
     user_iubase17,
 )
+from live_game_blog.tests.fixtures.teams import teams
 
 
 @pytest.mark.django_db

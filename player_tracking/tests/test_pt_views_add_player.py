@@ -13,7 +13,7 @@ from player_tracking.tests.fixtures.summer import (
     summer_teams,
 )
 from player_tracking.models import Player
-from live_game_blog.tests.fixtures.fixtures import teams
+from live_game_blog.tests.fixtures.teams import teams
 from accounts.models import CustomUser
 from accounts.tests.fixtures import logged_user_schwarbs
 

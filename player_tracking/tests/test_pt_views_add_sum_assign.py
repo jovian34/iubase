@@ -3,7 +3,7 @@ from django.urls import reverse
 
 
 from accounts.tests.fixtures import logged_user_schwarbs
-from live_game_blog.tests.fixtures.fixtures import teams
+from live_game_blog.tests.fixtures.teams import teams
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.summer import (

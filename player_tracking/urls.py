@@ -7,7 +7,8 @@ from player_tracking.views import (
     draft_combine, 
     drafted_players, 
     fall_players, 
-    iu_rosters, 
+    iu_rosters,
+    set_player_properties,
     single_player_page, 
     summer_assignments, 
     transfer_portal
@@ -34,7 +35,7 @@ urlpatterns = [
     path("portal/<portal_year>/", transfer_portal.view, name="portal"),
     path(
         "set_player_properties/",
-        changes.set_player_properties,
+        set_player_properties.view,
         name="set_player_properties",
     ),
     path(

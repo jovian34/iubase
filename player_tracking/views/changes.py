@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from player_tracking.models import Player
+from datetime import date
+
 from live_game_blog.models import Team
 from player_tracking.forms import (
     AnnualRosterForm,
@@ -16,8 +16,8 @@ from player_tracking.views.changes_logic import (
     save_transaction_form,
     save_roster_year,
     save_summer_assign,
-    set_player_props_get_errors,
 )
+from player_tracking.views.set_player_properties import set_player_props_get_errors
 
 
 @login_required
@@ -31,7 +31,7 @@ def add_player(request):
     else:
         form = NewPlayerForm(
             initial={
-                "hsgrad_year": timezone.now().year,
+                "hsgrad_year": date.today().year,
                 "home_country": "USA",
             },
         )
@@ -53,7 +53,7 @@ def add_roster_year(request, player_id):
     else:
         form = AnnualRosterForm(
             initial={
-                "spring_year": timezone.now().year,
+                "spring_year": date.today().year,
                 "team": Team.objects.get(team_name="Indiana"),
             },
         )
@@ -78,7 +78,7 @@ def add_summer_assignment(request, player_id):
     else:
         form = SummerAssignForm(
             initial={
-                "summer_year": timezone.now().year,
+                "summer_year": date.today().year,
             },
         )
         context = {
@@ -103,7 +103,7 @@ def add_transaction(request, player_id):
     else:
         form = TransactionForm(
             initial={
-                "trans_date": timezone.now().year,
+                "trans_date": date.today(),
             },
         )
         context = {
@@ -115,16 +115,3 @@ def add_transaction(request, player_id):
             "player_tracking/partials/add_transaction.html",
             context,
         )
-
-
-@login_required
-def set_player_properties(request):
-    errors = set_player_props_get_errors()
-    players_updated = Player.objects.all().order_by("last")
-    context = {
-        "players": players_updated,
-        "error_exists": bool(len(errors)),
-        "errors": errors,
-        "page_title": "Errors From Last Spring Calculations",
-    }
-    return render(request, "player_tracking/calc_last_spring.html", context)

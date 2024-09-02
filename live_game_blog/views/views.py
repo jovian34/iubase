@@ -5,12 +5,11 @@ from django.db.models import Q
 
 from accounts.models import CustomUser
 from index.views import save_traffic_data
-from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
+from live_game_blog.models import Game, Scoreboard, BlogEntry
 from live_game_blog.forms import (
     BlogAndScoreboardForm,
     BlogEntryForm,
     AddGameForm,
-    AddTeamForm,
 )
 
 
@@ -269,26 +268,3 @@ def add_game(request):
             "page_title": "Add Game",
         }
         return render(request, "live_game_blog/add_game.html", context)
-
-
-@login_required
-def add_team(request):
-    if request.method == "POST":
-        form = AddTeamForm(request.POST)
-        if form.is_valid():
-            add_team = Team(
-                team_name=form.cleaned_data["team_name"],
-                mascot=form.cleaned_data["mascot"],
-                logo=form.cleaned_data["logo"],
-                stats=form.cleaned_data["stats"],
-                roster=form.cleaned_data["roster"],
-            )
-            add_team.save()
-        return redirect(reverse("games"))
-    else:
-        form = AddTeamForm()
-        context = {
-            "form": form,
-            "page_title": "Add Team",
-        }
-        return render(request, "live_game_blog/add_team.html", context)

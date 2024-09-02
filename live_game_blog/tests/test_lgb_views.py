@@ -3,7 +3,7 @@ import pytest
 from datetime import datetime, timedelta
 from django.urls import reverse
 
-from live_game_blog.tests.fixtures import (
+from live_game_blog.tests.fixtures.fixtures import (
     teams,
     games,
     scoreboard,
@@ -185,42 +185,6 @@ def test_edit_blog_entry_changes_hit_to_error(
     assert response.status_code == 200
     assert "8 hits" not in str(response.content)
     assert "2 errors" in str(response.content)
-
-
-@pytest.mark.django_db
-def test_add_team_and_confirm_team_is_selectable_for_add_game(
-    client, logged_user_schwarbs
-):
-    response = client.post(
-        reverse("add_team"),
-        {
-            "team_name": "Purdue Ft. Wayne",
-            "mascot": "Mastodons",
-            "logo": "https://cdn.d1baseball.com/uploads/2023/12/21143914/iupufw.png",
-            "stats": "https://d1baseball.com/team/iupufw/stats/",
-            "roster": "https://gomastodons.com/sports/baseball/roster",
-        },
-    )
-    assert response.status_code == 302
-    response = client.get(reverse("add_game"))
-    assert "Purdue Ft. Wayne" in str(response.content)
-
-
-@pytest.mark.django_db
-def test_add_team_post_asks_for_login_when_not_logged_in(client):
-    response = client.post(
-        reverse("add_team"),
-        {
-            "team_name": "Purdue Ft. Wayne",
-            "mascot": "Mastodons",
-            "logo": "https://cdn.d1baseball.com/uploads/2023/12/21143914/iupufw.png",
-            "stats": "https://d1baseball.com/team/iupufw/stats/",
-            "roster": "https://gomastodons.com/sports/baseball/roster",
-        },
-        follow=True,
-    )
-    assert response.status_code == 200
-    assert "Password:" in str(response.content)
 
 
 @pytest.mark.django_db

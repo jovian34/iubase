@@ -2,7 +2,7 @@ import pytest
 
 from datetime import timedelta
 from django.utils import timezone
-from live_game_blog.tests.fixtures import (
+from live_game_blog.tests.fixtures.fixtures import (
     teams,
     games,
     scoreboard,

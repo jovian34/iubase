@@ -1,5 +1,5 @@
 from django.urls import path
-from live_game_blog import views
+from live_game_blog.views import views, add_team
 
 urlpatterns = [
     path("", views.games, name="games"),
@@ -11,7 +11,7 @@ urlpatterns = [
         name="edit_live_game_blog",
     ),
     path("add_game", views.add_game, name="add_game"),
-    path("add_team", views.add_team, name="add_team"),
+    path("add_team", add_team.view, name="add_team"),
     # partials
     path("past_games/", views.past_games, name="past_games"),
     path(

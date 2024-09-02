@@ -48,3 +48,17 @@ def test_single_player_page_renders_summer_teams(
         f"{this_year}: USA Collegiate National Team of the International Friendship League"
         in str(response.content)
     )
+
+
+@pytest.mark.django_db
+def test_single_player_page_renders_transfer_player_old_team(client, annual_rosters):
+    response = client.get(
+        reverse(
+            "single_player_page",
+            args=[annual_rosters.nm_soph.player.pk],
+        )
+    )
+    assert response.status_code == 200
+    assert "Nick Mitchell" in str(response.content)
+    assert "Devin" not in str(response.content)
+    assert "Miami (Ohio)" in str(response.content)

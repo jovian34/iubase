@@ -1,9 +1,22 @@
 from django.urls import path
-from player_tracking.views import visitor, changes, depth_charts, draft_combine, drafted_players, fall_players, iu_rosters, single_player_page, summer_assignments, transfer_portal
+from player_tracking.views import (
+    all_players,
+    pt_index, 
+    changes, 
+    depth_charts, 
+    draft_combine, 
+    drafted_players, 
+    fall_players, 
+    iu_rosters, 
+    single_player_page, 
+    summer_assignments, 
+    transfer_portal
+)
+
 
 urlpatterns = [
-    path("", visitor.pt_index, name="pt_index"),
-    path("players/", visitor.players, name="players"),
+    path("", pt_index.view, name="pt_index"),
+    path("players/", all_players.view, name="players"),
     path("player/<player_id>/", single_player_page.view, name="single_player_page"),
     path(
         "spring_depth_chart/<spring_year>/",

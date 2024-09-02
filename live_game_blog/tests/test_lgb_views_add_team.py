@@ -1,7 +1,7 @@
 import pytest
 
 from django.urls import reverse
-from live_game_blog.tests.fixtures.fixtures import logged_user_schwarbs
+from live_game_blog.tests.fixtures.games import logged_user_schwarbs
 from live_game_blog.tests.fixtures.form_data import forms
 
 

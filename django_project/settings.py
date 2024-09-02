@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.13"  # LGB moving blog test fixtures into sep modules ATP 2024-09-02
+    "0.1.14"  # LGB all test fixture classes moved into sep modules ATP 2024-09-02
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

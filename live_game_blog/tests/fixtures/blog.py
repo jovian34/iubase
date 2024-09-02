@@ -4,7 +4,8 @@ from collections import namedtuple
 from datetime import timedelta
 
 from live_game_blog.models import BlogEntry
-from live_game_blog.tests.fixtures.fixtures import games
+from live_game_blog.tests.fixtures.games import games
+from live_game_blog.tests.fixtures.scoreboards import scoreboards
 from accounts.tests.fixtures import (
     user_not_logged_in,
     user_iubase17,
@@ -13,7 +14,7 @@ from accounts.tests.fixtures import (
 
 
 @pytest.fixture
-def entries(client, games, user_not_logged_in, scoreboard):
+def entries(client, games, user_not_logged_in, scoreboards):
     blog_uk_mon_y = BlogEntry.objects.create(
         game=games.iu_uk_mon,
         author=user_not_logged_in,
@@ -27,7 +28,7 @@ def entries(client, games, user_not_logged_in, scoreboard):
         blog_time=games.iu_uk_mon.first_pitch + timedelta(minutes=165),
         blog_entry="Kentucky moves on to Super Regionals",
         include_scoreboard=True,
-        scoreboard=scoreboard.score_uk_mon,
+        scoreboard=scoreboards.score_uk_mon,
     )
     BlogEntryObj = namedtuple(
         "BlogEntryObj",

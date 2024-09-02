@@ -2,13 +2,13 @@ import pytest
 
 from datetime import timedelta
 from django.utils import timezone
-from live_game_blog.tests.fixtures.fixtures import (
+from live_game_blog.tests.fixtures.games import (
     games,
-    scoreboard,
     user_not_logged_in,
 )
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.blog import entries
+from live_game_blog.tests.fixtures.scoreboards import scoreboards
 
 
 @pytest.mark.django_db
@@ -42,14 +42,14 @@ def test_game_model_string_def_neutral(client, games):
 
 
 @pytest.mark.django_db
-def test_scoreboard_sets_default_time(client, scoreboard, user_not_logged_in):
-    score_time = scoreboard.score_uk_mon.update_time
+def test_scoreboard_sets_default_time(client, scoreboards, user_not_logged_in):
+    score_time = scoreboards.score_uk_mon.update_time
     assert timezone.now() - score_time < timedelta(seconds=2)
 
 
 @pytest.mark.django_db
-def test_scoreboard_model_string_def(client, scoreboard, user_not_logged_in):
-    assert str(scoreboard.score_uk_sat) == "Kentucky-3, Indiana-5 | Top Inning: 9"
+def test_scoreboard_model_string_def(client, scoreboards, user_not_logged_in):
+    assert str(scoreboards.score_uk_sat) == "Kentucky-3, Indiana-5 | Top Inning: 9"
 
 
 @pytest.mark.django_db

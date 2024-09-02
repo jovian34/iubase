@@ -3,15 +3,15 @@ import pytest
 from datetime import datetime, timedelta
 from django.urls import reverse
 
-from live_game_blog.tests.fixtures.fixtures import (
+from live_game_blog.tests.fixtures.games import (
     games,
-    scoreboard,
     logged_user_schwarbs,
     user_not_logged_in,
     user_iubase17,
 )
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.blog import entries
+from live_game_blog.tests.fixtures.scoreboards import scoreboards
 
 
 @pytest.mark.django_db
@@ -24,7 +24,7 @@ def test_games_list_page_renders_road_and_neutral_future(client, teams, games):
 
 
 @pytest.mark.django_db
-def test_games_list_page_does_not_render_canc_games(client, teams, games, scoreboard):
+def test_games_list_page_does_not_render_canc_games(client, teams, games, scoreboards):
     response = client.get(reverse("games"))
     assert response.status_code == 200
     assert "Coastal Carolina" in str(response.content)
@@ -32,7 +32,7 @@ def test_games_list_page_does_not_render_canc_games(client, teams, games, scoreb
 
 
 @pytest.mark.django_db
-def test_games_list_page_does_not_render_past_games(client, teams, games, scoreboard):
+def test_games_list_page_does_not_render_past_games(client, teams, games, scoreboards):
     response = client.get(reverse("games"))
     assert response.status_code == 200
     assert "Coastal Carolina" in str(response.content)
@@ -41,7 +41,7 @@ def test_games_list_page_does_not_render_past_games(client, teams, games, scoreb
 
 @pytest.mark.django_db
 def test_games_list_page_does_not_render_four_games_out(
-    client, teams, games, scoreboard
+    client, teams, games, scoreboards
 ):
     response = client.get(reverse("games"))
     assert response.status_code == 200
@@ -57,14 +57,14 @@ def test_games_list_page_renders_logo(client, teams, games):
 
 
 @pytest.mark.django_db
-def test_past_game_renders_partial_with_score(client, teams, games, scoreboard):
+def test_past_game_renders_partial_with_score(client, teams, games, scoreboards):
     response = client.get(reverse("past_games"))
     assert response.status_code == 200
     assert "Kentucky-4" in str(response.content)
 
 
 @pytest.mark.django_db
-def test_live_single_game_blog_page_renders(client, games, scoreboard, entries):
+def test_live_single_game_blog_page_renders(client, games, scoreboards, entries):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
     assert "Joey" in str(response.content)
@@ -75,7 +75,7 @@ def test_live_single_game_blog_page_renders(client, games, scoreboard, entries):
 
 @pytest.mark.django_db
 def test_edit_live_single_game_blog_page_renders(
-    client, games, scoreboard, entries, logged_user_schwarbs
+    client, games, scoreboards, entries, logged_user_schwarbs
 ):
     response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
@@ -83,7 +83,7 @@ def test_edit_live_single_game_blog_page_renders(
 
 @pytest.mark.django_db
 def test_edit_live_single_game_blog_page_redirects_not_logged_in(
-    client, games, scoreboard, entries
+    client, games, scoreboards, entries
 ):
     response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 302
@@ -115,7 +115,7 @@ def test_add_blog_entry_plus_scoreboard_form(client, logged_user_schwarbs, games
 
 
 @pytest.mark.django_db
-def test_add_blog_entry_only_post_form(client, logged_user_schwarbs, games, scoreboard):
+def test_add_blog_entry_only_post_form(client, logged_user_schwarbs, games, scoreboards):
     response = client.post(
         reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
         {
@@ -131,7 +131,7 @@ def test_add_blog_entry_only_post_form(client, logged_user_schwarbs, games, scor
 
 @pytest.mark.django_db
 def test_add_blog_entry_only_x_embed_post_form(
-    client, logged_user_schwarbs, user_iubase17, games, scoreboard
+    client, logged_user_schwarbs, user_iubase17, games, scoreboards
 ):
     response = client.post(
         reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
@@ -205,7 +205,7 @@ def test_add_game_page_renders(client, logged_user_schwarbs):
 
 
 @pytest.mark.django_db
-def test_add_game(client, logged_user_schwarbs, teams, games, scoreboard):
+def test_add_game(client, logged_user_schwarbs, teams, games, scoreboards):
     response = client.post(
         reverse("add_game"),
         {
@@ -227,7 +227,7 @@ def test_add_game(client, logged_user_schwarbs, teams, games, scoreboard):
 
 
 @pytest.mark.django_db
-def test_add_tourney_game(client, logged_user_schwarbs, teams, games, scoreboard):
+def test_add_tourney_game(client, logged_user_schwarbs, teams, games, scoreboards):
     response = client.post(
         reverse("add_game"),
         {

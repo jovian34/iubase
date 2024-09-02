@@ -1,5 +1,5 @@
 from django.urls import path
-from live_game_blog.views import views, add_team
+from live_game_blog.views import views, add_blog_plus_scoreboard, add_team, add_game, edit_blog_entry
 
 urlpatterns = [
     path("", views.games, name="games"),
@@ -10,7 +10,7 @@ urlpatterns = [
         views.edit_live_game_blog,
         name="edit_live_game_blog",
     ),
-    path("add_game", views.add_game, name="add_game"),
+    path("add_game", add_game.view, name="add_game"),
     path("add_team", add_team.view, name="add_team"),
     # partials
     path("past_games/", views.past_games, name="past_games"),
@@ -21,12 +21,12 @@ urlpatterns = [
     ),
     path(
         "add_blog_plus_scoreboard/<game_pk>/",
-        views.add_blog_plus_scoreboard,
+        add_blog_plus_scoreboard.view,
         name="add_blog_plus_scoreboard",
     ),
     path(
         "edit_blog_entry/<entry_pk>/",
-        views.edit_blog_entry,
+        edit_blog_entry.view,
         name="edit_blog_entry",
     ),
 ]

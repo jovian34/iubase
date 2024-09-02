@@ -12,10 +12,6 @@ from player_tracking.models import (
 )
 from index.views import save_traffic_data
 from player_tracking.choices import POSITION_CHOICES, ALL_ROSTER
-from player_tracking.views.visitor_logic import (
-    sort_by_positions,
-    set_fall_player_projection_info,
-)
 
 
 def players(request):
@@ -112,56 +108,3 @@ def portal(request, portal_year):
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/portal.html", context)
-
-
-def all_eligible_players_fall(request, fall_year):
-    spring_year = int(fall_year) + 1
-    players = (
-        Player.objects.filter(first_spring__lte=spring_year)
-        .filter(last_spring__gte=spring_year)
-        .order_by(Lower("last"))
-    )
-    context = {
-        "players": players,
-        "page_title": f"All Eligible Players For Fall {fall_year}",
-        "count": len(players),
-    }
-    return render(request, "player_tracking/all_eligible_players_fall.html", context)
-
-
-def fall_players(request, fall_year=date.today().year):
-    spring_year = int(fall_year) + 1
-    if AnnualRoster.objects.filter(spring_year=spring_year):
-        return redirect("fall_roster", fall_year=fall_year)
-    elif int(fall_year) < date.today().year:
-        return redirect("pt_index")
-    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(
-        fall_year=fall_year
-    ):
-        return redirect("all_eligible_players_fall", fall_year=fall_year)
-    else:
-        return redirect("projected_players_fall", fall_year=fall_year)
-
-
-def projected_players_fall(request, fall_year):
-    spring_year = int(fall_year) + 1
-    if AnnualRoster.objects.filter(spring_year=spring_year):
-        return redirect("fall_roster", fall_year=fall_year)
-    elif int(fall_year) < date.today().year:
-        return redirect("pt_index")
-    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(
-        fall_year=fall_year
-    ):
-        return redirect("all_eligible_players_fall", fall_year=fall_year)
-
-    players = set_fall_player_projection_info(fall_year)
-    count = len(players)
-    positions = sort_by_positions(players)
-    context = {
-        "players": players,
-        "page_title": f"Projected Players For Fall {fall_year}",
-        "count": count,
-        "positions": positions,
-    }
-    save_traffic_data(request=request, page=context["page_title"])
-    return render(request, "player_tracking/projected_players_fall.html", context)

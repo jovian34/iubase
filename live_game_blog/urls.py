@@ -1,22 +1,31 @@
 from django.urls import path
-from live_game_blog.views import views, add_blog_plus_scoreboard, add_team, add_game, edit_blog_entry
+from live_game_blog.views import (
+    games, 
+    add_blog_entry_only, 
+    add_blog_plus_scoreboard, 
+    add_team, add_game, 
+    edit_blog_entry, 
+    edit_live_game_blog,
+    live_game_blog,
+)
+
 
 urlpatterns = [
-    path("", views.games, name="games"),
-    path("games/", views.games, name="games"),
-    path("live_game_blog/<game_pk>/", views.live_game_blog, name="live_game_blog"),
+    path("", games.upcoming, name="games"),
+    path("games/", games.upcoming, name="games"),
+    path("live_game_blog/<game_pk>/", live_game_blog.view, name="live_game_blog"),
     path(
         "edit_live_game_blog/<game_pk>/",
-        views.edit_live_game_blog,
+        edit_live_game_blog.view,
         name="edit_live_game_blog",
     ),
     path("add_game", add_game.view, name="add_game"),
     path("add_team", add_team.view, name="add_team"),
     # partials
-    path("past_games/", views.past_games, name="past_games"),
+    path("past_games/", games.past, name="past_games"),
     path(
         "add_blog_entry_only/<game_pk>/",
-        views.add_blog_entry_only,
+        add_blog_entry_only.view,
         name="add_blog_entry_only",
     ),
     path(

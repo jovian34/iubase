@@ -1,5 +1,5 @@
 from django.urls import path
-from player_tracking.views import visitor, changes, depth_charts, draft_combine, drafted_players, fall_players, summer_assignments, transfer_portal
+from player_tracking.views import visitor, changes, depth_charts, draft_combine, drafted_players, fall_players, iu_rosters, summer_assignments, transfer_portal
 
 urlpatterns = [
     path("", visitor.pt_index, name="pt_index"),
@@ -15,8 +15,8 @@ urlpatterns = [
         depth_charts.fall_depth_chart,
         name="fall_depth_chart",
     ),
-    path("fall_roster/<fall_year>/", visitor.fall_roster, name="fall_roster"),
-    path("spring_roster/<spring_year>/", visitor.spring_roster, name="spring_roster"),
+    path("fall_roster/<fall_year>/", iu_rosters.fall, name="fall_roster"),
+    path("spring_roster/<spring_year>/", iu_rosters.spring, name="spring_roster"),
     path("add_player/", changes.add_player, name="add_player"),
     path("portal/<portal_year>/", transfer_portal.view, name="portal"),
     path(

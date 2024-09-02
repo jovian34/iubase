@@ -23,11 +23,25 @@ def forms(teams):
         ],
         "first_pitch": ["2025-02-14-1830"],
     }
+    iu_holds_duke = {
+        "game_status": "in-progress",
+        "inning_num": "2",
+        "inning_part": "Bottom",
+        "outs": "3",
+        "home_runs": "1",
+        "away_runs": "3",
+        "home_hits": "2",
+        "away_hits": "5",
+        "home_errors": "1",
+        "away_errors": "0",
+        "blog_entry": "Indiana holds Duke to one run",
+    }
     FormObj = namedtuple(
         "FormObj",
-        "pfw iu_v_gm",
+        "pfw iu_v_gm iu_holds_duke",
     )
     return FormObj(
         pfw=pfw,
         iu_v_gm=iu_v_gm,
+        iu_holds_duke=iu_holds_duke,
     )

@@ -1,8 +1,11 @@
 from django.urls import path
 from player_tracking.views import (
+    add_player,
+    add_roster_year,
+    add_summer_assignment,
+    add_transaction,
     all_players,
     pt_index, 
-    changes, 
     depth_charts, 
     draft_combine, 
     drafted_players, 
@@ -31,7 +34,7 @@ urlpatterns = [
     ),
     path("fall_roster/<fall_year>/", iu_rosters.fall, name="fall_roster"),
     path("spring_roster/<spring_year>/", iu_rosters.spring, name="spring_roster"),
-    path("add_player/", changes.add_player, name="add_player"),
+    path("add_player/", add_player.view, name="add_player"),
     path("portal/<portal_year>/", transfer_portal.view, name="portal"),
     path(
         "set_player_properties/",
@@ -75,14 +78,14 @@ urlpatterns = [
     ),
     # partials
     path(
-        "add_roster_year/<player_id>/", changes.add_roster_year, name="add_roster_year"
+        "add_roster_year/<player_id>/", add_roster_year.view, name="add_roster_year"
     ),
     path(
-        "add_transaction/<player_id>/", changes.add_transaction, name="add_transaction"
+        "add_transaction/<player_id>/", add_transaction.view, name="add_transaction"
     ),
     path(
         "add_summer_assignment/<player_id>/",
-        changes.add_summer_assignment,
+        add_summer_assignment.view,
         name="add_summer_assignment",
     ),
 ]

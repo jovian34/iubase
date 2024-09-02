@@ -5,7 +5,7 @@ from datetime import date
 
 from player_tracking.models import AnnualRoster
 from live_game_blog.models import Team
-from live_game_blog.tests.fixtures import teams
+from live_game_blog.tests.fixtures.fixtures import teams
 from .players import players
 
 

@@ -9,7 +9,7 @@ from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
 from player_tracking.views.drafted_players import group_drafted_player
 
-from live_game_blog.tests.fixtures import teams
+from live_game_blog.tests.fixtures.fixtures import teams
 
 
 this_year = date.today().year

@@ -7,7 +7,7 @@ from player_tracking.models import Player
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.form_data import forms
 from player_tracking.tests.fixtures.players import players
-from live_game_blog.tests.fixtures import teams
+from live_game_blog.tests.fixtures.fixtures import teams
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.summer import (
     summer_leagues,

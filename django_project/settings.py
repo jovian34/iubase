@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.10"  # PT break all changes views and tests into sep modules ATP 2024-09-01
+    "0.1.11"  # PT break all changes views and tests into sep modules ATP 2024-09-01
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

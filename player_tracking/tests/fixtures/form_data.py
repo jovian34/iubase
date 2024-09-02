@@ -8,7 +8,7 @@ from player_tracking.tests.fixtures.summer import (
     summer_teams,
 )
 from player_tracking.tests.fixtures.prof_org import prof_orgs
-from live_game_blog.tests.fixtures import teams
+from live_game_blog.tests.fixtures.fixtures import teams
 
 
 this_year = date.today().year

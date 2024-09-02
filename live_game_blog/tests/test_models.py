@@ -5,10 +5,10 @@ from django.utils import timezone
 from live_game_blog.tests.fixtures.fixtures import (
     games,
     scoreboard,
-    blog_entries,
     user_not_logged_in,
 )
 from live_game_blog.tests.fixtures.teams import teams
+from live_game_blog.tests.fixtures.blog import entries
 
 
 @pytest.mark.django_db
@@ -53,17 +53,17 @@ def test_scoreboard_model_string_def(client, scoreboard, user_not_logged_in):
 
 
 @pytest.mark.django_db
-def test_blog_model_string_def(client, blog_entries, user_not_logged_in):
-    assert "denato: " in str(blog_entries.blog_uk_mon_z)
+def test_blog_model_string_def(client, entries, user_not_logged_in):
+    assert "denato: " in str(entries.blog_uk_mon_z)
 
 
 @pytest.mark.django_db
-def test_blog_model_not_html(client, blog_entries, user_not_logged_in):
-    assert not blog_entries.blog_uk_mon_z.is_raw_html
+def test_blog_model_not_html(client, entries, user_not_logged_in):
+    assert not entries.blog_uk_mon_z.is_raw_html
 
 
 @pytest.mark.django_db
-def test_blog_model_sets_default_time(client, blog_entries, user_not_logged_in):
-    blog_time = blog_entries.blog_uk_mon_z.blog_time
+def test_blog_model_sets_default_time(client, entries, user_not_logged_in):
+    blog_time = entries.blog_uk_mon_z.blog_time
     expected_time = (timezone.now() - timedelta(days=300)) + timedelta(minutes=165)
     assert expected_time - blog_time < timedelta(seconds=5)

@@ -7,11 +7,11 @@ from live_game_blog.tests.fixtures.fixtures import (
     games,
     scoreboard,
     logged_user_schwarbs,
-    blog_entries,
     user_not_logged_in,
     user_iubase17,
 )
 from live_game_blog.tests.fixtures.teams import teams
+from live_game_blog.tests.fixtures.blog import entries
 
 
 @pytest.mark.django_db
@@ -64,7 +64,7 @@ def test_past_game_renders_partial_with_score(client, teams, games, scoreboard):
 
 
 @pytest.mark.django_db
-def test_live_single_game_blog_page_renders(client, games, scoreboard, blog_entries):
+def test_live_single_game_blog_page_renders(client, games, scoreboard, entries):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
     assert "Joey" in str(response.content)
@@ -75,7 +75,7 @@ def test_live_single_game_blog_page_renders(client, games, scoreboard, blog_entr
 
 @pytest.mark.django_db
 def test_edit_live_single_game_blog_page_renders(
-    client, games, scoreboard, blog_entries, logged_user_schwarbs
+    client, games, scoreboard, entries, logged_user_schwarbs
 ):
     response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
@@ -83,7 +83,7 @@ def test_edit_live_single_game_blog_page_renders(
 
 @pytest.mark.django_db
 def test_edit_live_single_game_blog_page_redirects_not_logged_in(
-    client, games, scoreboard, blog_entries
+    client, games, scoreboard, entries
 ):
     response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 302
@@ -148,9 +148,9 @@ def test_add_blog_entry_only_x_embed_post_form(
 
 
 @pytest.mark.django_db
-def test_edit_blog_entry_adds_text(client, logged_user_schwarbs, games, blog_entries):
+def test_edit_blog_entry_adds_text(client, logged_user_schwarbs, games, entries):
     response = client.post(
-        reverse("edit_blog_entry", args=[blog_entries.blog_uk_mon_y.pk]),
+        reverse("edit_blog_entry", args=[entries.blog_uk_mon_y.pk]),
         {
             "blog_entry": "Ty had a great 2nd inning",
         },
@@ -163,10 +163,10 @@ def test_edit_blog_entry_adds_text(client, logged_user_schwarbs, games, blog_ent
 
 @pytest.mark.django_db
 def test_edit_blog_entry_changes_hit_to_error(
-    client, logged_user_schwarbs, games, blog_entries
+    client, logged_user_schwarbs, games, entries
 ):
     response = client.post(
-        reverse("edit_blog_entry", args=[blog_entries.blog_uk_mon_z.pk]),
+        reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]),
         {
             "blog_entry": "Kentucky moves on to Super Regionals",
             "game_status": "final",

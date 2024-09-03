@@ -30,9 +30,16 @@ def test_add_player_form_renders(client, logged_user_schwarbs):
 
 
 @pytest.mark.django_db
-def test_add_player_form_redirects_not_logged_in(client):
+def test_add_player_get_redirects_not_logged_in(client):
     response = client.get(reverse("add_player"))
     assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_add_player_get_ask_for_password_not_logged_in(client):
+    response = client.get(reverse("add_player"), follow=True)
+    assert response.status_code == 200
+    assert "Password:" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -47,6 +54,15 @@ def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs, 
     phillip = Player.objects.filter(high_school="Tallmadge").last()
     assert phillip.last == "Glasser"
     assert phillip.birthdate == date(year=this_year - 25, month=12, day=3)
+
+
+@pytest.mark.django_db
+def test_add_player_form_redirects_not_logged_in(client, players, forms):
+    response = client.post(
+        reverse("add_player"),
+        forms.phillip_glasser_new,
+    )
+    assert response.status_code == 302
 
 
 @pytest.mark.django_db

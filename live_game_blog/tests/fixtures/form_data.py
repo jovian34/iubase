@@ -61,9 +61,22 @@ def forms(teams):
         ],
         "first_pitch": ["2025-06-03-1800"],
     }
+    edit_blog_uk_wins = {
+        "blog_entry": "Kentucky moves on to Super Regionals",
+        "game_status": "final",
+        "inning_num": "9",
+        "inning_part": "Top",
+        "outs": "3",
+        "home_runs": "4",
+        "away_runs": "2",
+        "home_hits": "7",
+        "away_hits": "10",
+        "home_errors": "1",
+        "away_errors": "2",
+    }
     FormObj = namedtuple(
         "FormObj",
-        "pfw iu_v_gm iu_holds_duke iu_slams_duke uk_tourney",
+        "pfw iu_v_gm iu_holds_duke iu_slams_duke uk_tourney edit_blog_uk_wins",
     )
     return FormObj(
         pfw=pfw,
@@ -71,4 +84,5 @@ def forms(teams):
         iu_holds_duke=iu_holds_duke,
         iu_slams_duke=iu_slams_duke,
         uk_tourney=uk_tourney,
+        edit_blog_uk_wins=edit_blog_uk_wins,
     )

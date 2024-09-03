@@ -29,6 +29,7 @@ def test_edit_live_single_game_blog_page_renders(
 ):
     response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
+    assert "Kentucky moves on to Super Regionals" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -37,3 +38,12 @@ def test_edit_live_single_game_blog_page_redirects_not_logged_in(
 ):
     response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_edit_live_single_game_blog_page_asks_for_password_not_logged_in(
+    client, games, scoreboards, entries
+):
+    response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]), follow=True)
+    assert response.status_code == 200
+    assert "Password:" in str(response.content)

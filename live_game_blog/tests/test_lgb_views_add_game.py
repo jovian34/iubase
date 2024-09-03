@@ -60,18 +60,10 @@ def test_add_tourney_game(client, logged_user_schwarbs, teams, games, forms, sco
 
 
 @pytest.mark.django_db
-def test_add_game_post_asks_for_login_when_not_logged_in(client, teams):
+def test_add_game_post_asks_for_login_when_not_logged_in(client, forms, teams):
     response = client.post(
         reverse("add_game"),
-        {
-            "home_team": [str(teams.indiana.pk)],
-            "away_team": [str(teams.gm.pk)],
-            "neutral_site": ["on"],
-            "live_stats": [
-                "https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind"
-            ],
-            "first_pitch": ["2025-02-14-1830"],
-        },
+        forms.iu_v_gm,
         follow=True,
     )
     assert response.status_code == 200

@@ -14,7 +14,7 @@ from live_game_blog.tests.fixtures.form_data import forms
 
 
 @pytest.mark.django_db
-def test_add_game_page_renders(client, logged_user_schwarbs):
+def test_add_game_page_renders_template(client, logged_user_schwarbs):
     response = client.get(reverse("add_game"))
     assert response.status_code == 200
     assert "Is this a neutral site or host is designated away?" in str(response.content)
@@ -45,21 +45,10 @@ def test_add_game(client, logged_user_schwarbs, teams, games, scoreboards, forms
 
 
 @pytest.mark.django_db
-def test_add_tourney_game(client, logged_user_schwarbs, teams, games, scoreboards):
+def test_add_tourney_game(client, logged_user_schwarbs, teams, games, forms, scoreboards):
     response = client.post(
         reverse("add_game"),
-        {
-            "home_team": [str(teams.kentucky.pk)],
-            "home_rank": ["20"],
-            "home_seed": ["1"],
-            "home_nat_seed": ["14"],
-            "away_team": [str(teams.indiana.pk)],
-            "away_seed": ["3"],
-            "live_stats": [
-                "https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind"
-            ],
-            "first_pitch": ["2025-06-03-1800"],
-        },
+        forms.uk_tourney,
         follow=True,
     )
     assert response.status_code == 200

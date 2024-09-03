@@ -36,12 +36,39 @@ def forms(teams):
         "away_errors": "0",
         "blog_entry": "Indiana holds Duke to one run",
     }
+    iu_slams_duke = {
+        "game_status": "in-progress",
+        "inning_num": "4",
+        "inning_part": "Top",
+        "outs": "1",
+        "home_runs": "1",
+        "away_runs": "7",
+        "home_hits": "2",
+        "away_hits": "9",
+        "home_errors": "1",
+        "away_errors": "0",
+        "blog_entry": "## DEVIN TAYLOR SALAMI!!!!",
+    }
+    uk_tourney = {
+        "home_team": [str(teams.kentucky.pk)],
+        "home_rank": ["20"],
+        "home_seed": ["1"],
+        "home_nat_seed": ["14"],
+        "away_team": [str(teams.indiana.pk)],
+        "away_seed": ["3"],
+        "live_stats": [
+            "https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind"
+        ],
+        "first_pitch": ["2025-06-03-1800"],
+    }
     FormObj = namedtuple(
         "FormObj",
-        "pfw iu_v_gm iu_holds_duke",
+        "pfw iu_v_gm iu_holds_duke iu_slams_duke uk_tourney",
     )
     return FormObj(
         pfw=pfw,
         iu_v_gm=iu_v_gm,
         iu_holds_duke=iu_holds_duke,
+        iu_slams_duke=iu_slams_duke,
+        uk_tourney=uk_tourney,
     )

@@ -44,3 +44,20 @@ def test_add_blog_entry_only_x_embed_post_form(
     assert response.status_code == 200
     assert "<li>Adding to the Duke Blog" in str(response.content)
     assert "entry by @iubase17" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_blog_entry_only_markdown_converts_to_html(
+    client, logged_user_schwarbs, games, scoreboards
+):
+    response = client.post(
+        reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
+        {
+            "blog_entry": "# Adding to the Duke Blog",
+            "is_raw_html": False,
+            "is_x_embed": False,
+        },
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "<h1>Adding to the Duke Blog</h1>" in str(response.content)

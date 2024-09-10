@@ -1,20 +1,10 @@
 from django.contrib import admin
-from django.db import models
-from player_tracking.models import (
-    Player,
-    Transaction,
-    AnnualRoster,
-    MLBDraftDate,
-    ProfOrg,
-    SummerLeague,
-    SummerTeam,
-    SummerAssign,
-)
+from player_tracking import models
 
 
-@admin.register(Player)
+@admin.register(models.Player)
 class PlayerAdmin(admin.ModelAdmin):
-    model = Player
+    model = models.Player
     list_display = (
         "first",
         "last",
@@ -24,9 +14,9 @@ class PlayerAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(Transaction)
+@admin.register(models.Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    model = Transaction
+    model = models.Transaction
     list_display = (
         "player",
         "trans_event",
@@ -34,9 +24,9 @@ class TransactionAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(AnnualRoster)
+@admin.register(models.AnnualRoster)
 class AnnualRosterAdmin(admin.ModelAdmin):
-    model = AnnualRoster
+    model = models.AnnualRoster
     list_display = (
         "spring_year",
         "team",
@@ -45,9 +35,9 @@ class AnnualRosterAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(MLBDraftDate)
+@admin.register(models.MLBDraftDate)
 class MLBDraftDateAdmin(admin.ModelAdmin):
-    model = MLBDraftDate
+    model = models.MLBDraftDate
     list_display = (
         "fall_year",
         "latest_birthdate",
@@ -56,33 +46,33 @@ class MLBDraftDateAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(SummerLeague)
+@admin.register(models.SummerLeague)
 class SummerLeagueAdmin(admin.ModelAdmin):
-    model = SummerLeague
+    model = models.SummerLeague
     list_display = ("league",)
 
 
-@admin.register(ProfOrg)
+@admin.register(models.ProfOrg)
 class SummerTeamAdmin(admin.ModelAdmin):
-    model = ProfOrg
+    model = models.ProfOrg
     list_display = (
         "city",
         "mascot",
     )
 
 
-@admin.register(SummerTeam)
+@admin.register(models.SummerTeam)
 class SummerTeamAdmin(admin.ModelAdmin):
-    model = SummerTeam
+    model = models.SummerTeam
     list_display = (
         "name",
         "mascot",
     )
 
 
-@admin.register(SummerAssign)
+@admin.register(models.SummerAssign)
 class SummerAssignAdmin(admin.ModelAdmin):
-    model = SummerAssign
+    model = models.SummerAssign
     list_display = (
         "player",
         "summer_year",

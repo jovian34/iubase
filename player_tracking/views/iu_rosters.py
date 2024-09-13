@@ -3,7 +3,7 @@ from django.shortcuts import render
 from datetime import date
 
 from player_tracking.models import AnnualRoster
-from player_tracking.choices import ALL_ROSTER
+from player_tracking import choices
 from index.views import save_traffic_data
 
 
@@ -27,7 +27,7 @@ def spring(request, spring_year):
     players = (
         AnnualRoster.objects.filter(spring_year=spring_year)
         .filter(team__team_name="Indiana")
-        .filter(status__in=ALL_ROSTER)
+        .filter(status__in=choices.ALL_ROSTER)
         .order_by("jersey")
     )
     if len(players) < 5 and int(spring_year) >= date.today().year:

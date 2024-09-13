@@ -20,26 +20,26 @@ class NewPlayerForm(forms.Form):
     birthdate = forms.DateField(label="Date of Birth", required=False)
     bats = forms.ChoiceField(
         label="Batting hand",
-        choices=choices.HAND_CHOICES,
+        choices=choices.HAND,
         required=False,
     )
     throws = forms.ChoiceField(
         label="Throwing hand",
-        choices=choices.HAND_CHOICES,
+        choices=choices.HAND,
         required=False,
     )
     height = forms.IntegerField(label="height in Inches", required=False)
     weight = forms.IntegerField(label="Weight in Lbs.", required=False)
     trans_event = forms.ChoiceField(
         label="Transaction",
-        choices=choices.TRANSACTION_CHOICES,
+        choices=choices.TRANSACTIONS,
         required=True,
     )
     trans_date = forms.DateField(label="Transaction Date")
     citation = forms.CharField(label="Citation", required=False)
     primary_position = forms.ChoiceField(
         label="Primary Position",
-        choices=choices.POSITION_CHOICES,
+        choices=choices.POSITIONS,
     )
 
 
@@ -52,23 +52,23 @@ class AnnualRosterForm(forms.Form):
     jersey = forms.IntegerField(label="Jersey Number", required=False)
     status = forms.ChoiceField(label="Eligibility Status", choices=choices.STATUS_CHOICES)
     primary_position = forms.ChoiceField(
-        label="Primary Fielding Position", choices=choices.POSITION_CHOICES
+        label="Primary Fielding Position", choices=choices.POSITIONS
     )
     secondary_position = forms.ChoiceField(
-        label="Secondary Fielding Position", choices=choices.POSITION_CHOICES, required=False
+        label="Secondary Fielding Position", choices=choices.POSITIONS, required=False
     )
 
 
 class TransactionForm(forms.Form):
     trans_event = forms.ChoiceField(
         label="Transaction Event",
-        choices=choices.TRANSACTION_CHOICES,
+        choices=choices.TRANSACTIONS,
     )
     trans_date = forms.DateField(label="Transaction Date")
     citation = forms.CharField(label="Citation", required=False)
     primary_position = forms.ChoiceField(
         label="Primary Position",
-        choices=choices.POSITION_CHOICES,
+        choices=choices.POSITIONS,
         required=False,
     )
     other_team = forms.ModelChoiceField(

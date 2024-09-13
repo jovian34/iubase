@@ -15,10 +15,10 @@ class Player(models.Model):
     home_country = models.CharField(db_default="USA")
     headshot = models.URLField(null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
-    primary_position = models.CharField(null=True, blank=True, choices=choices.POSITION_CHOICES)
-    bats = models.CharField(choices=choices.HAND_CHOICES, max_length=16, null=True, blank=True)
+    primary_position = models.CharField(null=True, blank=True, choices=choices.POSITIONS)
+    bats = models.CharField(choices=choices.HAND, max_length=16, null=True, blank=True)
     throws = models.CharField(
-        choices=choices.HAND_CHOICES, max_length=16, null=True, blank=True
+        choices=choices.HAND, max_length=16, null=True, blank=True
     )
     height = models.IntegerField(null=True, blank=True)
     weight = models.IntegerField(null=True, blank=True)
@@ -39,10 +39,10 @@ class ProfOrg(models.Model):
 
 class Transaction(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    trans_event = models.CharField(choices=choices.TRANSACTION_CHOICES, max_length=64)
+    trans_event = models.CharField(choices=choices.TRANSACTIONS, max_length=64)
     trans_date = models.DateField(db_default=Now())
     citation = models.URLField(null=True, blank=True)
-    primary_position = models.CharField(null=True, blank=True, choices=choices.POSITION_CHOICES)
+    primary_position = models.CharField(null=True, blank=True, choices=choices.POSITIONS)
     other_team = models.ForeignKey(
         lgb_models.Team,
         on_delete=models.CASCADE,
@@ -74,9 +74,9 @@ class AnnualRoster(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     jersey = models.IntegerField(null=True, blank=True)
     status = models.CharField(choices=choices.STATUS_CHOICES, db_default="Fall Roster")
-    primary_position = models.CharField(choices=choices.POSITION_CHOICES)
+    primary_position = models.CharField(choices=choices.POSITIONS)
     secondary_position = models.CharField(
-        choices=choices.POSITION_CHOICES, null=True, blank=True
+        choices=choices.POSITIONS, null=True, blank=True
     )
 
     def __str__(self) -> str:

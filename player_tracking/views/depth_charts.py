@@ -3,13 +3,13 @@ from django.db.models.functions import Lower
 
 from index.views import save_traffic_data
 from player_tracking.models import AnnualRoster
-from player_tracking.choices import POSITION_CHOICES
+from player_tracking import choices
 
 
 def fall_depth_chart(request, fall_year):
     spring_year = int(fall_year) + 1
     fall_statuses = ["Fall Roster", "Spring Roster"]
-    positions = [position[0] for position in POSITION_CHOICES]
+    positions = [position[0] for position in choices.POSITIONS]
     players = (
         AnnualRoster.objects.filter(spring_year=spring_year)
         .filter(team__team_name="Indiana")
@@ -26,7 +26,7 @@ def fall_depth_chart(request, fall_year):
 
 
 def spring_depth_chart(request, spring_year):
-    positions = [position[0] for position in POSITION_CHOICES]
+    positions = [position[0] for position in choices.POSITIONS]
     players = (
         AnnualRoster.objects.filter(spring_year=spring_year)
         .filter(team__team_name="Indiana")

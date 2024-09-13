@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.17"  # LGB all view tests moved into sep modules ATP 2024-09-02
+    "0.1.18"  # PT reformatting to import whole modules ATP 2024-09-13
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

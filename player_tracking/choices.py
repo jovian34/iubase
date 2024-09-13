@@ -1,4 +1,4 @@
-HAND_CHOICES = [
+HAND = [
     ("Left", "Left"),
     ("Right", "Right"),
     ("Both", "Both"),
@@ -36,14 +36,14 @@ AFTER_TUPLES = [
     ("Entered Transfer Portal - former IU", "Entered Transfer Portal - former IU"),
 ]
 
-TRANSACTION_CHOICES = JOINED_TUPLES + LEFT_TUPLES + AFTER_TUPLES
+TRANSACTIONS = JOINED_TUPLES + LEFT_TUPLES + AFTER_TUPLES
 LEFT = [left_tuple[0] for left_tuple in LEFT_TUPLES]
 JOINED = [joined_tuple[0] for joined_tuple in JOINED_TUPLES]
 AFTER = [after_tuple[0] for after_tuple in AFTER_TUPLES]
 COLLEGE = [JOINED_TUPLES[1][0]]
 HS = [JOINED_TUPLES[0][0], JOINED_TUPLES[2], [0]]
 
-POSITION_CHOICES = [
+POSITIONS = [
     ("Pitcher", "Pitcher"),
     ("Catcher", "Catcher"),
     ("First Base", "First Base"),

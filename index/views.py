@@ -45,14 +45,17 @@ def categorize_user_agent(row):
         "curl",
         "java",
         "odin",
+        "panscient",
+        "owler",
     ]
+    linux_comp = ["linux x86", "linux i686"]
     if any(bot in user_agent for bot in bots):
         category = "bot"
     elif "iphone" in user_agent or "ipad" in user_agent:
         category = "iPhone"
     elif "android" in user_agent:
         category = "Android"
-    elif "linux x86" in user_agent:
+    elif any(linux in user_agent for linux in linux_comp):
         category = "Linux"
     elif "macintosh" in user_agent:
         category = "Mac"

@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.18"  # PT reformatting to import whole modules ATP 2024-09-13
+    "0.1.19"  # INDEX made all timezone aware and tested each view ATP 2024-09-16
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

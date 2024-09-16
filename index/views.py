@@ -1,8 +1,11 @@
 from django import shortcuts
 from django.contrib.auth import decorators
 from datetime import datetime
+import pytz
 
 from index import models as index_models
+
+timezone = pytz.timezone('US/Eastern')
 
 
 def index(request):
@@ -31,15 +34,8 @@ def get_client_ip(request):
 
 @decorators.login_required
 def last_months_traffic(request):
-    first_of_month = datetime(
-        year=datetime.today().year,
-        month=datetime.today().month,
-        day=1,
-        hour=0,
-        minute=0,
-        second=0,
-    )
-    traf = TrafficCounter.objects.filter(timestamp__lt=first_of_month)
+    first_of_month = get_first_of_current_month()
+    traf = index_models.TrafficCounter.objects.filter(timestamp__lt=first_of_month)
     traf.delete()
     return shortcuts.redirect(index)
 
@@ -69,7 +65,8 @@ def get_first_of_current_month():
         hour=0,
         minute=0,
         second=0,
-    )    
+    )
+    first_of_month = timezone.localize(first_of_month)
     return first_of_month
 
 

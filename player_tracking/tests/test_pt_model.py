@@ -5,7 +5,7 @@ from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
-from player_tracking.tests.fixtures.mlb_draft_date import mlb_draft_date
+from player_tracking.tests.fixtures.mlb_draft_date import typical_mlb_draft_date
 from player_tracking.tests.fixtures.summer import (
     summer_leagues,
     summer_teams,
@@ -76,9 +76,9 @@ def test_annual_roster_model_string_def(client, annual_rosters, teams):
 
 
 @pytest.mark.django_db
-def test_mlb_draft_birthdate_string_def(client, mlb_draft_date):
+def test_mlb_draft_birthdate_string_def(client, typical_mlb_draft_date):
     assert (
-        str(mlb_draft_date.draft_this_year) == f"{this_year}: Aug 1, {this_year - 21}"
+        str(typical_mlb_draft_date.draft_this_year) == f"{this_year}: Aug 1, {this_year - 21}"
     )
 
 

@@ -3,7 +3,7 @@ from django.urls import reverse
 from datetime import date
 
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
-from player_tracking.tests.fixtures.mlb_draft_date import mlb_draft_date
+from player_tracking.tests.fixtures.mlb_draft_date import typical_mlb_draft_date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
@@ -29,7 +29,7 @@ def test_group_drafted_player_groups_iu(players):
 
 @pytest.mark.django_db
 def test_drafted_players_renders_drafted_not_signed(
-    client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
+    client, players, prof_orgs, transactions, annual_rosters, typical_mlb_draft_date
 ):
     response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
@@ -46,7 +46,7 @@ def test_drafted_players_renders_drafted_not_signed(
 
 @pytest.mark.django_db
 def test_drafted_players_renders_signed(
-    client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
+    client, players, prof_orgs, transactions, annual_rosters, typical_mlb_draft_date
 ):
     response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
@@ -63,7 +63,7 @@ def test_drafted_players_renders_signed(
 
 @pytest.mark.django_db
 def test_drafted_players_renders_unsigned(
-    client, players, prof_orgs, transactions, annual_rosters, mlb_draft_date
+    client, players, prof_orgs, transactions, annual_rosters, typical_mlb_draft_date
 ):
     response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200

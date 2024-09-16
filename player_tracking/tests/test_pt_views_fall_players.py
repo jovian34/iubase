@@ -3,7 +3,7 @@ from django.urls import reverse
 from datetime import date
 
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
-from player_tracking.tests.fixtures.mlb_draft_date import mlb_draft_date
+from player_tracking.tests.fixtures.mlb_draft_date import typical_mlb_draft_date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
@@ -49,7 +49,19 @@ def test_fall_players_fw_to_fall_roster_if_exists(
 
 @pytest.mark.django_db
 def test_projected_players_renders_current_players(
-    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
+    assert response.status_code == 200
+    assert f"Projected Players For Fall {this_year}" in str(response.content)
+    assert "Devin Taylor" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_fall_players_renders_projected_players_for_current_year(
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
@@ -61,7 +73,7 @@ def test_projected_players_renders_current_players(
 
 @pytest.mark.django_db
 def test_projected_players_excludes_transfer_portal_entrants(
-    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
@@ -94,7 +106,7 @@ def test_projected_players_for_future_year_redirects_to_all_eligible(client):
 
 @pytest.mark.django_db
 def test_projected_players_includes_incoming_high_school_commit(
-    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
@@ -105,7 +117,7 @@ def test_projected_players_includes_incoming_high_school_commit(
 
 @pytest.mark.django_db
 def test_projected_players_excludes_future_high_school_commit(
-    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
@@ -116,7 +128,7 @@ def test_projected_players_excludes_future_high_school_commit(
 
 @pytest.mark.django_db
 def test_projected_players_includes_transfer_commit(
-    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
@@ -127,7 +139,7 @@ def test_projected_players_includes_transfer_commit(
 
 @pytest.mark.django_db
 def test_non_existent_draft_year_redirects_to_index(
-    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
     # NEEDS RE-WRITTEN
     response = client.get(reverse("set_player_properties"), follow=True)
@@ -143,7 +155,7 @@ def test_non_existent_draft_year_redirects_to_index(
 
 @pytest.mark.django_db
 def test_all_eligible_players_fall_renders(
-    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     response = client.get(
@@ -155,7 +167,7 @@ def test_all_eligible_players_fall_renders(
 
 @pytest.mark.django_db
 def test_fall_players_renders_with_this_year_specified(
-    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
@@ -167,7 +179,7 @@ def test_fall_players_renders_with_this_year_specified(
 
 @pytest.mark.django_db
 def test_fall_players_renders_without_year_specified(
-    client, players, transactions, mlb_draft_date, logged_user_schwarbs
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
@@ -193,3 +205,8 @@ def test_fall_players_redirect_to_roster_instead_of_projection(
     assert "Nick Mitchell" in str(response.content)
     assert "Jack Moffitt" in str(response.content)
     assert "Brayden" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_draft_is_still_pending():
+    pass

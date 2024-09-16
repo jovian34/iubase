@@ -10,7 +10,7 @@ this_year = date.today().year
 
 
 @pytest.fixture
-def mlb_draft_date():
+def typical_mlb_draft_date():
     draft_this_year = MLBDraftDate.objects.create(
         fall_year=this_year,
         latest_birthdate=date(this_year - 21, 8, 1),

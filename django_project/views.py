@@ -1,6 +1,5 @@
-from django.shortcuts import redirect
-from django.urls import reverse
+from django import shortcuts, urls
 
 
 def index(request):
-    return redirect(reverse("index"))
+    return shortcuts.redirect(urls.reverse("index"))

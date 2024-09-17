@@ -12,7 +12,7 @@ def fall_players_redirect(request, fall_year=date.today().year):
     if AnnualRoster.objects.filter(spring_year=spring_year):
         return redirect("fall_roster", fall_year=fall_year)
     elif int(fall_year) < date.today().year:
-        return redirect("pt_index")
+        return redirect("all_eligible_players_fall", fall_year=fall_year)
     elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(
         fall_year=fall_year
     ):

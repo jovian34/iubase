@@ -7,11 +7,9 @@ from player_tracking.models import AnnualRoster, MLBDraftDate, Player, Transacti
 from index.views import save_traffic_data
 
 
-def fall_players(request, fall_year=date.today().year):
+def fall_players(request, fall_year=date.today().year):    
     context = {
         "fall_year": fall_year,
-        "prior_fall": int(fall_year) - 1,
-        "next_fall": int(fall_year) + 1,
         "page_title": "Players for Fall Seasons by Year",
     }
     save_traffic_data(request=request, page=context["page_title"])
@@ -39,9 +37,10 @@ def all_eligible(request, fall_year):
         .filter(last_spring__gte=spring_year)
         .order_by(Lower("last"))
     )
+    years = [ int(fall_year) - 2 + i for i in range(5) ]
     context = {
-        "prior_fall": int(fall_year) - 1,
-        "next_fall": int(fall_year) + 1,
+        "fall_year": fall_year,
+        "years": years,
         "players": players,
         "page_title": f"All Eligible Players For Fall {fall_year}",
         "count": len(players),
@@ -63,10 +62,11 @@ def projected(request, fall_year):
     players = set_fall_player_projection_info(fall_year)
     count = len(players)
     positions = sort_by_positions(players)
+    years = [ int(fall_year) - 2 + i for i in range(5) ]
     context = {
+        "fall_year": fall_year,
         "players": players,
-        "prior_fall": int(fall_year) - 1,
-        "next_fall": int(fall_year) + 1,
+        "years": years,
         "page_title": f"Projected Players For Fall {fall_year}",
         "count": count,
         "positions": positions,

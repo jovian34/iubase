@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.21"  # PT removed fall depth chart as that is in fall projection ATP 2024-09-17
+    "0.1.22"  # PT reworked fall year navigation ATP 2024-09-17
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

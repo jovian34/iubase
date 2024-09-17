@@ -27,11 +27,6 @@ urlpatterns = [
         depth_charts.spring_depth_chart,
         name="spring_depth_chart",
     ),
-    path(
-        "fall_depth_chart/<fall_year>/",
-        depth_charts.fall_depth_chart,
-        name="fall_depth_chart",
-    ),
     path("spring_roster/<spring_year>/", iu_rosters.spring, name="spring_roster"),
     path("add_player/", add_player.view, name="add_player"),
     path("portal/<portal_year>/", transfer_portal.view, name="portal"),

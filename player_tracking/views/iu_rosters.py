@@ -20,7 +20,7 @@ def fall(request, fall_year):
         "total": len(players),
     }
     save_traffic_data(request=request, page=context["page_title"])
-    return render(request, "player_tracking/roster.html", context)
+    return render(request, "player_tracking/partials/roster.html", context)
 
 
 def spring(request, spring_year):

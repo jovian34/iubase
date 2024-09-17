@@ -65,7 +65,7 @@ def projected(request, fall_year):
         "count": count,
         "positions": positions,
     }
-    return render(request, "player_tracking/projected_players_fall.html", context)
+    return render(request, "player_tracking/partials/projected_players_fall.html", context)
 
 
 def set_fall_player_projection_info(fall_year):

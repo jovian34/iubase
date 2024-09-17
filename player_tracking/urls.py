@@ -32,7 +32,6 @@ urlpatterns = [
         depth_charts.fall_depth_chart,
         name="fall_depth_chart",
     ),
-    path("fall_roster/<fall_year>/", iu_rosters.fall, name="fall_roster"),
     path("spring_roster/<spring_year>/", iu_rosters.spring, name="spring_roster"),
     path("add_player/", add_player.view, name="add_player"),
     path("portal/<portal_year>/", transfer_portal.view, name="portal"),
@@ -76,6 +75,7 @@ urlpatterns = [
         summer_assignments.view,
         name="summer_assignments",
     ),
+    
     # partials
     path(
         "add_roster_year/<player_id>/", add_roster_year.view, name="add_roster_year"
@@ -93,4 +93,5 @@ urlpatterns = [
         fall_players.fall_players_redirect,
         name="fall_players_redirect",
     ),
+    path("fall_roster/<fall_year>/", iu_rosters.fall, name="fall_roster"),
 ]

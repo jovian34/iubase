@@ -10,13 +10,15 @@ from index.views import save_traffic_data
 def fall_players(request, fall_year=date.today().year):
     context = {
         "fall_year": fall_year,
+        "prior_fall": int(fall_year) - 1,
+        "next_fall": int(fall_year) + 1,
         "page_title": "Players for Fall Seasons by Year",
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/fall_players.html", context)
 
 
-def fall_players_redirect(request, fall_year=date.today().year):
+def fall_players_redirect(request, fall_year):
     spring_year = int(fall_year) + 1
     if AnnualRoster.objects.filter(spring_year=spring_year):
         return redirect("fall_roster", fall_year=fall_year)
@@ -38,6 +40,8 @@ def all_eligible(request, fall_year):
         .order_by(Lower("last"))
     )
     context = {
+        "prior_fall": int(fall_year) - 1,
+        "next_fall": int(fall_year) + 1,
         "players": players,
         "page_title": f"All Eligible Players For Fall {fall_year}",
         "count": len(players),
@@ -61,6 +65,8 @@ def projected(request, fall_year):
     positions = sort_by_positions(players)
     context = {
         "players": players,
+        "prior_fall": int(fall_year) - 1,
+        "next_fall": int(fall_year) + 1,
         "page_title": f"Projected Players For Fall {fall_year}",
         "count": count,
         "positions": positions,

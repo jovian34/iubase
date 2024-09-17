@@ -15,11 +15,12 @@ def fall(request, fall_year):
         .order_by("jersey")
     )
     context = {
+        "prior_fall": int(fall_year) - 1,
+        "next_fall": int(fall_year) + 1,
         "players": players,
         "page_title": f"Fall {fall_year} Roster",
         "total": len(players),
     }
-    save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/partials/roster.html", context)
 
 

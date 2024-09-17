@@ -120,30 +120,51 @@ def test_all_eligible_players_fall_renders(
     assert "Jack Moffitt" not in str(response.content)
 
 
-@pytest.mark.xfail
 @pytest.mark.django_db
-def test_fall_players_renders_with_this_year_specified(
+def test_fall_players_points_HTMX_to_current_year_without_year_specified(
     client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("fall_players", args=[f"{this_year}"]), follow=True)
+    response = client.get(reverse("fall_players"))
     assert response.status_code == 200
-    assert f"Projected Players For Fall {this_year}" in str(response.content)
-    assert "Devin Taylor" in str(response.content)
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year}/"' in str(response.content)
 
 
-@pytest.mark.xfail
 @pytest.mark.django_db
-def test_fall_players_renders_without_year_specified(
+def test_fall_roster_includes_buttons_that_point_HTMX_to_prior_and_next_year(
     client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("fall_players"), follow=True)
+    response = client.get(reverse("fall_roster", args=[f"{this_year - 1}"]))
     assert response.status_code == 200
-    assert f"Projected Players For Fall {this_year}" in str(response.content)
-    assert "Devin Taylor" in str(response.content)
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year}/"' in str(response.content)
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year - 2}/"' in str(response.content)
+
+
+@pytest.mark.django_db
+def test_fall_projection_includes_buttons_that_point_HTMX_to_prior_and_next_year(
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
+    assert response.status_code == 200
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 1}/"' in str(response.content)
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year - 1}/"' in str(response.content)
+
+
+@pytest.mark.django_db
+def test_all_eligible_players_includes_buttons_that_point_HTMX_to_prior_and_next_year(
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    response = client.get(reverse("all_eligible_players_fall", args=[f"{this_year + 1}"]))
+    assert response.status_code == 200
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year}/"' in str(response.content)
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 2}/"' in str(response.content)
 
 
 @pytest.mark.django_db

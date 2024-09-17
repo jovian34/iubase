@@ -61,21 +61,11 @@ urlpatterns = [
         name="fall_players",
     ),
     path(
-        "projected_players_fall/<fall_year>/",
-        fall_players.projected,
-        name="projected_players_fall",
-    ),
-    path(
-        "all_eligible_players_fall/<fall_year>/",
-        fall_players.all_eligible,
-        name="all_eligible_players_fall",
-    ),
-    path(
         "summer_assignments/<summer_year>/",
         summer_assignments.view,
         name="summer_assignments",
     ),
-    
+
     # partials
     path(
         "add_roster_year/<player_id>/", add_roster_year.view, name="add_roster_year"
@@ -89,9 +79,19 @@ urlpatterns = [
         name="add_summer_assignment",
     ),
     path(
-        "fall_players_redirect/",
+        "fall_players_redirect/<fall_year>/",
         fall_players.fall_players_redirect,
         name="fall_players_redirect",
     ),
     path("fall_roster/<fall_year>/", iu_rosters.fall, name="fall_roster"),
+    path(
+        "projected_players_fall/<fall_year>/",
+        fall_players.projected,
+        name="projected_players_fall",
+    ),
+    path(
+        "all_eligible_players_fall/<fall_year>/",
+        fall_players.all_eligible,
+        name="all_eligible_players_fall",
+    ),
 ]

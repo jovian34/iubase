@@ -7,7 +7,8 @@ from player_tracking.tests.fixtures.mlb_draft_date import typical_mlb_draft_date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
-from player_tracking.models import Player
+from player_tracking.models import Player, MLBDraftDate
+from player_tracking.views import fall_players
 from live_game_blog.tests.fixtures.teams import teams
 from accounts.tests.fixtures import logged_user_schwarbs
 
@@ -207,6 +208,3 @@ def test_fall_players_redirect_to_roster_instead_of_projection(
     assert "Brayden" not in str(response.content)
 
 
-@pytest.mark.django_db
-def test_draft_is_still_pending():
-    pass

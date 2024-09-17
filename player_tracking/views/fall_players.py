@@ -7,6 +7,15 @@ from player_tracking.models import AnnualRoster, MLBDraftDate, Player, Transacti
 from index.views import save_traffic_data
 
 
+def fall_players(request, fall_year=date.today().year):
+    context = {
+        "fall_year": fall_year,
+        "page_title": "Players for Fall Seasons by Year",
+    }
+    save_traffic_data(request=request, page=context["page_title"])
+    return render(request, "player_tracking/fall_players.html", context)
+
+
 def fall_players_redirect(request, fall_year=date.today().year):
     spring_year = int(fall_year) + 1
     if AnnualRoster.objects.filter(spring_year=spring_year):
@@ -33,7 +42,7 @@ def all_eligible(request, fall_year):
         "page_title": f"All Eligible Players For Fall {fall_year}",
         "count": len(players),
     }
-    return render(request, "player_tracking/all_eligible_players_fall.html", context)
+    return render(request, "player_tracking/partials/all_eligible_players_fall.html", context)
 
 
 def projected(request, fall_year):
@@ -56,7 +65,6 @@ def projected(request, fall_year):
         "count": count,
         "positions": positions,
     }
-    save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/projected_players_fall.html", context)
 
 

@@ -53,12 +53,12 @@ urlpatterns = [
     ),
     path(
         "fall_players/",
-        fall_players.fall_players_redirect,
+        fall_players.fall_players,
         name="fall_players",
     ),
     path(
         "fall_players/<fall_year>/",
-        fall_players.fall_players_redirect,
+        fall_players.fall_players,
         name="fall_players",
     ),
     path(
@@ -87,5 +87,10 @@ urlpatterns = [
         "add_summer_assignment/<player_id>/",
         add_summer_assignment.view,
         name="add_summer_assignment",
+    ),
+    path(
+        "fall_players_redirect/",
+        fall_players.fall_players_redirect,
+        name="fall_players_redirect",
     ),
 ]

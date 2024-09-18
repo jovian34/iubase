@@ -14,9 +14,10 @@ def fall(request, fall_year):
         .filter(team__team_name="Indiana")
         .order_by("jersey")
     )
+    years = [ int(fall_year) - 2 + i for i in range(5) ]
     context = {
-        "prior_fall": int(fall_year) - 1,
-        "next_fall": int(fall_year) + 1,
+        "fall_year": fall_year,
+        "years": years,
         "players": players,
         "page_title": f"Fall {fall_year} Roster",
         "total": len(players),

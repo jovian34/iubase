@@ -46,6 +46,16 @@ def test_games_list_page_does_not_render_past_games(client, teams, games, scoreb
 
 
 @pytest.mark.django_db
+def test_games_list_shows_fall_exhibition(
+    client, teams, games, scoreboards
+):
+    response = client.get(reverse("games"))
+    assert response.status_code == 200
+    assert "George Mason" in str(response.content)
+    assert "FALL EXHIBITION" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_games_list_page_does_not_render_four_games_out(
     client, teams, games, scoreboards
 ):

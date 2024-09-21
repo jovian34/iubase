@@ -34,6 +34,7 @@ def save_game(form):
                 away_seed=form.cleaned_data["away_seed"],
                 away_nat_seed=form.cleaned_data["away_nat_seed"],
                 neutral_site=form.cleaned_data["neutral_site"],
+                fall_exhibition=form.cleaned_data["fall_exhibition"],
                 live_stats=form.cleaned_data["live_stats"],
                 video=form.cleaned_data["video"],
                 video_url=form.cleaned_data["video_url"],

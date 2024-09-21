@@ -17,8 +17,8 @@
             <h2><a href="{% url "live_game_blog" game.pk %}">
             {{ game.away_team }}
                 {% if game.neutral_site %} versus {% else %} at {% endif %}
-                {% if game.fall_exhibition %}<em>FALL EXHIBITION</em>{% endif %}
             {{ game.home_team }}
+                {% if game.fall_exhibition %}<em>- FALL EXHIBITION</em>{% endif %}
             </h2></a>
             <h3>{{ game.first_pitch }}</h3>
             {% if user.is_authenticated %}

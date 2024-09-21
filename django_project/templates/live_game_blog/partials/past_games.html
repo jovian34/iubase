@@ -14,6 +14,7 @@
         {{ scoreboard.game.away_team }}-{{ scoreboard.away_runs }}
             {% if scoreboard.game.neutral_site %} versus {% else %} at {% endif %}
         {{ scoreboard.game.home_team }}-{{ scoreboard.home_runs }}
+            {% if scoreboard.game.fall_exhibition %}<em>- FALL EXHIBITION</em>{% endif %}
         </h2></a>
         <h3>{{ scoreboard.game.first_pitch }}</h3>
         {% if user.is_authenticated %}

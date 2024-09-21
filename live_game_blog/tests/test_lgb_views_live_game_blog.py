@@ -21,6 +21,17 @@ def test_live_single_game_blog_page_renders(client, games, scoreboards, entries)
     assert "Indiana at Kentucky," in str(response.content)
     assert "(FINAL)" in str(response.content)
     assert "Kentucky moves on to Super Regionals" in str(response.content)
+    assert "stats" in str(response.content)
+    assert "roster" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_live_single_game_blog_page_shows_exhibition(client, games, scoreboards, entries):
+    response = client.get(reverse("live_game_blog", args=[games.iu_gm_fall.pk]))
+    assert response.status_code == 200
+    assert "FALL EXHIBITION" in str(response.content)
+    assert "stats" not in str(response.content)
+    assert "roster" not in str(response.content)
 
 
 @pytest.mark.django_db

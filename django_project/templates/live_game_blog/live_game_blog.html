@@ -15,6 +15,7 @@
     {% if game.away_rank %}no. {{ game.away_rank }}{% endif %}
     {{ game.away_team }} {% if game.away_seed %}({{ game.away_seed }}-seed){% endif %}
     {% if game.away_nat_seed %}(#{{ game.away_nat_seed }} National Seed){% endif %}
+    {% if game.fall_exhibition %}<em>FALL EXHIBITION</em>{% endif %}
     
     {% if game.neutral_site %}vs.{% else %}at{% endif %}
     {% if game.home_rank %}no. {{ game.home_rank }}{% endif %}
@@ -30,9 +31,13 @@
     </p>
 
     <p><img class="team-logo" src="{{ game.away_team.logo }}">
+    {% if game.fall_exhibition %}{% else %}
     {{ game.away_team }}: <a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a><p>
+    {% endif %}
     <p><img class="team-logo" src="{{ game.home_team.logo }}">
+    {% if game.fall_exhibition %} {% else %}
     {{ game.home_team }}: <a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a></p>
+    {% endif %}
 
     
             

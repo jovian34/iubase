@@ -46,6 +46,7 @@ def save_new_player_and_init_transaction(form):
         throws=form.cleaned_data["throws"],
         height=form.cleaned_data["height"],
         weight=form.cleaned_data["weight"],
+        primary_position=form.cleaned_data["primary_position"],
     )
     add_player.save()
     this_player = Player.objects.last()

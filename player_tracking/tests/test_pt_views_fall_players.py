@@ -167,3 +167,4 @@ def test_all_eligible_players_includes_buttons_that_point_HTMX_to_prior_and_next
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 2}/"' in str(response.content)
 
 
+# Write test to verify alphabetical order

@@ -1,0 +1,21 @@
+{% include "player_tracking/includes/fall_nav.html" %}
+
+<div class="column-12">     
+        <h3>{{ page_title }}</h3>
+        <h3>Total Players: {{ count }}</h3>
+</div>
+<br clear="both">
+
+<button hx-get="{% url 'projected_players_fall_depth' fall_year %}" hx-target="#fall-content">Switch to Depth Listing</button>
+
+<h3>Alphabetical Listing</h3>
+    <ul>
+    {% for player in players %}
+        <li>
+            <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
+            {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
+            <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p>        
+        </li>
+        <hr>
+    {% endfor %}
+    </ul>

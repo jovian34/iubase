@@ -6,6 +6,7 @@
 </div>
 <br clear="both">
 
+<button hx-get="{% url 'projected_players_fall_alpha' fall_year %}" hx-target="#fall-content">Switch to Alphabetical Listing</button>
 
 {% for position in positions %}
 {% if position.count %}
@@ -25,19 +26,3 @@
     <br clear="both">
 {% endif %}
 {% endfor %}
-
-
-<div class="column-12">  
-
-        <h3>Alphabetical Listing</h3>
-        <ul>
-        {% for player in players %}
-            <li>
-                <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
-                {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
-                <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p>        
-            </li>
-            <hr>
-        {% endfor %}
-        </ul>
-</div>

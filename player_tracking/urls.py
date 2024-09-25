@@ -80,9 +80,14 @@ urlpatterns = [
     ),
     path("fall_roster/<fall_year>/", iu_rosters.fall, name="fall_roster"),
     path(
-        "projected_players_fall/<fall_year>/",
-        fall_players.projected,
-        name="projected_players_fall",
+        "projected_players_fall_depth/<fall_year>/",
+        fall_players.projected_depth,
+        name="projected_players_fall_depth",
+    ),
+    path(
+        "projected_players_fall_alpha/<fall_year>/",
+        fall_players.projected_alpha,
+        name="projected_players_fall_alpha",
     ),
     path(
         "all_eligible_players_fall/<fall_year>/",

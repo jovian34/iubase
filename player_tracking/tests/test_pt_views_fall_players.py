@@ -46,7 +46,7 @@ def test_projected_players_renders_current_players(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
+    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert f"Projected Players For Fall {this_year}" in str(response.content)
     assert "Devin Taylor" in str(response.content)
@@ -58,7 +58,7 @@ def test_fall_players_renders_projected_players_for_current_year(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
+    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert f"Projected Players For Fall {this_year}" in str(response.content)
     assert "Devin Taylor" in str(response.content)
@@ -70,7 +70,7 @@ def test_projected_players_excludes_transfer_portal_entrants(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
+    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Brooks Ey" not in str(response.content)
 
@@ -81,7 +81,7 @@ def test_projected_players_includes_incoming_high_school_commit(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
+    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Grant Hollister" in str(response.content)
 
@@ -92,7 +92,7 @@ def test_projected_players_excludes_future_high_school_commit(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
+    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Xavier" not in str(response.content)
 
@@ -103,7 +103,7 @@ def test_projected_players_includes_transfer_commit(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
+    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Holton Compton" in str(response.content)
 
@@ -149,7 +149,7 @@ def test_fall_projection_includes_buttons_that_point_HTMX_to_prior_and_next_year
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year}"]))
+    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 1}/"' in str(response.content)
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year - 1}/"' in str(response.content)

@@ -27,7 +27,7 @@ def fall_players_redirect(request, fall_year):
     ):
         return redirect("all_eligible_players_fall", fall_year=fall_year)
     else:
-        return redirect("projected_players_fall", fall_year=fall_year)
+        return redirect("projected_players_fall_depth", fall_year=fall_year)
 
 
 def all_eligible(request, fall_year):
@@ -48,7 +48,17 @@ def all_eligible(request, fall_year):
     return render(request, "player_tracking/partials/all_eligible_players_fall.html", context)
 
 
-def projected(request, fall_year):
+def projected_depth(request, fall_year):
+    context = set_projected_players(fall_year)
+    return render(request, "player_tracking/partials/projected_players_fall_depth.html", context)
+
+
+def projected_alpha(request, fall_year):
+    context = set_projected_players(fall_year)
+    return render(request, "player_tracking/partials/projected_players_fall_alpha.html", context)
+
+
+def set_projected_players(fall_year):
     players = set_fall_player_projection_info(fall_year)
     count = len(players)
     positions = sort_by_positions(players)
@@ -60,8 +70,8 @@ def projected(request, fall_year):
         "page_title": f"Projected Players For Fall {fall_year}",
         "count": count,
         "positions": positions,
-    }
-    return render(request, "player_tracking/partials/projected_players_fall.html", context)
+    }    
+    return context
 
 
 def set_fall_player_projection_info(fall_year):

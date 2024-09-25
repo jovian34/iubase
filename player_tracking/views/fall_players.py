@@ -49,16 +49,6 @@ def all_eligible(request, fall_year):
 
 
 def projected(request, fall_year):
-    spring_year = int(fall_year) + 1
-    if AnnualRoster.objects.filter(spring_year=spring_year):
-        return redirect("fall_roster", fall_year=fall_year)
-    elif int(fall_year) < date.today().year:
-        return redirect("pt_index")
-    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(
-        fall_year=fall_year
-    ):
-        return redirect("all_eligible_players_fall", fall_year=fall_year)
-
     players = set_fall_player_projection_info(fall_year)
     count = len(players)
     positions = sort_by_positions(players)

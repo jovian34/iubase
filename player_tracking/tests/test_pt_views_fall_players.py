@@ -167,21 +167,3 @@ def test_all_eligible_players_includes_buttons_that_point_HTMX_to_prior_and_next
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 2}/"' in str(response.content)
 
 
-@pytest.mark.django_db
-def test_fall_players_redirect_to_roster_instead_of_projection(
-    client, players, teams, annual_rosters
-):
-    response = client.get(reverse("projected_players_fall", args=[f"{this_year - 1}"]))
-    assert response.status_code == 302
-    response = client.get(
-        reverse("projected_players_fall", args=[f"{this_year - 1}"]), follow=True
-    )
-    assert response.status_code == 200
-    assert "Total Roster Length: 4" in str(response.content)
-    assert f"Fall {this_year - 1} Roster" in str(response.content)
-    assert "Nathan Ball" in str(response.content)
-    assert "Nick Mitchell" in str(response.content)
-    assert "Jack Moffitt" in str(response.content)
-    assert "Brayden" not in str(response.content)
-
-

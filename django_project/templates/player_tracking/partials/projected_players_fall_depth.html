@@ -6,7 +6,7 @@
 </div>
 <br clear="both">
 
-<button hx-get="{% url 'projected_players_fall_alpha' fall_year %}" hx-target="#fall-content">Switch to Alphabetical Listing</button>
+<button hx-get="{% url 'projected_players_fall_alpha' fall_year %}" hx-target="#fall-content" hx-push-url="true">Switch to Alphabetical Listing</button>
 
 {% for position in positions %}
 {% if position.count %}

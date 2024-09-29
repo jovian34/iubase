@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.23"  # PT redirect fall player partials to full page if not called by HTMX with tests ATP 2024-09-29
+    "0.1.24"  # PT fall player HTMX nav now uses hx-push-url to allow for back functionality and populate the URL field of the browser ATP 2024-09-29
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

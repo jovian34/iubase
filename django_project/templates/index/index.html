@@ -9,14 +9,14 @@
 
     <div class="column-6">
         <ul>
+
+            <img src="https://live.staticflickr.com/65535/54014518896_5c58571da6_o.jpg" id="player-photo">
             <li><h2><a href="{% url "games" %}">Live Game Blogs</a></h2></li>
             <li><h2><a href="{% url "pt_index" %}">Player Tracking</a></h2></li>
 
             {% if user.is_authenticated %}
             <li><h2><a href="{% url "current_months_traffic" %}">Current Month's Traffic</h2></li>
             {% endif %}
-
-
 
         </ul>
 

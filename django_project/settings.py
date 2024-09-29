@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.24"  # PT fall player HTMX nav now uses hx-push-url to allow for back functionality and populate the URL field of the browser ATP 2024-09-29
+    "0.1.26"  # ALL added all level navigation and some photos to each app ATP 2024-09-29
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

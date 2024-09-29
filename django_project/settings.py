@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.22"  # PT reworked fall year navigation ATP 2024-09-17
+    "0.1.23"  # PT redirect fall player partials to full page if not called by HTMX with tests ATP 2024-09-29
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

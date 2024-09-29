@@ -128,6 +128,25 @@ def test_projected_players_includes_transfer_commit(
 
 
 @pytest.mark.django_db
+def test_projected_players_not_from_HTMX_redirects_to_fall_players(
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
+    )
+    assert response.status_code == 302
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "<title>Players for Fall Seasons by Year</title>" in str(response.content)
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year}/" hx-trigger="load"' in str(response.content)
+
+
+@pytest.mark.django_db
 def test_all_eligible_players_fall_renders(
     client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
@@ -138,6 +157,24 @@ def test_all_eligible_players_fall_renders(
     )
     assert "Grant Hollister" in str(response.content)
     assert "Jack Moffitt" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_all_eligible_players_not_from_HTMX_redirects_to_fall_players(
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    response = client.get(
+        reverse("all_eligible_players_fall", args=[f"{this_year + 1}"]),
+    )
+    assert response.status_code == 302
+    response = client.get(
+        reverse("all_eligible_players_fall", args=[f"{this_year + 1}"]),
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "<title>Players for Fall Seasons by Year</title>" in str(response.content)
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 1}/" hx-trigger="load"' in str(response.content)
 
 
 @pytest.mark.django_db
@@ -179,6 +216,25 @@ def test_fall_projection_includes_buttons_that_point_HTMX_to_prior_and_next_year
     assert response.status_code == 200
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 1}/"' in str(response.content)
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year - 1}/"' in str(response.content)
+
+
+@pytest.mark.django_db
+def test_fall_projection_not_called_by_HTMX_redirects_to_fall_players(
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
+    )
+    assert response.status_code == 302
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "<title>Players for Fall Seasons by Year</title>" in str(response.content)
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year}/" hx-trigger="load"' in str(response.content)
 
 
 @pytest.mark.django_db

@@ -19,7 +19,7 @@ this_year = date.today().year
 @pytest.mark.django_db
 def test_player_model_stored_all_fields(client, players):
     assert players.devin_taylor.first == "Devin"
-    assert players.brayden_risedorph.throws == "right"
+    assert players.brayden_risedorph.throws == "Right"
     assert players.andrew_wiggins.hsgrad_year == this_year - 1
     assert players.devin_taylor.home_country == "USA"
 

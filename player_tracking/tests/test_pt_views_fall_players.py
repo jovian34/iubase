@@ -128,6 +128,40 @@ def test_projected_players_includes_transfer_commit(
 
 
 @pytest.mark.django_db
+def test_projected_players_depth_lists_pitcher_before_infielder(
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
+    assert response.status_code == 200
+    output = str(response.content)
+    shortstop = output.find("Holton Compton")
+    pitcher = output.find("Grant Hollister")
+    assert shortstop > pitcher
+
+
+@pytest.mark.django_db
+def test_projected_players_alpha_lists_alphabetical_order_by_last_name(
+    client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    response = client.get(
+        reverse("projected_players_fall_alpha", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
+    assert response.status_code == 200
+    output = str(response.content)
+    compton = output.find("Holton Compton")
+    hollister = output.find("Grant Hollister")
+    assert hollister > compton
+
+
+@pytest.mark.django_db
 def test_projected_players_not_from_HTMX_redirects_to_fall_players(
     client, players, transactions, typical_mlb_draft_date, logged_user_schwarbs
 ):
@@ -247,7 +281,3 @@ def test_all_eligible_players_includes_buttons_that_point_HTMX_to_prior_and_next
     assert response.status_code == 200
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year}/"' in str(response.content)
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 2}/"' in str(response.content)
-
-
-# Write tests to verify alphabetical order
-# Write tests to verify non-HTMX redirects to fall players

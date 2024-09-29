@@ -15,86 +15,86 @@ def players():
         first="Devin",
         last="Taylor",
         hsgrad_year=this_year - 2,
-        bats="left",
-        throws="left",
+        bats="Left",
+        throws="Left",
     )
     brayden_risedorph = Player.objects.create(
         first="Brayden",
         last="Risedorph",
         hsgrad_year=this_year - 2,
         birthdate=date(this_year - 21, 7, 30),
-        bats="right",
-        throws="right",
+        bats="Right",
+        throws="Right",
     )
     andrew_wiggins = Player.objects.create(
         first="Andrew",
         last="Wiggins",
         hsgrad_year=this_year - 1,
-        bats="left",
-        throws="right",
+        bats="Left",
+        throws="Right",
     )
     nick_mitchell = Player.objects.create(
         first="Nick",
         last="Mitchell",
         hsgrad_year=this_year - 3,
-        bats="left",
-        throws="right",
+        bats="Left",
+        throws="Right",
     )
     brooks_ey = Player.objects.create(
         first="Brooks",
         last="Ey",
         hsgrad_year=this_year - 3,
-        bats="right",
-        throws="right",
+        bats="Right",
+        throws="Right",
     )
     jack_moffitt = Player.objects.create(
         first="Jack",
         last="Moffitt",
         hsgrad_year=this_year - 5,
-        bats="right",
-        throws="right",
+        bats="Right",
+        throws="Right",
     )
     grant_hollister = Player.objects.create(
         first="Grant",
         last="Hollister",
         hsgrad_year=this_year,
-        bats="left",
-        throws="right",
+        bats="Left",
+        throws="Right",
     )
     cole_gilley = Player.objects.create(
         first="Cole",
         last="Gilley",
         hsgrad_year=this_year - 4,
-        bats="right",
-        throws="right",
+        bats="Right",
+        throws="Right",
     )
     nate_ball = Player.objects.create(
         first="Nathan",
         last="Ball",
         hsgrad_year=this_year - 1,
-        bats="right",
-        throws="right",
+        bats="Right",
+        throws="Right",
     )
     holton_compton = Player.objects.create(
         first="Holton",
         last="Compton",
         hsgrad_year=this_year - 2,
-        bats="right",
-        throws="right",
+        bats="Right",
+        throws="Right",
     )
     xavier_carrera = Player.objects.create(
         first="Xavier",
         last="Carrera",
         hsgrad_year=this_year + 1,
-        bats="right",
-        throws="right",
+        bats="Right",
+        throws="Right",
     )
     owen_ten_oever = Player.objects.create(
         first="Owen",
         last="ten Oever",
         hsgrad_year=this_year + 1,
-        bats="right",
-        throws="right",
+        bats="Right",
+        throws="Right",
     )
     PlayerObj = namedtuple(
         "PlayerObj",

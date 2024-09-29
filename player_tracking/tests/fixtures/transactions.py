@@ -79,6 +79,7 @@ def transactions(players, prof_orgs):
     gh_verbal = Transaction.objects.create(
         player=players.grant_hollister,
         trans_event="Verbal Commitment from High School",
+        primary_position="Pitcher",
         trans_date=date(year=this_year - 2, month=3, day=11),
     )
     gh_combine = Transaction.objects.create(
@@ -89,11 +90,13 @@ def transactions(players, prof_orgs):
     gh_draft = Transaction.objects.create(
         player=players.grant_hollister,
         trans_event="Drafted",
+        primary_position="Pitcher",
         trans_date=date(year=this_year, month=7, day=14),
         comment="He is expected by insiders to require $500,000 to sign.",
     )
     gh_not_sign = Transaction.objects.create(
         player=players.grant_hollister,
+        primary_position="Pitcher",
         trans_event="Not Signing Professional Contract",
         trans_date=date(year=this_year, month=8, day=1),
     )
@@ -115,6 +118,7 @@ def transactions(players, prof_orgs):
     hc_verbal = Transaction.objects.create(
         player=players.holton_compton,
         trans_event="Verbal Commitment from College",
+        primary_position="Shortstop",
         trans_date=date(year=this_year - 1, month=10, day=23),
     )
     xc_verbal = Transaction.objects.create(

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
 
 from index.views import save_traffic_data
@@ -21,12 +21,15 @@ def upcoming(request):
 
 
 def past(request):
-    scoreboards = (
-        Scoreboard.objects.select_related("game")
-        .filter(game_status="final")
-        .order_by("-update_time")
-    )
-    context = {
-        "scoreboards": scoreboards,
-    }
-    return render(request, "live_game_blog/partials/past_games.html", context)
+    if request.META.get('HTTP_HX_REQUEST'):
+        scoreboards = (
+            Scoreboard.objects.select_related("game")
+            .filter(game_status="final")
+            .order_by("-update_time")
+        )
+        context = {
+            "scoreboards": scoreboards,
+        }
+        return render(request, "live_game_blog/partials/past_games.html", context)
+    else:
+        return redirect("games")

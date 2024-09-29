@@ -74,6 +74,21 @@ def test_games_list_page_renders_logo(client, teams, games):
 
 @pytest.mark.django_db
 def test_past_game_renders_partial_with_score(client, teams, games, scoreboards):
-    response = client.get(reverse("past_games"))
+    response = client.get(
+        reverse("past_games"),
+        HTTP_HX_REQUEST="true",
+    )
     assert response.status_code == 200
     assert "Kentucky-4" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_past_game_partial_redirects_to_games_when_not_requested_by_HTMX(client, teams, games, scoreboards):
+    response = client.get(reverse("past_games"))
+    assert response.status_code == 302
+    response = client.get(reverse("past_games"), follow=True,)    
+    assert response.status_code == 200
+    expected = "Indiana at Coastal".replace(" ", "")
+    actual = str(response.content).replace(" ", "").replace("\\n", "")
+    assert expected in actual    
+    assert "Kentucky-4" not in str(response.content)

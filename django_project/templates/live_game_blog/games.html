@@ -8,12 +8,11 @@
 {% block content %}
 
 <div class="column-12">
-    {% for game in games %}
-    <div class="column-12">
-        <div class="column-3"></div>
-        <div class="column-6">
-            <img src="https://live.staticflickr.com/65535/54014518406_96d65316e9_o.jpg" id="player-photo">  
-            <hr>
+    <div class="column-3"></div>
+    <div class="column-6">
+        <img src="https://live.staticflickr.com/65535/54014518406_96d65316e9_o.jpg" id="player-photo">  
+        <hr>
+        {% for game in games %}
             <img class="team-logo" src="{{ game.away_team.logo }}">
             <img class="team-logo" src="{{ game.home_team.logo }}">
             <h2><a href="{% url "live_game_blog" game.pk %}">
@@ -24,14 +23,13 @@
             </h2></a>
             <h3>{{ game.first_pitch }}</h3>
             {% if user.is_authenticated %}
-            <h2><a href="{% url "edit_live_game_blog" game.pk %}">Edit or Add to Game Blog</a><h2>
+                <h2><a href="{% url "edit_live_game_blog" game.pk %}">Edit or Add to Game Blog</a><h2>          
             {% endif %}
-        </div>
-        <div class="column-3"></div>
+        {% endfor %}
     </div>
-    <br clear="both">
-    {% endfor %}
+    <div class="column-3"></div>
 </div>
+<br clear="both">
 
 
 {% if user.is_authenticated %}
@@ -45,12 +43,11 @@
 {% endif %}
 <br clear="both">
 
-
-<div class="column-12" id="past-button">
+<div class="column-12">
     <div class="column-3"></div>
-    <div class="column-6">
-        <button hx-trigger="click" hx-get="{% url "past_games" %}" hx-target="#past-button">Show Completed Games</button>
+    <div class="column-6" id="past-games">
+        <button hx-trigger="click" hx-get="{% url "past_games" %}" hx-target="#past-games">Show Completed Games</button>
     </div>
-</div> 
+</div>
 
 {% endblock %}

@@ -12,7 +12,10 @@ this_year = date.today().year
 
 @pytest.mark.django_db
 def test_fall_roster_renders(client, players, teams, annual_rosters):
-    response = client.get(reverse("fall_roster", args=[f"{this_year - 1}"]))
+    response = client.get(
+        reverse("fall_roster", args=[f"{this_year - 1}"]), 
+        HTTP_HX_REQUEST="true",
+    )
     assert response.status_code == 200
     assert "Total Roster Length: 4" in str(response.content)
     assert f"Fall {this_year - 1} Roster" in str(response.content)
@@ -20,6 +23,21 @@ def test_fall_roster_renders(client, players, teams, annual_rosters):
     assert "Nick Mitchell" in str(response.content)
     assert "Jack Moffitt" in str(response.content)
     assert "Brayden" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_fall_roster_renders_full_page_without_HTMX_call(client, players, teams, annual_rosters):
+    response = client.get(
+        reverse("fall_roster", args=[f"{this_year - 1}"]),
+    )
+    assert response.status_code == 302
+    response = client.get(
+        reverse("fall_roster", args=[f"{this_year - 1}"]),
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "<title>Players for Fall Seasons by Year</title>" in str(response.content)
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year - 1}/" hx-trigger="load"' in str(response.content)
 
 
 @pytest.mark.django_db

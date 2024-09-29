@@ -31,31 +31,39 @@ def fall_players_redirect(request, fall_year):
 
 
 def all_eligible(request, fall_year):
-    spring_year = int(fall_year) + 1
-    players = (
-        Player.objects.filter(first_spring__lte=spring_year)
-        .filter(last_spring__gte=spring_year)
-        .order_by(Lower("last"))
-    )
-    years = [ int(fall_year) - 2 + i for i in range(5) ]
-    context = {
-        "fall_year": fall_year,
-        "years": years,
-        "players": players,
-        "page_title": f"All Eligible Players For Fall {fall_year}",
-        "count": len(players),
-    }
-    return render(request, "player_tracking/partials/all_eligible_players_fall.html", context)
-
+    if request.META.get('HTTP_HX_REQUEST'):
+        spring_year = int(fall_year) + 1
+        players = (
+            Player.objects.filter(first_spring__lte=spring_year)
+            .filter(last_spring__gte=spring_year)
+            .order_by(Lower("last"))
+        )
+        years = [ int(fall_year) - 2 + i for i in range(5) ]
+        context = {
+            "fall_year": fall_year,
+            "years": years,
+            "players": players,
+            "page_title": f"All Eligible Players For Fall {fall_year}",
+            "count": len(players),
+        }
+        return render(request, "player_tracking/partials/all_eligible_players_fall.html", context)
+    else:
+        return redirect("fall_players", fall_year=fall_year)
 
 def projected_depth(request, fall_year):
-    context = set_projected_players(fall_year)
-    return render(request, "player_tracking/partials/projected_players_fall_depth.html", context)
+    if request.META.get('HTTP_HX_REQUEST'):
+        context = set_projected_players(fall_year)
+        return render(request, "player_tracking/partials/projected_players_fall_depth.html", context)
+    else:
+        return redirect("fall_players", fall_year=fall_year)
 
 
 def projected_alpha(request, fall_year):
-    context = set_projected_players(fall_year)
-    return render(request, "player_tracking/partials/projected_players_fall_alpha.html", context)
+    if request.META.get('HTTP_HX_REQUEST'):
+        context = set_projected_players(fall_year)
+        return render(request, "player_tracking/partials/projected_players_fall_alpha.html", context)
+    else:
+        return redirect("fall_players", fall_year=fall_year)
 
 
 def set_projected_players(fall_year):

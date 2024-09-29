@@ -32,7 +32,8 @@ def test_all_eligible_players_includes_only_committs_four_years_out(
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     response = client.get(
-        reverse("all_eligible_players_fall", args=[f"{this_year + 4}"])
+        reverse("all_eligible_players_fall", args=[f"{this_year + 4}"]), 
+        HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
     assert "Owen ten Oever" in str(response.content)
@@ -46,7 +47,10 @@ def test_projected_players_renders_current_players(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
     assert response.status_code == 200
     assert f"Projected Players For Fall {this_year}" in str(response.content)
     assert "Devin Taylor" in str(response.content)
@@ -58,7 +62,10 @@ def test_fall_players_renders_projected_players_for_current_year(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
     assert response.status_code == 200
     assert f"Projected Players For Fall {this_year}" in str(response.content)
     assert "Devin Taylor" in str(response.content)
@@ -70,7 +77,10 @@ def test_projected_players_excludes_transfer_portal_entrants(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
     assert response.status_code == 200
     assert "Brooks Ey" not in str(response.content)
 
@@ -81,7 +91,10 @@ def test_projected_players_includes_incoming_high_school_commit(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
     assert response.status_code == 200
     assert "Grant Hollister" in str(response.content)
 
@@ -92,7 +105,10 @@ def test_projected_players_excludes_future_high_school_commit(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
     assert response.status_code == 200
     assert "Xavier" not in str(response.content)
 
@@ -103,7 +119,10 @@ def test_projected_players_includes_transfer_commit(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
     assert response.status_code == 200
     assert "Holton Compton" in str(response.content)
 
@@ -114,7 +133,8 @@ def test_all_eligible_players_fall_renders(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     response = client.get(
-        reverse("all_eligible_players_fall", args=[f"{this_year + 1}"])
+        reverse("all_eligible_players_fall", args=[f"{this_year + 1}"]), 
+        HTTP_HX_REQUEST="true",
     )
     assert "Grant Hollister" in str(response.content)
     assert "Jack Moffitt" not in str(response.content)
@@ -137,7 +157,10 @@ def test_fall_roster_includes_buttons_that_point_HTMX_to_prior_and_next_year(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("fall_roster", args=[f"{this_year - 1}"]))
+    response = client.get(
+        reverse("fall_roster", args=[f"{this_year - 1}"]), 
+        HTTP_HX_REQUEST="true",
+    )
     assert response.status_code == 200
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year}/"' in str(response.content)
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year - 2}/"' in str(response.content)
@@ -149,7 +172,10 @@ def test_fall_projection_includes_buttons_that_point_HTMX_to_prior_and_next_year
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("projected_players_fall_depth", args=[f"{this_year}"]))
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
     assert response.status_code == 200
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 1}/"' in str(response.content)
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year - 1}/"' in str(response.content)
@@ -161,10 +187,11 @@ def test_all_eligible_players_includes_buttons_that_point_HTMX_to_prior_and_next
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    response = client.get(reverse("all_eligible_players_fall", args=[f"{this_year + 1}"]))
+    response = client.get(reverse("all_eligible_players_fall", args=[f"{this_year + 1}"]), HTTP_HX_REQUEST="true")
     assert response.status_code == 200
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year}/"' in str(response.content)
     assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 2}/"' in str(response.content)
 
 
-# Write test to verify alphabetical order
+# Write tests to verify alphabetical order
+# Write tests to verify non-HTMX redirects to fall players

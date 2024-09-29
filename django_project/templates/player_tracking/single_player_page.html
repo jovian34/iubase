@@ -9,55 +9,57 @@
 
 
 {% block content %}
-<div class="column-3"></div>
-<div class="column-6">
-    {% if user.is_authenticated %}
-    <button hx-get="{% url "add_roster_year" player.pk %}" hx-target="#add_roster_or_transaction">add roster year</button>
-    {% endif %}
-   
-    <ul>
-    {% for roster in rosters%}
-        <li><h2>{{roster.spring_year}} {{roster.team.team_name}} </h2>
-            <p>{{roster.status}} - {{roster.primary_position}}</p></li>
-            <hr>
-    {% endfor %}
-    </ul>
+<div class="column-12">
+    <div class="column-3"></div>
+    <div class="column-6">
+        {% if user.is_authenticated %}
+        <button hx-get="{% url "add_roster_year" player.pk %}" hx-target="#add_roster_or_transaction">add roster year</button>
+        {% endif %}
+    
+        <ul>
+        {% for roster in rosters%}
+            <li><h2>{{roster.spring_year}} {{roster.team.team_name}} </h2>
+                <p>{{roster.status}} - {{roster.primary_position}}</p></li>
+                <hr>
+        {% endfor %}
+        </ul>
 
-    <hr>
-    <h3>Transactions:</h3>
-    {% if user.is_authenticated %}
-    <button hx-get="{% url "add_transaction" player.pk %}" hx-target="#add_roster_or_transaction">add transaction</button>
-    {% endif %}
+        <hr>
+        <h3>Transactions:</h3>
+        {% if user.is_authenticated %}
+        <button hx-get="{% url "add_transaction" player.pk %}" hx-target="#add_roster_or_transaction">add transaction</button>
+        {% endif %}
+        
+        <ul>
+        {% for transaction in transactions%}
+            <li><p>{{transaction.trans_date}}: 
+                {% if transaction.citation %}
+                    <a target="_blank" href="{{ transaction.citation }}">{{transaction.trans_event}}</a></p></li>
+                {% else %}
+                    {{transaction.trans_event}}</p></li>
+                {% endif %}
+                <hr>
+        {% endfor %}
+        </ul>
+
+        <h3>Summer Ball:</h3>
+        {% if user.is_authenticated %}
+        <button hx-get="{% url "add_summer_assignment" player.pk %}" hx-target="#add_roster_or_transaction">add summer assignment</button>
+    {% endif %} 
     
     <ul>
-    {% for transaction in transactions%}
-        <li><p>{{transaction.trans_date}}: 
-            {% if transaction.citation %}
-                <a target="_blank" href="{{ transaction.citation }}">{{transaction.trans_event}}</a></p></li>
-            {% else %}
-                {{transaction.trans_event}}</p></li>
-            {% endif %}
-            <hr>
-    {% endfor %}
-    </ul>
+        {% for summer in summers %}
+            <li><p>{{ summer.summer_year }}: {{ summer.summer_team.name }} {{summer.summer_team.mascot}} of the {{ summer.summer_league.league }} League</p></li>
+        {% endfor %}
+        </ul>
+    </div>
 
-    <h3>Summer Ball:</h3>
-    {% if user.is_authenticated %}
-    <button hx-get="{% url "add_summer_assignment" player.pk %}" hx-target="#add_roster_or_transaction">add summer assignment</button>
-   {% endif %} 
-   
-   <ul>
-    {% for summer in summers %}
-        <li><p>{{ summer.summer_year }}: {{ summer.summer_team.name }} {{summer.summer_team.mascot}} of the {{ summer.summer_league.league }} League</p></li>
-    {% endfor %}
-    </ul>
-</div>
+    <br clear="both">
 
-<br clear="both">
+    <div class="column-3"></div>
+    <div class="column-6" id="add_roster_or_transaction">
 
-<div class="column-3"></div>
-<div class="column-6" id="add_roster_or_transaction">
-
+    </div>
 </div>
 
 {% endblock %}

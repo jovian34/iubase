@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.27"  # LGB cleaned up layout for games list and redirected partial when not HTMX ATP 2024-09-29
+    "0.1.28"  # ALL Style enhancements ATP 2024-09-29
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

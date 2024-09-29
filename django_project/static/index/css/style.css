@@ -13,7 +13,12 @@ html {
 
 body {
   background-color: #fcfbf4;
-  background-image: url("https://iubase.com/wp-content/uploads/2020/06/turf.jpg");
+  background-image: url("https://live.staticflickr.com/65535/53652314882_aa3066a4a2_4k.jpg");
+  min-height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
   color: black;
 }
 
@@ -304,6 +309,10 @@ select {
     display: table;
     width: 100%;
   }
+  /*--------BACKGROUND---------*/
+  body {
+    background-image: url("https://live.staticflickr.com/65535/53542563433_848440f519_3k.jpg");
+  }
   /*-------COLUMNS----------*/
   .column-9, .column-8, .column-6, .column-4, .column-3 {
     float: left;
@@ -335,6 +344,10 @@ select {
     margin: 0 auto;
   }
   /*-------NAV---------*/
+  /*--------BACKGROUND---------*/
+  body {
+    background-image: url("https://live.staticflickr.com/65535/53652314882_aa3066a4a2_4k.jpg");
+  }
   /*-------COLUMNS----------*/
   .column-2 {
     width: 16.6666%;

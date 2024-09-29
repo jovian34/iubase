@@ -10,7 +10,12 @@ box-sizing:border-box;
 
 body {
 	background-color: $body-background-color;	
-	background-image: url("https://iubase.com/wp-content/uploads/2020/06/turf.jpg");
+	background-image: url("https://live.staticflickr.com/65535/53652314882_aa3066a4a2_4k.jpg");
+	min-height: 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
 	color: $body-text-color;
 }
 

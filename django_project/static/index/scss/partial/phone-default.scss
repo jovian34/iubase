@@ -9,14 +9,25 @@ box-sizing:border-box;
 
 
 body {
-	background-color: $body-background-color;	
-	background-image: url("https://live.staticflickr.com/65535/53652314882_aa3066a4a2_4k.jpg");
-	min-height: 100%;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-position: center;
-	background-size: cover;
+	background-color: $body-background-color;
 	color: $body-text-color;
+}
+
+.bg {
+	background-image: url("https://live.staticflickr.com/65535/53763155323_4ba1461e16_k.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 100vh;
+	width: 100vw;
+	position: fixed;
+}
+
+.foreground {
+	position: absolute;
+	margin-top: 5rem;
+	left: 50%; 
+	transform: translateX(-50%);
+	width: 80%;
 }
 
 p, button {

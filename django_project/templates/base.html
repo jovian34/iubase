@@ -16,52 +16,58 @@
 
   <body>
 
-  <div id="contentWrapper">
+  <div class="bg"></div>
 
-    <div class="column-12">
+  <div class="foreground">
 
-      <div class="column-3"></div>
+    <div id="contentWrapper">
 
-      <div class="column-6">
-        <a href="{% url "index" %}">
-          <img id="iubase-logo" src="https://live.staticflickr.com/65535/53826570535_5ea23e55bc_c.jpg">
-        </a>{% block header %}<h1>iubase.com Apps</h1>{% endblock %}
+      <div class="column-12">
+
+        <div class="column-3"></div>
+
+        <div class="column-6">
+          <a href="{% url "index" %}">
+            <img id="iubase-logo" src="https://live.staticflickr.com/65535/53826570535_5ea23e55bc_c.jpg">
+          </a>{% block header %}<h1>iubase.com Apps</h1>{% endblock %}
+        </div>
+
+        <div class="column-3">
+          <button><a href="https://iubase.com" target="_blank">iubase.com</a></button>
+          <button><a href="{% url "games" %}">Live Game Blogs</a></button>
+          <button><a href="{% url "pt_index" %}">Player Tracking</a></button>
+        </div>
+        
+      </div><!-- end of banner -->
+
+      <div class="column-12">
+          <br clear="both">
       </div>
 
-      <div class="column-3">
-        <button><a href="https://iubase.com" target="_blank">iubase.com</a></button>
-        <button><a href="{% url "games" %}">Live Game Blogs</a></button>
-        <button><a href="{% url "pt_index" %}">Player Tracking</a></button>
-      </div>
-      
-    </div><!-- end of banner -->
+          {% block content %}{% endblock %}
 
-    <div class="column-12">
-        <br clear="both">
     </div>
 
-        {% block content %}{% endblock %}
 
+    <div id="footerWrapper">
+      <footer>
+          <p>Copyright &#169;{% this_year %} <a href="{% url 'index' %}">iubase.com</a></p>
+            <hr>
+            {% if user.is_authenticated %}
+            <p>Welcome, {{ user.first_name }}.
+              You can <a href="{% url 'index' %}">add dynamic content</a> 
+              or</p>
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Sign Out</button>
+              </form>
+            {% else %}
+            <p><a href="{% url 'login' %}">Staff login</a></p>
+            {% endif %}
+          
+      </footer>
   </div>
 
-
-  <div id="footerWrapper">
-    <footer>
-        <p>Copyright &#169;{% this_year %} <a href="{% url 'index' %}">iubase.com</a></p>
-          <hr>
-          {% if user.is_authenticated %}
-          <p>Welcome, {{ user.first_name }}.
-            You can <a href="{% url 'index' %}">add dynamic content</a> 
-            or</p>
-            <form method="post" action="{% url 'logout' %}">
-              {% csrf_token %}
-              <button type="submit">Sign Out</button>
-            </form>
-          {% else %}
-          <p><a href="{% url 'login' %}">Staff login</a></p>
-          {% endif %}
-        
-    </footer>
 </div>
 
 <script src="https://unpkg.com/htmx.org@2.0.2" integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ" crossorigin="anonymous"></script>

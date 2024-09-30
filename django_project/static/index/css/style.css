@@ -13,13 +13,24 @@ html {
 
 body {
   background-color: #fcfbf4;
-  background-image: url("https://live.staticflickr.com/65535/53652314882_aa3066a4a2_4k.jpg");
-  min-height: 100%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  background-size: cover;
   color: black;
+}
+
+.bg {
+  background-image: url("https://live.staticflickr.com/65535/53763155323_4ba1461e16_k.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+}
+
+.foreground {
+  position: absolute;
+  margin-top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
 }
 
 p, button {
@@ -310,8 +321,8 @@ select {
     width: 100%;
   }
   /*--------BACKGROUND---------*/
-  body {
-    background-image: url("https://live.staticflickr.com/65535/53542563433_848440f519_3k.jpg");
+  .bg {
+    background-image: url("https://live.staticflickr.com/65535/53652314882_aa3066a4a2_4k.jpg");
   }
   /*-------COLUMNS----------*/
   .column-9, .column-8, .column-6, .column-4, .column-3 {
@@ -345,7 +356,7 @@ select {
   }
   /*-------NAV---------*/
   /*--------BACKGROUND---------*/
-  body {
+  .bg {
     background-image: url("https://live.staticflickr.com/65535/53652314882_aa3066a4a2_4k.jpg");
   }
   /*-------COLUMNS----------*/

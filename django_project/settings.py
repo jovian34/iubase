@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.38"  # DJ-Pro upgrades to Python 3.12.7 and psycopg ATP 2024-09-29
+    "0.1.38"  # DJ-Pro upgrades to Python 3.12.7 and psycopg ATP 2024-10-05
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

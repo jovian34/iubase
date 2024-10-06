@@ -43,7 +43,7 @@ class Game(models.Model):
         vs = "at"
         if self.neutral_site:
             vs = "vs."
-        return f"{self.first_pitch:%Y-%m-%d %H:%m} {self.away_team.team_name} {vs} {self.home_team.team_name}"
+        return f"{self.first_pitch:%Y-%m-%d %H:%M} UTC - {self.away_team.team_name} {vs} {self.home_team.team_name}"
 
 
 class Scoreboard(models.Model):

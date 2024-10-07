@@ -42,8 +42,39 @@ def last_months_traffic(request):
 
 @decorators.login_required
 def current_months_traffic(request):
-    first_of_month = get_first_of_current_month()
-    traf = index_models.TrafficCounter.objects.filter(timestamp__gte=first_of_month).order_by(
+    today = datetime.today()
+    prior_day = today.day - 1
+    context = {
+        "title": "Last Month's Traffic",
+        "month": f"{today:%B}",
+        "day": f"{today:%-d}",
+        "prior_day": prior_day,
+    }
+    print(f"Current Month {today:%B}")
+    return shortcuts.render(request, "index/one_months_traffic.html", context=context)
+
+
+@decorators.login_required
+def one_days_traffic(request, day):
+    if int(day) < 1:
+        pass
+    end = datetime(
+        year=datetime.today().year,
+        month=datetime.today().month,
+        day=int(day),
+        hour=23,
+        minute=59,
+        second=59,
+    )
+    start = datetime(
+        year=datetime.today().year,
+        month=datetime.today().month,
+        day=int(day),
+        hour=0,
+        minute=0,
+        second=0,
+    )
+    traf = index_models.TrafficCounter.objects.filter(timestamp__gte=start, timestamp__lte=end).order_by(
         "-timestamp"
     )
     agent_info = AgentInfo()
@@ -52,9 +83,11 @@ def current_months_traffic(request):
     context = {
         "traffic": traf,
         "count": len(traf),
-        "title": "Last Month's Traffic",
+        "month_day": f"{start:%B %-d}",
+        "prior_day": int(day) - 1,
     }
-    return shortcuts. render(request, "index/one_months_traffic.html", context=context)
+    print(f"processing {start:%B %-d}")
+    return shortcuts.render(request, "index/partials/one_days_traffic.html", context=context)
 
 
 def get_first_of_current_month():

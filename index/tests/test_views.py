@@ -1,5 +1,6 @@
 import pytest
 from django import urls
+from datetime import datetime
 
 from index.tests.fixtures import agents
 from index import models as index_models
@@ -59,12 +60,20 @@ def test_index_hit_adds_no_traffic_for_logged_in_user(client, agents, logged_use
 
 
 @pytest.mark.django_db
-def test_current_months_traffic_renders(client, agents, logged_user_schwarbs):
-    response = client.get(urls.reverse("current_months_traffic"))
+def test_current_days_traffic_renders(client, agents, logged_user_schwarbs):
+    day = datetime.today().day
+    response = client.get(urls.reverse("one_days_traffic", args=[day]))
     assert response.status_code == 200
     assert "47.128.55.115" in str(response.content)
     assert "AJ Shepard" in str(response.content)
     assert "iPhone" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_current_months_traffic_renders(client, agents, logged_user_schwarbs):
+    response = client.get(urls.reverse("current_months_traffic"))
+    assert response.status_code == 200
+    assert "Traffic for" in str(response.content)
 
 
 @pytest.mark.django_db

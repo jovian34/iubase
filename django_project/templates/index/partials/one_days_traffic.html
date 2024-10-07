@@ -1,0 +1,33 @@
+<div class="column-12" id="{{ month_day }}">
+
+    <div class="column-3"></div>
+
+    <div class="column-6">
+        <h3>Traffic Count for {{ day }}: {{ count }}</h3>
+        <table>
+
+        {% for traf in traffic %}
+
+        <tr>
+            <td>{{ traf.page }}</td>
+            <td>{{ traf.timestamp }}</td>
+            <td>{{ traf.ip }}</td>
+            <td>{{ traf.agent_group }}</td>
+        </tr>
+
+        {% endfor %}
+
+        </table>
+    </div>
+
+</div>
+
+<br clear="both">
+
+<div class="column-12"
+    hx-get="{% url "one_days_traffic" prior_day %}"
+    hx-target="this"
+    hx-swap="afterend"
+    hx-trigger="revealed delay:1s"
+>
+</div>

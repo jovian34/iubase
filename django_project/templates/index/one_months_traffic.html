@@ -4,28 +4,23 @@
 
 {% block content %}
 
-<div class="column-12">
+<div class="column-12" 
+    hx-get="{% url "one_days_traffic" day %}"
+    hx-target="#first-day"
+    hx-swap="afterend"
+    hx-trigger="load delay:1s"
+    >
 
     <div class="column-3"></div>
 
     <div class="column-6">
-        <h3>Traffic Count for the Month: {{ count }}</h3>
-        <table>
-
-        {% for traf in traffic %}
-
-        <tr>
-            <td>{{ traf.page }}</td>
-            <td>{{ traf.timestamp }}</td>
-            <td>{{ traf.ip }}</td>
-            <td>{{ traf.agent_group }}</td>
-        </tr>
-
-        {% endfor %}
-
-        </table>
+        <h3>Traffic for {{ month }}</h3> 
     </div>
 
 </div>
+
+<br clear="both">
+
+<div class="column-12" id="first-day"></div>
 
 {% endblock %}

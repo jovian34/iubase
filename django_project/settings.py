@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.40"  # INDEX using hx-delete and hx-confirm on deleting traffic data ATP 2024-10-07
+    "0.1.41"  # INDEX added infinite scroll on deleting traffic data ATP 2024-10-07
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

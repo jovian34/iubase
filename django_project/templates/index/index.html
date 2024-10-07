@@ -15,17 +15,20 @@
             <li><h2><a href="{% url "pt_index" %}">Player Tracking</a></h2></li>
 
             {% if user.is_authenticated %}
-            <li><h2><a href="{% url "current_months_traffic" %}">Current Month's Traffic</h2></li>
+            <li><h2><a href="{% url "current_months_traffic" %}">Current Month's Traffic</a></h2></li>
             {% endif %}
 
         </ul>
 
             {% if user.is_authenticated %}
             <br>
-            <br>
             <hr>
-            <h2><a href="{% url "last_months_traffic" %}">DELETE Last Month's Traffic</h2>
-            <p><em>this is not reversible</em></p>
+            <button hx-delete="{% url "last_months_traffic" %}" 
+                hx-confirm="Are you sure you want to DELETE last months traffic data? This is not reversible"
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                hx-swap="none">
+                DELETE Last Month's Traffic
+            </button>
             <hr>
             {% endif %}
 

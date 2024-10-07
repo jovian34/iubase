@@ -50,7 +50,6 @@ def current_months_traffic(request):
         "day": f"{today:%-d}",
         "prior_day": prior_day,
     }
-    print(f"Current Month {today:%B}")
     return shortcuts.render(request, "index/one_months_traffic.html", context=context)
 
 
@@ -86,7 +85,6 @@ def one_days_traffic(request, day):
         "month_day": f"{start:%B %-d}",
         "prior_day": int(day) - 1,
     }
-    print(f"processing {start:%B %-d}")
     return shortcuts.render(request, "index/partials/one_days_traffic.html", context=context)
 
 

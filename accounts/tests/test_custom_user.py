@@ -1,7 +1,8 @@
 import pytest
 import os
 
-from ..models import CustomUser
+from django import urls
+from accounts.models import CustomUser
 
 
 @pytest.fixture()
@@ -25,3 +26,12 @@ def test_admin_page_renders(client):
     response = client.get(f"/{os.getenv('ADMIN_WORD')}/", follow=True)
     assert response.status_code == 200
     assert "jovian34_iubase" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_sign_up_page_renders(client):
+    response = client.get(urls.reverse("account_signup"))
+    assert response.status_code == 200
+    assert "Sign Up" in str(response.content)
+
+

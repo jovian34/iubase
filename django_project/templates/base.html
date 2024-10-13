@@ -57,12 +57,12 @@
             <p>Welcome, {{ user.first_name }}.
               You can <a href="{% url 'index' %}">add dynamic content</a> 
               or</p>
-              <form method="post" action="{% url 'logout' %}">
+              <form method="post" action="{% url 'account_logout' %}">
                 {% csrf_token %}
                 <button type="submit">Sign Out</button>
               </form>
             {% else %}
-            <p><a href="{% url 'login' %}">Staff login</a></p>
+            <p><a href="{% url 'account_login' %}">Staff login</a></p>
             {% endif %}
           
       </footer>

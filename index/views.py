@@ -57,22 +57,7 @@ def current_months_traffic(request):
 def one_days_traffic(request, day):
     if int(day) < 1:
         pass
-    end = datetime(
-        year=datetime.today().year,
-        month=datetime.today().month,
-        day=int(day),
-        hour=23,
-        minute=59,
-        second=59,
-    )
-    start = datetime(
-        year=datetime.today().year,
-        month=datetime.today().month,
-        day=int(day),
-        hour=0,
-        minute=0,
-        second=0,
-    )
+    end, start = get_start_and_end_of_day(day)
     traf = index_models.TrafficCounter.objects.filter(timestamp__gte=start, timestamp__lte=end).order_by(
         "-timestamp"
     )
@@ -86,6 +71,28 @@ def one_days_traffic(request, day):
         "prior_day": int(day) - 1,
     }
     return shortcuts.render(request, "index/partials/one_days_traffic.html", context=context)
+
+
+def get_start_and_end_of_day(day):
+    unaware_end = datetime(
+        year=datetime.today().year,
+        month=datetime.today().month,
+        day=int(day),
+        hour=23,
+        minute=59,
+        second=59,
+    )
+    end = timezone.localize(unaware_end)
+    unaware_start = datetime(
+        year=datetime.today().year,
+        month=datetime.today().month,
+        day=int(day),
+        hour=0,
+        minute=0,
+        second=0,
+    )    
+    start = timezone.localize(unaware_start) 
+    return end, start
 
 
 def get_first_of_current_month():

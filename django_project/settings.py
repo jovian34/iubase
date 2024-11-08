@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.41"  # INDEX fix template issue on traffic data ATP 2024-10-07
+    "0.1.42"  # DJ-PROJ update Django to 5.1.3 ATP 2024-11-08
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

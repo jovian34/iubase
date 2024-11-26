@@ -10,6 +10,7 @@ from player_tracking.views import (
     drafted_players, 
     fall_players, 
     iu_rosters,
+    incoming_not_signed,
     pt_index, 
     set_player_properties,
     single_player_page, 
@@ -59,6 +60,11 @@ urlpatterns = [
         "summer_assignments/<summer_year>/",
         summer_assignments.view,
         name="summer_assignments",
+    ),
+    path(
+        "incoming_not_signed/<fall_year>/",
+        incoming_not_signed.view,
+        name="incoming_not_signed",
     ),
 
     # partials

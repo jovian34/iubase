@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.42"  # DJ-PROJ update Django to 5.1.3 ATP 2024-11-08
+    "0.1.43"  # PT show commits who have not signed ATP 2024-11-25
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

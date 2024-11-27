@@ -9,13 +9,16 @@ from player_tracking.models import Player, Transaction
 def view(request, fall_year):
     players = Player.objects.filter(first_spring=int(fall_year)+1).order_by(Lower("last"))
     for player in players:
+        player.hs = True
         player.nli = False
         transactions = Transaction.objects.filter(player=player)
         for transaction in transactions:
             if transaction.trans_event == "National Letter of Intent Signed":
                 player.nli = True
+            if transaction.trans_event == "Verbal Commitment from College":
+                player.hs = False
     context = {
         "players": players,
         "page_title": f"Commits for {fall_year} who have not yet signed a National Letter of Intent",
     }
-    return render(request, "player_tracking/incoming_not_signed.html", context)
+    return render(request, "player_tracking/incoming_players.html", context)

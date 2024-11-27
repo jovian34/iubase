@@ -14,10 +14,10 @@
         <a href="{% url "set_player_properties" %}"><button>Calculate last eliigible spring</button></a>
         {% endif %}
 
-        <h3>Verbal Commits from high school pending National Letter of Intent</h3>
+        <h3>Commits from high school with confirmed National Letter of Intent signed</h3>
         <ul>
         {% for player in players%}
-            {% if not player.nli and player.hs %}
+            {% if player.nli and player.hs %}
             <li>
                 <h2><a href="{% url "single_player_page" player.pk %}">
                     {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
@@ -27,10 +27,10 @@
         {% endfor %}
         </ul>
 
-        <h3>Commits from high school with confirmed National Letter of Intent signed</h3>
+        <h3>Verbal Commits from high school pending National Letter of Intent</h3>
         <ul>
         {% for player in players%}
-            {% if player.nli and player.hs %}
+            {% if not player.nli and player.hs %}
             <li>
                 <h2><a href="{% url "single_player_page" player.pk %}">
                     {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    

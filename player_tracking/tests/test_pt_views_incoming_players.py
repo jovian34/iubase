@@ -29,9 +29,9 @@ def test_incoming_players_places_hs_under_correct_nli_headers_player (
     output = str(response.content)
     xavier = output.find("Xavier")
     owen = output.find("Owen")
-    nli_head = output.find("with confirmed National")
-    assert nli_head < xavier
-    assert nli_head > owen
+    nli_head = output.find("from high school pending")
+    assert nli_head > xavier
+    assert nli_head < owen
 
 
 @pytest.mark.django_db

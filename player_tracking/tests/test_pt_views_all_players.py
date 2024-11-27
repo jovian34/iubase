@@ -29,7 +29,7 @@ def test_all_players_renders_in_alpha_order_by_case_insensitive_last_name(
     """
     Edge case where player's last name starts with a lower case letter
     The order_by function normally orders capital letters before lower case
-    a Lower() method is applied to make the ordering case insensative
+    a Lower() method is applied to make the ordering case insensitive
     """
     response = client.get(reverse("players"))
     assert response.status_code == 200

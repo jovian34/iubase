@@ -8,14 +8,46 @@
 </div>
 <br clear="both">
 
-{% if user.is_authenticated %}
-<div class="column-12">
+
+<div class="column-12">{% include "player_tracking/includes/fall_nav.html" %}
+
+    <div class="column-12">
+            <h3>{{ page_title }}</h3>
+            <h3>Total Players: {{ count }}</h3>
+            <p>NOTE: this is all eligible players committed or in the system now by NCAA rules.
+            This does not take into account the MLB Draft.</p>
+    </div>
+    <br clear="both">
+    
+    
+    <div class="column-12">
+        <div class="column-3"></div>
+        <div class="column-6">    
+                <a href="{% url "incoming_players" fall_year %}"><button>Only Incoming Players</button></a></div>
+        </div>
+    </div>
+    
+    
+    
+    <div class="column-12">  
+    
+            <h3>Alphabetical Listing</h3>
+            <ul>
+            {% for player in players %}
+                <li>
+                    <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
+                    <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.primary_position }}</p>        
+                </li>
+                <hr>
+            {% endfor %}
+            </ul>
+    </div>
     <div class="column-3"></div>
     <div class="column-6">    
-            <a href="{% url "incoming_players" fall_year %}"><button>Letter of Intent not yet signed</button></a></div>
+            <a href="{% url "incoming_players" fall_year %}"><button>Only Incoming Players</button></a></div>
     </div>
 </div>
-{% endif %}
+
 
 
 <div class="column-12">  

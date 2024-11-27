@@ -8,21 +8,20 @@ from player_tracking.tests.fixtures.mlb_draft_date import typical_mlb_draft_date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
-from accounts.tests.fixtures import logged_user_schwarbs
 from live_game_blog.tests.fixtures.teams import teams
+from player_tracking.views import set_player_properties
 
 this_year = date.today().year
 
 
 @pytest.mark.django_db
 def test_draft_combine_attendees_set_to_current_last_year(
-    client, players, transactions, annual_rosters, typical_mlb_draft_date, logged_user_schwarbs
+    client, players, transactions, annual_rosters, typical_mlb_draft_date
 ):
     response = client.get(reverse("players"), follow=True)
     nick = Player.objects.get(pk=players.nick_mitchell.pk)
     assert not nick.first_spring or nick.last_spring
-    response = client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
+    set_player_properties.set_player_props_get_errors()
     response = client.get(reverse("players"), follow=True)
     nick = Player.objects.get(pk=players.nick_mitchell.pk)
     assert nick.first_spring == this_year

@@ -1,16 +1,6 @@
 import pytest
 from django.urls import reverse
-from datetime import date, datetime
-
-from player_tracking.tests.fixtures.annual_rosters import annual_rosters
-from player_tracking.tests.fixtures.mlb_draft_date import typical_mlb_draft_date
-from player_tracking.tests.fixtures.players import players
-from player_tracking.tests.fixtures.prof_org import prof_orgs
-from player_tracking.tests.fixtures.transactions import transactions
-from player_tracking.models import Player
-from live_game_blog.tests.fixtures.teams import teams
-from accounts.models import CustomUser
-from accounts.tests.fixtures import logged_user_schwarbs
+from datetime import date
 
 
 this_year = date.today().year

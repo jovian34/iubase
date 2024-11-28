@@ -13,14 +13,21 @@
         <a href="{% url "add_player" %}"><button>Add Player</button></a>
         <a href="{% url "set_player_properties" %}"><button>Calculate last eliigible spring</button></a>
         {% endif %}
-        <ul>
+        <table>
         {% for player in players%}
-            <li>
-                <h2><a href="{% url "single_player_page" player.pk %}">
-                    {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
-                </a></h2>    
-            </li>
+            <tr>
+                <td>
+                    <img src="{{ player.headshot }}" class=thumbnail>
+                </td>
+
+                <td>
+                    <p><a href="{% url "single_player_page" player.pk %}">
+                        {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
+                    </a></p>
+                </td>  
+            </tr>
         {% endfor %}
+        </table>
     </div>
 </div>
 {% endblock %}

@@ -17,6 +17,7 @@ def players():
         hsgrad_year=this_year - 2,
         bats="Left",
         throws="Left",
+        headshot="https://iubase.com/wp-content/uploads/2023/03/Taylor-still_00001-2.jpg",
     )
     brayden_risedorph = Player.objects.create(
         first="Brayden",

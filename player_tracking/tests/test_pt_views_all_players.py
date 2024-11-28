@@ -37,3 +37,10 @@ def test_all_players_renders_in_alpha_order_by_case_insensitive_last_name(
     oo = output.find("Owen ten Oever")
     aw = output.find("Andrew Wiggins")
     assert aw > oo
+
+
+@pytest.mark.django_db
+def test_all_players_shows_thumbnail(client, players):
+    response = client.get(reverse("players"))
+    assert response.status_code == 200
+    assert "https://iubase.com/wp-content/uploads/2023/03/Taylor-still_00001-2.jpg" in str(response.content)

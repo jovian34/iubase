@@ -109,6 +109,15 @@ h3 {
   border-style: solid;
 }
 
+.thumbnail {
+  width: 120px;
+  height: auto;
+  margin: 1px;
+  border: 1pt;
+  border-color: black;
+  border-style: solid;
+}
+
 /*--------NAVIGATION------------*/
 .nav-buttons {
   text-align: center;

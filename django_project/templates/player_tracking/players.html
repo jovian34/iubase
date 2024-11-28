@@ -22,9 +22,12 @@
 
                 <td>
                     <p><a href="{% url "single_player_page" player.pk %}">
-                        {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
+                        {{player.first}} {{player.last}}    
                     </a></p>
                 </td>  
+                <td>
+                    <p>{{ player.first_spring }} to {{ player.last_spring }}</p>
+                </td>
             </tr>
         {% endfor %}
         </table>

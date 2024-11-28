@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.45"  # PT Incoming Players page order changed ATP 2024-11-27
+    "0.1.46"  # PT corrected template error ATP 2024-11-28
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

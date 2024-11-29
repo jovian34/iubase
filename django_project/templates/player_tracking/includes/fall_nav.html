@@ -1,8 +1,12 @@
-
-{% for year in years %}
-    <button hx-get="{% url 'fall_players_redirect' year %}" hx-target="#fall-content" hx-push-url="true">{{ year }}</button>
-{% endfor %}
-{% if user.is_authenticated %}
-<br>
-<a href="{% url "add_player" %}"><button>Add Player</button></a>
-{% endif %}
+<div class="column-12 clear-both"> 
+    <div class="column-3"></div>
+    <div class="column-6">
+    {% for year in years %}
+        <button hx-get="{% url 'fall_players_redirect' year %}" hx-target="#fall-content" hx-push-url="true">{{ year }}</button>
+    {% endfor %}
+    {% if user.is_authenticated %}
+    <br>
+    <a href="{% url "add_player" %}"><button>Add Player</button></a>
+    {% endif %}
+    </div>
+</div>

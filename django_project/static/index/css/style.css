@@ -135,12 +135,13 @@ h3 {
 }
 
 .thumbnail {
-	width: 120px;
+	width: 35%;
 	height: auto;
 	margin: 1px;
 	border: 1pt;
 	border-color: var(--black);
 	border-style: solid;
+	float: right;
 }
 
 /*--------NAVIGATION------------*/
@@ -193,6 +194,14 @@ a:active {
 }
 .color-1{
 	background-color: var(--yellow);
+}
+
+.clear-left {
+	clear: left;
+}
+
+.clear-both {
+	clear: both;
 }
 
 /*------ PHOTO STYLING ------*/

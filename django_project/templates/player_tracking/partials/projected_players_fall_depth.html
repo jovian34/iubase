@@ -1,28 +1,37 @@
 {% include "player_tracking/includes/fall_nav.html" %}
 
-<div class="column-12">     
+<div class="column-12 clear-both"> 
+    <div class="column-3"></div>
+    <div class="column-6">    
         <h3>{{ page_title }}</h3>
         <h3>Total Players: {{ count }}</h3>
+    </div>
 </div>
-<br clear="both">
 
-<button hx-get="{% url 'projected_players_fall_alpha' fall_year %}" hx-target="#fall-content" hx-push-url="true">Switch to Alphabetical Listing</button>
+<div class="column-12 clear-both"> 
+    <div class="column-3"></div>
+    <div class="column-6"> 
+        <button hx-get="{% url 'projected_players_fall_alpha' fall_year %}" hx-target="#fall-content" hx-push-url="true">Switch to Alphabetical Listing</button>
+    </div>    
+</div>
 
 {% for position in positions %}
 {% if position.count %}
-    <div class="column-12">               
+    <div class="column-12 clear-both">    
+        <div class="column-3"></div>
+        <div class="column-6">           
             <h3>{{ position.position }}s: {{ position.count }}</h3>                
-            <ul>
+            
                 {% for player in position.players %}
-                    <li>
+                    <div class="clear-both">
+                    <hr>
+                        <img src="{{ player.headshot }}" class="thumbnail"> 
                         <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
                         {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
-                        <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p>        
-                    </li>
-                    <hr>
+                        <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p>
+                    </div>
                 {% endfor %}
-            </ul>
+                </div>
     </div>
-    <br clear="both">
 {% endif %}
 {% endfor %}

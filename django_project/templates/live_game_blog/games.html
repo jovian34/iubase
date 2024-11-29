@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<div class="column-12">
+<div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6">
         <img src="https://live.staticflickr.com/65535/54014518406_96d65316e9_o.jpg" id="player-photo">  
@@ -27,13 +27,11 @@
             {% endif %}
         {% endfor %}
     </div>
-    <div class="column-3"></div>
 </div>
-<br clear="both">
 
 
 {% if user.is_authenticated %}
-<div class="column-12">
+<div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6">
         <a href="{% url "add_game" %}"><button>Add game</button></a>
@@ -41,9 +39,8 @@
     </div>
 </div>
 {% endif %}
-<br clear="both">
 
-<div class="column-12">
+<div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6" id="past-games">
         <button hx-trigger="click" hx-get="{% url "past_games" %}" hx-target="#past-games">Show Completed Games</button>

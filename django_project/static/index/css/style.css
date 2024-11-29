@@ -134,6 +134,16 @@ h3 {
 	border-style: solid;
 }
 
+.headshot {
+	width: 20%;
+	height: auto;
+	margin-right: 8%;
+	border: 2pt;
+	border-color: var(--black);
+	border-style: solid;
+	float: right;
+}
+
 .thumbnail {
 	width: 35%;
 	height: auto;

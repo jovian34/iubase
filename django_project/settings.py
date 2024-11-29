@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.54"  # PT edit player info feature added ATP 2024-11-29
+    "0.1.56"  # PT shrunk headshot in single player page ATP 2024-11-29
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

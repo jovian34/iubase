@@ -14,6 +14,18 @@
         <a href="{% url "set_player_properties" %}"><button>Calculate last eliigible spring</button></a>
         {% endif %}
         <table>
+            <tr>
+                <td>
+                    <h3>Photo</h3>
+                </td>
+                <td>
+                    <h3>Info</h3>
+                </td>
+                <td>
+                    <h3>IU Years</h3>
+                </td>
+            </tr>
+
         {% for player in players%}
             <tr>
                 <td>
@@ -24,6 +36,11 @@
                     <p><a href="{% url "single_player_page" player.pk %}">
                         {{player.first}} {{player.last}}    
                     </a></p>
+                    <ul>
+                        <li><p>Height: {{ player.height }}"<p></li>
+                        <li><p>Weight: {{ player.weight }} lbs.<p></li>
+                        <li><p>Hometown: {{ player.home_city }}, {{ player.home_state }}, {{ player.home_country }}<p></li>
+                    </ul>
                 </td>  
                 <td>
                     <p>{{ player.first_spring }} to {{ player.last_spring }}</p>

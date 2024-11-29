@@ -137,6 +137,7 @@ h3 {
 .headshot {
 	width: 20%;
 	height: auto;
+	margin-top: 1%;
 	margin-right: 8%;
 	border: 2pt;
 	border-color: var(--black);

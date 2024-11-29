@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.50"  # Index - all style to raw CSS with variables ATP 2024-11-28
+    "0.1.51"  # Index - changed fonts ATP 2024-11-28
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

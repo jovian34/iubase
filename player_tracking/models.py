@@ -14,6 +14,7 @@ class Player(models.Model):
     home_state = models.CharField(null=True, blank=True, max_length=8)
     home_country = models.CharField(db_default="USA")
     headshot = models.URLField(null=True, blank=True)
+    action_shot = models.URLField(null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
     primary_position = models.CharField(null=True, blank=True, choices=choices.POSITIONS)
     bats = models.CharField(choices=choices.HAND, max_length=16, null=True, blank=True)

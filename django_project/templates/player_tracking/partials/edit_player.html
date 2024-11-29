@@ -1,0 +1,8 @@
+<div class="column-3"></div>
+<div class="column-6">
+    <form action="{% url "edit_player" player_id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" value="Submit">Submit Updated Player Info</button>
+    </form>
+</div>

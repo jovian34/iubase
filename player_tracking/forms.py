@@ -4,7 +4,7 @@ from live_game_blog import models as lgb_models
 from player_tracking import choices
 
 
-class NewPlayerForm(forms.Form):
+class PlayerForm(forms.Form):
     first = forms.CharField(label="First Name")
     last = forms.CharField(label="Last Name")
     hsgrad_year = forms.IntegerField(label="High School Graduate Year")
@@ -13,7 +13,12 @@ class NewPlayerForm(forms.Form):
     home_state = forms.CharField(label="Home State", required=False)
     home_country = forms.CharField(label="Home Country")
     headshot = forms.URLField(
-        label="Headshot or other photo file URL",
+        label="Portrait headshot URL",
+        required=False,
+        assume_scheme="https",  # remove argument for Django 6.0
+    )
+    action_shot = forms.URLField(
+        label="Landscape action shot URL",
         required=False,
         assume_scheme="https",  # remove argument for Django 6.0
     )
@@ -30,17 +35,21 @@ class NewPlayerForm(forms.Form):
     )
     height = forms.IntegerField(label="height in Inches", required=False)
     weight = forms.IntegerField(label="Weight in Lbs.", required=False)
+    primary_position = forms.ChoiceField(
+        label="Primary Position",
+        choices=choices.POSITIONS,
+        required=False,
+    )
+
+
+class NewPlayerForm(PlayerForm):
     trans_event = forms.ChoiceField(
         label="Transaction",
         choices=choices.TRANSACTIONS,
         required=True,
     )
     trans_date = forms.DateField(label="Transaction Date")
-    citation = forms.CharField(label="Citation", required=False)
-    primary_position = forms.ChoiceField(
-        label="Primary Position",
-        choices=choices.POSITIONS,
-    )
+    citation = forms.CharField(label="Citation", required=False)    
 
 
 class AnnualRosterForm(forms.Form):

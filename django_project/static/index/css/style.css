@@ -127,7 +127,7 @@ h3 {
 }
 
 #player-photo {
-	width: 75%;
+	width: 60%;
 	margin: 5px;
 	border: 2pt;
 	border-color: var(--black);
@@ -167,14 +167,11 @@ a:visited {
 	text-decoration: none;
 }
 
-
-
 /* selected link */
 a:active {
     color: var(--link-active);
 	text-decoration: none;
 }
-
 
 
 /*---------COLUMNS--------*/
@@ -188,21 +185,8 @@ a:active {
 
 .column-2{width: 50%; float: left;}
 .column-2 img {width: 100%;}
-
-.color-1, .color-2 {
-	padding: .4em 1em .5em 1em;
-}
-.color-1{
-	background-color: var(--yellow);
-}
-
-.clear-left {
-	clear: left;
-}
-
-.clear-both {
-	clear: both;
-}
+.clear-left {clear: left;}
+.clear-both {clear: both;}
 
 /*------ PHOTO STYLING ------*/
 

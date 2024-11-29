@@ -8,6 +8,7 @@ from player_tracking.views import (
     depth_charts, 
     draft_combine, 
     drafted_players, 
+    edit_player,
     fall_players,
     incoming_players, 
     iu_rosters,
@@ -100,4 +101,9 @@ urlpatterns = [
         fall_players.all_eligible,
         name="all_eligible_players_fall",
     ),
+    path(
+        "edit_player/<player_id>/",
+        edit_player.view,
+        name="edit_player",
+    )
 ]

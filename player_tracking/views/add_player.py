@@ -41,6 +41,7 @@ def save_new_player_and_init_transaction(form):
         home_state=form.cleaned_data["home_state"],
         home_country=form.cleaned_data["home_country"],
         headshot=form.cleaned_data["headshot"],
+        action_shot=form.cleaned_data["action_shot"],
         birthdate=form.cleaned_data["birthdate"],
         bats=form.cleaned_data["bats"],
         throws=form.cleaned_data["throws"],

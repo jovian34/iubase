@@ -61,13 +61,34 @@ def forms(summer_leagues, summer_teams, teams, prof_orgs):
         "bonus_or_slot": ["150000"],
         "comment": ["Expected to go over slot value."],
     }
+    devin_taylor_edited = {
+        "first": ["Devin"],
+        "last": ["Taylor"],
+        "hsgrad_year": [f"{this_year - 2}"],
+        "high_school": ["LaSalle"],
+        "home_city": ["Cincinnati"],
+        "home_state": ["OH"],
+        "home_country": ["USA"],
+        "headshot": ["https://iubase.com/wp-content/uploads/2023/03/Taylor-still_00001-2.jpg"],
+        "action_shot": ["https://live.staticflickr.com/65535/54132418776_e7cc1bcd11_k.jpg"],
+        "birthdate": [],
+        "bats": ["Left"],
+        "throws": ["Left"],
+        "height": [],
+        "weight": [],
+        "primary_position": [],
+    }
     FormObj = namedtuple(
         "FormObj",
-        "phillip_glasser_new summer_assignment_new nick_mitchell_two_years_past risedorph_drafted",
+        "phillip_glasser_new summer_assignment_new nick_mitchell_two_years_past risedorph_drafted devin_taylor_edited",
     )
     return FormObj(
         phillip_glasser_new=phillip_glasser_new,
         summer_assignment_new=summer_assignment_new,
         nick_mitchell_two_years_past=nick_mitchell_two_years_past,
         risedorph_drafted=risedorph_drafted,
+        devin_taylor_edited=devin_taylor_edited,
     )
+
+
+

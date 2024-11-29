@@ -26,7 +26,7 @@ def test_add_player_form_renders(client, logged_user_schwarbs):
     response = client.get(reverse("add_player"))
     assert response.status_code == 200
     assert "First Name" in str(response.content)
-    assert "Headshot or other photo file URL" in str(response.content)
+    assert "Portrait headshot URL" in str(response.content)
 
 
 @pytest.mark.django_db

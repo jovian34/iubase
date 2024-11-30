@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.57"  # PT generic action shot set for single player template ATP 2024-11-29
+    "0.1.58"  # PT style tweaks ATP 2024-11-30
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

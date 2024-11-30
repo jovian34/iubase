@@ -26,14 +26,13 @@
     <div class="column-3"></div>
     <div class="column-6">    
         <h3>Alphabetical Listing</h3>
-        <ul>
         {% for player in players %}
-            <li>
+            <div class="column-12 clear-both">
+
+                <img class="headshot" src="{{player.headshot}}">
                 <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
-                <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.primary_position }}</p>        
-            </li>
-            <hr>
+                <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.primary_position }}</p> 
+            </div>
         {% endfor %}
-        </ul>
     </div>
 </div>

@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="column-12" 
+<div class="column-12 clear-both" 
     hx-get="{% url "one_days_traffic" day %}"
     hx-target="#first-day"
     hx-swap="afterend"
@@ -19,8 +19,7 @@
 
 </div>
 
-<br clear="both">
 
-<div class="column-12" id="first-day"></div>
+<div class="column-12 clear-both" id="first-day"></div>
 
 {% endblock %}

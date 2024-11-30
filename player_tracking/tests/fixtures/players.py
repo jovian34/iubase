@@ -18,6 +18,7 @@ def players():
         bats="Left",
         throws="Left",
         headshot="https://iubase.com/wp-content/uploads/2023/03/Taylor-still_00001-2.jpg",
+        action_shot="https://live.staticflickr.com/65535/54014518896_5c58571da6_o.jpg",
     )
     brayden_risedorph = Player.objects.create(
         first="Brayden",

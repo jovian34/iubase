@@ -4,9 +4,13 @@
 
 {% block header %}
     <h1>{{ page_title }}</h1>
-    <img id="player-photo" src="{{player.action_shot}}">
+    {% if player.action_shot %}
+        <img id="player-photo" src="{{player.action_shot}}">
+    {% else %}
+        <img id="player-photo" src="https://iubase.com/wp-content/uploads/2024/11/53704071552_13227a46a0_k.jpg">
+    {% endif %}
     <img class="headshot" src="{{player.headshot}}">
-    {% endblock %}
+{% endblock %}
 
 
 {% block content %}

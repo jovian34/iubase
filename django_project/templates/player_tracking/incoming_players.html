@@ -18,8 +18,8 @@
         <h3>Commits from high school with confirmed National Letter of Intent signed</h3>
 
         {% for player in players%}
-            <div class="column-12 clear-both">
-                {% if player.nli and player.hs %}
+            {% if player.nli and player.hs %}
+                <div class="column-12 clear-both">
                     <h2><a href="{% url "single_player_page" player.pk %}">
                         {{player.first}} {{player.last}}   
                     </a></h2>
@@ -30,9 +30,9 @@
                     <p>Bats: {{ player.bats }}</p>
                     <p>Throws: {{ player.throws }}</p>
                     <p>Height: {{ player.height }}"</p>
-                    <p>Weight: {{ player.weight }} lbs.</p>                    
-                {% endif %}
-            </div>
+                    <p>Weight: {{ player.weight }} lbs.</p> 
+                </div>                   
+            {% endif %}
         {% endfor %}
     </div>
 </div>

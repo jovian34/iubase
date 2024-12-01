@@ -21,7 +21,7 @@
             <div class="column-12 clear-both">
                 {% if player.nli and player.hs %}
                     <h2><a href="{% url "single_player_page" player.pk %}">
-                        {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
+                        {{player.first}} {{player.last}}   
                     </a></h2>
                     <img class="large-headshot" src="{{ player.headshot }}">
                     <p>From high school: {{ player.high_school }}
@@ -47,7 +47,7 @@
             {% if not player.nli and player.hs %}
                 <div class="column-12 clear-both">
                     <h2><a href="{% url "single_player_page" player.pk %}">
-                        {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
+                        {{player.first}} {{player.last}} 
                     </a></h2>
                     <img class="large-headshot" src="{{ player.headshot }}">
                     <p>From high school: {{ player.high_school }}

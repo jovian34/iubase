@@ -1,0 +1,24 @@
+<div class="column-12 clear-both">
+
+    <div class="column-3"></div>
+    <div class="column-6">
+        <h3>{{ page_title }}</h3>
+        <h3>Total Roster Length: {{ total }}</h3>
+        
+        {% for player in players %}
+            <div class="column-12 clear-both">
+                <img class="headshot" src="{{player.player.headshot}}">
+                <h3>{{ player.jersey }}. <a href="{% url "single_player_page" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></h3>                    
+                <p>
+                    {% if player.primary_position == "Pitcher" %}{{ player.player.throws}}-Handed{% endif %}
+                    {{ player.primary_position }}
+                    {% if player.secondary_position %}/ {{ player.secondary_position}}{% endif %}
+                    {% if player.status != "Spring Roster" %}
+                        <em>- {{ player.status }}</em>
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    
+    </div>
+</div>

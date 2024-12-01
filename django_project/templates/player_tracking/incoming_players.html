@@ -9,49 +9,82 @@
 <div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6">
+
         {% if user.is_authenticated %}
         <a href="{% url "add_player" %}"><button>Add Player</button></a>
         <a href="{% url "set_player_properties" %}"><button>Calculate last eliigible spring</button></a>
         {% endif %}
-
+            
         <h3>Commits from high school with confirmed National Letter of Intent signed</h3>
-        <ul>
-        {% for player in players%}
-            {% if player.nli and player.hs %}
-            <li>
-                <h2><a href="{% url "single_player_page" player.pk %}">
-                    {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
-                </a></h2>    
-            </li>
-            {% endif %}
-        {% endfor %}
-        </ul>
 
-        <h3>Verbal Commits from high school pending National Letter of Intent</h3>
-        <ul>
+        {% for player in players%}
+            <div class="column-12 clear-both">
+                {% if player.nli and player.hs %}
+                    <h2><a href="{% url "single_player_page" player.pk %}">
+                        {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
+                    </a></h2>
+                    <img class="large-headshot" src="{{ player.headshot }}">
+                    <p>From high school: {{ player.high_school }}
+                    in {{ player.home_city }}, {{ player.home_state}}, {{ player.home_country }}</p>  
+                    <p>Primary position: {{ player.primary_position }}</p>
+                    <p>Bats: {{ player.bats }}</p>
+                    <p>Throws: {{ player.throws }}</p>
+                    <p>Height: {{ player.height }}"</p>
+                    <p>Weight: {{ player.weight }} lbs.</p>                    
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+    
+    
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+            <h3>Verbal Commits from high school pending National Letter of Intent</h3>
+
         {% for player in players%}
             {% if not player.nli and player.hs %}
-            <li>
-                <h2><a href="{% url "single_player_page" player.pk %}">
-                    {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
-                </a></h2>    
-            </li>
+                <div class="column-12 clear-both">
+                    <h2><a href="{% url "single_player_page" player.pk %}">
+                        {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
+                    </a></h2>
+                    <img class="large-headshot" src="{{ player.headshot }}">
+                    <p>From high school: {{ player.high_school }}
+                    in {{ player.home_city }}, {{ player.home_state}}, {{ player.home_country }}</p>  
+                    <p>Primary position: {{ player.primary_position }}</p>
+                    <p>Bats: {{ player.bats }}</p>
+                    <p>Throws: {{ player.throws }}</p>
+                    <p>Height: {{ player.height }}"</p>
+                    <p>Weight: {{ player.weight }} lbs.</p>
+                </div> 
             {% endif %}
         {% endfor %}
-        </ul>
+    </div>
+</div>
 
-        <h3>Transfer Commits</h3>
-        <ul>
+    
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+            <h3>Transfer Commits</h3>
+
         {% for player in players%}
             {% if not player.hs %}
-            <li>
-                <h2><a href="{% url "single_player_page" player.pk %}">
-                    {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
-                </a></h2>    
-            </li>
+                <div class="column-12 clear-both">
+                    <h2><a href="{% url "single_player_page" player.pk %}">
+                        {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
+                    </a></h2>
+                    <img class="large-headshot" src="{{ player.headshot }}">
+                    <p>From {{ player.home_city }}, {{ player.home_state}}, {{ player.home_country }}</p>  
+                    <p>Primary position: {{ player.primary_position }}</p>
+                    <p>Bats: {{ player.bats }}</p>
+                    <p>Throws: {{ player.throws }}</p>
+                    <p>Height: {{ player.height }}"</p>
+                    <p>Weight: {{ player.weight }} lbs.</p>  
+                </div>  
             {% endif %}
         {% endfor %}
-        </ul>
     </div>
 </div>
 {% endblock %}

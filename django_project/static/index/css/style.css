@@ -99,32 +99,6 @@ h3 {
 	width: 70%;
 	padding: 5px;
 }
-/*--------HEADER---------------*/
-#headerWrapper {
-	background-color: var(--body-background-color);
-}
-
-.blog-small-header {
-	font-size: 14px;
-}
-
-/*------BANNER-----*/
-
-.banner {
-	width: 95%;
-	align-content: center;
-}
-
-#iubase-logo {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 30%;
-	border: 5pt;
-	border-color: var(--crimson);
-	border-style: solid;
-	border-radius: 5%;
-}
 
 #player-photo {
 	width: 60%;
@@ -153,6 +127,47 @@ h3 {
 	border-color: var(--black);
 	border-style: solid;
 	float: right;
+}
+
+.large-headshot {
+	width: 40%;
+	height: auto;
+	margin-top: 1%;
+	margin-right: 2%;
+	margin-left: 5%;
+	border: 2pt;
+	border-color: var(--black);
+	border-style: solid;
+	float: right;
+}
+
+
+
+/*--------HEADER---------------*/
+#headerWrapper {
+	background-color: var(--body-background-color);
+}
+
+.blog-small-header {
+	font-size: 14px;
+}
+
+/*------BANNER-----*/
+
+.banner {
+	width: 95%;
+	align-content: center;
+}
+
+#iubase-logo {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 30%;
+	border: 5pt;
+	border-color: var(--crimson);
+	border-style: solid;
+	border-radius: 5%;
 }
 
 /*--------NAVIGATION------------*/
@@ -198,6 +213,8 @@ a:active {
 .column-2 img {width: 100%;}
 .clear-left {clear: left;}
 .clear-both {clear: both;}
+.bkgrd-clear {background-color: transparent;}
+.bkrgd-body-std {background-color: var(--body-background-color);}
 
 /*------ PHOTO STYLING ------*/
 

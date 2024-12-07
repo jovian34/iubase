@@ -215,6 +215,7 @@ a:active {
 .clear-both {clear: both;}
 .bkgrd-clear {background-color: transparent;}
 .bkrgd-body-std {background-color: var(--body-background-color);}
+.col-crimson {background-color: var(--crimson);}
 
 /*------ PHOTO STYLING ------*/
 

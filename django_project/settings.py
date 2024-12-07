@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.60"  # PT added photos and info to incoming players ATP 2024-11-30
+    "0.1.60"  # ALL upgrade Python to 3.12.8 and Django to 5.1.4 ATP 2024-12-07
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

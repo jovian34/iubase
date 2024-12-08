@@ -23,7 +23,7 @@
                     <h2><a href="{% url "single_player_page" player.pk %}">
                         {{player.first}} {{player.last}}   
                     </a></h2>
-                    <img class="large-headshot" src="{{ player.headshot }}">
+                    <img class="large-headshot" src="{{ player.headshot }}" alt="{{player.first}} {{player.last}}">
                     <p>From high school: {{ player.high_school }}
                     in {{ player.home_city }}, {{ player.home_state}}, {{ player.home_country }}</p>  
                     <p>Primary position: {{ player.primary_position }}</p>

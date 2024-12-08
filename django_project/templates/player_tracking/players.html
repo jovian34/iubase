@@ -20,7 +20,7 @@
 <div class="column-12 clear-left">    
     <div class="column-3"></div>
     <div class="column-6">
-        <img src="{{ player.headshot }}" class="thumbnail">
+        <img src="{{ player.headshot }}" class="thumbnail" alt="{{player.first}} {{player.last}}">
         <h3><a href="{% url "single_player_page" player.pk %}">
             {{player.first}} {{player.last}}    
         </a></h3>

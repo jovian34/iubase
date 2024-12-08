@@ -79,7 +79,7 @@ def test_past_game_renders_partial_with_score(client, teams, games, scoreboards)
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
-    assert "Kentucky-4" in str(response.content)
+    assert "Kentucky: 4" in str(response.content)
 
 
 @pytest.mark.django_db

@@ -13,18 +13,41 @@
         <img src="https://live.staticflickr.com/65535/54014518406_96d65316e9_o.jpg" id="player-photo">  
         <hr>
         {% for game in games %}
-            <img class="team-logo" src="{{ game.away_team.logo }}">
-            <img class="team-logo" src="{{ game.home_team.logo }}">
-            <h2><a href="{% url "live_game_blog" game.pk %}">
-            {{ game.away_team }}
-                {% if game.neutral_site %} versus {% else %} at {% endif %}
-            {{ game.home_team }}
-                {% if game.fall_exhibition %}<em>- FALL EXHIBITION</em>{% endif %}
-            </h2></a>
-            <h3>{{ game.first_pitch }}</h3>
-            {% if user.is_authenticated %}
-                <h2><a href="{% url "edit_live_game_blog" game.pk %}">Edit or Add to Game Blog</a><h2>          
-            {% endif %}
+            <div class="column-12 clear-both">
+                <img class="team-logo" src="{{ game.away_team.logo }}">
+                <h3><a href="{% url "live_game_blog" game.pk %}">
+                    {% if game.away_rank %}no. {{ game.away_rank }}{% endif %}
+                    {{ game.away_team }}</a>
+                </h3>
+                <p>
+                    {% if game.away_seed %}({{ game.away_seed }}-seed){% endif %}
+                    {% if game.away_nat_seed %}(#{{ game.away_nat_seed }} National Seed){% endif %}            
+                </p>
+
+                <p><a href="{% url "live_game_blog" game.pk %}">
+                    <em>{% if game.neutral_site %} versus {% else %} at {% endif %}</em></a>
+                </p>
+            </div>
+
+            <div class="column-12 clear-both">
+                <img class="team-logo" src="{{ game.home_team.logo }}">
+                <h3><a href="{% url "live_game_blog" game.pk %}">
+                    {% if game.home_rank %}no. {{ game.home_rank }}{% endif %}
+                    {{ game.home_team }}</a>
+                </h3>
+                <p>
+                    {% if game.home_seed %}({{ game.home_seed }}-seed){% endif %}
+                    {% if game.home_nat_seed %}(#{{ game.home_nat_seed }} National Seed){% endif %}
+                </p>
+            </div>
+
+            <div class="column-12 clear-both">
+                <p>{{ game.first_pitch }}{% if game.fall_exhibition %}<em>- FALL EXHIBITION</em>{% endif %}</p>
+                {% if user.is_authenticated %}
+                    <h3><a href="{% url "edit_live_game_blog" game.pk %}">Edit or Add to Game Blog</a></h3>
+                {% endif %}
+                <hr class="crimson">
+            </div>
         {% endfor %}
     </div>
 </div>

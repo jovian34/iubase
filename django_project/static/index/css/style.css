@@ -41,9 +41,8 @@ body {
 	color: var(--body-text-color);
 }
 
-
 .bg {
-	background-image: url("https://live.staticflickr.com/65535/53652315332_e0f75e6483_h.jpg");
+	background-image: url("https://live.staticflickr.com/65535/53652315332_e81f9f13d7_o.jpg");
 	background-repeat: no-repeat;
 	background-position: center;
 	height: 100vh;
@@ -368,7 +367,7 @@ select {
 
 
 
-@media only screen and (min-width: 1200px) { /*start of TABLET media query*/
+@media only screen and (min-width: 800px) { /*start of TABLET media query*/
 
     /*NAVIGATION HERE*/
     
@@ -391,9 +390,9 @@ select {
     
     
     /*--------BACKGROUND---------*/
-    .bg {
-        background-image: url("https://live.staticflickr.com/65535/53652315332_4b34dcfbb9_k.jpg");
-    }
+	.bg {
+		background-image: url("https://live.staticflickr.com/65535/53652315332_4b34dcfbb9_k.jpg");
+	}
     
     /*-------COLUMNS----------*/
     .column-9, .column-8, .column-6, .column-4 , .column-3 {
@@ -430,25 +429,23 @@ select {
 
 
 
-@media only screen and (min-width: 1600px) { /*start of DESKTOP media query*/
+@media only screen and (min-width: 1200px) { /*start of DESKTOP media query*/
 
     /*---------HEADER----------*/
     
+
     header, nav, .row, footer {
         max-width: 1140px;
         margin: 0 auto;
     }
     
-    
     /*-------NAV---------*/
     
     
     /*--------BACKGROUND---------*/
-
-
 	
-.bg {
-        background-image: url("https://live.staticflickr.com/65535/53652315332_e81f9f13d7_o.jpg");
+    .bg {
+		background-image: url("https://live.staticflickr.com/65535/53652315332_e0f75e6483_h.jpg");   
     }
     
     

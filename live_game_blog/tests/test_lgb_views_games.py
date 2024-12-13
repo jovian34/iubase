@@ -17,16 +17,15 @@ from live_game_blog.tests.fixtures.scoreboards import scoreboards
 def test_games_list_page_renders_road_future(client, teams, games, scoreboards):
     response = client.get(reverse("games"))
     assert response.status_code == 200
-    expected = "Indiana at Coastal".replace(" ", "")
+    expected = "Indiana <em>@</em> Coastal".replace(" ", "")
     actual = str(response.content).replace(" ", "").replace("\\n", "")
     assert expected in actual
-
 
 @pytest.mark.django_db
 def test_games_list_page_renders_neutral_future(client, teams, games):
     response = client.get(reverse("games"))
     assert response.status_code == 200
-    assert "versus" in str(response.content)
+    assert "vs." in str(response.content)
 
 
 @pytest.mark.django_db
@@ -73,13 +72,13 @@ def test_games_list_page_renders_logo(client, teams, games):
 
 
 @pytest.mark.django_db
-def test_past_game_renders_partial_with_score(client, teams, games, scoreboards):
+def test_past_game_renders_partial_with_seed_and_score(client, teams, games, scoreboards):
     response = client.get(
         reverse("past_games"),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
-    assert "Kentucky: 4" in str(response.content)
+    assert "Kentucky Wildcats (1-seed): 4" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -88,7 +87,7 @@ def test_past_game_partial_redirects_to_games_when_not_requested_by_HTMX(client,
     assert response.status_code == 302
     response = client.get(reverse("past_games"), follow=True,)    
     assert response.status_code == 200
-    expected = "Indiana at Coastal".replace(" ", "")
+    expected = "Indiana<em>@</em>Coastal".replace(" ", "")
     actual = str(response.content).replace(" ", "").replace("\\n", "")
     assert expected in actual    
     assert "Kentucky-4" not in str(response.content)

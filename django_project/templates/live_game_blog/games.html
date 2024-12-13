@@ -29,12 +29,14 @@
                     {% if game.home_seed %}{{ game.home_team }}({{ game.home_seed }}-seed){% endif %}
                     {% if game.home_nat_seed %}(#{{ game.home_nat_seed }} National Seed){% endif %}
                 </p>
-
-            <div class="column-12 clear-both">
                 <p>{{ game.first_pitch }}{% if game.fall_exhibition %}<em>- FALL EXHIBITION</em>{% endif %}</p>
                 {% if user.is_authenticated %}
                     <h3><a href="{% url "edit_live_game_blog" game.pk %}">Edit or Add to Game Blog</a></h3>
                 {% endif %}
+            </div>
+
+            <div class="column-12 clear-both">    
+                <p></p>
                 <hr class="crimson">
             </div>
         {% endfor %}

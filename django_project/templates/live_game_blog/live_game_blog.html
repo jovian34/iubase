@@ -11,38 +11,41 @@
 {% endblock %}
 
 {% block header %}
-    <h1>
-    {% if game.away_rank %}no. {{ game.away_rank }}{% endif %}
-    {{ game.away_team }} {% if game.away_seed %}({{ game.away_seed }}-seed){% endif %}
-    {% if game.away_nat_seed %}(#{{ game.away_nat_seed }} National Seed){% endif %}
-    
-    {% if game.neutral_site %}vs.{% else %}at{% endif %}
-    {% if game.home_rank %}no. {{ game.home_rank }}{% endif %}
-    {{ game.home_team }} {% if game.home_seed %}({{ game.home_seed }}-seed){% endif %}
-    {% if game.home_nat_seed %}(#{{ game.home_nat_seed }} National Seed){% endif %}
-    {% if game.fall_exhibition %}<em>- FALL EXHIBITION</em>{% endif %}
-    </h1>
-
-    <p>{{ game.first_pitch }} first pitch |
-    {% if game.video and game.video_url %}video: <a href="{{ game.video_url }}">{{ game.video }}</a> |{% endif %}
-    {% if game.audio_primary %}<a href="{{ game.audio_primary }}">audio</a> |{% endif %}
-    {% if game.audio_student %}<a href="{{ game.audio_student }}">student audio</a> |{% endif %}
-    {% if game.live_stats %}<a href="{{ game.live_stats}}">live stats</a>{% endif %}
-    </p>
-
     <div class="column-12 clear-both">
-    <img class="team-logo" src="{{ game.away_team.logo }}">    
-    <p>{{ game.away_team }} {{ game.away_team.mascot }} {% if game.fall_exhibition %}{% else %}: <a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a><p>
-    {% endif %}
+        <h1>  
+        <img class="team-logo" src="{{ game.home_team.logo }}">
+        <img class="team-logo" src="{{ game.away_team.logo }}"> 
+        {% if game.away_rank %}no. {{ game.away_rank }}{% endif %}
+        {{ game.away_team }} {% if game.away_seed %}({{ game.away_seed }}-seed){% endif %}
+        {% if game.away_nat_seed %}(#{{ game.away_nat_seed }} National Seed){% endif %}
+        
+        {% if game.neutral_site %}vs.{% else %}at{% endif %}
+        {% if game.home_rank %}no. {{ game.home_rank }}{% endif %}
+        {{ game.home_team }} {% if game.home_seed %}({{ game.home_seed }}-seed){% endif %}
+        {% if game.home_nat_seed %}(#{{ game.home_nat_seed }} National Seed){% endif %}
+        </h1>
+
+        <h2>
+        {% if game.event %}<em>{{ game.event }}</em>{% endif %}
+        </h2>
+
+        <p>{{ game.first_pitch }} first pitch |
+        {% if game.video and game.video_url %}video: <a href="{{ game.video_url }}">{{ game.video }}</a> |{% endif %}
+        {% if game.audio_primary %}<a href="{{ game.audio_primary }}">audio</a> |{% endif %}
+        {% if game.audio_student %}<a href="{{ game.audio_student }}">student audio</a> |{% endif %}
+        {% if game.live_stats %}<a href="{{ game.live_stats}}">live stats</a>{% endif %}
+        </p>
+        <p>{{ game.away_team }} {{ game.away_team.mascot }} {% if game.fall_exhibition %}{% else %}: <a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a><p>
+        {% endif %}
+        <p>{{ game.home_team }} {{ game.home_team.mascot }} {% if game.fall_exhibition %}{% else %}: <a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a></p>
+        {% endif %}
     </div>
 
     <div class="column-12 clear-both">
-    <img class="team-logo" src="{{ game.home_team.logo }}">
-    <p>{{ game.home_team }} {{ game.home_team.mascot }} {% if game.fall_exhibition %}{% else %}: <a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a></p>
-    {% endif %}
-    </div>   
-
-    <div class="column-12 clear-both"></div>
+        {% if game.featured_image %}
+            <img src="{{ game.featured_image }}" class="lgb-featured-image">
+        {% endif %}
+    </div>
             
             
 

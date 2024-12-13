@@ -31,7 +31,8 @@ class Game(models.Model):
     away_nat_seed = models.IntegerField(null=True, blank=True)
 
     neutral_site = models.BooleanField(db_default=False)
-    fall_exhibition = models.BooleanField(db_default=False)
+    event = models.CharField(null=True, blank=True)
+    featured_image = models.URLField(null=True, blank=True)
     live_stats = models.URLField(null=True, blank=True)
     first_pitch = models.DateTimeField(null=True, blank=True)
     video = models.CharField(null=True, blank=True)

@@ -35,8 +35,8 @@ class AddGameForm(forms.Form):
     neutral_site = forms.BooleanField(
         label="Is this a neutral site or host is designated away?", required=False
     )
-    fall_exhibition = forms.BooleanField(
-        label="Is this a fall exhibition game?", required=False
+    event = forms.CharField(
+        label="Describe the event: ", required=False
     )
 
     home_team = forms.ModelChoiceField(
@@ -72,7 +72,11 @@ class AddGameForm(forms.Form):
         label="Away team national tournament seed",
         required=False,
     )
-
+    featured_image = forms.URLField(
+        label="Featured Image",
+        required=False,
+        assume_scheme="https",  # remove argument for Django 6.0
+    )
     live_stats = forms.URLField(
         label="Live Stats Link",
         required=False,

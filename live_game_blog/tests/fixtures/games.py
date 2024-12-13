@@ -68,7 +68,7 @@ def games(client, teams):
         home_team=teams.indiana,
         away_team=teams.gm,
         neutral_site=False,
-        fall_exhibition=True,
+        event="Fall exhibition",
         first_pitch=(timezone.now() + timedelta(days=1)),
     )
     GameObj = namedtuple(

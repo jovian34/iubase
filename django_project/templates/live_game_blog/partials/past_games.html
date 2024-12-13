@@ -10,7 +10,7 @@
         <img class="team-logo" src="{{ scoreboard.game.home_team.logo }}">
         <h3>
             <a href="{% url "live_game_blog" scoreboard.game.pk %}">
-            {% if scoreboard.game.away_rank %}no. {{ scoreboard.game.away_rank }} {% endif %}{{ scoreboard.game.away_team }}<em>{% if scoreboard.game.neutral_site %} vs. {% else %} @ {% endif %}</em>{% if scoreboard.game.home_rank %}no. {{ scoreboard.game.home_rank }}{% endif %}{{ scoreboard.game.home_team }}</a>
+            {% if scoreboard.game.away_rank %}no. {{ scoreboard.game.away_rank }} {% endif %}{{ scoreboard.game.away_team }}<em>{% if scoreboard.game.neutral_site %} vs. {% else %} @ {% endif %}</em>{% if scoreboard.game.home_rank %}no. {{ scoreboard.game.home_rank }} {% endif %}{{ scoreboard.game.home_team }}</a>
             
             </a>
         </h3>
@@ -20,7 +20,10 @@
         <p>
             {{ scoreboard.game.home_team }} {{ scoreboard.game.home_team.mascot }}{% if scoreboard.game.home_seed %} ({{ scoreboard.game.home_seed }}-seed){% endif %}{% if scoreboard.game.home_nat_seed %}(#{{ scoreboard.game.home_nat_seed }} National Seed){% endif %}: {{ scoreboard.home_runs }}      
         </p>
-        <p>{{ scoreboard.game.first_pitch }}{% if scoreboard.game.fall_exhibition %}<em>- FALL EXHIBITION</em>{% endif %}</p>
+        <p>
+            {{ scoreboard.game.first_pitch }}
+            {% if scoreboard.game.event %}{{ scoreboard.game.event }}.{% endif %}
+        </p>
         {% if user.is_authenticated %}
             <h3><a href="{% url "edit_live_game_blog" scoreboard.game.pk %}">Edit or Add to Game Blog</a></h3>
         {% endif %}

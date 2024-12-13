@@ -18,6 +18,7 @@ class GameAdmin(admin.ModelAdmin):
     list_display = (
         "home_team",
         "away_team",
+        "event",
         "neutral_site",
         "first_pitch",
     )

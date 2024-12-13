@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.63"  # LGB added event & feat img with style changes ATP 2024-12-13
+    "0.1.64"  # LGB registered event with admin ATP 2024-12-13
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

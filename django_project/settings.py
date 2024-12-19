@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.64"  # LGB registered event with admin ATP 2024-12-13
+    "0.1.66"  # PT switched ul to divs in drafted players ATP 2024-12-19
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

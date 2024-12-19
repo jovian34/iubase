@@ -16,10 +16,9 @@
 
         <h3>Count of Players: {{ count }}</h3>
 
-        <ul>
         {% for player in players %}
             {% if player.drafted %}
-            <li>
+                <div class="column-12 clear-both">
                 <img src="{{ player.headshot }}" class="thumbnail" alt="{{player.first}} {{player.last}}">
                 <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
                 <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p> 
@@ -37,13 +36,11 @@
                 {% else %} 
                 <p>With this pick he can get a bonus value of ${{ player.slot|floatformat:"0g" }} before
                 the {{ player.prof_org }} incur a slot penalty.</p>
-
+                </div>
                 {% endif %}   
-            </li>
             <hr>
             {% endif %}
         {% endfor %}
-        </ul>
     </div>
 </div>
 {% endblock %}

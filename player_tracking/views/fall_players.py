@@ -20,14 +20,18 @@ def fall_players_redirect(request, fall_year):
     spring_year = int(fall_year) + 1
     if AnnualRoster.objects.filter(spring_year=spring_year):
         return redirect("fall_roster", fall_year=fall_year)
-    elif int(fall_year) < date.today().year:
-        return redirect("all_eligible_players_fall", fall_year=fall_year)
-    elif int(fall_year) > date.today().year or not MLBDraftDate.objects.get(
-        fall_year=fall_year
-    ):
-        return redirect("all_eligible_players_fall", fall_year=fall_year)
-    else:
+    elif int(fall_year) == date.today().year and does_mlb_draft_date_exist(fall_year):
         return redirect("projected_players_fall_depth", fall_year=fall_year)
+    else:
+        return redirect("all_eligible_players_fall", fall_year=fall_year)        
+    
+
+def does_mlb_draft_date_exist(fall_year):
+    try:
+        MLBDraftDate.objects.get(fall_year=fall_year)
+        return True
+    except MLBDraftDate.DoesNotExist:
+        return False
 
 
 def all_eligible(request, fall_year):

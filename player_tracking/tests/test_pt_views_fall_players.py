@@ -4,6 +4,7 @@ from datetime import date
 
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.mlb_draft_date import typical_mlb_draft_date
+from player_tracking.tests.fixtures.mlb_draft_date import last_year_mlb_draft_date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
@@ -77,6 +78,54 @@ def test_projected_players_excludes_transfer_portal_entrants(
     )
     assert response.status_code == 200
     assert "Brooks Ey" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_prior_year_fall_players_redirect_redirects_to_fall_roster(
+    client, players, transactions, typical_mlb_draft_date, annual_rosters,
+):
+    set_player_properties.set_player_props_get_errors()
+    response = client.get(
+        reverse("fall_players_redirect", args=[f"{this_year - 1}"]),
+    )
+    assert response.status_code == 302
+    assert "fall_roster" in str(response['Location'])
+
+
+@pytest.mark.django_db
+def test_future_year_fall_players_redirect_redirects_to_all_eligible(
+    client, players, transactions, typical_mlb_draft_date, annual_rosters,
+):
+    set_player_properties.set_player_props_get_errors()
+    response = client.get(
+        reverse("fall_players_redirect", args=[f"{this_year + 1}"]),
+    )
+    assert response.status_code == 302
+    assert "all_eligible_players_fall" in str(response['Location'])
+
+
+@pytest.mark.django_db
+def test_this_year_fall_players_redirect_redirects_to_projected_players_fall_depth(
+    client, players, transactions, typical_mlb_draft_date, annual_rosters,
+):
+    set_player_properties.set_player_props_get_errors()
+    response = client.get(
+        reverse("fall_players_redirect", args=[f"{this_year}"]),
+    )
+    assert response.status_code == 302
+    assert "projected_players_fall_depth" in str(response['Location'])
+
+
+@pytest.mark.django_db
+def test_this_year_no_draft_date_fall_players_redirect_redirects_to_all_eligible(
+    client, players, transactions, annual_rosters,
+):
+    set_player_properties.set_player_props_get_errors()
+    response = client.get(
+        reverse("fall_players_redirect", args=[f"{this_year}"]),
+    )
+    assert response.status_code == 302
+    assert "all_eligible_players_fall" in str(response['Location'])
 
 
 @pytest.mark.django_db

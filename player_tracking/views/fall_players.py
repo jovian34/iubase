@@ -169,6 +169,12 @@ def sort_by_positions(players):
         "position": "Designated Hitter",
         "players": [],
     }
+    infield_positions = [
+        "First Base",
+        "Second Base",
+        "Third Base",
+        "Shortstop",
+    ]
     for player in players:
         if player.throws == "Left" and player.position == "Pitcher":
             lhp["players"].append(player)
@@ -176,12 +182,7 @@ def sort_by_positions(players):
             rhp["players"].append(player)
         elif player.position == "Catcher":
             catcher["players"].append(player)
-        elif player.position in [
-            "First Base",
-            "Second Base",
-            "Third Base",
-            "Shortstop",
-        ]:
+        elif player.position in infield_positions:
             infielder["players"].append(player)
         elif player.position in ["Centerfield", "Corner Outfield"]:
             outfielder["players"].append(player)

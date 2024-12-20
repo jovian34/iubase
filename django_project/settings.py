@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.68"  # PT slight refactor ATP 2024-12-20
+    "0.1.70"  # PT renamed method ATP 2024-12-20
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

@@ -14,6 +14,16 @@ this_year = date.today().year
 
 @pytest.fixture
 def transactions(players, prof_orgs):
+    js_verbal = Transaction.objects.create(
+        player=players.jake_stadler,
+        trans_event="Verbal Commitment from College",
+        trans_date=date(year=this_year - 1, month=6, day=7),
+    )
+    rk_verbal = Transaction.objects.create(
+        player=players.ryan_kraft,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(year=this_year - 4, month=3, day=11),
+    )
     dt_verbal = Transaction.objects.create(
         player=players.devin_taylor,
         trans_event="Verbal Commitment from High School",
@@ -138,9 +148,11 @@ def transactions(players, prof_orgs):
     )
     TransObj = namedtuple(
         "TransObj",
-        "dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal xc_verbal xc_nli oo_verbal",
+        "js_verbal rk_verbal dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal xc_verbal xc_nli oo_verbal",
     )
     return TransObj(
+        js_verbal=js_verbal,
+        rk_verbal=rk_verbal,
         dt_verbal=dt_verbal,
         dt_nli=dt_nli,
         be_commit=be_commit,

@@ -20,3 +20,13 @@ def test_spring_depth_chart_renders_indiana_players(
     assert f"Spring {this_year - 1} Available Depth Chart" in str(response.content)
     assert "Devin Taylor" in str(response.content)
     assert "Nick" not in str(response.content)  # on different team
+
+
+@pytest.mark.django_db
+def test_spring_depth_chart_shows_no_roster_without_rosters(
+    client, players, teams,
+):
+    response = client.get(reverse("spring_depth_chart", args=[f"{this_year - 1}"]))
+    assert response.status_code == 200
+    assert f"Spring {this_year - 1} Roster not yet announced" in str(response.content)
+    assert "Devin Taylor" not in str(response.content)

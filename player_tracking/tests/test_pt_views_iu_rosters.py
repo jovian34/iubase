@@ -17,7 +17,7 @@ def test_fall_roster_renders(client, players, teams, annual_rosters):
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
-    assert "Total Roster Length: 4" in str(response.content)
+    assert "Total Roster Length: 6" in str(response.content)
     assert f"Fall {this_year - 1} Roster" in str(response.content)
     assert "Nathan Ball" in str(response.content)
     assert "Nick Mitchell" in str(response.content)
@@ -44,7 +44,7 @@ def test_fall_roster_renders_full_page_without_HTMX_call(client, players, teams,
 def test_spring_roster_renders(client, players, teams, annual_rosters):
     response = client.get(reverse("spring_roster", args=[f"{this_year - 1}"]))
     assert response.status_code == 200
-    assert "Total Roster Length: 2" in str(response.content)
+    assert "Total Roster Length: 3" in str(response.content)
     assert f"Spring {this_year - 1} Roster" in str(response.content)
     assert "Nick Mitchell" not in str(response.content)
     assert "Devin Taylor" in str(response.content)

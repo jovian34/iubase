@@ -14,6 +14,54 @@ this_year = date.today().year
 
 @pytest.fixture
 def annual_rosters(players, teams):
+    js_jr = AnnualRoster.objects.create(
+        spring_year=this_year,
+        status="Fall Roster",
+        player=players.jake_stadler,
+        team=teams.indiana,
+        jersey=9,
+        primary_position="Catcher",
+    )
+    js_soph = AnnualRoster.objects.create(
+        spring_year=this_year - 1,
+        status="Spring Roster",
+        player=players.jake_stadler,
+        team=teams.miami_oh,
+        jersey=54,
+        primary_position="Catcher",
+    )
+    js_fresh = AnnualRoster.objects.create(
+        spring_year=this_year - 2,
+        status="Spring Roster",
+        player=players.jake_stadler,
+        team=teams.miami_oh,
+        jersey=54,
+        primary_position="Catcher",
+    )
+    rk_fresh = AnnualRoster.objects.create(
+        spring_year=this_year - 2,
+        status="Spring Roster",
+        player=players.ryan_kraft,
+        team=teams.indiana,
+        jersey=29,
+        primary_position="Pitcher",
+    )
+    rk_soph = AnnualRoster.objects.create(
+        spring_year=this_year - 1,
+        status="Spring Roster",
+        team=teams.indiana,
+        player=players.ryan_kraft,
+        jersey=29,
+        primary_position="Pitcher",
+    )
+    rk_jr = AnnualRoster.objects.create(
+        spring_year=this_year,
+        status="Fall Roster",
+        player=players.ryan_kraft,
+        team=teams.indiana,
+        jersey=29,
+        primary_position="Pitcher",
+    )
     dt_fresh = AnnualRoster.objects.create(
         spring_year=this_year - 1,
         status="Spring Roster",
@@ -71,7 +119,7 @@ def annual_rosters(players, teams):
         player=players.holton_compton,
         team=teams.miami_oh,
         jersey=35,
-        primary_position="Pitcher",
+        primary_position="Shortstop",
     )
     br_fresh = AnnualRoster.objects.create(
         spring_year=this_year - 1,
@@ -163,9 +211,15 @@ def annual_rosters(players, teams):
     )
     AnnualRosterObj = namedtuple(
         "AnnualRosterObj",
-        "dt_fresh dt_soph nm_fresh nm_soph nm_jr hc_fresh hc_soph br_fresh jm_fresh jm_soph jm_jr jm_sr jm2024 cg_fresh cg_soph cg_jr cg_sr nb_fresh",
+        "js_jr js_soph js_fresh rk_fresh rk_soph rk_jr dt_fresh dt_soph nm_fresh nm_soph nm_jr hc_fresh hc_soph br_fresh jm_fresh jm_soph jm_jr jm_sr jm2024 cg_fresh cg_soph cg_jr cg_sr nb_fresh",
     )
     return AnnualRosterObj(
+        js_jr=js_jr,
+        js_soph=js_soph,
+        js_fresh=js_fresh,
+        rk_fresh=rk_fresh,
+        rk_soph=rk_soph,
+        rk_jr=rk_jr,
         dt_fresh=dt_fresh,
         dt_soph=dt_soph,
         nm_fresh=nm_fresh,

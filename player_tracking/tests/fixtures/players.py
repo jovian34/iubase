@@ -11,10 +11,27 @@ this_year = date.today().year
 
 @pytest.fixture
 def players():
+    jake_stadler = Player.objects.create(
+        first="Jake",
+        last="Stadler",
+        hsgrad_year=this_year - 3,
+        birthdate=date(this_year - 22, 4, 30),
+        bats="Left",
+        throws="Right",
+    )
+    ryan_kraft = Player.objects.create(
+        first="Ryan",
+        last="Kraft",
+        hsgrad_year=this_year - 3,
+        birthdate=date(this_year - 22, 4, 30),
+        bats="Left",
+        throws="Left",
+    )
     devin_taylor = Player.objects.create(
         first="Devin",
         last="Taylor",
         hsgrad_year=this_year - 2,
+        birthdate=date(this_year - 20, 4, 30),
         bats="Left",
         throws="Left",
         headshot="https://iubase.com/wp-content/uploads/2023/03/Taylor-still_00001-2.jpg",
@@ -81,6 +98,7 @@ def players():
         first="Holton",
         last="Compton",
         hsgrad_year=this_year - 2,
+        birthdate=date(this_year - 21, 7, 30),
         bats="Right",
         throws="Right",
     )
@@ -100,9 +118,11 @@ def players():
     )
     PlayerObj = namedtuple(
         "PlayerObj",
-        "devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jack_moffitt grant_hollister cole_gilley nate_ball holton_compton xavier_carrera owen_ten_oever",
+        "jake_stadler ryan_kraft devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jack_moffitt grant_hollister cole_gilley nate_ball holton_compton xavier_carrera owen_ten_oever",
     )
     return PlayerObj(
+        jake_stadler=jake_stadler,
+        ryan_kraft=ryan_kraft,
         devin_taylor=devin_taylor,
         brayden_risedorph=brayden_risedorph,
         andrew_wiggins=andrew_wiggins,

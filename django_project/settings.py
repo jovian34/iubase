@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.74"  # INDEX + LGB total test coverage 99% ATP 2024-12-21
+    "0.1.75"  # INDEX upgrade sqlparse to 0.5.3 ATP 2024-12-21
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

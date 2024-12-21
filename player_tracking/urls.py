@@ -9,7 +9,6 @@ from player_tracking.views import (
     draft_combine, 
     drafted_players, 
     edit_player,
-    fall_players,
     incoming_players, 
     iu_rosters,
     pt_index, 
@@ -18,7 +17,11 @@ from player_tracking.views import (
     summer_assignments, 
     transfer_portal
 )
-
+from player_tracking.views.fall import(
+    fall_all_eligible,
+    fall_landing,
+    fall_projection,
+)
 
 urlpatterns = [
     path("", pt_index.view, name="pt_index"),
@@ -49,12 +52,12 @@ urlpatterns = [
     ),
     path(
         "fall_players/",
-        fall_players.fall_players,
+        fall_landing.view,
         name="fall_players",
     ),
     path(
         "fall_players/<fall_year>/",
-        fall_players.fall_players,
+        fall_landing.view,
         name="fall_players",
     ),
     path(
@@ -82,23 +85,23 @@ urlpatterns = [
     ),
     path(
         "fall_players_redirect/<fall_year>/",
-        fall_players.fall_players_redirect,
+        fall_landing.redirect_to_roster_projection_or_eligible,
         name="fall_players_redirect",
     ),
     path("fall_roster/<fall_year>/", iu_rosters.fall, name="fall_roster"),
     path(
         "projected_players_fall_depth/<fall_year>/",
-        fall_players.projected_depth,
+        fall_projection.projected_depth,
         name="projected_players_fall_depth",
     ),
     path(
         "projected_players_fall_alpha/<fall_year>/",
-        fall_players.projected_alpha,
+        fall_projection.projected_alpha,
         name="projected_players_fall_alpha",
     ),
     path(
         "all_eligible_players_fall/<fall_year>/",
-        fall_players.all_eligible,
+        fall_all_eligible.view,
         name="all_eligible_players_fall",
     ),
     path(

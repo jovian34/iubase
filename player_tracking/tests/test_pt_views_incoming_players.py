@@ -5,7 +5,8 @@ from datetime import date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
-from player_tracking.views import fall_players, set_player_properties
+from player_tracking.views import set_player_properties
+from player_tracking.views.fall import fall_landing
 
 this_year = date.today().year
 

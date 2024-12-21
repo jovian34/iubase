@@ -14,6 +14,13 @@ from live_game_blog.tests.fixtures.scoreboards import scoreboards
 
 
 @pytest.mark.django_db
+def test_add_blog_entry_only_get_renders(client, logged_user_schwarbs, games, scoreboards):
+    response = client.get(reverse("add_blog_entry_only", args=[games.iu_duke.pk]))
+    assert response.status_code == 200
+    assert "Content of Blog" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_add_blog_entry_only_post_form(client, logged_user_schwarbs, games, scoreboards):
     response = client.post(
         reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
@@ -26,6 +33,32 @@ def test_add_blog_entry_only_post_form(client, logged_user_schwarbs, games, scor
     assert response.status_code == 200
     assert "Adding to the Duke Blog" in str(response.content)
     assert "Kyle" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_blog_entry_only_post_not_logged_in_redirects(client, user_not_logged_in, games, scoreboards):
+    response = client.post(
+        reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
+        {
+            "blog_entry": "Adding to the Duke Blog",
+            "is_x_embed": False,
+        },
+    )
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_add_blog_entry_only_post_not_logged_in_asks_for_password(client, user_not_logged_in, games, scoreboards):
+    response = client.post(
+        reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
+        {
+            "blog_entry": "Adding to the Duke Blog",
+            "is_x_embed": False,
+        },
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "Password:" in str(response.content)
 
 
 @pytest.mark.django_db

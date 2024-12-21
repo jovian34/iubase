@@ -15,14 +15,23 @@ from live_game_blog.tests.fixtures.scoreboards import scoreboards
 
 
 @pytest.mark.django_db
-def test_edit_blog_entry_renders(client, logged_user_schwarbs, games, entries):
+def test_edit_blog_entry_get_renders_with_scoreboard(client, logged_user_schwarbs, games, entries, scoreboards):
     response = client.get(reverse("edit_blog_entry", args=[entries.blog_uk_mon_y.pk]))
     assert response.status_code == 200
-    assert "Bothwell walks the first batter" in str(response.content)                         
+    assert "Content of Blog" in str(response.content)
+    assert "Bothwell walks the first batter" in str(response.content)    
 
 
 @pytest.mark.django_db
-def test_edit_blog_entry_adds_text(client, logged_user_schwarbs, games, entries):
+def test_edit_blog_entry_get_renders_without_scoreboard(client, logged_user_schwarbs, games, entries, scoreboards):
+    response = client.get(reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]))
+    assert response.status_code == 200
+    assert "Content of Blog" in str(response.content)
+    assert "Kentucky moves on to Super Regionals" in str(response.content)                        
+
+
+@pytest.mark.django_db
+def test_edit_blog_entry_adds_text(client, logged_user_schwarbs, games, entries, scoreboards):
     response = client.post(
         reverse("edit_blog_entry", args=[entries.blog_uk_mon_y.pk]),
         {
@@ -37,7 +46,7 @@ def test_edit_blog_entry_adds_text(client, logged_user_schwarbs, games, entries)
 
 @pytest.mark.django_db
 def test_edit_blog_entry_changes_hit_to_error(
-    client, logged_user_schwarbs, games, entries, forms
+    client, logged_user_schwarbs, games, entries, forms, scoreboards
 ):
     response = client.post(
         reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]),
@@ -51,7 +60,7 @@ def test_edit_blog_entry_changes_hit_to_error(
 
 @pytest.mark.django_db
 def test_edit_blog_entry_redirects_when_not_logged_in(
-    client, games, entries, forms
+    client, games, entries, forms, scoreboards
 ):
     response = client.post(
         reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]),
@@ -63,7 +72,7 @@ def test_edit_blog_entry_redirects_when_not_logged_in(
 
 @pytest.mark.django_db
 def test_edit_blog_entry_asks_for_password_when_not_logged_in_post(
-    client, games, entries, forms
+    client, games, entries, forms, scoreboards
 ):
     response = client.post(
         reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]),
@@ -76,7 +85,7 @@ def test_edit_blog_entry_asks_for_password_when_not_logged_in_post(
 
 @pytest.mark.django_db
 def test_edit_blog_entry_asks_for_password_when_not_logged_in_get(
-    client, games, entries, forms
+    client, games, entries, forms, scoreboards
 ):
     response = client.get(
         reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]),

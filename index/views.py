@@ -55,8 +55,6 @@ def current_months_traffic(request):
 
 @decorators.login_required
 def one_days_traffic(request, day):
-    if int(day) < 1:
-        pass
     end, start = get_start_and_end_of_day(day)
     traf = index_models.TrafficCounter.objects.filter(timestamp__gte=start, timestamp__lte=end).order_by(
         "-timestamp"

@@ -67,6 +67,7 @@ def test_current_days_traffic_renders(client, agents, logged_user_schwarbs):
     assert "47.128.55.115" in str(response.content)
     assert "AJ Shepard" in str(response.content)
     assert "iPhone" in str(response.content)
+    assert "Android" in str(response.content)
 
 
 @pytest.mark.django_db

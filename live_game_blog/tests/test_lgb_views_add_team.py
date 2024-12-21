@@ -7,6 +7,14 @@ from live_game_blog.tests.fixtures.teams import teams
 
 
 @pytest.mark.django_db
+def test_add_team_get_renders_form(client, logged_user_schwarbs):
+    response = client.get(reverse("add_team"))
+    assert response.status_code == 200
+    assert "URL for the team" in str(response.content)
+    assert "Add Team" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_add_team_and_confirm_team_is_selectable_for_add_game(
     client, logged_user_schwarbs, forms
 ):

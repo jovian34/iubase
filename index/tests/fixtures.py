@@ -32,6 +32,12 @@ def agents():
         ip="104.139.10.207",
         user_agent="Mozilla/5.0 (iPhone; CPU iPhone OS 17_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Mobile/15E148 Safari/604.1",
     )
+    android = index_models.TrafficCounter.objects.create(
+        page="AJ Shepard",
+        timestamp=datetime.today().astimezone() - timedelta(seconds=37),
+        ip="72.14.201.229",
+        user_agent="Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.69 Mobile Safari/537.36",
+    )
     last_month = index_models.TrafficCounter.objects.create(
         page="AJ Shepard",
         timestamp=datetime(
@@ -47,12 +53,13 @@ def agents():
     )
     AgentObj = namedtuple(
         "AgentObj",
-        "windows bot mac iphone last_month"
+        "windows bot mac iphone android last_month"
     )
     return AgentObj(
         windows=windows,
         bot=bot,
         mac=mac,
         iphone=iphone,
+        android=android,
         last_month=last_month,
     )

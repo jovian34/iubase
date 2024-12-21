@@ -153,6 +153,15 @@ def test_set_player_properties_properly_resets_drafted_not_signed(
 
 
 @pytest.mark.django_db
+def test_set_player_properties_properly_shows_error_for_missing_annual_roster(
+    client, players, annual_rosters, transactions, logged_user_schwarbs
+):
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    assert f"missing roster year {this_year - 2} for Jake Stadler" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_set_player_properties_properly_sets_start_for_early_juco_commit(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
@@ -164,6 +173,19 @@ def test_set_player_properties_properly_sets_start_for_early_juco_commit(
     holton = Player.objects.get(pk=players.holton_compton.pk)
     assert holton.first_spring == this_year + 1
     assert holton.last_spring == this_year + 2
+
+
+@pytest.mark.django_db
+def test_set_player_properties_properly_sets_no_starts_for_decommit(
+    client, players, annual_rosters, transactions, logged_user_schwarbs
+):
+    response = client.get(reverse("players"), follow=True)
+    sinke = Player.objects.get(pk=players.gibson_sinke.pk)
+    assert not sinke.first_spring or sinke.last_spring
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    sinke = Player.objects.get(pk=players.gibson_sinke.pk)
+    assert not sinke.first_spring or sinke.last_spring
 
 
 @pytest.mark.django_db

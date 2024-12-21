@@ -30,17 +30,9 @@ def annual_rosters(players, teams):
         jersey=54,
         primary_position="Catcher",
     )
-    js_fresh = AnnualRoster.objects.create(
-        spring_year=this_year - 2,
-        status="Spring Roster",
-        player=players.jake_stadler,
-        team=teams.miami_oh,
-        jersey=54,
-        primary_position="Catcher",
-    )
     rk_fresh = AnnualRoster.objects.create(
         spring_year=this_year - 2,
-        status="Spring Roster",
+        status="Not on Spring roster",
         player=players.ryan_kraft,
         team=teams.indiana,
         jersey=29,
@@ -211,12 +203,11 @@ def annual_rosters(players, teams):
     )
     AnnualRosterObj = namedtuple(
         "AnnualRosterObj",
-        "js_jr js_soph js_fresh rk_fresh rk_soph rk_jr dt_fresh dt_soph nm_fresh nm_soph nm_jr hc_fresh hc_soph br_fresh jm_fresh jm_soph jm_jr jm_sr jm2024 cg_fresh cg_soph cg_jr cg_sr nb_fresh",
+        "js_jr js_soph rk_fresh rk_soph rk_jr dt_fresh dt_soph nm_fresh nm_soph nm_jr hc_fresh hc_soph br_fresh jm_fresh jm_soph jm_jr jm_sr jm2024 cg_fresh cg_soph cg_jr cg_sr nb_fresh",
     )
     return AnnualRosterObj(
         js_jr=js_jr,
         js_soph=js_soph,
-        js_fresh=js_fresh,
         rk_fresh=rk_fresh,
         rk_soph=rk_soph,
         rk_jr=rk_jr,

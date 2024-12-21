@@ -28,8 +28,6 @@ def view(request, player_id):
             edit_info.weight = form.cleaned_data["weight"]
             edit_info.primary_position = form.cleaned_data["primary_position"]
             edit_info.save()
-        else:
-            print("FORM IS NOT VALID")
         return redirect(reverse("single_player_page", args=[player_id]))
     else:
         form = forms.PlayerForm(

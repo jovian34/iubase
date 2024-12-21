@@ -48,3 +48,10 @@ def test_spring_roster_renders(client, players, teams, annual_rosters):
     assert f"Spring {this_year - 1} Roster" in str(response.content)
     assert "Nick Mitchell" not in str(response.content)
     assert "Devin Taylor" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_spring_roster_future_shows_not_aanounced(client, players, teams, annual_rosters):
+    response = client.get(reverse("spring_roster", args=[f"{this_year + 1}"]))
+    assert response.status_code == 200
+    assert "Roster not fully announced" in str(response.content)

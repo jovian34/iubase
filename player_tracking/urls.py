@@ -1,5 +1,6 @@
 from django.urls import path
 from player_tracking.views import (
+    add_accolade,
     add_player,
     add_roster_year,
     add_summer_assignment,
@@ -108,5 +109,10 @@ urlpatterns = [
         "edit_player/<player_id>/",
         edit_player.view,
         name="edit_player",
-    )
+    ),
+    path(
+        "add_accolade/<player_id>/",
+        add_accolade.view,
+        name="add_accolade",
+    ),
 ]

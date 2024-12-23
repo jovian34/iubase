@@ -119,3 +119,22 @@ class SummerAssignForm(forms.Form):
         label="Citation",
         assume_scheme="https",  # remove argument for Django 6.0
     )
+
+
+class AccoladeForm(forms.Form):
+    name = forms.CharField(label="Name of accolade")
+    award_date = forms.DateField(label="Date issued")
+    award_org = forms.CharField(
+        label="Sponsor Organization",
+    )
+    description = forms.CharField(
+        label="Detailed description",
+    )
+    citation = forms.URLField(
+        label="Web link for announcement",
+        assume_scheme="https",  # remove argument for Django 6.0
+    )
+    annual_roster = forms.ModelChoiceField(
+        queryset=pt_models.AnnualRoster.objects.all(),
+        label="Applicable college roster",
+    )

@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.2.1"  # PT added accolade model ATP 2024-12-21
+    "0.2.2"  # PT added accolade form 1 test fails 2024-12-23
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

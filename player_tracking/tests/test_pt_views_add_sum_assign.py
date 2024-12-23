@@ -19,7 +19,7 @@ def test_add_summer_assignment_get_redirects_not_logged_in(
     client, players, summer_leagues, summer_teams
 ):
     response = client.get(
-        reverse("add_summer_assignment", args=[players.devin_taylor]),
+        reverse("add_summer_assignment", args=[str(players.devin_taylor.pk)]),
         follow=True,
     )
     assert response.status_code == 200

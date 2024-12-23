@@ -26,7 +26,32 @@
         {% for roster in rosters%}
             <li><h2>{{roster.spring_year}} {{roster.team.team_name}} </h2>
                 <p>{{roster.status}} - {{roster.primary_position}}</p></li>
+
+                <ul>
+                {% for accolade in accolades %}
+                    {% if accolade.annual_roster.pk == roster.pk %}
+                        <li><p>Accolade: {{ accolade.award_org }} {{ accolade.name }}</p></li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
                 <hr>
+        {% endfor %}
+        </ul>
+
+        <hr>
+        <h3>Other Accolades:</h3>
+        
+        <ul>
+        {% for accolade in accolades%}
+            {% if not accolade.annual_roster %}
+            <li><p>{{ accolade.award_date }}: 
+                {% if accolade.citation %}
+                    <a target="_blank" href="{{ accolade.citation }}">{{accolade.org}} {{ accolade.name }}</a></p></li>
+                {% else %}
+                {{accolade.org}} {{ accolade.name }}</p></li>
+                {% endif %}
+            {% endif %}
+            <hr>
         {% endfor %}
         </ul>
 

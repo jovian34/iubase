@@ -79,3 +79,14 @@ class SummerAssignAdmin(admin.ModelAdmin):
         "summer_league",
         "summer_team",
     )
+
+
+@admin.register(models.Accolade)
+class AccoladeAdmin(admin.ModelAdmin):
+    model = models.Accolade
+    list_display = (
+        "player",
+        "award_date",
+        "award_org",
+        "name",
+    )

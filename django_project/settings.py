@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.1.76"  # LGB style - fix edit blog button divs ATP 2024-12-21
+    "0.2.1"  # PT added accolade model ATP 2024-12-21
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

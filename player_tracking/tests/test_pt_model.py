@@ -10,12 +10,15 @@ from player_tracking.tests.fixtures.summer import (
     summer_teams,
     summer_assign,
 )
+from player_tracking.tests.fixtures.accolades import accolades
+from player_tracking.tests.fixtures.annual_rosters import annual_rosters
+from live_game_blog.tests.fixtures.teams import teams
 
 this_year = date.today().year
 
 
 @pytest.mark.django_db
-def test_transaction_model_string_def(client, transactions):
+def test_transaction_model_string_def(transactions):
     assert (
         str(transactions.dt_verbal)
         == f"Devin Taylor Verbal Commitment from High School on March {this_year - 3}"
@@ -23,12 +26,18 @@ def test_transaction_model_string_def(client, transactions):
 
 
 @pytest.mark.django_db
-def test_mlb_draft_birthdate_string_def(client, typical_mlb_draft_date):
+def test_mlb_draft_birthdate_string_def(typical_mlb_draft_date):
     assert (
         str(typical_mlb_draft_date.draft_this_year) == f"{this_year}: Aug 1, {this_year - 21}"
     )
 
 
 @pytest.mark.django_db
-def test_summer_assign_string_def(client, summer_assign):
+def test_summer_assign_string_def(summer_assign):
+    assert summer_assign.dt_usa_2024.pk
     assert str(summer_assign.dt_usa_2024) == f"Devin Taylor {this_year} USA"
+
+
+@pytest.mark.django_db
+def test_accolade_model_str_def(accolades, annual_rosters, teams):
+    assert str(accolades.dt_ly_b1g_first_team) == f"Devin Taylor {this_year} B1G First Team All-Conference Outfielder"

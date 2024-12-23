@@ -12,6 +12,7 @@ from player_tracking.tests.fixtures.summer import (
     summer_leagues,
     summer_teams,
 )
+from player_tracking.tests.fixtures.accolades import accolades
 from live_game_blog.tests.fixtures.teams import teams
 
 
@@ -85,3 +86,16 @@ def test_single_player_page_renders_generic_action_shot_if_one_does_not_exist(cl
         )
     )
     assert "https://iubase.com/wp-content/uploads/2024/11/53704071552_13227a46a0_k.jpg" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_single_player_page_renders_accolade_org_and_name(client, players, annual_rosters, accolades):
+    response = client.get(
+        reverse(
+            "single_player_page",
+            args=[players.devin_taylor.pk],
+        )
+    )
+    assert response.status_code == 200
+    assert "Devin Taylor" in str(response.content)
+    assert "B1G First Team All-Conference Outfielder" in str(response.content)

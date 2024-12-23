@@ -25,6 +25,9 @@ class Player(models.Model):
     weight = models.IntegerField(null=True, blank=True)
     first_spring = models.IntegerField(null=True, blank=True)
     last_spring = models.IntegerField(null=True, blank=True)
+    
+    class Meta:
+        ordering = [ "last", "first"]
 
     def __str__(self) -> str:
         return f"{self.first} {self.last} {self.hsgrad_year}"
@@ -79,6 +82,9 @@ class AnnualRoster(models.Model):
     secondary_position = models.CharField(
         choices=choices.POSITIONS, null=True, blank=True
     )
+    
+    class Meta:
+        ordering = [ "player", "spring_year"]
 
     def __str__(self) -> str:
         return (
@@ -124,3 +130,16 @@ class SummerAssign(models.Model):
 
     def __str__(self) -> str:
         return f"{self.player.first} {self.player.last} {self.summer_year} {self.summer_team.name}"
+
+
+class Accolade(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    annual_roster = models.ForeignKey(AnnualRoster, on_delete=models.CASCADE, null=True, blank=True)
+    award_date = models.DateField(db_default=Now())
+    citation = models.URLField(null=True, blank=True)
+    name = models.CharField(null=False, max_length=64)
+    award_org = models.CharField(null=False, max_length=64)
+    description = models.TextField(null=True, blank=True)
+    
+    def __str__(self):
+        return f"{self.player.first} {self.player.last} {self.award_date.year} {self.award_org} {self.name}"

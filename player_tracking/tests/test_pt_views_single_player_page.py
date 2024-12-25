@@ -14,6 +14,7 @@ from player_tracking.tests.fixtures.summer import (
 )
 from player_tracking.tests.fixtures.accolades import accolades
 from live_game_blog.tests.fixtures.teams import teams
+from accounts.tests.fixtures import logged_user_schwarbs
 
 
 this_year = date.today().year
@@ -99,3 +100,16 @@ def test_single_player_page_renders_accolade_org_and_name(client, players, annua
     assert response.status_code == 200
     assert "Devin Taylor" in str(response.content)
     assert "B1G First Team All-Conference Outfielder" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_single_player_page_renders_add_accolade_button(client, players, annual_rosters, logged_user_schwarbs):
+    response = client.get(
+        reverse(
+            "single_player_page",
+            args=[players.devin_taylor.pk],
+        )
+    )
+    assert response.status_code == 200
+    assert "Devin Taylor" in str(response.content)
+    assert "add accolade</button>" in str(response.content)

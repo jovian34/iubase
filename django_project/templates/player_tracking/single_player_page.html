@@ -40,6 +40,9 @@
 
         <hr>
         <h3>Other Accolades:</h3>
+        {% if user.is_authenticated %}
+        <button hx-get="{% url "add_accolade" player.pk %}" hx-target="#add_roster_or_transaction">add accolade</button>
+        {% endif %}
         
         <ul>
         {% for accolade in accolades%}

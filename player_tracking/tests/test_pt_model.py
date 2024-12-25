@@ -18,6 +18,14 @@ this_year = date.today().year
 
 
 @pytest.mark.django_db
+def test_player_model_string_def(players):
+    assert (
+        str(players.devin_taylor)
+        == f"Devin Taylor { this_year - 2 }"
+    )
+
+
+@pytest.mark.django_db
 def test_transaction_model_string_def(transactions):
     assert (
         str(transactions.dt_verbal)
@@ -34,7 +42,6 @@ def test_mlb_draft_birthdate_string_def(typical_mlb_draft_date):
 
 @pytest.mark.django_db
 def test_summer_assign_string_def(summer_assign):
-    assert summer_assign.dt_usa_2024.pk
     assert str(summer_assign.dt_usa_2024) == f"Devin Taylor {this_year} USA"
 
 

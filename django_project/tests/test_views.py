@@ -1,4 +1,5 @@
 import pytest
+import os
 
 
 def test_index_redirect(client):
@@ -13,3 +14,9 @@ def test_redirect_goes_to_index(client):
     assert "Application Index" in str(response.content)
     assert "Live Game Blogs" in str(response.content)
     assert "Player Tracking" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_django_admin_renders(admin_client):
+    response = admin_client.get(f"/{os.getenv('ADMIN_WORD')}/")
+    assert response.status_code == 200

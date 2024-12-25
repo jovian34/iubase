@@ -2,6 +2,8 @@ import pytest
 from django.urls import reverse
 
 from player_tracking.tests.fixtures.players import players
+from player_tracking.tests.fixtures.annual_rosters import annual_rosters
+from live_game_blog.tests.fixtures.teams import teams
 
 
 @pytest.mark.django_db
@@ -19,7 +21,7 @@ def test_add_accolade_partial_renders_form(client, players):
 
 
 @pytest.mark.django_db
-def test_add_accolade_partial_renders_form_with_only_one_players_rosters(client, players):
+def test_add_accolade_partial_renders_form_with_only_one_players_rosters(client, players, annual_rosters, teams):
     response = client.get(
         reverse("add_accolade", args=[str(players.devin_taylor.pk)]),
     )

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import decorators as auth_dec
 from django.urls import reverse
 
 from datetime import date
@@ -9,7 +9,7 @@ from player_tracking.forms import NewPlayerForm
 from player_tracking.views.set_player_properties import set_player_props_get_errors
 
 
-@login_required
+@auth_dec.login_required
 def view(request):
     if request.method == "POST":
         form = NewPlayerForm(request.POST)

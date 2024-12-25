@@ -6,6 +6,7 @@ from accounts.tests.fixtures import logged_user_schwarbs
 from live_game_blog.tests.fixtures.teams import teams
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.players import players
+from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.summer import (
     summer_assign,
     summer_leagues,
@@ -39,7 +40,7 @@ def test_add_summer_assignment_get_renders_form(
 
 @pytest.mark.django_db
 def test_add_summer_assignment_post_adds_assignment(
-    client, players, summer_leagues, summer_teams, logged_user_schwarbs, forms
+    client, players, summer_leagues, summer_teams, logged_user_schwarbs, forms, annual_rosters,
 ):
     response = client.post(
         reverse("add_summer_assignment", args=[str(players.brayden_risedorph.pk)]),

@@ -8,6 +8,7 @@ from player_tracking.tests.fixtures.summer import (
     summer_teams,
 )
 from player_tracking.tests.fixtures.prof_org import prof_orgs
+from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from live_game_blog.tests.fixtures.teams import teams
 
 
@@ -15,7 +16,7 @@ this_year = date.today().year
 
 
 @pytest.fixture
-def forms(summer_leagues, summer_teams, teams, prof_orgs):
+def forms(summer_leagues, summer_teams, teams, prof_orgs, annual_rosters):
     phillip_glasser_new = {
         "first": ["Phillip"],
         "last": ["Glasser"],
@@ -54,7 +55,7 @@ def forms(summer_leagues, summer_teams, teams, prof_orgs):
     }
     risedorph_drafted = {
         "trans_event": ["Drafted"],
-        "trans_date": [str(date(this_year, 7, 17))],
+        "trans_date": [date(this_year, 7, 17)],
         "citation": ["https://www.mlb.com/draft/tracker"],
         "other_team": [],
         "prof_org": [prof_orgs.d_backs.pk],
@@ -78,9 +79,17 @@ def forms(summer_leagues, summer_teams, teams, prof_orgs):
         "weight": [],
         "primary_position": [],
     }
+    dt_foy = {
+        "name": ["Freshman of the Year"],
+        "award_date": [date(this_year-1, 5, 23)],
+        "award_org": ["B1G"],
+        "description": [],
+        "citation": ["https://iuhoosiers.com/news/2023/5/23/baseball-b1g-honors-for-taylor-and-co"],
+        "annual_roster": [annual_rosters.dt_fresh.pk],
+    }
     FormObj = namedtuple(
         "FormObj",
-        "phillip_glasser_new summer_assignment_new nick_mitchell_two_years_past risedorph_drafted devin_taylor_edited",
+        "phillip_glasser_new summer_assignment_new nick_mitchell_two_years_past risedorph_drafted devin_taylor_edited dt_foy",
     )
     return FormObj(
         phillip_glasser_new=phillip_glasser_new,
@@ -88,6 +97,7 @@ def forms(summer_leagues, summer_teams, teams, prof_orgs):
         nick_mitchell_two_years_past=nick_mitchell_two_years_past,
         risedorph_drafted=risedorph_drafted,
         devin_taylor_edited=devin_taylor_edited,
+        dt_foy=dt_foy,
     )
 
 

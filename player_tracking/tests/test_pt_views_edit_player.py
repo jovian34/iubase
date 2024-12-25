@@ -7,6 +7,7 @@ from player_tracking.tests.fixtures.transactions import transactions
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.form_data import forms
 from player_tracking.tests.fixtures.summer import summer_leagues, summer_teams
+from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.models import Player
 from live_game_blog.tests.fixtures.teams import teams
 from accounts.tests.fixtures import logged_user_schwarbs, user_not_logged_in
@@ -25,7 +26,7 @@ def test_edit_player_renders_current_info_in_form(client, logged_user_schwarbs, 
 
 
 @pytest.mark.django_db
-def test_edit_player_good_post_redirects_to_player_page(client, logged_user_schwarbs, players, transactions, prof_orgs, forms):
+def test_edit_player_good_post_redirects_to_player_page(client, logged_user_schwarbs, players, transactions, prof_orgs, forms, annual_rosters):
     response = client.post(
         reverse("edit_player", args=[players.devin_taylor.pk]),
         forms.devin_taylor_edited,
@@ -36,7 +37,7 @@ def test_edit_player_good_post_redirects_to_player_page(client, logged_user_schw
 
 
 @pytest.mark.django_db
-def test_edit_player_good_post_adds_action_shot(client, logged_user_schwarbs, players, transactions, prof_orgs, forms):
+def test_edit_player_good_post_adds_action_shot(client, logged_user_schwarbs, players, transactions, prof_orgs, forms, annual_rosters):
     response = client.post(
         reverse("edit_player", args=[players.devin_taylor.pk]),
         forms.devin_taylor_edited,
@@ -49,7 +50,7 @@ def test_edit_player_good_post_adds_action_shot(client, logged_user_schwarbs, pl
 
 
 @pytest.mark.django_db
-def test_edit_player_post_redirects_and_makes_no_change_not_logged_in(client, user_not_logged_in, players, transactions, prof_orgs, forms):
+def test_edit_player_post_redirects_and_makes_no_change_not_logged_in(client, user_not_logged_in, players, transactions, prof_orgs, forms, annual_rosters):
     response = client.post(
         reverse("edit_player", args=[players.devin_taylor.pk]),
         forms.devin_taylor_edited,

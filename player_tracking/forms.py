@@ -134,6 +134,7 @@ class AccoladeForm(forms.Form):
     )
     description = forms.CharField(
         label="Detailed description",
+        required=False,
     )
     citation = forms.URLField(
         label="Web link for announcement",

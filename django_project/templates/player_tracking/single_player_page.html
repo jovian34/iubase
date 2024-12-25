@@ -30,7 +30,12 @@
                 <ul>
                 {% for accolade in accolades %}
                     {% if accolade.annual_roster.pk == roster.pk %}
-                        <li><p>Accolade: {{ accolade.award_org }} {{ accolade.name }}</p></li>
+                    <li><p> 
+                        {% if accolade.citation %}
+                            <a target="_blank" href="{{ accolade.citation }}">{{accolade.award_org}} {{ accolade.name }}</a></p></li>
+                        {% else %}
+                        {{accolade.award_org}} {{ accolade.name }}</p></li>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 </ul>
@@ -49,12 +54,11 @@
             {% if not accolade.annual_roster %}
             <li><p>{{ accolade.award_date }}: 
                 {% if accolade.citation %}
-                    <a target="_blank" href="{{ accolade.citation }}">{{accolade.org}} {{ accolade.name }}</a></p></li>
+                    <a target="_blank" href="{{ accolade.citation }}">{{accolade.award_org}} {{ accolade.name }}</a></p></li>
                 {% else %}
-                {{accolade.org}} {{ accolade.name }}</p></li>
+                {{accolade.award_org}} {{ accolade.name }}</p></li>
                 {% endif %}
             {% endif %}
-            <hr>
         {% endfor %}
         </ul>
 

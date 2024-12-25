@@ -143,4 +143,5 @@ class AccoladeForm(forms.Form):
     annual_roster = forms.ModelChoiceField(
         queryset=pt_models.AnnualRoster.objects.all(),
         label="Applicable college roster",
+        required=False,
     )

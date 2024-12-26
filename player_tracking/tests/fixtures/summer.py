@@ -1,10 +1,12 @@
 import pytest
+from datetime import date
 
 from collections import namedtuple
 
 from player_tracking.models import SummerLeague, SummerTeam, SummerAssign
 from player_tracking.tests.fixtures.players import players
 
+this_year = date.today().year
 
 @pytest.fixture
 def summer_leagues():
@@ -34,18 +36,23 @@ def summer_teams():
 
 @pytest.fixture
 def summer_assign(players, summer_leagues, summer_teams):
-    dt_usa_2024 = SummerAssign.objects.create(
+    dt_usa_ty = SummerAssign.objects.create(
         player=players.devin_taylor,
-        summer_year=2024,
+        summer_year=this_year,
         summer_league=summer_leagues.in_fr,
         summer_team=summer_teams.usa,
     )
-    rk_kg_2024 = SummerAssign.objects.create(
+    rk_kg_ty = SummerAssign.objects.create(
         player=players.ryan_kraft,
-        summer_year=2024,
+        summer_year=this_year,
         summer_league=summer_leagues.nw,
         summer_team=summer_teams.kg,
-
     )
-    SummerAssignObj = namedtuple("SummerAssignObj", "dt_usa_2024 rk_kg_2024")
-    return SummerAssignObj(dt_usa_2024=dt_usa_2024, rk_kg_2024=rk_kg_2024,)
+    dt_kg_ly = SummerAssign.objects.create(
+        player=players.devin_taylor,
+        summer_year=this_year - 1,
+        summer_league=summer_leagues.nw,
+        summer_team=summer_teams.kg,
+    )
+    SummerAssignObj = namedtuple("SummerAssignObj", "dt_usa_ty rk_kg_ty dt_kg_ly")
+    return SummerAssignObj(dt_usa_ty=dt_usa_ty, rk_kg_ty=rk_kg_ty, dt_kg_ly=dt_kg_ly,)

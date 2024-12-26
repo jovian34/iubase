@@ -42,7 +42,7 @@ def test_mlb_draft_birthdate_string_def(typical_mlb_draft_date):
 
 @pytest.mark.django_db
 def test_summer_assign_string_def(summer_assign):
-    assert str(summer_assign.dt_usa_2024) == f"Devin Taylor {this_year} USA"
+    assert str(summer_assign.dt_usa_ty) == f"Devin Taylor {this_year} USA"
 
 
 @pytest.mark.django_db

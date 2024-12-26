@@ -11,6 +11,7 @@ from player_tracking.tests.fixtures.transactions import transactions
 from player_tracking.tests.fixtures.summer import (
     summer_leagues,
     summer_teams,
+    summer_assign,
 )
 from player_tracking.models import Player
 from live_game_blog.tests.fixtures.teams import teams

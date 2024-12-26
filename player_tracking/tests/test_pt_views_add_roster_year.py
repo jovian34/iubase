@@ -12,6 +12,7 @@ from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.summer import (
     summer_leagues,
     summer_teams,
+    summer_assign,
 )
 
 

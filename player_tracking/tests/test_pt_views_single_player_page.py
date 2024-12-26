@@ -142,9 +142,11 @@ def test_single_player_page_renders_summer_accolades_after_summer_header(client,
     assert response.status_code == 200
     assert "Ryan Kraft" in str(response.content)
     assert "Northwoods League Pitcher of the Year" in str(response.content)
+    other = str(response.content).find("Other Accolades:")
     head = str(response.content).find("Summer Ball:")
     award = str(response.content).find("Northwoods League Pitcher of the Year")
     assert head < award
+    assert award < other
 
 
 

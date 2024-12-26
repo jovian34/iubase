@@ -33,6 +33,7 @@ def create_accolade_and_save(player_id, form):
                 award_org=form.cleaned_data["award_org"],
                 description=form.cleaned_data["description"],
                 citation=form.cleaned_data["citation"],
-                annual_roster=form.cleaned_data["annual_roster"]
+                annual_roster=form.cleaned_data["annual_roster"],
+                summer_assign=form.cleaned_data["summer_assign"]
             )
     add_accolade.save()

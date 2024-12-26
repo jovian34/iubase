@@ -37,10 +37,12 @@ def accolades(players, annual_rosters, summer_assign):
         name="First Team All-Conference Outfielder",
         award_org="B1G",
         description=None,
+        summer_assign=None,
     )
     rk_northwoods_pitch_of_year = Accolade.objects.create(
         player=players.ryan_kraft,
-        summer_assign=summer_assign.rk_kg_2024,
+        annual_roster=None,
+        summer_assign=summer_assign.rk_kg_ty,
         award_date=date.today() - timedelta(days=10),
         citation="https://northwoodsleague.com/kalamazoo-growlers/ryan-kraft-award-as-the-northwoods-league-pitcher-of-the-year/",
         name="Pitcher of the Year",
@@ -49,10 +51,11 @@ def accolades(players, annual_rosters, summer_assign):
     )
     AccoladeObj = namedtuple(
         "AccoladeObj",
-        "dt_ly_ps_aa_second_team dt_ly_aa_second_team dt_ly_b1g_first_team"
+        "dt_ly_ps_aa_second_team dt_ly_aa_second_team dt_ly_b1g_first_team rk_northwoods_pitch_of_year"
     )
     return AccoladeObj(
         dt_ly_ps_aa_second_team=dt_ly_ps_aa_second_team,
         dt_ly_aa_second_team=dt_ly_aa_second_team,
         dt_ly_b1g_first_team=dt_ly_b1g_first_team,
+        rk_northwoods_pitch_of_year=rk_northwoods_pitch_of_year,
     )

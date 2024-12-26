@@ -18,3 +18,5 @@ def test_summer_assignments_page_renders(
 ):
     response = client.get(reverse("summer_assignments", args=[f"{this_year}"]))
     assert response.status_code == 200
+    assert "Devin Taylor" in str(response.content)
+    assert "Ryan Kraft" in str(response.content)

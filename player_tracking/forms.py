@@ -126,6 +126,7 @@ class AccoladeForm(forms.Form):
         self.player_id = int(player_id)
         super().__init__(*args, **kwargs)
         self.fields['annual_roster'].queryset = pt_models.AnnualRoster.objects.filter(player=self.player_id)
+        self.fields['summer_assign'].queryset = pt_models.SummerAssign.objects.filter(player=self.player_id)
 
     name = forms.CharField(label="Name of accolade")
     award_date = forms.DateField(label="Date issued")
@@ -143,5 +144,10 @@ class AccoladeForm(forms.Form):
     annual_roster = forms.ModelChoiceField(
         queryset=pt_models.AnnualRoster.objects.all(),
         label="Applicable college roster",
+        required=False,
+    )
+    summer_assign = forms.ModelChoiceField(
+        queryset=pt_models.SummerAssign.objects.all(),
+        label="Applicable summer assignment",
         required=False,
     )

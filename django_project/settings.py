@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.2.6"  # PT accolades model includes summer assignments ATP 2024-12-25
+    "0.2.7"  # PT accolades form and views include summer assignments ATP 99.6% cov 2024-12-25
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

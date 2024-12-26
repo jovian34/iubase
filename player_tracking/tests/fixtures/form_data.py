@@ -6,6 +6,7 @@ from datetime import date
 from player_tracking.tests.fixtures.summer import (
     summer_leagues,
     summer_teams,
+    summer_assign,
 )
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
@@ -16,7 +17,7 @@ this_year = date.today().year
 
 
 @pytest.fixture
-def forms(summer_leagues, summer_teams, teams, prof_orgs, annual_rosters):
+def forms(summer_leagues, summer_teams, summer_assign, teams, prof_orgs, annual_rosters):
     phillip_glasser_new = {
         "first": ["Phillip"],
         "last": ["Glasser"],
@@ -86,10 +87,20 @@ def forms(summer_leagues, summer_teams, teams, prof_orgs, annual_rosters):
         "description": [],
         "citation": ["https://iuhoosiers.com/news/2023/5/23/baseball-b1g-honors-for-taylor-and-co"],
         "annual_roster": [annual_rosters.dt_fresh.pk],
+        "summer_assign": [],
+    }
+    dt_roy = {
+        "name": ["Rookie of the Year"],
+        "award_date": [date(this_year-1, 7, 23)],
+        "award_org": ["Northwoods League"],
+        "description": [],
+        "citation": ["https://www.idsnews.com/article/2023/08/indiana-baseball-devin-taylor-necbl-rookie-of-the-year-tyler-cerny-appalachian-league"],
+        "summer_assign": [summer_assign.dt_kg_ly.pk],
+        "annual_roster": [],
     }
     FormObj = namedtuple(
         "FormObj",
-        "phillip_glasser_new summer_assignment_new nick_mitchell_two_years_past risedorph_drafted devin_taylor_edited dt_foy",
+        "phillip_glasser_new summer_assignment_new nick_mitchell_two_years_past risedorph_drafted devin_taylor_edited dt_foy dt_roy",
     )
     return FormObj(
         phillip_glasser_new=phillip_glasser_new,
@@ -98,6 +109,7 @@ def forms(summer_leagues, summer_teams, teams, prof_orgs, annual_rosters):
         risedorph_drafted=risedorph_drafted,
         devin_taylor_edited=devin_taylor_edited,
         dt_foy=dt_foy,
+        dt_roy=dt_roy,
     )
 
 

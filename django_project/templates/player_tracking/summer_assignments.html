@@ -19,6 +19,17 @@
                 {% if assign.source and assign.citation %}
                 <p>Source: <a href="{{ assign.citation }}">{{ assign.source }}</a></p>
                 {% endif %}
+
+                {% for accolade in accolades %}
+                    {% if accolade.summer_assign == assign %}
+                    <p>Accolade: 
+                        {% if accolade.citation %}
+                            <a target="_blank" href="{{ accolade.citation }}">{{accolade.award_org}} {{ accolade.name }}</a></p>
+                        {% else %}
+                        {{accolade.award_org}} {{ accolade.name }}</p>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
             </div>
         {% endfor %}
     </div>

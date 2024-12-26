@@ -200,22 +200,7 @@ a:active {
 }
 
 
-/*---------COLUMNS--------*/
-.column-12, .column-9, .column-8, .column-6, .column-4, .column-3, .column-2 {
-	padding: .5em 2%;
-}
 
-.column-6{
-	background-color: var(--body-background-color);
-}
-
-.column-2{width: 50%; float: left;}
-.column-2 img {width: 100%;}
-.clear-left {clear: left;}
-.clear-both {clear: both;}
-.bkgrd-clear {background-color: transparent;}
-.bkrgd-body-std {background-color: var(--body-background-color);}
-.col-crimson {background-color: var(--crimson);}
 
 /*------ PHOTO STYLING ------*/
 
@@ -321,6 +306,18 @@ td {
 	width: 100%;
 	padding: .5em 2%;
 }
+
+.column-6{
+	background-color: var(--body-background-color);
+}
+
+.column-2{width: 50%; float: left;}
+.column-2 img {width: 100%;}
+.clear-left {clear: left;}
+.clear-both {clear: both;}
+.bkgrd-clear {background-color: transparent;}
+.bkrgd-body-std {background-color: var(--body-background-color);}
+.col-crimson {background-color: var(--crimson);}
 
 
 /*---------------FOOTER---------------*/

@@ -19,26 +19,26 @@
         {% for player in players %}
             {% if player.drafted %}
                 <div class="column-12 clear-both">
-                <img src="{{ player.headshot }}" class="thumbnail" alt="{{player.first}} {{player.last}}">
-                <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
-                <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p> 
-                <p>Drafted in Round {{ player.draft_round }} by the {{ player.prof_org }} organization.
-                {% if player.draft_comment %}{{ player.draft_comment }}{% endif %}</p>
-                {% if player.signed == "yes" %}
-                   <em><p>{{player.first}} {{player.last}} signed a professional contract with a bonus of ${{ player.bonus|floatformat:"0g"}}.
-                        This bonus was {{ player.bonus_pct|floatformat:"0g"}}% of the assigned value of the draft pick.
-                            {% if player.sign_comment %}{{ player.sign_comment }}{% endif %}
-                    </p></em>
-                {% elif player.signed == "refused" %}
-                   <em><p>{{player.first}} {{player.last}} did not sign and will be on campus in the fall.
-                            {% if player.sign_comment %}{{ player.sign_comment }}{% endif %}
-                    </p></em>
-                {% else %} 
-                <p>With this pick he can get a bonus value of ${{ player.slot|floatformat:"0g" }} before
-                the {{ player.prof_org }} incur a slot penalty.</p>
-                </div>
-                {% endif %}   
-            <hr>
+                    <img src="{{ player.headshot }}" class="thumbnail" alt="{{player.first}} {{player.last}}">
+                    <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
+                    <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p> 
+                    <p>Drafted in Round {{ player.draft_round }} by the {{ player.prof_org }} organization.
+                    {% if player.draft_comment %}{{ player.draft_comment }}{% endif %}</p>
+                    {% if player.signed == "yes" %}
+                    <em><p>{{player.first}} {{player.last}} signed a professional contract with a bonus of ${{ player.bonus|floatformat:"0g"}}.
+                            This bonus was {{ player.bonus_pct|floatformat:"0g"}}% of the assigned value of the draft pick.
+                                {% if player.sign_comment %}{{ player.sign_comment }}{% endif %}
+                        </p></em>
+                    {% elif player.signed == "refused" %}
+                    <em><p>{{player.first}} {{player.last}} did not sign and will be on campus in the fall.
+                                {% if player.sign_comment %}{{ player.sign_comment }}{% endif %}
+                        </p></em>
+                    {% else %} 
+                    <p>With this pick he can get a bonus value of ${{ player.slot|floatformat:"0g" }} before
+                    the {{ player.prof_org }} incur a slot penalty.</p>
+                    {% endif %} 
+                </div>  
+                <hr>
             {% endif %}
         {% endfor %}
     </div>

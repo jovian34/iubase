@@ -6,7 +6,7 @@ from datetime import date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.form_data import forms
-from player_tracking.tests.fixtures.summer import summer_leagues, summer_teams
+from player_tracking.tests.fixtures.summer import summer_leagues, summer_teams, summer_assign
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.accolades import accolades
 from live_game_blog.tests.fixtures.teams import teams
@@ -78,7 +78,7 @@ def test_add_accolade_partial_post_redirects_to_player_page(client, players, log
 
 
 @pytest.mark.django_db
-def test_add_accolade_partial_post_submits_form_data(client, players, logged_user_schwarbs, summer_leagues, summer_teams, forms, prof_orgs, accolades):
+def test_add_accolade_partial_post_submits_form_data(client, players, logged_user_schwarbs, summer_leagues, summer_teams, summer_assign, forms, prof_orgs, accolades):
     response = client.post(
         reverse("add_accolade", args=[players.devin_taylor.pk]),
         forms.dt_foy,
@@ -90,7 +90,7 @@ def test_add_accolade_partial_post_submits_form_data(client, players, logged_use
 
 
 @pytest.mark.django_db
-def test_add_accolade_partial_post_adds_correct_data(client, players, logged_user_schwarbs, summer_leagues, summer_teams, forms, prof_orgs, accolades, annual_rosters):
+def test_add_accolade_partial_post_adds_correct_data(client, players, logged_user_schwarbs, summer_leagues, summer_teams, summer_assign, forms, prof_orgs, accolades, annual_rosters):
     response = client.post(
         reverse("add_accolade", args=[players.devin_taylor.pk]),
         forms.dt_foy,

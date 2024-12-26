@@ -129,3 +129,22 @@ def test_single_player_page_renders_accolades_in_reverse_date_order(client, play
     sec = str(response.content).find("2nd team All-American Outfielder")
     assert sec < first
     assert first < pre
+
+
+@pytest.mark.django_db
+def test_single_player_page_renders_summer_accolades_after_summer_header(client, players, annual_rosters, logged_user_schwarbs, accolades, summer_assign, summer_leagues, summer_teams):
+    response = client.get(
+        reverse(
+            "single_player_page",
+            args=[players.ryan_kraft.pk],
+        )
+    )
+    assert response.status_code == 200
+    assert "Ryan Kraft" in str(response.content)
+    assert "Northwoods League Pitcher of the Year" in str(response.content)
+    head = str(response.content).find("Summer Ball:")
+    award = str(response.content).find("Northwoods League Pitcher of the Year")
+    assert head < award
+
+
+

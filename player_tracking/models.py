@@ -135,6 +135,7 @@ class SummerAssign(models.Model):
 class Accolade(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     annual_roster = models.ForeignKey(AnnualRoster, on_delete=models.CASCADE, null=True, blank=True)
+    summer_assign = models.ForeignKey(SummerAssign, on_delete=models.CASCADE, null=True, blank=True)
     award_date = models.DateField(db_default=Now())
     citation = models.URLField(null=True, blank=True)
     name = models.CharField(null=False, max_length=64)

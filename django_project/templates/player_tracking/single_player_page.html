@@ -29,7 +29,7 @@
 
                 <ul>
                 {% for accolade in accolades %}
-                    {% if accolade.annual_roster.pk == roster.pk %}
+                    {% if accolade.annual_roster == roster %}
                     <li><p> 
                         {% if accolade.citation %}
                             <a target="_blank" href="{{ accolade.citation }}">{{accolade.award_org}} {{ accolade.name }}</a></p></li>
@@ -40,25 +40,6 @@
                 {% endfor %}
                 </ul>
                 <hr>
-        {% endfor %}
-        </ul>
-
-        <hr>
-        <h3>Other Accolades:</h3>
-        {% if user.is_authenticated %}
-        <button hx-get="{% url "add_accolade" player.pk %}" hx-target="#add_roster_or_transaction">add accolade</button>
-        {% endif %}
-        
-        <ul>
-        {% for accolade in accolades%}
-            {% if not accolade.annual_roster %}
-            <li><p>{{ accolade.award_date }}: 
-                {% if accolade.citation %}
-                    <a target="_blank" href="{{ accolade.citation }}">{{accolade.award_org}} {{ accolade.name }}</a></p></li>
-                {% else %}
-                {{accolade.award_org}} {{ accolade.name }}</p></li>
-                {% endif %}
-            {% endif %}
         {% endfor %}
         </ul>
 
@@ -88,11 +69,43 @@
     <ul>
         {% for summer in summers %}
             <li><p>{{ summer.summer_year }}: {{ summer.summer_team.name }} {{summer.summer_team.mascot}} of the {{ summer.summer_league.league }} League</p></li>
+            <ul>
+                {% for accolade in accolades %}
+                    {% if accolade.summer_assign == summer %}
+                    <li><p> 
+                        {% if accolade.citation %}
+                            <a target="_blank" href="{{ accolade.citation }}">{{accolade.award_org}} {{ accolade.name }}</a></p></li>
+                        {% else %}
+                        {{accolade.award_org}} {{ accolade.name }}</p></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                </ul>
         {% endfor %}
-        </ul>
-    </div>
+    </ul>
 
-    <br clear="both">
+
+
+    <hr>
+    <h3>Other Accolades:</h3>
+    {% if user.is_authenticated %}
+    <button hx-get="{% url "add_accolade" player.pk %}" hx-target="#add_roster_or_transaction">add accolade</button>
+    {% endif %}
+    
+    <ul>
+    {% for accolade in accolades%}
+        {% if not accolade.annual_roster and not accolade.summer_assign %}
+        <li><p>{{ accolade.award_date }}: 
+            {% if accolade.citation %}
+                <a target="_blank" href="{{ accolade.citation }}">{{accolade.award_org}} {{ accolade.name }}</a></p></li>
+            {% else %}
+            {{accolade.award_org}} {{ accolade.name }}</p></li>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    </ul>
+
+    </div>
 
     <div class="column-3"></div>
     <div class="column-6" id="add_roster_or_transaction">

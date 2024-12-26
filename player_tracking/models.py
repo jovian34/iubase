@@ -141,5 +141,8 @@ class Accolade(models.Model):
     award_org = models.CharField(null=False, max_length=64)
     description = models.TextField(null=True, blank=True)
     
+    class Meta:
+        ordering = [ "-award_date", "name" ]
+    
     def __str__(self):
         return f"{self.player.first} {self.player.last} {self.award_date.year} {self.award_org} {self.name}"

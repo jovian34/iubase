@@ -113,3 +113,19 @@ def test_single_player_page_renders_add_accolade_button(client, players, annual_
     assert response.status_code == 200
     assert "Devin Taylor" in str(response.content)
     assert "add accolade</button>" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_single_player_page_renders_accolades_in_reverse_date_order(client, players, annual_rosters, logged_user_schwarbs, accolades):
+    response = client.get(
+        reverse(
+            "single_player_page",
+            args=[players.devin_taylor.pk],
+        )
+    )
+    assert response.status_code == 200
+    pre = str(response.content).find("Pre-season second team All-American Outfielder")
+    first = str(response.content).find("First Team All-Conference")
+    sec = str(response.content).find("2nd team All-American Outfielder")
+    assert sec < first
+    assert first < pre

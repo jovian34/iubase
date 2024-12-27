@@ -7,7 +7,8 @@ from player_tracking.tests.fixtures.mlb_draft_date import typical_mlb_draft_date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
-from player_tracking.views.drafted_players import group_drafted_player
+from player_tracking.views import drafted_players
+from player_tracking.views import set_player_properties
 
 from live_game_blog.tests.fixtures.teams import teams
 
@@ -17,13 +18,13 @@ this_year = date.today().year
 
 @pytest.mark.django_db
 def test_group_drafted_player_groups_high_school(players):
-    group_drafted_player(draft_year=f"{this_year}", player=players.grant_hollister)
+    drafted_players.group_drafted_player(draft_year=this_year, player=players.grant_hollister)
     assert players.grant_hollister.group == "High School Signee"
 
 
 @pytest.mark.django_db
 def test_group_drafted_player_groups_iu(players):
-    group_drafted_player(draft_year=f"{this_year}", player=players.brayden_risedorph)
+    drafted_players.group_drafted_player(draft_year=this_year, player=players.brayden_risedorph)
     assert players.brayden_risedorph.group == "IU Player/Alumni"
 
 
@@ -31,6 +32,7 @@ def test_group_drafted_player_groups_iu(players):
 def test_drafted_players_renders_drafted_not_signed(
     client, players, prof_orgs, transactions, annual_rosters, typical_mlb_draft_date
 ):
+    errors = set_player_properties.set_player_props_get_errors()
     response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Grant Hollister" in str(response.content)
@@ -48,6 +50,7 @@ def test_drafted_players_renders_drafted_not_signed(
 def test_drafted_players_renders_signed(
     client, players, prof_orgs, transactions, annual_rosters, typical_mlb_draft_date
 ):
+    errors = set_player_properties.set_player_props_get_errors()
     response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert response.context["count"] == 2
@@ -65,6 +68,7 @@ def test_drafted_players_renders_signed(
 def test_drafted_players_renders_unsigned(
     client, players, prof_orgs, transactions, annual_rosters, typical_mlb_draft_date
 ):
+    errors = set_player_properties.set_player_props_get_errors()
     response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Grant Hollister did not sign and will be on campus in the fall." in str(

@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.db.models.functions import Lower
+from django.db.models import Q
 
 from player_tracking.models import Player, Transaction
 from index.views import save_traffic_data
 
 
 def view(request, draft_year):
-    players, count = set_drafted_player_info(draft_year)
+    players, count = set_drafted_player_info(int(draft_year))
     context = {
         "this_year": draft_year,
         "players": players,
@@ -18,28 +19,29 @@ def view(request, draft_year):
 
 
 def set_drafted_player_info(draft_year):
-    players = Player.objects.all().order_by(Lower("last"))
+    players = Player.objects.filter(
+        Q(hsgrad_year__lte=draft_year),
+        Q(last_spring__isnull=True) | Q(last_spring__gte=draft_year)
+    )
     count = 0
     for player in players:
         player.drafted = False
         player.signed = "no"
         transactions = Transaction.objects.filter(player=player).order_by("trans_date")
         for trans in transactions:
-            if trans.trans_event == "Drafted" and trans.trans_date.year == int(
-                draft_year
-            ):
+            if trans.trans_event == "Drafted" and trans.trans_date.year == draft_year:
                 set_drafted_player(draft_year, player, trans)
                 count += 1
             if (
                 trans.trans_event == "Signed Professional Contract"
                 and player.drafted
-                and trans.trans_date.year == int(draft_year)
+                and trans.trans_date.year == draft_year
             ):
                 set_signed_player(player, trans)
             if (
                 trans.trans_event == "Not Signing Professional Contract"
                 and player.drafted
-                and trans.trans_date.year == int(draft_year)
+                and trans.trans_date.year == draft_year
             ):
                 set_not_signed_player(player, trans)
     return players, count
@@ -56,7 +58,7 @@ def set_drafted_player(draft_year, player, trans):
 
 
 def group_drafted_player(draft_year, player):
-    if player.hsgrad_year == int(draft_year):
+    if player.hsgrad_year == draft_year:
         player.group = "High School Signee"
     else:
         player.group = "IU Player/Alumni"

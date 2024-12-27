@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.2.9"  # PT draft page bug fixed with div-end tag inside  an if statement ATP 2024-12-25
+    "0.2.10"  # PT draft page optimized to include a smaller range of possible players ATP 2024-12-26
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

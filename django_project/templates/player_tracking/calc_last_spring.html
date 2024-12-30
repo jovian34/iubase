@@ -6,30 +6,32 @@
 
 
 {% block content %}
-<div class="column-3"></div>
-<div class="column-6">
-    
-    <ul>
-    {% if error_exists %}
-    {% for error in errors %}
-        <li>
-            <p>{{ error }}</p>     
-        </li>
-    {% endfor %}
-    {% else %}
-        <p>no errors recorded</p>
-    {% endif %}
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        
+        <ul>
+        {% if error_exists %}
+        {% for error in errors %}
+            <li>
+                <p>{{ error }}</p>     
+            </li>
+        {% endfor %}
+        {% else %}
+            <p>no errors recorded</p>
+        {% endif %}
 
-    <ul>
-    {% for player in players %}
-        <li>
-                <h2><a href="{% url "single_player_page" player.pk %}">
-                    {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
-                </a></h2> 
-        </li>
-    {% endfor %}
-    </ul>
+        <ul>
+        {% for player in players %}
+            <li>
+                    <h2><a href="{% url "single_player_page" player.pk %}">
+                        {{player.first}} {{player.last}} ({{ player.first_spring }}-{{ player.last_spring }})    
+                    </a></h2> 
+            </li>
+        {% endfor %}
+        </ul>
 
-    <h3>View <a href="{% url "players" %}">list of players</a></h3>
+        <h3>View <a href="{% url "players" %}">list of players</a></h3>
+    </div>
 </div>
 {% endblock %}

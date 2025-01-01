@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.2.13"  # INDEX customized error templates ATP 2025-01-01
+    "0.2.14"  # PT/LGB raise 404 errors for invalid players or games ATP 2025-01-01
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

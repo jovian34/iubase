@@ -67,6 +67,8 @@ def agents():
 
 def set_last_year_month():
     # handles edge case where last month is December of last year
+    # two lines will show as not-covered in coverage report
+    # this is expected
     if datetime.today().month == 1:
         last_mo_yr = datetime.today().year - 1
         last_mo_mo = 12

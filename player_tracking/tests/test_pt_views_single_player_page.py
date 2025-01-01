@@ -34,6 +34,17 @@ def test_single_player_page_renders_one_player_only(client, players, annual_rost
 
 
 @pytest.mark.django_db
+def test_single_player_page_raises_404_if_not_in_database(client, players, annual_rosters):
+    response = client.get(
+        reverse(
+            "single_player_page",
+            args=[5748454752],
+        )
+    )
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
 def test_single_player_page_renders_summer_teams(
     client, players, annual_rosters, summer_assign, summer_leagues, summer_teams
 ):

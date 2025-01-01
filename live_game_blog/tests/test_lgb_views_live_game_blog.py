@@ -43,6 +43,14 @@ def test_edit_live_single_game_blog_page_redirects_not_logged_in(
 
 
 @pytest.mark.django_db
+def test_non_existent_game_raises_404_error(
+    client, games, scoreboards, entries
+):
+    response = client.get(reverse("live_game_blog", args=[58479574]))
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
 def test_edit_live_single_game_blog_page_asks_for_password_not_logged_in(
     client, games, scoreboards, entries
 ):

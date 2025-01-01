@@ -1,11 +1,15 @@
 from django.shortcuts import render
+from django import http
 
 from index.views import save_traffic_data
 from live_game_blog.models import Game, Scoreboard, BlogEntry
 
 
 def view(request, game_pk):
-    game = Game.objects.get(pk=game_pk)
+    try:
+        game = Game.objects.get(pk=game_pk)
+    except Game.DoesNotExist:
+        raise http.Http404
     blog_entries = (
         BlogEntry.objects.filter(game=game)
         .select_related("scoreboard")

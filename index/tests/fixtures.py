@@ -32,11 +32,23 @@ def agents():
         ip="104.139.10.207",
         user_agent="Mozilla/5.0 (iPhone; CPU iPhone OS 17_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Mobile/15E148 Safari/604.1",
     )
+    linux = index_models.TrafficCounter.objects.create(
+        page="AJ Shepard",
+        timestamp=datetime.today().astimezone() - timedelta(seconds=35),
+        ip="104.139.10.207",
+        user_agent="Mozilla/5.0 (Linux; linux x86)",
+    )
     android = index_models.TrafficCounter.objects.create(
         page="AJ Shepard",
         timestamp=datetime.today().astimezone() - timedelta(seconds=37),
         ip="72.14.201.229",
         user_agent="Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.69 Mobile Safari/537.36",
+    )
+    other = index_models.TrafficCounter.objects.create(
+        page="AJ Shepard",
+        timestamp=datetime.today().astimezone() - timedelta(seconds=37),
+        ip="72.14.201.229",
+        user_agent="Mozilla/5.0 (Tindleberry)",
     )
     last_mo_yr, last_mo_mo = set_last_year_month()
     last_month = index_models.TrafficCounter.objects.create(
@@ -54,25 +66,24 @@ def agents():
     )
     AgentObj = namedtuple(
         "AgentObj",
-        "windows bot mac iphone android last_month"
+        "windows bot mac iphone linux android other last_month"
     )
     return AgentObj(
         windows=windows,
         bot=bot,
         mac=mac,
         iphone=iphone,
+        linux=linux,
         android=android,
+        other=other,
         last_month=last_month,
     )
 
 def set_last_year_month():
     # handles edge case where last month is December of last year
-    # two lines will show as not-covered in coverage report
-    # this is expected
+    last_mo_yr = datetime.today().year
+    last_mo_mo = datetime.today().month - 1
     if datetime.today().month == 1:
-        last_mo_yr = datetime.today().year - 1
-        last_mo_mo = 12
-    else:
-        last_mo_yr = datetime.today().year
-        last_mo_mo = datetime.today().month - 1
+        # below will show as not-covered in cov-report outside of January
+        last_mo_yr, last_mo_mo = last_mo_yr - 1, 12
     return last_mo_yr,last_mo_mo

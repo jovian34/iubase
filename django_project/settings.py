@@ -15,13 +15,13 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get("DEVELOP")))
 
-if not bool(int(os.environ.get("DEVELOP"))):
-    ALLOWED_HOSTS = [
-        "localhost",
-        "apps.iubase.com",
-        "159.203.11.18",
-    ]
-else:
+
+ALLOWED_HOSTS = [
+    "localhost",
+    "apps.iubase.com",
+    "159.203.11.18",
+]
+if bool(int(os.environ.get("DEVELOP"))):
     ALLOWED_HOSTS = [
         "localhost",
         "127.0.0.1",
@@ -84,10 +84,10 @@ DATABASES = {
     }
 }
 
+log_level = "WARNING"
 if DEBUG:
     log_level = "DEBUG"
-else:
-    log_level = "WARNING"
+    
 
 LOGGING = {
     "version": 1,
@@ -161,24 +161,28 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 
-if not bool(int(os.environ.get("DEVELOP"))):
-    # added due to security warnings
-    CSRF_COOKIE_SECURE = True
 
-    SECURE_HSTS_SECONDS = 9999
+# added due to security warnings
 
-    SECURE_SSL_REDIRECT = True
+CSRF_COOKIE_SECURE = True
 
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_SECONDS = 9999
 
-    SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-    SESSION_COOKIE_SECURE = True
+SECURE_HSTS_PRELOAD = True
 
-    STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
+SESSION_COOKIE_SECURE = True
+
+STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
+
+SECURE_SSL_REDIRECT = True
+
+if bool(int(os.environ.get("DEVELOP"))):
+    SECURE_SSL_REDIRECT = False
 
 
 project_version = (
-    "0.2.14"  # PT/LGB raise 404 errors for invalid players or games ATP 2025-01-01
+    "0.2.15"  # several if stmts tweaked to get 100% test coverage ATP 2025-01-01
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

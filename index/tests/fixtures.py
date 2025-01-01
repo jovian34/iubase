@@ -38,11 +38,12 @@ def agents():
         ip="72.14.201.229",
         user_agent="Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.69 Mobile Safari/537.36",
     )
+    last_mo_yr, last_mo_mo = set_last_year_month()
     last_month = index_models.TrafficCounter.objects.create(
         page="AJ Shepard",
         timestamp=datetime(
-            year=datetime.today().year,
-            month=datetime.today().month - 1,
+            year=last_mo_yr,
+            month=last_mo_mo,
             day=8,
             hour=10,
             minute=38,
@@ -63,3 +64,13 @@ def agents():
         android=android,
         last_month=last_month,
     )
+
+def set_last_year_month():
+    # handles edge case where last month is December of last year
+    if datetime.today().month == 1:
+        last_mo_yr = datetime.today().year - 1
+        last_mo_mo = 12
+    else:
+        last_mo_yr = datetime.today().year
+        last_mo_mo = datetime.today().month - 1
+    return last_mo_yr,last_mo_mo

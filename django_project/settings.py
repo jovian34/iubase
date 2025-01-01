@@ -179,6 +179,6 @@ if not bool(int(os.environ.get("DEVELOP"))):
 
 
 project_version = (
-    "0.2.11"  # PT fix template div position last eligible spring ATP 2024-12-26
+    "0.2.12"  # INDEX/PT fixed test problems caused by relative time shown by new year ATP 2025-01-01
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

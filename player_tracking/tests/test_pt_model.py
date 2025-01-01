@@ -1,5 +1,5 @@
 import pytest
-from datetime import date
+from datetime import date, timedelta
 
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
@@ -47,4 +47,5 @@ def test_summer_assign_string_def(summer_assign):
 
 @pytest.mark.django_db
 def test_accolade_model_str_def(accolades, annual_rosters, teams):
-    assert str(accolades.dt_ly_b1g_first_team) == f"Devin Taylor {this_year} B1G First Team All-Conference Outfielder"
+    award_date = date.today() - timedelta(days=60)
+    assert str(accolades.dt_ly_b1g_first_team) == f"Devin Taylor {award_date.year} B1G First Team All-Conference Outfielder"

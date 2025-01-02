@@ -50,17 +50,9 @@ def agents():
         ip="72.14.201.229",
         user_agent="Mozilla/5.0 (Tindleberry)",
     )
-    last_mo_yr, last_mo_mo = set_last_year_month()
     last_month = index_models.TrafficCounter.objects.create(
         page="AJ Shepard",
-        timestamp=datetime(
-            year=last_mo_yr,
-            month=last_mo_mo,
-            day=8,
-            hour=10,
-            minute=38,
-            second=27,
-        ).astimezone(),
+        timestamp=datetime.today().astimezone().replace(day=1) - timedelta(days=7),
         ip="104.139.10.207",
         user_agent="Mozilla/5.0 (iPhone; CPU iPhone OS 17_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Mobile/15E148 Safari/604.1",
     )
@@ -78,12 +70,3 @@ def agents():
         other=other,
         last_month=last_month,
     )
-
-def set_last_year_month():
-    # handles edge case where last month is December of last year
-    last_mo_yr = datetime.today().year
-    last_mo_mo = datetime.today().month - 1
-    if datetime.today().month == 1:
-        # below will show as not-covered in cov-report outside of January
-        last_mo_yr, last_mo_mo = last_mo_yr - 1, 12
-    return last_mo_yr,last_mo_mo

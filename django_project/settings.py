@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "0.2.16"  # INDEX added fade-in animation to index button and images ATP 2025-01-03
+    "2025.01.03.B"  # LGB fixed template bug caught by logs in testing ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

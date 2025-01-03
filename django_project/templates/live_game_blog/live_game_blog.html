@@ -35,10 +35,8 @@
         {% if game.audio_student %}<a href="{{ game.audio_student }}">student audio</a> |{% endif %}
         {% if game.live_stats %}<a href="{{ game.live_stats}}">live stats</a>{% endif %}
         </p>
-        <p>{{ game.away_team }} {{ game.away_team.mascot }} {% if game.fall_exhibition %}{% else %}: <a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a><p>
-        {% endif %}
-        <p>{{ game.home_team }} {{ game.home_team.mascot }} {% if game.fall_exhibition %}{% else %}: <a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a></p>
-        {% endif %}
+        <p>{{ game.away_team }} {{ game.away_team.mascot }}: <a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a><p>
+        <p>{{ game.home_team }} {{ game.home_team.mascot }}: <a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a></p>
     </div>
 
     <div class="column-12 clear-both">

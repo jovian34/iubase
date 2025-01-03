@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "0.2.15"  # INDEX fixed test fixture to work in any month and maintain 100% test coverage ATP 2025-01-01
+    "0.2.16"  # INDEX added fade-in animation to index button and images ATP 2025-01-03
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

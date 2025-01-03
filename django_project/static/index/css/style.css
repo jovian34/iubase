@@ -142,6 +142,25 @@ h3 {
 }
 
 
+/*--------TRANSITIONS----------*/
+.fade-me-in-2s {
+    opacity: 1;
+    animation: fade 2s linear;
+}
+
+
+.fade-me-in-5s {
+    opacity: 1;
+    animation: fade 5s linear;
+}
+
+
+@keyframes fade {
+  0% { opacity: 0 }
+  100% { opacity: 1 }
+}
+
+
 
 /*--------HEADER---------------*/
 #headerWrapper {

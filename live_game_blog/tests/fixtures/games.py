@@ -27,6 +27,12 @@ def games(client, teams):
         neutral_site=False,
         first_pitch=(timezone.now() + timedelta(days=2, hours=7)),
     )
+    iu_coastal_ip = Game.objects.create(
+        home_team=teams.coastal,
+        away_team=teams.indiana,
+        neutral_site=False,
+        first_pitch=(timezone.now() - timedelta(hours=1)),
+    )
     iu_gm = Game.objects.create(
         home_team=teams.indiana,
         away_team=teams.gm,
@@ -73,11 +79,12 @@ def games(client, teams):
     )
     GameObj = namedtuple(
         "GameObj",
-        "iu_duke iu_coastal iu_gm iu_mo iu_mo_rain iu_uk_mon iu_uk_sun iu_uk_sat iu_gm_fall",
+        "iu_duke iu_coastal iu_coastal_ip iu_gm iu_mo iu_mo_rain iu_uk_mon iu_uk_sun iu_uk_sat iu_gm_fall",
     )
     return GameObj(
         iu_duke=iu_duke,
         iu_coastal=iu_coastal,
+        iu_coastal_ip=iu_coastal_ip,
         iu_gm=iu_gm,
         iu_mo=iu_mo,
         iu_mo_rain=iu_mo_rain,

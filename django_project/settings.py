@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.01.03.B"  # LGB fixed template bug caught by logs in testing ATP
+    "2025.01.05.a"  # LGB refactoring ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

@@ -75,3 +75,12 @@ def test_get_add_blog_plus_scoreboard_end_of_top_fills_form_with_bottom_of_innin
     )
     assert response.status_code == 200
     assert 'value="Bottom" selected' in str(response.content)
+
+
+@pytest.mark.django_db
+def test_get_add_blog_plus_scoreboard_ip_fills_form_with_top_of_inning(client, logged_user_schwarbs, games, scoreboards):
+    response = client.get(
+        reverse("add_blog_plus_scoreboard", args=[games.iu_coastal_ip.pk]),
+    )
+    assert response.status_code == 200
+    assert 'value="Top" selected' in str(response.content)

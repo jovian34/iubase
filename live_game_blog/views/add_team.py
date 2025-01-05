@@ -5,6 +5,7 @@ from django.urls import reverse
 from live_game_blog.forms import AddTeamForm
 from live_game_blog.models import Team
 
+
 @login_required
 def view(request):
     if request.method == "POST":

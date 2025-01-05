@@ -22,16 +22,16 @@ def view(request, game_pk):
         return render(
             request, "live_game_blog/partials/add_blog_entry_only.html", context
         )
-    
+
 
 def save_blog_entry(request, game_pk, form):
     add_blog = BlogEntry(
-                game=Game.objects.get(pk=game_pk),
-                author=request.user,
-                blog_entry=form.cleaned_data["blog_entry"],
-                is_raw_html=form.cleaned_data["is_raw_html"],
-                include_scoreboard=False,
-            )
+        game=Game.objects.get(pk=game_pk),
+        author=request.user,
+        blog_entry=form.cleaned_data["blog_entry"],
+        is_raw_html=form.cleaned_data["is_raw_html"],
+        include_scoreboard=False,
+    )
     add_blog.save()
     return add_blog
 

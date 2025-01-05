@@ -8,14 +8,19 @@ from live_game_blog import models as lgb_models
 @auth.login_required
 def view(request, game_pk):
     if request.method == "POST":
-        return get_posted_form_to_save_blog_and_scoreboard_then_redirect(request, game_pk)
+        return get_posted_form_to_save_blog_and_scoreboard_then_redirect(
+            request, game_pk
+        )
     else:
-        context = {"form": fill_initial_blog_and_scoreboard(game_pk), "game_pk": game_pk}
+        context = {
+            "form": fill_initial_blog_and_scoreboard(game_pk),
+            "game_pk": game_pk,
+        }
         template_path = "live_game_blog/partials/add_blog_plus_scoreboard.html"
         return shortcuts.render(request, template_path, context)
-    
 
-def get_posted_form_to_save_blog_and_scoreboard_then_redirect(request, game_pk):    
+
+def get_posted_form_to_save_blog_and_scoreboard_then_redirect(request, game_pk):
     form = lgb_forms.BlogAndScoreboardForm(request.POST)
     if form.is_valid():
         save_scoreboard(request, game_pk, form)
@@ -71,11 +76,16 @@ def fill_initial_blog_and_scoreboard(game_pk):
         },
     )
 
+
 def set_initial_inning_outs_and_part(last_score):
     if last_score.outs == 3 and last_score.inning_part == "Bottom":
         outs, inning, part = 0, last_score.inning_num + 1, "Top"
     elif last_score.outs == 3 and last_score.inning_part == "Top":
         outs, inning, part = 0, last_score.inning_num, "Bottom"
     else:
-        outs, inning, part = last_score.outs, last_score.inning_num, last_score.inning_part
+        outs, inning, part = (
+            last_score.outs,
+            last_score.inning_num,
+            last_score.inning_part,
+        )
     return inning, outs, part

@@ -1,30 +1,29 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse
+from django import shortcuts, urls
+from django.contrib.auth import decorators as auth
 
-from live_game_blog.forms import BlogAndScoreboardForm
-from live_game_blog.models import BlogEntry, Game, Scoreboard
+from live_game_blog import forms as lgb_forms
+from live_game_blog import models as lgb_models
 
 
-@login_required
+@auth.login_required
 def view(request, game_pk):
     if request.method == "POST":
-        form = BlogAndScoreboardForm(request.POST)
+        form = lgb_forms.BlogAndScoreboardForm(request.POST)
         if form.is_valid():
             save_scoreboard(request, game_pk, form)
             save_blog_entry(request, game_pk, form)
-        return redirect(reverse("edit_live_game_blog", args=[game_pk]))
+        return shortcuts.redirect(urls.reverse("edit_live_game_blog", args=[game_pk]))
     else:
         form = fill_initial_blog_and_scoreboard(game_pk)
         context = {"form": form, "game_pk": game_pk}
-        return render(
+        return shortcuts.render(
             request, "live_game_blog/partials/add_blog_plus_scoreboard.html", context
         )
 
 
 def save_scoreboard(request, game_pk, form):
-    add_scoreboard = Scoreboard(
-        game=Game.objects.get(pk=game_pk),
+    add_scoreboard = lgb_models.Scoreboard(
+        game=lgb_models.Game.objects.get(pk=game_pk),
         scorekeeper=request.user,
         game_status=form.cleaned_data["game_status"],
         inning_num=form.cleaned_data["inning_num"],
@@ -41,27 +40,21 @@ def save_scoreboard(request, game_pk, form):
 
 
 def save_blog_entry(request, game_pk, form):
-    this_score = Scoreboard.objects.filter(game=game_pk).last()
-    add_blog = BlogEntry(
-        game=Game.objects.get(pk=game_pk),
+    this_score = lgb_models.Scoreboard.objects.filter(game=game_pk).last()
+    add_blog = lgb_models.BlogEntry(
+        game=lgb_models.Game.objects.get(pk=game_pk),
         author=request.user,
         blog_entry=form.cleaned_data["blog_entry"],
         include_scoreboard=True,
-        scoreboard=Scoreboard.objects.get(pk=this_score.pk),
+        scoreboard=lgb_models.Scoreboard.objects.get(pk=this_score.pk),
     )
     add_blog.save()
 
 
 def fill_initial_blog_and_scoreboard(game_pk):
-    last_score = Scoreboard.objects.filter(game=game_pk).last()
-    inning = last_score.inning_num
-    outs = last_score.outs
-    part = last_score.inning_part
-    if last_score.outs == 3 and last_score.inning_part == "Bottom":
-        outs, inning, part = 0, last_score.inning_num + 1, "Top"
-    elif last_score.outs == 3 and last_score.inning_part == "Top":
-        outs, part = 0, "Bottom"
-    form = BlogAndScoreboardForm(
+    last_score = lgb_models.Scoreboard.objects.filter(game=game_pk).last()
+    inning, outs, part = set_initial_inning_and_part(last_score)
+    return lgb_forms.BlogAndScoreboardForm(
         initial={
             "game_status": last_score.game_status,
             "inning_num": inning,
@@ -76,4 +69,9 @@ def fill_initial_blog_and_scoreboard(game_pk):
         },
     )
 
-    return form
+def set_initial_inning_and_part(last_score):
+    if last_score.outs == 3 and last_score.inning_part == "Bottom":
+        outs, inning, part = 0, last_score.inning_num + 1, "Top"
+    elif last_score.outs == 3 and last_score.inning_part == "Top":
+        outs, inning, part = 0, last_score.inning_num, "Bottom"
+    return inning, outs, part

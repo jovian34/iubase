@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.functions import Now
+from django.db.models import functions as model_func
 
 from live_game_blog import models as lgb_models
 from player_tracking import choices
@@ -44,7 +44,7 @@ class ProfOrg(models.Model):
 class Transaction(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     trans_event = models.CharField(choices=choices.TRANSACTIONS, max_length=64)
-    trans_date = models.DateField(db_default=Now())
+    trans_date = models.DateField(db_default=model_func.Now())
     citation = models.URLField(null=True, blank=True)
     primary_position = models.CharField(null=True, blank=True, choices=choices.POSITIONS)
     other_team = models.ForeignKey(
@@ -136,7 +136,7 @@ class Accolade(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     annual_roster = models.ForeignKey(AnnualRoster, on_delete=models.CASCADE, null=True, blank=True)
     summer_assign = models.ForeignKey(SummerAssign, on_delete=models.CASCADE, null=True, blank=True)
-    award_date = models.DateField(db_default=Now())
+    award_date = models.DateField(db_default=model_func.Now())
     citation = models.URLField(null=True, blank=True)
     name = models.CharField(null=False, max_length=64)
     award_org = models.CharField(null=False, max_length=64)

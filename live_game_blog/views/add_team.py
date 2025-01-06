@@ -10,16 +10,7 @@ def view(request):
     if request.method == "POST":
         return validate_posted_add_team_form_save_then_redirect(request)
     else:
-        return initial_blank_add_team_form_and_render_template(request)
-
-
-def initial_blank_add_team_form_and_render_template(request):
-    context = {
-        "form": lgb_forms.AddTeamForm(),
-        "page_title": "Add Team",
-    }
-    template_path = "live_game_blog/add_team.html"
-    return shortcuts.render(request, template_path, context)
+        return initialize_blank_add_team_form_and_render_template(request)
 
 
 def validate_posted_add_team_form_save_then_redirect(request):
@@ -38,3 +29,12 @@ def save_team(form):
         roster=form.cleaned_data["roster"],
     )
     add_team.save()
+
+
+def initialize_blank_add_team_form_and_render_template(request):
+    context = {
+        "form": lgb_forms.AddTeamForm(),
+        "page_title": "Add Team",
+    }
+    template_path = "live_game_blog/add_team.html"
+    return shortcuts.render(request, template_path, context)

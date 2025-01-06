@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.01.05.e"  # LGB games refactoring manual and black ATP
+    "2025.01.05.f"  # LGB live_game_blog refactoring manual and black ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

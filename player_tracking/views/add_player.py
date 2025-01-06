@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
+from django import shortcuts, urls
 from django.contrib.auth import decorators as auth_dec
-from django.urls import reverse
 
 from datetime import date
 
@@ -12,26 +11,39 @@ from player_tracking.views.set_player_properties import set_player_props_get_err
 @auth_dec.login_required
 def view(request):
     if request.method == "POST":
-        form = NewPlayerForm(request.POST)
-        if form.is_valid():
-            save_new_player_and_init_transaction(form)
-            set_player_props_get_errors()
-        return redirect(reverse("players"))
+        return validate_post_new_player_form_save_then_redirect(request)
     else:
-        form = NewPlayerForm(
-            initial={
-                "hsgrad_year": date.today().year,
-                "home_country": "USA",
-            },
-        )
         context = {
-            "form": form,
+            "form": initialize_new_player_form(),
             "page_title": "Add a New Player",
         }
-        return render(request, "player_tracking/add_player.html", context)
+        template_path = "player_tracking/add_player.html"
+        return shortcuts.render(request, template_path, context)
+
+
+def validate_post_new_player_form_save_then_redirect(request):
+    form = NewPlayerForm(request.POST)
+    if form.is_valid():
+        save_new_player_and_init_transaction(form)
+        set_player_props_get_errors()
+    return shortcuts.redirect(urls.reverse("players"))
+
+
+def initialize_new_player_form():
+    return NewPlayerForm(
+        initial={
+            "hsgrad_year": date.today().year,
+            "home_country": "USA",
+        },
+    )
 
 
 def save_new_player_and_init_transaction(form):
+    save_new_player(form)
+    save_initial_transaction(form)
+
+
+def save_new_player(form):
     add_player = Player.objects.create(
         first=form.cleaned_data["first"],
         last=form.cleaned_data["last"],
@@ -50,6 +62,9 @@ def save_new_player_and_init_transaction(form):
         primary_position=form.cleaned_data["primary_position"],
     )
     add_player.save()
+
+
+def save_initial_transaction(form):
     this_player = Player.objects.last()
     add_initial_transaction = Transaction(
         player=this_player,

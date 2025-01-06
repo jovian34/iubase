@@ -6,7 +6,9 @@ from index.views import save_traffic_data
 
 
 def view(request, fall_year):
-    players = Player.objects.filter(first_spring=int(fall_year)+1).order_by(Lower("last"))
+    players = Player.objects.filter(first_spring=int(fall_year) + 1).order_by(
+        Lower("last")
+    )
     for player in players:
         if int(fall_year) == player.hsgrad_year:
             player.hs = True
@@ -14,7 +16,7 @@ def view(request, fall_year):
             player.hs = False
         player.nli = False
         transactions = Transaction.objects.filter(player=player)
-        nli = "National Letter of Intent Signed"        
+        nli = "National Letter of Intent Signed"
         for transaction in transactions:
             age_of_nli = int(fall_year) - transaction.trans_date.year
             if transaction.trans_event == nli and age_of_nli < 2:

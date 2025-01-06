@@ -7,6 +7,7 @@ from datetime import date
 from player_tracking.forms import SummerAssignForm
 from player_tracking.models import Player, SummerAssign
 
+
 @login_required
 def view(request, player_id):
     if request.method == "POST":

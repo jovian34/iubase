@@ -49,5 +49,8 @@ def view(request, player_id):
                 "primary_position": edit_info.primary_position,
             },
         )
-        context = {"form": form, "player_id": player_id,}
+        context = {
+            "form": form,
+            "player_id": player_id,
+        }
         return render(request, "player_tracking/partials/edit_player.html", context)

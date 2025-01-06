@@ -8,14 +8,14 @@ from index.views import save_traffic_data
 
 
 def fall(request, fall_year):
-    if request.META.get('HTTP_HX_REQUEST'):
+    if request.META.get("HTTP_HX_REQUEST"):
         spring_year = int(fall_year) + 1
         players = (
             AnnualRoster.objects.filter(spring_year=spring_year)
             .filter(team__team_name="Indiana")
             .order_by("jersey")
         )
-        years = [ int(fall_year) - 2 + i for i in range(5) ]
+        years = [int(fall_year) - 2 + i for i in range(5)]
         context = {
             "fall_year": fall_year,
             "years": years,

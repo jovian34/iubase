@@ -21,7 +21,7 @@ def view(request, draft_year):
 def set_drafted_player_info(draft_year):
     players = Player.objects.filter(
         Q(hsgrad_year__lte=draft_year),
-        Q(last_spring__isnull=True) | Q(last_spring__gte=draft_year)
+        Q(last_spring__isnull=True) | Q(last_spring__gte=draft_year),
     )
     count = 0
     for player in players:

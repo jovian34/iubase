@@ -9,6 +9,7 @@ from player_tracking.views import set_player_properties
 from player_tracking import models as pt_models
 from live_game_blog import models as lgb_models
 
+
 @decorators.login_required
 def view(request, player_id):
     if request.method == "POST":

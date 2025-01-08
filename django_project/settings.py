@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.01.06.a"  # ACCOUNTS fixed fieldset bug in add user via admin ATP
+    "2025.01.08.a"  # PT template tweaks ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

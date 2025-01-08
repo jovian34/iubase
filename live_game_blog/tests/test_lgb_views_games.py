@@ -2,8 +2,8 @@ import pytest
 
 from django.urls import reverse
 
-from live_game_blog.tests.fixtures.games import (
-    games,
+from live_game_blog.tests.fixtures.games import games
+from accounts.tests.fixtures import (
     logged_user_schwarbs,
     user_not_logged_in,
     user_iubase17,
@@ -42,6 +42,21 @@ def test_games_list_page_does_not_render_past_games(client, teams, games, scoreb
     assert response.status_code == 200
     assert "Coastal Carolina" in str(response.content)
     assert "Kentucky" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_games_list_page_renders_add_game_and_team_if_staff(admin_client, teams, games, scoreboards):
+    response = admin_client.get(reverse("games"))
+    assert response.status_code == 200
+    assert "Add game" in str(response.content)
+    assert "Add team" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_games_list_page_no_add_game_if_logged_not_staff(client, logged_user_schwarbs, teams, games, scoreboards):
+    response = client.get(reverse("games"))
+    assert response.status_code == 200
+    assert "Add game" not in str(response.content)
 
 
 @pytest.mark.django_db

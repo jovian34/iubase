@@ -19,8 +19,6 @@ def redirect_to_roster_projection_or_eligible(request, fall_year):
     spring_year = int(fall_year) + 1
     if AnnualRoster.objects.filter(spring_year=spring_year):
         return redirect("fall_roster", fall_year=fall_year)
-    elif int(fall_year) == 2024: # temporary hard-code for 2025 - remove when spring roster announced
-        return redirect("projected_players_fall_depth", fall_year=fall_year)
     elif int(fall_year) == date.today().year and does_mlb_draft_date_exist_for_year(fall_year):
         return redirect("projected_players_fall_depth", fall_year=fall_year)
     else:

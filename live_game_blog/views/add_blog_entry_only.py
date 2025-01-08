@@ -20,7 +20,7 @@ def process_form_validate_and_save_new_blog(request, game_pk):
         add_blog = save_blog_entry(request, game_pk, form)
         if form.cleaned_data["is_x_embed"]:
             assign_iubase_as_author(add_blog)
-    return shortcuts.redirect(urls.reverse("edit_live_game_blog", args=[game_pk]))
+    return shortcuts.redirect(urls.reverse("live_game_blog", args=[game_pk]))
 
 
 def save_blog_entry(request, game_pk, form):

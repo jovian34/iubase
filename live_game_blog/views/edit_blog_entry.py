@@ -19,7 +19,7 @@ def edit_blog_plus_scoreboard_entry(request, edit_entry):
     if request.method == "POST":
         validate_blog_and_score_form_and_save(request, edit_entry, edit_scoreboard)
         return shortcuts.redirect(
-            urls.reverse("edit_live_game_blog", args=[edit_entry.game.pk])
+            urls.reverse("live_game_blog", args=[edit_entry.game.pk])
         )
     else:
         context = {
@@ -76,7 +76,7 @@ def edit_blog_only_entry(request, edit_entry):
     if request.method == "POST":
         save_blog_only_entry(request, edit_entry)
         return shortcuts.redirect(
-            urls.reverse("edit_live_game_blog", args=[edit_entry.game.pk])
+            urls.reverse("live_game_blog", args=[edit_entry.game.pk])
         )
     else:
         context = {

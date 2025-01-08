@@ -53,6 +53,22 @@
 
 {% block edit_buttons %}
 
+{% if perms.live_game_blog.add_blogentry %}
+    <div class="column-12 clear-both" id="add_blog_entry">
+        <div class="column-3"></div>
+        <div class="column-6">
+            <button hx-get="{% url "add_blog_entry_only" game.pk %}"
+                    hx-target="#add_blog_entry">
+                    Add Blog Entry Only
+            </button>
+            <button hx-get="{% url "add_blog_plus_scoreboard" game.pk %}"
+                    hx-target="#add_blog_entry">
+                    Add Blog Entry plus Scoreboard
+            </button>
+        </div>
+    </div>
+{% endif %}
+
 {% endblock %}
 
 <div class="column-12 clear-both">

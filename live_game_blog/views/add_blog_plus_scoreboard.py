@@ -25,7 +25,7 @@ def get_posted_form_to_save_blog_and_scoreboard_then_redirect(request, game_pk):
     if form.is_valid():
         save_scoreboard(request, game_pk, form)
         save_blog_entry(request, game_pk, form)
-    return shortcuts.redirect(urls.reverse("edit_live_game_blog", args=[game_pk]))
+    return shortcuts.redirect(urls.reverse("live_game_blog", args=[game_pk]))
 
 
 def save_scoreboard(request, game_pk, form):

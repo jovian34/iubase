@@ -23,24 +23,7 @@ def test_live_single_game_blog_page_renders(client, games, scoreboards, entries)
     assert "Kentucky moves on to Super Regionals" in str(response.content)
     assert "stats" in str(response.content)
     assert "roster" in str(response.content)
-
-
-@pytest.mark.django_db
-def test_edit_live_single_game_blog_page_renders(
-    client, games, scoreboards, entries, logged_user_schwarbs
-):
-    response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]))
-    assert response.status_code == 200
-    assert "Kentucky moves on to Super Regionals" in str(response.content)
-
-
-@pytest.mark.django_db
-def test_edit_live_single_game_blog_page_redirects_not_logged_in(
-    client, games, scoreboards, entries
-):
-    response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]))
-    assert response.status_code == 302
-
+    
 
 @pytest.mark.django_db
 def test_non_existent_game_raises_404_error(
@@ -48,12 +31,3 @@ def test_non_existent_game_raises_404_error(
 ):
     response = client.get(reverse("live_game_blog", args=[58479574]))
     assert response.status_code == 404
-
-
-@pytest.mark.django_db
-def test_edit_live_single_game_blog_page_asks_for_password_not_logged_in(
-    client, games, scoreboards, entries
-):
-    response = client.get(reverse("edit_live_game_blog", args=[games.iu_uk_mon.pk]), follow=True)
-    assert response.status_code == 200
-    assert "Password:" in str(response.content)

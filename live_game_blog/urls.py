@@ -4,8 +4,7 @@ from live_game_blog.views import (
     add_blog_entry_only, 
     add_blog_plus_scoreboard, 
     add_team, add_game, 
-    edit_blog_entry, 
-    edit_live_game_blog,
+    edit_blog_entry,
     live_game_blog,
 )
 
@@ -14,11 +13,6 @@ urlpatterns = [
     path("", games.upcoming, name="games"),
     path("games/", games.upcoming, name="games"),
     path("live_game_blog/<game_pk>/", live_game_blog.view, name="live_game_blog"),
-    path(
-        "edit_live_game_blog/<game_pk>/",
-        edit_live_game_blog.view,
-        name="edit_live_game_blog",
-    ),
     path("add_game", add_game.view, name="add_game"),
     path("add_team", add_team.view, name="add_team"),
     # partials

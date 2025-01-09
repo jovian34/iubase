@@ -95,13 +95,11 @@ def determine_last_effective_transaction(players_transactions):
 
 
 def set_leaving_player(this_player, last_effective_transaction):
-    last_sping = None
+    last_sping = last_effective_transaction.trans_date.year
     if last_effective_transaction.trans_date.month > 8:
         last_sping = last_effective_transaction.trans_date.year + 1
-    else:
-        last_sping = last_effective_transaction.trans_date.year
     this_player.last_spring = last_sping
-    if this_player.hsgrad_year == last_effective_transaction.trans_date.year:
+    if this_player.hsgrad_year == last_sping:
         this_player.first_spring = None
         this_player.last_spring = None
     this_player.save()

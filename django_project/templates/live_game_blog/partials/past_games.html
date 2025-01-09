@@ -24,9 +24,6 @@
             {{ scoreboard.game.first_pitch }}
             {% if scoreboard.game.event %}{{ scoreboard.game.event }}.{% endif %}
         </p>
-        {% if user.is_authenticated %}
-            <h3><a href="{% url "edit_live_game_blog" scoreboard.game.pk %}">Edit or Add to Game Blog</a></h3>
-        {% endif %}
         <div class="column-3"></div>
     </div>
 

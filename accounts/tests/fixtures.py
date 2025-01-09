@@ -1,5 +1,8 @@
 import pytest
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 from accounts.models import CustomUser
+from live_game_blog import models as lgb_models
 
 
 @pytest.fixture

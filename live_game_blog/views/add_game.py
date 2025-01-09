@@ -18,7 +18,7 @@ def validate_and_save_posted_game_form_then_redirect(request):
     if form.is_valid():
         save_game(form)
         this_game = save_initial_scoreboard(request)
-    return shortcuts.redirect(urls.reverse("edit_live_game_blog", args=[this_game.pk]))
+    return shortcuts.redirect(urls.reverse("live_game_blog", args=[this_game.pk]))
 
 
 def save_game(form):

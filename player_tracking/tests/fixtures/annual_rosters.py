@@ -201,9 +201,17 @@ def annual_rosters(players, teams):
         jersey=67,
         primary_position="Pitcher",
     )
+    em_fresh = AnnualRoster.objects.create(
+        spring_year=2023,
+        status="Fall Roster",
+        player=players.evan_mac,
+        team=teams.indiana,
+        jersey=48,
+        primary_position="Corner Outfield",
+    )
     AnnualRosterObj = namedtuple(
         "AnnualRosterObj",
-        "js_jr js_soph rk_fresh rk_soph rk_jr dt_fresh dt_soph nm_fresh nm_soph nm_jr hc_fresh hc_soph br_fresh jm_fresh jm_soph jm_jr jm_sr jm2024 cg_fresh cg_soph cg_jr cg_sr nb_fresh",
+        "js_jr js_soph rk_fresh rk_soph rk_jr dt_fresh dt_soph nm_fresh nm_soph nm_jr hc_fresh hc_soph br_fresh jm_fresh jm_soph jm_jr jm_sr jm2024 cg_fresh cg_soph cg_jr cg_sr nb_fresh em_fresh",
     )
     return AnnualRosterObj(
         js_jr=js_jr,
@@ -229,4 +237,5 @@ def annual_rosters(players, teams):
         cg_jr=cg_jr,
         cg_sr=cg_sr,
         nb_fresh=nb_fresh,
+        em_fresh=em_fresh,
     )

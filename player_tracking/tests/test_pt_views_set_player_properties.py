@@ -44,6 +44,20 @@ def test_set_player_properties_correctly_sets_returning_player(
 
 
 @pytest.mark.django_db
+def test_set_player_properties_correctly_sets_mid_year_transfer(
+    client, players, annual_rosters, transactions, logged_user_schwarbs
+):
+    response = client.get(reverse("players"), follow=True)
+    evan_mac = Player.objects.get(pk=players.evan_mac.pk)
+    assert not evan_mac.first_spring or evan_mac.last_spring
+    response = client.get(reverse("set_player_properties"), follow=True)
+    assert response.status_code == 200
+    evan_mac = Player.objects.get(pk=players.evan_mac.pk)
+    assert evan_mac.first_spring == 2023
+    assert evan_mac.last_spring == 2023
+
+
+@pytest.mark.django_db
 def test_set_player_properties_produces_correct_end_date_future_commit(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):

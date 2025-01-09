@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.01.08.d"  # PT trans after August count for next spring ATP
+    "2025.01.09.a"  # PT fixed bug in trans after August count for next spring ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

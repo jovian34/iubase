@@ -156,9 +156,19 @@ def transactions(players, prof_orgs):
         trans_event="Verbal Commitment from High School",
         trans_date=date(year=this_year - 1, month=8, day=11),
     )
+    em_verbal = Transaction.objects.create(
+        player=players.evan_mac,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(year=2020, month=9, day=26),
+    )
+    em_portal = Transaction.objects.create(
+        player=players.evan_mac,
+        trans_event="Entered Transfer Portal",
+        trans_date=date(year=2022, month=12, day=11),
+    )
     TransObj = namedtuple(
         "TransObj",
-        "js_verbal rk_verbal dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal xc_verbal gs_verbal gs_decommit xc_nli oo_verbal",
+        "js_verbal rk_verbal dt_verbal dt_nli be_commit be_portal br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal xc_verbal gs_verbal gs_decommit xc_nli oo_verbal em_verbal em_portal",
     )
     return TransObj(
         js_verbal=js_verbal,
@@ -187,4 +197,6 @@ def transactions(players, prof_orgs):
         gs_verbal=gs_verbal,
         gs_decommit=gs_decommit,
         oo_verbal=oo_verbal,
+        em_verbal=em_verbal,
+        em_portal=em_portal,
     )

@@ -123,9 +123,16 @@ def players():
         bats="Right",
         throws="Right",
     )
+    evan_mac = Player.objects.create(
+        first="Evan",
+        last="Macintyre",
+        hsgrad_year=2022,
+        bats="Right",
+        throws="Right",
+    )
     PlayerObj = namedtuple(
         "PlayerObj",
-        "jake_stadler ryan_kraft devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jack_moffitt grant_hollister cole_gilley nate_ball holton_compton gibson_sinke xavier_carrera owen_ten_oever",
+        "jake_stadler ryan_kraft devin_taylor brayden_risedorph andrew_wiggins nick_mitchell brooks_ey jack_moffitt grant_hollister cole_gilley nate_ball holton_compton gibson_sinke xavier_carrera owen_ten_oever evan_mac",
     )
     return PlayerObj(
         jake_stadler=jake_stadler,
@@ -143,4 +150,5 @@ def players():
         gibson_sinke=gibson_sinke,
         xavier_carrera=xavier_carrera,
         owen_ten_oever=owen_ten_oever,
+        evan_mac=evan_mac,
     )

@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
@@ -93,7 +95,12 @@ def determine_last_effective_transaction(players_transactions):
 
 
 def set_leaving_player(this_player, last_effective_transaction):
-    this_player.last_spring = last_effective_transaction.trans_date.year
+    last_sping = None
+    if last_effective_transaction.trans_date.month > 8:
+        last_sping = last_effective_transaction.trans_date.year + 1
+    else:
+        last_sping = last_effective_transaction.trans_date.year
+    this_player.last_spring = last_sping
     if this_player.hsgrad_year == last_effective_transaction.trans_date.year:
         this_player.first_spring = None
         this_player.last_spring = None

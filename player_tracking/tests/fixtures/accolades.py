@@ -49,13 +49,24 @@ def accolades(players, annual_rosters, summer_assign):
         award_org="Northwoods League",
         description=None,
     )
+    brise_all_fresh = Accolade.objects.create(
+        player=players.brayden_risedorph,
+        annual_roster=annual_rosters.br_fresh,
+        summer_assign=None,
+        award_date=date.today() - timedelta(days=370),
+        citation="https://www.google.com",
+        name="All-Conference Freshman Team",
+        award_org="B1G",
+        description=None,
+    )
     AccoladeObj = namedtuple(
         "AccoladeObj",
-        "dt_ly_ps_aa_second_team dt_ly_aa_second_team dt_ly_b1g_first_team rk_northwoods_pitch_of_year"
+        "dt_ly_ps_aa_second_team dt_ly_aa_second_team dt_ly_b1g_first_team rk_northwoods_pitch_of_year brise_all_fresh"
     )
     return AccoladeObj(
         dt_ly_ps_aa_second_team=dt_ly_ps_aa_second_team,
         dt_ly_aa_second_team=dt_ly_aa_second_team,
         dt_ly_b1g_first_team=dt_ly_b1g_first_team,
         rk_northwoods_pitch_of_year=rk_northwoods_pitch_of_year,
+        brise_all_fresh=brise_all_fresh,
     )

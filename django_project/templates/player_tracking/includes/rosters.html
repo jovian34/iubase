@@ -17,6 +17,11 @@
                         <em>- {{ player.status }}</em>
                     {% endif %}
                 </p>
+                {% for accolade in accolades %}
+                    {% if accolade.annual_roster.pk == player.pk %}
+                        <p>{{ accolade.award_org }} {{ accolade.name }}</p>
+                    {% endif %}
+                {% endfor %}
             </div>
         {% endfor %}
     

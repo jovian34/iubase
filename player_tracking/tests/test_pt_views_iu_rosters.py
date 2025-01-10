@@ -6,6 +6,8 @@ from live_game_blog.tests.fixtures.teams import teams
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.transactions import transactions
+from player_tracking.tests.fixtures.accolades import accolades
+from player_tracking.tests.fixtures.summer import summer_assign, summer_leagues, summer_teams
 
 this_year = date.today().year
 
@@ -48,6 +50,13 @@ def test_spring_roster_renders(client, players, teams, annual_rosters):
     assert f"Spring {this_year - 1} Roster" in str(response.content)
     assert "Nick Mitchell" not in str(response.content)
     assert "Devin Taylor" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_spring_roster_renders_accolade(client, players, teams, annual_rosters, accolades):
+    response = client.get(reverse("spring_roster", args=[f"{this_year - 1}"]))
+    assert response.status_code == 200
+    assert "B1G All-Conference Freshman Team" in str(response.content)
 
 
 @pytest.mark.django_db

@@ -97,12 +97,11 @@ def test_add_college_accolade_partial_post_adds_correct_data(client, players, lo
         forms.dt_foy,
     )
     assert response.status_code == 302
-    foy = pt_models.Accolade.objects.last()
+    foy = pt_models.Accolade.objects.get(description="devindude")
     assert foy.annual_roster == annual_rosters.dt_fresh
     assert foy.player == players.devin_taylor
     assert foy.award_date == date(this_year-1, 5, 23)
     assert foy.award_org == "B1G"
-    assert not foy.description
     assert not foy.summer_assign
     assert str(foy.citation) == "https://iuhoosiers.com/news/2023/5/23/baseball-b1g-honors-for-taylor-and-co"
 
@@ -114,12 +113,11 @@ def test_add_summer_accolade_partial_post_adds_correct_data(client, players, log
         forms.dt_roy,
     )
     assert response.status_code == 302
-    roy = pt_models.Accolade.objects.last()
+    roy = pt_models.Accolade.objects.get(description="devinrookie")
     assert roy.summer_assign == summer_assign.dt_kg_ly
     assert roy.player == players.devin_taylor
     assert roy.award_date == date(this_year-1, 7, 23)
     assert roy.award_org == "Northwoods League"
-    assert not roy.description
     assert not roy.annual_roster
     assert str(roy.citation) == "https://www.idsnews.com/article/2023/08/indiana-baseball-devin-taylor-necbl-rookie-of-the-year-tyler-cerny-appalachian-league"
 

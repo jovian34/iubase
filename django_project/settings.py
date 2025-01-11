@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.01.11.b"  # PT refactor iu_rosters ATP
+    "2025.01.11.c"  # CSS changed background image ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

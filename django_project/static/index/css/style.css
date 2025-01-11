@@ -42,13 +42,14 @@ body {
 }
 
 .bg {
-	background-image: url("https://live.staticflickr.com/65535/53652315332_e81f9f13d7_o.jpg");
+	background-image: url("https://live.staticflickr.com/65535/53704071552_457711bd39_h.jpg");
 	background-repeat: no-repeat;
 	background-position: center;
 	height: 100vh;
 	width: 100vw;
 	position: fixed;
 }
+
 
 .foreground {
 	position: absolute;
@@ -412,9 +413,10 @@ select {
     
     /*--------BACKGROUND---------*/
 	.bg {
-		background-image: url("https://live.staticflickr.com/65535/53652315332_4b34dcfbb9_k.jpg");
-	}
-    
+		background-image: url("https://live.staticflickr.com/65535/53704071552_13227a46a0_k.jpg");
+	}	
+	
+
     /*-------COLUMNS----------*/
     .column-9, .column-8, .column-6, .column-4 , .column-3 {
         float: left;
@@ -466,7 +468,7 @@ select {
     /*--------BACKGROUND---------*/
 	
     .bg {
-		background-image: url("https://live.staticflickr.com/65535/53652315332_e0f75e6483_h.jpg");   
+		background-image: url("https://live.staticflickr.com/65535/53704071552_0987128d4d_3k.jpg");   
     }
     
     

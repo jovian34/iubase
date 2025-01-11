@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.01.09.c"  # PT spring roster shows accolades under each player ATP
+    "2025.01.11.a"  # CSS added a 4K media query ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

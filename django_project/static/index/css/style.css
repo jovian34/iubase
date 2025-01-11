@@ -476,3 +476,28 @@ select {
     }	
         
 }  /*end of DESKTOP media query*/
+
+
+
+
+@media only screen and (min-width: 1920px) { /*start of 4K media query*/
+
+    /*---------HEADER----------*/    
+
+    header, nav, .row, footer {
+        max-width: 2500px;
+        margin: 0 auto;
+    }
+    
+    /*-------NAV---------*/
+    
+    
+    /*--------BACKGROUND---------*/
+	
+    .bg {
+		background-image: url("https://live.staticflickr.com/65535/53704071552_ac662fb7f7_4k.jpg");   
+    }
+    
+        
+}  /*end of 4K media query*/
+

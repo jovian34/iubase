@@ -8,6 +8,7 @@ from player_tracking.tests.fixtures.mlb_draft_date import typical_mlb_draft_date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
+from player_tracking.views import set_player_properties
 from player_tracking.models import Player
 from live_game_blog.tests.fixtures.teams import teams
 from accounts.models import CustomUser
@@ -215,11 +216,19 @@ def test_set_player_properties_asks_for_password_not_logged_in(
 def test_set_player_properties_produces_correct_end_date_typical_case(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):
-    response = client.get(reverse("players"), follow=True)
-    devin = Player.objects.get(pk=players.devin_taylor.pk)
-    assert not devin.first_spring or devin.last_spring
-    response = client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
+    krafty = Player.objects.get(pk=players.ryan_kraft.pk)
+    assert not krafty.first_spring or krafty.last_spring
+    set_player_properties.set_player_props_get_errors()
+    krafty = Player.objects.get(pk=players.ryan_kraft.pk)
+    assert krafty.first_spring == this_year - 2
+    assert krafty.last_spring == this_year + 2
+
+
+@pytest.mark.django_db
+def test_set_player_properties_produces_correct_end_date_draft_ranked(
+    client, players, annual_rosters, transactions, logged_user_schwarbs
+):
+    set_player_properties.set_player_props_get_errors()
     devin = Player.objects.get(pk=players.devin_taylor.pk)
     assert devin.first_spring == this_year - 1
-    assert devin.last_spring == this_year + 2
+    assert devin.last_spring == this_year

@@ -48,7 +48,7 @@ def annual_rosters(players, teams):
     )
     rk_jr = AnnualRoster.objects.create(
         spring_year=this_year,
-        status="Fall Roster",
+        status="Spring Roster",
         player=players.ryan_kraft,
         team=teams.indiana,
         jersey=29,
@@ -65,7 +65,7 @@ def annual_rosters(players, teams):
     )
     dt_soph = AnnualRoster.objects.create(
         spring_year=this_year,
-        status="Fall Roster",
+        status="Spring Roster",
         team=teams.indiana,
         player=players.devin_taylor,
         jersey=5,

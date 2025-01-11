@@ -82,7 +82,7 @@ def test_fall_players_renders_projected_players_for_current_year(
     )
     assert response.status_code == 200
     assert f"Projected Players For Fall {this_year}" in str(response.content)
-    assert "Devin Taylor" in str(response.content)
+    assert "Ryan Kraft" in str(response.content)
 
 
 @pytest.mark.django_db

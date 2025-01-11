@@ -17,6 +17,7 @@ LEFT_TUPLES = [
     ("Entered Transfer Portal", "Entered Transfer Portal"),
     ("Verbal Commitment to Transfer College", "Verbal Commitment to Transfer College"),
     ("Attending MLB Draft Combine", "Attending MLB Draft Combine"),
+    ("Ranked MLB Draft Prospect for Next Draft", "Ranked MLB Draft Prospect for Next Draft"),
     ("Drafted", "Drafted"),
     (
         "Signed Professional Contract - Undrafted",

@@ -26,22 +26,8 @@ def test_set_player_properties_produces_correct_html_output(
     assert "None to None" in str(response.content)
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    assert f"{this_year - 1}-{this_year + 2}" in str(response.content)
+    assert f"{this_year - 1}-{this_year}" in str(response.content)
     assert "Devin Taylor" in str(response.content)
-
-
-@pytest.mark.django_db
-def test_set_player_properties_correctly_sets_returning_player(
-    client, players, annual_rosters, transactions, logged_user_schwarbs
-):
-    response = client.get(reverse("players"), follow=True)
-    devin = Player.objects.get(pk=players.devin_taylor.pk)
-    assert not devin.first_spring or devin.last_spring
-    response = client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
-    devin = Player.objects.get(pk=players.devin_taylor.pk)
-    assert devin.first_spring == this_year - 1
-    assert devin.last_spring == this_year + 2
 
 
 @pytest.mark.django_db

@@ -31,6 +31,30 @@ def test_all_eligible_players_includes_only_committs_four_years_out(
 
 
 @pytest.mark.django_db
+def test_all_eligible_players_future_includes_blanket_MLB_draft_caveat(
+    client, players, transactions, typical_mlb_draft_date
+):
+    set_player_properties.set_player_props_get_errors()
+    response = client.get(
+        reverse("all_eligible_players_fall", args=[f"{this_year + 4}"]), 
+        HTTP_HX_REQUEST="true",
+    )
+    assert "as this does not take into account the MLB Draft." in str(response.content)
+
+
+@pytest.mark.django_db
+def test_all_eligible_players_this_year_includes_blanket_MLB_draft_caveat(
+    client, players, transactions, typical_mlb_draft_date
+):
+    set_player_properties.set_player_props_get_errors()
+    response = client.get(
+        reverse("all_eligible_players_fall", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
+    assert "with the exception of players expected to go professional in the MLB Draft." in str(response.content)
+
+
+@pytest.mark.django_db
 def test_all_eligible_players_fall_renders(
     client, players, transactions, typical_mlb_draft_date
 ):

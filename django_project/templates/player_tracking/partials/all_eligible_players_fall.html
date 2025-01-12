@@ -5,8 +5,18 @@
     <div class="column-6">
         <h3>{{ page_title }}</h3>
         <h3>Total Players: {{ count }}</h3>
-        <p>NOTE: this is all eligible players committed or in the system now by NCAA rules.
-        This does not take into account the MLB Draft.</p>
+        <p>NOTE: this is all eligible players committed or in the system now by NCAA rules,
+        {% if draft_year and not draft_complete %}
+            with the exception of players expected to go professional in the MLB Draft.
+            A player is expected to go pro if D1Baseball.com has ranked the player
+            as an MLB Draft prospect prospect for the next draft or they were invited 
+            to the MLB Draft Combine for the current draft year.
+        {% elif not draft_year %}
+            as this does not take into account the MLB Draft.
+        {% elif draft_complete %}
+            as the {{ fall_year }} MLB Draft is complete.
+        {% endif %}
+        </p>
     </div>
 </div>
 

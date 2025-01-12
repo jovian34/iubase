@@ -1,0 +1,15 @@
+<div class="column-12 clear-both"> 
+    <div class="column-3"></div>
+    <div class="column-6">    
+        <h3>{{ page_title }}</h3>
+        <h3>Total Players: {{ count }}</h3>
+        {% if not draft_complete %}
+        <p>This projection excludes players expected to go professional in the MLB Draft.
+            A player is expected to go pro if D1Baseball.com has ranked the player
+            as an MLB Draft prospect prospect for the next draft or they were invited 
+            to the MLB Draft Combine for the current draft year. 
+        </p>
+        {% endif %}
+        </p>
+    </div>
+</div>

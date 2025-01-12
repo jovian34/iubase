@@ -27,15 +27,19 @@ def set_projected_players(fall_year):
     count = len(players)
     positions = sort_by_positions(players)
     years = [ int(fall_year) - 2 + i for i in range(5) ]
-    context = {
+    try:
+        draft_complete = MLBDraftDate.objects.get(fall_year=int(fall_year)).draft_complete
+    except MLBDraftDate.DoesNotExist:
+        draft_complete = False  
+    return {
         "fall_year": fall_year,
         "players": players,
         "years": years,
         "page_title": f"Projected Players For Fall {fall_year}",
         "count": count,
         "positions": positions,
-    }    
-    return context
+        "draft_complete": draft_complete,
+    }
 
 
 def set_fall_player_projection_info(fall_year):

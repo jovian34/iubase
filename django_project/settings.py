@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.01.11.c"  # CSS changed background image ATP
+    "2025.01.11.e"  # PT corrected template explanations for MLB Draft ranked for NEXT draft removed from follow fall ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

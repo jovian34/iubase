@@ -89,6 +89,42 @@ def test_projected_players_includes_transfer_commit(
 
 
 @pytest.mark.django_db
+def test_projected_players_excludes_expected_draftee(
+    client, players, transactions, typical_mlb_draft_date, annual_rosters
+):
+    set_player_properties.set_player_props_get_errors()
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
+    assert "Devin Taylor" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_projected_players_draft_pending_explains_draft_exceptions(
+    client, players, transactions, very_soon_mlb_draft_date, annual_rosters
+):
+    set_player_properties.set_player_props_get_errors()
+    response = client.get(
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
+    assert "This projection excludes players expected to go professional in the MLB Draft." in str(response.content)
+
+
+@pytest.mark.django_db
+def test_projected_players_alpha_draft_pending_explains_draft_exceptions(
+    client, players, transactions, very_soon_mlb_draft_date, annual_rosters
+):
+    set_player_properties.set_player_props_get_errors()
+    response = client.get(
+        reverse("projected_players_fall_alpha", args=[f"{this_year}"]), 
+        HTTP_HX_REQUEST="true",
+    )
+    assert "This projection excludes players expected to go professional in the MLB Draft." in str(response.content)
+
+
+@pytest.mark.django_db
 def test_projected_players_draft_pending_flags_draft_eligible_player(
     client, players, transactions, very_soon_mlb_draft_date, annual_rosters
 ):

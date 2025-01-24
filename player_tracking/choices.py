@@ -23,7 +23,7 @@ LEFT_TUPLES = [
         "Signed Professional Contract - Undrafted",
         "Signed Professional Contract - Undrafted",
     ),
-    ("Medical Waiver - will no longer compete", "Medical Waiver - will no longer compete"),
+    ("Medical Waiver - ending eligibility", "Medical Waiver - ending eligibility"),
     ("No Longer With Program - Other Reason", "No Longer With Program - Other Reason"),
     (
         "Not playing but with the program in another role",
@@ -70,6 +70,7 @@ GREY_SHIRT_TUPLES = [
 RED_SHIRT_TUPLES = [
     ("Played but granted eligibility waiver", "Played but granted eligibility waiver"),
     ("On Spring Roster but did not play", "On Spring Roster but did not play"),
+    ("Medical Waiver - ending eligibility", "Medical Waiver - ending eligibility"),
     ("Replaced on Spring Roster - Medical", "Replaced on Spring Roster - Medical"),
 ]
 

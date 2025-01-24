@@ -23,6 +23,7 @@ LEFT_TUPLES = [
         "Signed Professional Contract - Undrafted",
         "Signed Professional Contract - Undrafted",
     ),
+    ("Medical Waiver - will no longer compete", "Medical Waiver - will no longer compete"),
     ("No Longer With Program - Other Reason", "No Longer With Program - Other Reason"),
     (
         "Not playing but with the program in another role",

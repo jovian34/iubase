@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.01.18.a"  # PT index cleaned up to show roster not announced ATP
+    "2025.01.24.a"  # PT spring roster announced ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

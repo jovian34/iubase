@@ -30,7 +30,7 @@
                 <ul>
                 {% for accolade in accolades %}
                     {% if accolade.annual_roster == roster %}
-                    <li><p> 
+                    <li><p>{{ accolade.award_date }}:
                         {% if accolade.citation %}
                             <a target="_blank" href="{{ accolade.citation }}">{{accolade.award_org}} {{ accolade.name }}</a></p></li>
                         {% else %}

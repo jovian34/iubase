@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.02.20.a"  # PT show accolade date on signle player page ATP
+    "2025.02.20.b"  # PT set future year decommit to never playing ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

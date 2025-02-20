@@ -164,13 +164,11 @@ def test_set_player_properties_properly_shows_error_for_missing_annual_roster(
 
 @pytest.mark.django_db
 def test_set_player_properties_properly_sets_start_for_early_juco_commit(
-    client, players, annual_rosters, transactions, logged_user_schwarbs
+    client, players, annual_rosters, transactions,
 ):
-    response = client.get(reverse("players"), follow=True)
     holton = Player.objects.get(pk=players.holton_compton.pk)
     assert not holton.first_spring or holton.last_spring
-    response = client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
+    set_player_properties.set_player_props_get_errors()
     holton = Player.objects.get(pk=players.holton_compton.pk)
     assert holton.first_spring == this_year + 1
     assert holton.last_spring == this_year + 2
@@ -178,15 +176,28 @@ def test_set_player_properties_properly_sets_start_for_early_juco_commit(
 
 @pytest.mark.django_db
 def test_set_player_properties_properly_sets_no_starts_for_decommit(
-    client, players, annual_rosters, transactions, logged_user_schwarbs
+    client, players, annual_rosters, transactions,
 ):
-    response = client.get(reverse("players"), follow=True)
     sinke = Player.objects.get(pk=players.gibson_sinke.pk)
     assert not sinke.first_spring or sinke.last_spring
-    response = client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
+    set_player_properties.set_player_props_get_errors()
     sinke = Player.objects.get(pk=players.gibson_sinke.pk)
     assert not sinke.first_spring or sinke.last_spring
+
+
+@pytest.mark.django_db
+def test_set_player_properties_properly_sets_no_starts_for_future_year_decommit(
+    client, players, annual_rosters, transactions,
+):
+    amalbert = Player.objects.get(pk=players.jason_amalbert.pk)
+    assert not amalbert.first_spring
+    assert not amalbert.last_spring
+    assert amalbert.first == "Jason"
+    set_player_properties.set_player_props_get_errors()
+    amalbert = Player.objects.get(pk=players.jason_amalbert.pk)
+    assert amalbert.first == "Jason"
+    assert amalbert.first_spring == None
+    assert amalbert.last_spring == None
 
 
 @pytest.mark.django_db

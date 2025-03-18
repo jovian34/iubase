@@ -7,8 +7,8 @@
         
         {% for player in players %}
             <div class="column-12 clear-both">
-                <img class="headshot" src="{{player.player.headshot}}" alt="{{player.player.first}} {{player.player.last}}">
                 <h3>{{ player.jersey }}. <a href="{% url "single_player_page" player.player.pk %}">{{player.player.first}} {{player.player.last}}</a></h3>                    
+                <img class="headshot" src="{{player.player.headshot}}" alt="{{player.player.first}} {{player.player.last}}">
                 <p>
                     {% if player.primary_position == "Pitcher" %}{{ player.player.throws}}-Handed{% endif %}
                     {{ player.primary_position }}
@@ -17,13 +17,19 @@
                         <em>- {{ player.status }}</em>
                     {% endif %}
                 </p>
+                <ul>
                 {% for accolade in accolades %}
                     {% if accolade.annual_roster.pk == player.pk %}
-                        <p>{{ accolade.award_org }} {{ accolade.name }}</p>
+                        <li><p class="acc-list-small">{{ accolade.award_org }} {{ accolade.name }}</p></li>
                     {% endif %}
                 {% endfor %}
+                </ul>                
+            </div>
+            <div class="column-12 clear-both">
+                <hr>
             </div>
         {% endfor %}
+
     
     </div>
 </div>

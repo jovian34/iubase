@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.03.18.a"  # PT roster style changes & upgrade deps ATP
+    "2025.03.19.a"  # LGB chron blog order for completed games ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

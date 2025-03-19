@@ -30,11 +30,27 @@ def entries(client, games, user_not_logged_in, scoreboards):
         include_scoreboard=True,
         scoreboard=scoreboards.score_uk_mon,
     )
+    blog_coast_ip_third = BlogEntry.objects.create(
+        game=games.iu_coastal_ip,
+        author=user_not_logged_in,
+        blog_time=games.iu_coastal_ip.first_pitch + timedelta(minutes=60),
+        blog_entry="Gavin Seebold back out for the third inning",
+        include_scoreboard=False,
+    )
+    blog_coast_ip_seventh = BlogEntry.objects.create(
+        game=games.iu_coastal_ip,
+        author=user_not_logged_in,
+        blog_time=games.iu_coastal_ip.first_pitch + timedelta(minutes=140),
+        blog_entry="Pete Haas warming as the seventh starts",
+        include_scoreboard=False,
+    )
     BlogEntryObj = namedtuple(
         "BlogEntryObj",
-        "blog_uk_mon_y blog_uk_mon_z",
+        "blog_uk_mon_y blog_uk_mon_z blog_coast_ip_third blog_coast_ip_seventh",
     )
     return BlogEntryObj(
         blog_uk_mon_y=blog_uk_mon_y,
         blog_uk_mon_z=blog_uk_mon_z,
+        blog_coast_ip_third=blog_coast_ip_third,
+        blog_coast_ip_seventh=blog_coast_ip_seventh,
     )

@@ -81,7 +81,10 @@
             <div id="entry-{{ entry.pk }}">
 
                 {% if entry.include_scoreboard %}
-                <hr class="thick-rule">
+
+                {% if not game_over %}
+                    <hr class="thick-rule">
+                {% endif %}
 
                 <h3>
                     {% if entry.scoreboard.outs == 3 %}
@@ -97,7 +100,10 @@
                     <li><p><b>{{ game.away_team.mascot }}</b>: <b>{{ entry.scoreboard.away_runs }}</b> runs | {{ entry.scoreboard.away_hits }} hits | {{ entry.scoreboard.away_errors }} errors</p></li>
                     <li><p><b>{{ game.home_team.mascot }}</b>: <b>{{ entry.scoreboard.home_runs }}</b> runs | {{ entry.scoreboard.home_hits }} hits | {{ entry.scoreboard.home_errors }} errors</p></li>
                 </ul>
+                
                 {% else %}
+                
+                
                 <hr>
 
                 {% endif %}         
@@ -118,7 +124,12 @@
                         {{ entry.blog_entry | markitup }}
                     {% endif %}
                 
-                {% endautoescape %}       
+                {% endautoescape %}  
+
+
+                {% if game_over and entry.include_scoreboard %}
+                    <hr class="thick-rule">
+                {% endif %}    
 
             </div>
         {% endfor %}

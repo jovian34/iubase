@@ -14,6 +14,7 @@ def view(request, game_pk):
         "last_score": lgb_models.Scoreboard.objects.filter(game=game_pk).order_by(
             "-update_time"
         )[0],
+        "game_over": game_over,
     }
     template_path = "live_game_blog/live_game_blog.html"
     save_traffic_data(request=request, page=context["game"].__str__())

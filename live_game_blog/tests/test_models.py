@@ -18,7 +18,7 @@ def test_team_model_stored_all_fields(client, teams):
     assert teams.gm.team_name == "George Mason"
     assert teams.miami_oh.mascot == "RedHawks"
     assert not teams.indiana.stats
-    assert not teams.miami_oh.roster
+    assert teams.miami_oh.roster == "https://miamiredhawks.com/sports/baseball/roster"
 
 
 @pytest.mark.django_db

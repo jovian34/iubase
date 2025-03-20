@@ -101,6 +101,34 @@ def scoreboards(client, games, user_not_logged_in):
         home_errors=1,
         away_errors=0,
     )
+    score_iu_duke_ly = Scoreboard.objects.create(
+        game=games.iu_duke_ly,
+        scorekeeper=user_not_logged_in,
+        game_status="final",
+        inning_num=9,
+        inning_part="Bottom",
+        outs=3,
+        home_runs=6,
+        away_runs=16,
+        home_hits=12,
+        away_hits=14,
+        home_errors=1,
+        away_errors=0,
+    )
+    score_iu_duke_23_fall = Scoreboard.objects.create(
+        game=games.iu_duke_23_fall,
+        scorekeeper=user_not_logged_in,
+        game_status="final",
+        inning_num=14,
+        inning_part="Bottom",
+        outs=3,
+        home_runs=18,
+        away_runs=16,
+        home_hits=20,
+        away_hits=14,
+        home_errors=1,
+        away_errors=2,
+    )
     score_uk_sat = Scoreboard.objects.create(
         game=games.iu_uk_sat,
         scorekeeper=user_not_logged_in,
@@ -120,7 +148,7 @@ def scoreboards(client, games, user_not_logged_in):
     )
     ScoreboardObj = namedtuple(
         "ScoreboardObj",
-        "score_uk_mon, score_coast_fut, score_coast_ip, score_gm_fall, score_miami_rain, score_uk_sun, score_uk_sat score_duke",
+        "score_uk_mon, score_coast_fut, score_coast_ip, score_gm_fall, score_miami_rain, score_uk_sun, score_iu_duke_ly, score_iu_duke_23_fall, score_uk_sat score_duke",
     )
     return ScoreboardObj(
         score_uk_mon=score_uk_mon,
@@ -129,6 +157,8 @@ def scoreboards(client, games, user_not_logged_in):
         score_gm_fall=score_gm_fall,
         score_miami_rain=score_miami_rain,
         score_uk_sun=score_uk_sun,
+        score_iu_duke_ly=score_iu_duke_ly,
+        score_iu_duke_23_fall=score_iu_duke_23_fall,
         score_uk_sat=score_uk_sat,
         score_duke=score_duke,
     )

@@ -1,4 +1,5 @@
 import pytest
+from datetime import datetime
 
 from django.urls import reverse
 
@@ -11,6 +12,9 @@ from live_game_blog.tests.fixtures.games import (
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.blog import entries
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
+
+
+this_year = datetime.today().year
 
 
 @pytest.mark.django_db
@@ -54,8 +58,28 @@ def test_non_existent_game_raises_404_error(
 
 
 @pytest.mark.django_db
-def test_roster_url_renders(client, games, scoreboards, entries):
+def test_roster_url_renders_with_year_specified_and_adds_slash_before_year(client, games, scoreboards, entries):
     response = client.get(reverse("live_game_blog", args=[games.iu_duke.pk]))
     assert response.status_code == 200
-    assert "https://iuhoosiers.com/sports/baseball/roster" in str(response.content)
-    assert "https://goduke.com/sports/baseball/roster/" in str(response.content)
+    assert f"https://iuhoosiers.com/sports/baseball/roster/{this_year}/" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_roster_url_renders_with_year_specified_and_keeps_slash_before_year(client, games, scoreboards, entries):
+    response = client.get(reverse("live_game_blog", args=[games.iu_duke.pk]))
+    assert response.status_code == 200
+    assert f"https://goduke.com/sports/baseball/roster/{this_year}/" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_roster_url_renders_with_last_year_specified_and_keeps_slash_before_year(client, games, scoreboards, entries):
+    response = client.get(reverse("live_game_blog", args=[games.iu_duke_ly.pk]))
+    assert response.status_code == 200
+    assert f"https://goduke.com/sports/baseball/roster/{this_year - 1}/" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_roster_url_fall_game_renders_with_next_spring_roster(client, games, scoreboards, entries):
+    response = client.get(reverse("live_game_blog", args=[games.iu_duke_23_fall.pk]))
+    assert response.status_code == 200
+    assert f"https://goduke.com/sports/baseball/roster/2024/" in str(response.content)

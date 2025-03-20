@@ -8,6 +8,8 @@ from live_game_blog import models as lgb_models
 def view(request, game_pk):
     game = get_game_or_raise_404(game_pk)
     game_over = is_game_over(game_pk)
+    spring_year = set_spring_year(game)
+    set_roster_url_to_game_year(game, spring_year)
     context = {
         "game": game,
         "entries": get_blog_entries(game_pk, game_over),
@@ -19,6 +21,24 @@ def view(request, game_pk):
     template_path = "live_game_blog/live_game_blog.html"
     save_traffic_data(request=request, page=context["game"].__str__())
     return shortcuts.render(request, template_path, context)
+
+
+def set_spring_year(game):
+    spring_year = game.first_pitch.year
+    if game.first_pitch.month > 7:
+        spring_year += 1
+    return spring_year
+
+
+def set_roster_url_to_game_year(game, spring_year):
+    if game.away_team.roster[-1] == "/":
+        game.away_team.roster += f"{spring_year}/"
+    else:
+        game.away_team.roster += f"/{spring_year}/"
+    if game.home_team.roster[-1] == "/":
+        game.home_team.roster += f"{spring_year}/"
+    else:
+        game.home_team.roster += f"/{spring_year}/"
 
 
 def get_blog_entries(game_pk, game_over):

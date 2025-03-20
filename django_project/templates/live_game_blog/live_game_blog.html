@@ -29,7 +29,7 @@
         {% if game.event %}<em>{{ game.event }}</em>{% endif %}
         </h2>
 
-        <p>{{ game.first_pitch }} first pitch |
+        <p>{{ game.first_pitch | date:"D" }}, {{ game.first_pitch }} first pitch |
         {% if game.video and game.video_url %}video: <a href="{{ game.video_url }}">{{ game.video }}</a> |{% endif %}
         {% if game.audio_primary %}<a href="{{ game.audio_primary }}">audio</a> |{% endif %}
         {% if game.audio_student %}<a href="{{ game.audio_student }}">student audio</a> |{% endif %}

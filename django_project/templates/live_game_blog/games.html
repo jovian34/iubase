@@ -31,7 +31,7 @@
                     
                 </p>
                 <p>
-                    {{ game.first_pitch }}
+                    {{ game.first_pitch | date:"D" }}, {{ game.first_pitch }}
                     {% if game.event %}{{ game.event }}.{% endif %}
                 </p>
             </div>

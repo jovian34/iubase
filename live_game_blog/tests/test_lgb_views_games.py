@@ -87,6 +87,16 @@ def test_games_list_page_renders_logo(client, teams, games):
 
 
 @pytest.mark.django_db
+def test_past_game_renders_partial_with_weekday(client, teams, games, scoreboards):
+    response = client.get(
+        reverse("past_games"),
+        HTTP_HX_REQUEST="true",
+    )
+    assert response.status_code == 200
+    assert "Wed, Oct. 4, 2023," in str(response.content)
+
+
+@pytest.mark.django_db
 def test_past_game_renders_partial_with_seed_and_score(client, teams, games, scoreboards):
     response = client.get(
         reverse("past_games"),
@@ -94,6 +104,7 @@ def test_past_game_renders_partial_with_seed_and_score(client, teams, games, sco
     )
     assert response.status_code == 200
     assert "Kentucky Wildcats (1-seed): 4" in str(response.content)
+    assert "Wed, Oct. 4, 2023," in str(response.content)
 
 
 @pytest.mark.django_db

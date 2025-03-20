@@ -21,7 +21,7 @@
             {{ scoreboard.game.home_team }} {{ scoreboard.game.home_team.mascot }}{% if scoreboard.game.home_seed %} ({{ scoreboard.game.home_seed }}-seed){% endif %}{% if scoreboard.game.home_nat_seed %}(#{{ scoreboard.game.home_nat_seed }} National Seed){% endif %}: {{ scoreboard.home_runs }}      
         </p>
         <p>
-            {{ scoreboard.game.first_pitch }}
+            {{ scoreboard.game.first_pitch | date:"D" }}, {{ scoreboard.game.first_pitch }}
             {% if scoreboard.game.event %}{{ scoreboard.game.event }}.{% endif %}
         </p>
         <div class="column-3"></div>

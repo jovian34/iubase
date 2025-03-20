@@ -83,3 +83,10 @@ def test_roster_url_fall_game_renders_with_next_spring_roster(client, games, sco
     response = client.get(reverse("live_game_blog", args=[games.iu_duke_23_fall.pk]))
     assert response.status_code == 200
     assert f"https://goduke.com/sports/baseball/roster/2024/" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_lgb_shows_weekday(client, games, scoreboards, entries):
+    response = client.get(reverse("live_game_blog", args=[games.iu_duke_23_fall.pk]))
+    assert response.status_code == 200
+    assert "Wed, Oct. 4, 2023," in str(response.content)

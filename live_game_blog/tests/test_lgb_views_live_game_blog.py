@@ -51,3 +51,11 @@ def test_non_existent_game_raises_404_error(
 ):
     response = client.get(reverse("live_game_blog", args=[58479574]))
     assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_roster_url_renders(client, games, scoreboards, entries):
+    response = client.get(reverse("live_game_blog", args=[games.iu_duke.pk]))
+    assert response.status_code == 200
+    assert "https://iuhoosiers.com/sports/baseball/roster" in str(response.content)
+    assert "https://goduke.com/sports/baseball/roster/" in str(response.content)

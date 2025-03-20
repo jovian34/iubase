@@ -16,8 +16,9 @@ def test_team_model_stored_all_fields(client, teams):
     assert teams.indiana.mascot == "Hoosiers"
     assert teams.duke.logo == "https://cdn.d1baseball.com/logos/teams/256/duke.png"
     assert teams.gm.team_name == "George Mason"
+    assert teams.miami_oh.mascot == "RedHawks"
     assert not teams.indiana.stats
-    assert not teams.indiana.roster
+    assert not teams.miami_oh.roster
 
 
 @pytest.mark.django_db

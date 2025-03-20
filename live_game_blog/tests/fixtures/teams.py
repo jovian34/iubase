@@ -11,11 +11,13 @@ def teams(client):
         team_name="Indiana",
         mascot="Hoosiers",
         logo="https://cdn.d1baseball.com/logos/teams/256/indiana.png",
+        roster="https://iuhoosiers.com/sports/baseball/roster",
     )
     duke = Team.objects.create(
         team_name="Duke",
         mascot="Blue Devils",
         logo="https://cdn.d1baseball.com/logos/teams/256/duke.png",
+        roster="https://goduke.com/sports/baseball/roster/",
     )
     coastal = Team.objects.create(
         team_name="Coastal Carolina",

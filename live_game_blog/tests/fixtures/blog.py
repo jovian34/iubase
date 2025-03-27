@@ -30,6 +30,14 @@ def entries(client, games, user_not_logged_in, scoreboards):
         include_scoreboard=True,
         scoreboard=scoreboards.score_uk_mon,
     )
+    blog_uk_mon_photo = BlogEntry.objects.create(
+        game=games.iu_uk_mon,
+        author=user_not_logged_in,
+        blog_time=games.iu_uk_mon.first_pitch + timedelta(minutes=150),
+        blog_entry="https://iubase.com/wp-content/uploads/2025/03/team-880x660.jpg",
+        include_scoreboard=False,
+        is_photo_only=True,
+    )
     blog_coast_ip_third = BlogEntry.objects.create(
         game=games.iu_coastal_ip,
         author=user_not_logged_in,
@@ -46,11 +54,13 @@ def entries(client, games, user_not_logged_in, scoreboards):
     )
     BlogEntryObj = namedtuple(
         "BlogEntryObj",
-        "blog_uk_mon_y blog_uk_mon_z blog_coast_ip_third blog_coast_ip_seventh",
+        "blog_uk_mon_y blog_uk_mon_z blog_uk_mon_photo blog_coast_ip_third blog_coast_ip_seventh",
     )
     return BlogEntryObj(
         blog_uk_mon_y=blog_uk_mon_y,
         blog_uk_mon_z=blog_uk_mon_z,
+        blog_uk_mon_photo=blog_uk_mon_photo,
         blog_coast_ip_third=blog_coast_ip_third,
         blog_coast_ip_seventh=blog_coast_ip_seventh,
     )
+

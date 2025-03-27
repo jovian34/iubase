@@ -76,6 +76,7 @@ class BlogEntry(models.Model):
     blog_time = models.DateTimeField(db_default=Now())
     blog_entry = models.TextField()
     is_raw_html = models.BooleanField(null=True, blank=True)
+    is_photo_only = models.BooleanField(null=True, blank=True)
     include_scoreboard = models.BooleanField()
     scoreboard = models.ForeignKey(
         Scoreboard, on_delete=models.CASCADE, null=True, blank=True

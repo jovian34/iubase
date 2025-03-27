@@ -64,6 +64,11 @@ def test_blog_model_not_html(client, entries, user_not_logged_in):
 
 
 @pytest.mark.django_db
+def test_blog_model_is_a_photo_only(client, entries, user_not_logged_in):
+    assert entries.blog_uk_mon_photo.is_photo_only
+
+
+@pytest.mark.django_db
 def test_blog_model_sets_default_time(client, entries, user_not_logged_in):
     blog_time = entries.blog_uk_mon_z.blog_time
     expected_time = (timezone.now() - timedelta(days=300)) + timedelta(minutes=165)

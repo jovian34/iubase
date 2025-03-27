@@ -29,6 +29,7 @@ def save_blog_entry(request, game_pk, form):
         author=request.user,
         blog_entry=form.cleaned_data["blog_entry"],
         is_raw_html=form.cleaned_data["is_raw_html"],
+        is_photo_only=form.cleaned_data["is_photo_only"],
         include_scoreboard=False,
     )
     add_blog.save()

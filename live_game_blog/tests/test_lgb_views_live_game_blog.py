@@ -50,6 +50,13 @@ def test_live_single_complete_game_blog_page_renders_in_chron_order(client, game
 
 
 @pytest.mark.django_db
+def test_live_single_complete_game_blog_page_renders_photo_html(client, games, scoreboards, entries):
+    response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
+    assert response.status_code == 200
+    assert 'class="lgb-featured-image">' in str(response.content)
+
+
+@pytest.mark.django_db
 def test_non_existent_game_raises_404_error(
     client, games, scoreboards, entries
 ):

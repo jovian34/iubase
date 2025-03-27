@@ -21,6 +21,7 @@ class BlogAndScoreboardForm(forms.Form):
 
 class BlogEntryForm(forms.Form):
     is_raw_html = forms.BooleanField(label="Entry is RAW HTML code", required=False)
+    is_photo_only = forms.BooleanField(label="Entry is photo URL only", required=False)
     is_x_embed = forms.BooleanField(
         label="Entry is @iubase17 X embed code", required=False
     )

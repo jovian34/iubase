@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.03.27.a"  # LGB add photo only bool option to blog model ATP
+    "2025.03.27.b"  # LGB add photo only bool option to blog form ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

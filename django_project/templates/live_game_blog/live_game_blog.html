@@ -120,6 +120,8 @@
                 
                     {% if entry.is_raw_html %} 
                         {{ entry.blog_entry }}
+                    {% elif entry.is_photo_only %}
+                        <img src="{{ entry.blog_entry }}" class="lgb-featured-image">
                     {% else %} 
                         {{ entry.blog_entry | markitup }}
                     {% endif %}

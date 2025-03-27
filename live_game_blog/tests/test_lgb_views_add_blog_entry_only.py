@@ -36,6 +36,21 @@ def test_add_blog_entry_only_post_form(client, logged_user_schwarbs, games, scor
 
 
 @pytest.mark.django_db
+def test_add_blog_entry_only_photo_post_form(client, logged_user_schwarbs, games, scoreboards):
+    response = client.post(
+        reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
+        {
+            "blog_entry": "https://live.staticflickr.com/65535/54013610622_61d5c92ebc_o.jpg",
+            "is_x_embed": False,
+            "is_photo_only": True,
+        },
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert 'class="lgb-featured-image">' in str(response.content)
+
+
+@pytest.mark.django_db
 def test_add_blog_entry_only_post_not_logged_in_redirects(client, user_not_logged_in, games, scoreboards):
     response = client.post(
         reverse("add_blog_entry_only", args=[games.iu_duke.pk]),

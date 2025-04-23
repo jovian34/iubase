@@ -7,13 +7,16 @@
 
 {% block content %}
 
-<div class="column-3"></div>
-<div class="column-6">
-    <form action="{% url "add_team" %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit" value="Submit">{{ page_title }}</button>
-    </form>
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        <form action="{% url "add_team" %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" value="Submit">{{ page_title }}</button>
+        </form>
+    </div>
+    <div class="column-3"></div>
 </div>
 
 {% endblock %}

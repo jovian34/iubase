@@ -51,6 +51,12 @@ def games(client, teams):
         neutral_site=True,
         first_pitch=(timezone.now() + datetime.timedelta(days=3)),
     )
+    iu_iowa = Game.objects.create(
+        home_team=teams.iowa,
+        away_team=teams.indiana,
+        neutral_site=False,
+        first_pitch=datetime.datetime(timezone.now().year + 3, 4, 4, 21, 5, 00, tzinfo=datetime.timezone.utc),
+    )
     iu_mo_rain = Game.objects.create(
         home_team=teams.indiana,
         away_team=teams.miami_oh,
@@ -91,7 +97,7 @@ def games(client, teams):
     )
     GameObj = namedtuple(
         "GameObj",
-        "iu_duke iu_duke_ly iu_duke_23_fall iu_coastal iu_coastal_ip iu_gm iu_mo iu_mo_rain iu_uk_mon iu_uk_sun iu_uk_sat iu_gm_fall",
+        "iu_duke iu_duke_ly iu_duke_23_fall iu_coastal iu_coastal_ip iu_gm iu_mo iu_iowa iu_mo_rain iu_uk_mon iu_uk_sun iu_uk_sat iu_gm_fall",
     )
     return GameObj(
         iu_duke=iu_duke,
@@ -101,6 +107,7 @@ def games(client, teams):
         iu_coastal_ip=iu_coastal_ip,
         iu_gm=iu_gm,
         iu_mo=iu_mo,
+        iu_iowa=iu_iowa,
         iu_mo_rain=iu_mo_rain,
         iu_uk_mon=iu_uk_mon,
         iu_uk_sun=iu_uk_sun,

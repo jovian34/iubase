@@ -43,7 +43,13 @@ def teams(client):
         logo="https://cdn.d1baseball.com/uploads/2023/12/21143717/miamioh.png",
         roster="https://miamiredhawks.com/sports/baseball/roster",
     )
-    TeamObj = namedtuple("TeamObj", "indiana duke coastal kentucky gm miami_oh")
+    iowa = Team.objects.create(
+        team_name="Iowa",
+        mascot="Hawkeyes",
+        logo="https://web2.ncaa.org/ncaa_style/img/All_Logos/sm/312.gif",
+        roster="https://hawkeyesports.com/sports/baseball/roster/season/",
+    )
+    TeamObj = namedtuple("TeamObj", "indiana duke coastal kentucky gm miami_oh iowa")
     return TeamObj(
         indiana=indiana,
         duke=duke,
@@ -51,4 +57,5 @@ def teams(client):
         kentucky=kentucky,
         gm=gm,
         miami_oh=miami_oh,
+        iowa=iowa,
     )

@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.04.23.a"  # style changes ATP
+    "2025.04.25.a"  # LGB edge case for iowa roster URL ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

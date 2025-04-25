@@ -31,14 +31,20 @@ def set_spring_year(game):
 
 
 def set_roster_url_to_game_year(game, spring_year):
-    if game.away_team.roster[-1] == "/":
+    if game.away_team.roster[-1] != "/":
+        game.away_team.roster += f"/"
+    if game.home_team.roster[-1] != "/":
+        game.home_team.roster += f"/"
+
+    if game.away_team.roster[-7:] == "season/":
+        game.away_team.roster += f"{spring_year - 1}-{spring_year - 2000}"
+    else:
         game.away_team.roster += f"{spring_year}/"
+        
+    if game.home_team.roster[-7:] == "season/":
+        game.home_team.roster += f"{spring_year - 1}-{spring_year - 2000}"    
     else:
-        game.away_team.roster += f"/{spring_year}/"
-    if game.home_team.roster[-1] == "/":
         game.home_team.roster += f"{spring_year}/"
-    else:
-        game.home_team.roster += f"/{spring_year}/"
 
 
 def get_blog_entries(game_pk, game_over):

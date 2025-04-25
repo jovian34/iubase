@@ -72,6 +72,14 @@ def test_roster_url_renders_with_year_specified_and_adds_slash_before_year(clien
 
 
 @pytest.mark.django_db
+def test_roster_url_renders_special_case_roster_academic_year(client, games, scoreboards, entries):
+    response = client.get(reverse("live_game_blog", args=[games.iu_iowa.pk]))
+    assert response.status_code == 200
+    iowa_roster_url = f"https://hawkeyesports.com/sports/baseball/roster/season/{this_year + 2}-{this_year -1997}"
+    assert iowa_roster_url in str(response.content)
+
+
+@pytest.mark.django_db
 def test_roster_url_renders_with_year_specified_and_keeps_slash_before_year(client, games, scoreboards, entries):
     response = client.get(reverse("live_game_blog", args=[games.iu_duke.pk]))
     assert response.status_code == 200

@@ -36,6 +36,7 @@ def test_live_single_in_progress_game_blog_page_renders_in_reverse_order(client,
     output = str(response.content)
     late = output.find("Pete Haas warming as the seventh starts")
     early = output.find("Gavin Seebold back out for the third inning")
+    assert early != -1 # verifies early was found
     assert late < early
 
 
@@ -46,6 +47,18 @@ def test_live_single_complete_game_blog_page_renders_in_chron_order(client, game
     output = str(response.content)
     late = output.find("Kentucky moves on to Super Regionals")
     early = output.find("Bothwell walks the first batter")
+    assert early != -1 # verifies early was found
+    assert late > early
+
+
+@pytest.mark.django_db
+def test_live_single_complete_game_blog_page_renders_final_scoreboard_at_top(client, games, scoreboards, entries):
+    response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
+    assert response.status_code == 200
+    output = str(response.content)
+    early = output.find("<p><b>Hoosiers</b>: <b>2</b> runs |")
+    late = output.find("Bothwell walks the first batter")
+    assert early != -1 # verifies early was found
     assert late > early
 
 

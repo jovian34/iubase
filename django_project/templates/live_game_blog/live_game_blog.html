@@ -71,7 +71,32 @@
 
 {% endblock %}
 
+
+ 
+{% if game_over %}
 <div class="column-12 clear-both">
+    <div class="column-3"></div>
+
+    <div class="column-6">
+
+        {% if last_score.inning_num == 9 %}        
+            <h3><em>FINAL:</em></h3>
+        {% else %}
+            <h3><em>FINAL ({{ last_score.inning_num }}):</em></h3>
+        {% endif %}
+                <ul>
+                    <li><p><b>{{ game.away_team.mascot }}</b>: <b>{{ last_score.away_runs }}</b> runs | {{ last_score.away_hits }} hits | {{ last_score.away_errors }} errors</p></li>
+                    <li><p><b>{{ game.home_team.mascot }}</b>: <b>{{ last_score.home_runs }}</b> runs | {{ last_score.home_hits }} hits | {{ last_score.home_errors }} errors</p></li>
+                </ul>
+
+    </div>
+</div>
+{% endif %}
+
+
+
+
+<div class="column-12 clear-both"> 
 
     <div class="column-3"></div>
 

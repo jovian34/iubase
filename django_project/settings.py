@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.05.04.a"  # LGB show final score of complete game at top ATP
+    "2025.05.05.a"  # LGB page title only includes score in game has started ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

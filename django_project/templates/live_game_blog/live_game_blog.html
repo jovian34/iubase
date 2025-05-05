@@ -2,12 +2,15 @@
 
 {% load markitup %}
 
-
 {% block title %}
     {{ game.away_team }}{% if game.neutral_site %} vs. {% else %} at {% endif %}{{ game.home_team }}, 
-    {{ last_score.away_runs }}-{{ last_score.home_runs }} 
-    {{ last_score.inning_part }} {{ last_score.inning_num }}
-    {% if last_score.game_status == "final" %}(FINAL){% endif %}
+    {% if last_score.game_status == "pre-game" %}
+        {{ game.first_pitch | date:"D" }}, {{ game.first_pitch }} first pitch
+    {% else %}
+        {{ last_score.away_runs }}-{{ last_score.home_runs }} 
+        {{ last_score.inning_part }} {{ last_score.inning_num }}
+        {% if last_score.game_status == "final" %}(FINAL){% endif %}
+    {% endif %}
 {% endblock %}
 
 {% block header %}

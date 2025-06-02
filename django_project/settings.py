@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.05.29.a"  # migrate from pip to UV ATP
+    "2025.06.02.a"  # upgrade deps ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

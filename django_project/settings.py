@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.06.02.b"  # PT index changes as season is over ATP
+    "2025.06.03.a"  # PT fixed bug that applied initial transaction to the wrong player ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

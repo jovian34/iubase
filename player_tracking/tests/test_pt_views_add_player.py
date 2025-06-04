@@ -17,6 +17,7 @@ from player_tracking.models import Player
 from live_game_blog.tests.fixtures.teams import teams
 from accounts.models import CustomUser
 from accounts.tests.fixtures import logged_user_schwarbs
+from player_tracking import models as pt_models
 
 
 this_year = date.today().year
@@ -55,6 +56,19 @@ def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs, 
     phillip = Player.objects.filter(high_school="Tallmadge").last()
     assert phillip.last == "Glasser"
     assert phillip.birthdate == date(year=this_year - 25, month=12, day=3)
+
+
+@pytest.mark.django_db
+def test_add_player_form_adds_new_transaction(client, players, logged_user_schwarbs, forms):
+    response = client.post(
+        reverse("add_player"),
+        forms.phillip_glasser_new,
+        follow=True,
+    )
+    trans = pt_models.Transaction.objects.filter(
+        player__first="Phillip", player__last="Glasser"
+    ).last()
+    assert trans.trans_event == "Verbal Commitment from College"
 
 
 @pytest.mark.django_db

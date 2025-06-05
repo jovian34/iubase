@@ -165,6 +165,6 @@ if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
 project_version = (
-    "2025.06.04.a"  # upgrade to python and django ATP
+    "2025.06.05.a"  # version change only ATP
 )
 os.environ.setdefault("PROJECT_VERSION", project_version)

@@ -46,6 +46,14 @@
                 {% if transaction.comment %}
                     <p><em>{{ transaction.comment }}</em></p>
                 {% endif %}
+                {% for commit in outgoing_commit %}
+                    {% if transaction.player.pk == commit.player.pk %}
+                        <p>Committed to {{ commit.other_team }} on {{ commit.trans_date }}</p>
+                        {% if commit.comment %}
+                            <p><em>{{ commit.comment }}</em></p>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
             </li>
         {% endfor %}
         </ul>

@@ -41,3 +41,10 @@ def test_portal_page_shows_date_commited(client, players, teams, annual_rosters,
     response = client.get(reverse("portal", args=[str(last_year)]))
     assert response.status_code == 200
     assert f"From the portal</a> on July 15, {str(last_year)}" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_portal_page_shows_outgoing_commit_school(client, players, teams, annual_rosters, transactions):
+    response = client.get(reverse("portal", args=[str(this_year)])) 
+    assert response.status_code == 200
+    assert "Committed to Duke" in str(response.content)

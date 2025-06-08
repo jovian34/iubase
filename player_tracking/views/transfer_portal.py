@@ -15,6 +15,11 @@ def view(request, portal_year):
         trans_date__gte=start,
         trans_date__lte=end,
     ).order_by("player__last")
+    outgoing_commit = Transaction.objects.filter(
+        trans_event="Verbal Commitment to Transfer College",
+        trans_date__gte=start,
+        trans_date__lte=end,
+    )
     incoming = Transaction.objects.filter(
         trans_event="Verbal Commitment from College",
         trans_date__gte=start,
@@ -22,6 +27,7 @@ def view(request, portal_year):
     ).order_by(Lower("player__last"))
     context = {
         "outgoing": outgoing,
+        "outgoing_commit": outgoing_commit,
         "incoming": incoming,
         "page_title": f"{portal_year} Transfer Portal",
         "total_out": str(len(outgoing)),

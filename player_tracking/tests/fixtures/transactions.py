@@ -7,13 +7,14 @@ from datetime import datetime, date
 from player_tracking.models import Transaction
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
+from live_game_blog.tests.fixtures.teams import teams
 
 
 this_year = date.today().year
 
 
 @pytest.fixture
-def transactions(players, prof_orgs):
+def transactions(players, prof_orgs, teams):
     js_verbal = Transaction.objects.create(
         player=players.jake_stadler,
         trans_event="Verbal Commitment from College",
@@ -86,6 +87,12 @@ def transactions(players, prof_orgs):
         trans_event="Entered Transfer Portal",
         trans_date=date(year=this_year, month=6, day=15),
         citation="https://x.com/brooks_ey/status/1794162572117303480"
+    )
+    be_new_school = Transaction.objects.create(
+        player=players.brooks_ey,
+        trans_event="Verbal Commitment to Transfer College",
+        trans_date=date(year=this_year, month=7, day=8),
+        other_team=teams.duke,
     )
     jm_verb_port = Transaction.objects.create(
         player=players.jack_moffitt,
@@ -184,7 +191,7 @@ def transactions(players, prof_orgs):
     )
     TransObj = namedtuple(
         "TransObj",
-        "js_verbal rk_verbal dt_verbal dt_nli be_commit be_portal dt_draft_ranked br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal xc_verbal gs_verbal gs_decommit xc_nli oo_verbal em_verbal em_portal ja_verbal ja_decommit",
+        "js_verbal rk_verbal dt_verbal dt_nli be_commit be_portal be_new_school dt_draft_ranked br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal xc_verbal gs_verbal gs_decommit xc_nli oo_verbal em_verbal em_portal ja_verbal ja_decommit",
     )
     return TransObj(
         js_verbal=js_verbal,
@@ -193,6 +200,7 @@ def transactions(players, prof_orgs):
         dt_nli=dt_nli,
         be_commit=be_commit,
         be_portal=be_portal,
+        be_new_school=be_new_school,
         dt_draft_ranked=dt_draft_ranked,
         br_nli=br_nli,
         nm_verbal=nm_verbal,

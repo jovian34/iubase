@@ -48,7 +48,7 @@
                 {% endif %}
                 {% for commit in outgoing_commit %}
                     {% if transaction.player.pk == commit.player.pk %}
-                        <p>Committed to {{ commit.other_team }} on {{ commit.trans_date }}</p>
+                        <p><a href="{{ commit.citation }}">Committed to {{ commit.other_team }}</a> on {{ commit.trans_date }}</p>
                         {% if commit.comment %}
                             <p><em>{{ commit.comment }}</em></p>
                         {% endif %}

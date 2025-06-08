@@ -15,7 +15,6 @@ JOINED_TUPLES = [
 LEFT_TUPLES = [
     ("Decommit", "Decommit"),
     ("Entered Transfer Portal", "Entered Transfer Portal"),
-    ("Verbal Commitment to Transfer College", "Verbal Commitment to Transfer College"),
     ("Attending MLB Draft Combine", "Attending MLB Draft Combine"),
     ("Ranked MLB Draft Prospect for Next Draft", "Ranked MLB Draft Prospect for Next Draft"),
     ("Drafted", "Drafted"),
@@ -34,12 +33,14 @@ LEFT_TUPLES = [
 AFTER_TUPLES = [
     ("Drafted former IU", "Drafted former IU"),
     ("Signed Professional Contract", "Signed Professional Contract"),
-    ("Verbal Commitment to New College", "Verbal Commitment to New College"),
+    ("Verbal Commitment to Transfer College", "Verbal Commitment to Transfer College"),
     ("Entered Transfer Portal - former IU", "Entered Transfer Portal - former IU"),
 ]
 
-TRANSACTIONS = JOINED_TUPLES + LEFT_TUPLES + AFTER_TUPLES
-LEFT = [left_tuple[0] for left_tuple in LEFT_TUPLES]
+initial_transactions = JOINED_TUPLES + LEFT_TUPLES + AFTER_TUPLES
+initial_transactions.sort(key=lambda x: x[0])
+TRANSACTIONS = tuple(initial_transactions)
+LEFT = tuple([left_tuple[0] for left_tuple in LEFT_TUPLES])
 JOINED = [joined_tuple[0] for joined_tuple in JOINED_TUPLES]
 AFTER = [after_tuple[0] for after_tuple in AFTER_TUPLES]
 COLLEGE = [JOINED_TUPLES[1][0]]

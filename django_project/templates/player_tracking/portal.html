@@ -15,6 +15,14 @@
         {% for transaction in incoming %}
             <li>
                 <h3><a href="{% url "single_player_page" transaction.player.pk %}">{{transaction.player.first}} {{transaction.player.last}}</a></h3>
+                {% if transaction.other_team %}
+                    <p><a href="{{ transaction.citation }}">From {{ transaction.other_team }}</a> on {{ transaction.trans_date }}</p>
+                {% else %}
+                    <p><a href="{{ transaction.citation }}">From the portal</a> on {{ transaction.trans_date }}</p>
+                {% endif %}
+                {% if transaction.comment %}
+                    <p><em>{{ transaction.comment }}</em></p>
+                {% endif %}
             </li>
         {% endfor %}
         </ul>
@@ -25,13 +33,19 @@
     <div class="column-3"></div>
     <div class="column-6">
         <h3>Total IU Players in the Portal: {{ total_out }}</h3>
-        <p><em>Note: The 2025 standard window for portal entry is June 2 to July 1 for
-            rostered players who have not yet graduated.
+        {% if portal_year == "2025" %}
+            <p><em>Note: The 2025 standard window for portal entry is June 2 to July 1 for
+                rostered players who have not yet graduated.        
+        {% endif %}
         </em></p>
         <ul>
         {% for transaction in outgoing %}
             <li>
-                <h3><a href="{% url "single_player_page" transaction.player.pk %}">{{transaction.player.first}} {{transaction.player.last}}</a></h3>
+                <h3><a href="{% url "single_player_page" transaction.player.pk %}">{{transaction.player.first}} {{transaction.player.last}}</a></h3> 
+                <p><a href="{{ transaction.citation }}">Entered the portal</a> on {{transaction.trans_date}}
+                {% if transaction.comment %}
+                    <p><em>{{ transaction.comment }}</em></p>
+                {% endif %}
             </li>
         {% endfor %}
         </ul>

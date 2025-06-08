@@ -85,6 +85,7 @@ def transactions(players, prof_orgs):
         player=players.brooks_ey,
         trans_event="Entered Transfer Portal",
         trans_date=date(year=this_year, month=6, day=15),
+        citation="https://x.com/brooks_ey/status/1794162572117303480"
     )
     jm_verb_port = Transaction.objects.create(
         player=players.jack_moffitt,

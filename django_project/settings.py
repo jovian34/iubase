@@ -2,12 +2,28 @@ from dotenv import load_dotenv
 import pathlib
 from datetime import date
 import os
+import toml
 
 
 load_dotenv()
 today = date.today()
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
+
+
+def get_version():
+    file_path = BASE_DIR / "pyproject.toml"    
+    try:
+        with file_path.open("r", encoding="utf-8") as file:
+            for line in file:
+                if line.strip().startswith("version ="):
+                    return line.split("=")[1].strip().strip('"')                    
+        return "Version not found"    
+    except FileNotFoundError:
+        return "pyproject.toml not found"
+    except Exception as e:
+        return f"Error reading pyproject.toml: {e}"
+    
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
@@ -164,7 +180,7 @@ SECURE_SSL_REDIRECT = True
 if bool(int(os.environ.get("DEVELOP"))):
     SECURE_SSL_REDIRECT = False
 
-project_version = (
-    "2025.06.06.a"  # ALL update photos ATP
-)
+project_version = get_version()
 os.environ.setdefault("PROJECT_VERSION", project_version)
+print(f"Project version: {os.environ.get("PROJECT_VERSION")}")
+

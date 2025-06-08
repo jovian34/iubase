@@ -26,6 +26,7 @@ def view(request, portal_year):
         "page_title": f"{portal_year} Transfer Portal",
         "total_out": str(len(outgoing)),
         "total_in": str(len(incoming)),
+        "portal_year": portal_year,
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/portal.html", context)

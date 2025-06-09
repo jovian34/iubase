@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.db.models.functions import Lower
 
 from datetime import date
 from index.views import save_traffic_data

@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 import pathlib
 from datetime import date
 import os
-import toml
 
 
 load_dotenv()

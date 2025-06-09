@@ -107,7 +107,7 @@ wheels = [
 
 [[package]]
 name = "iubase"
-version = "2025.6.8rc0"
+version = "2025.6.9a0"
 source = { virtual = "." }
 dependencies = [
     { name = "asgiref" },

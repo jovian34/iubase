@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+
+
+{% block content %}
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        {% for accolade in accolades %}
+            <h2><a href="{% url "single_player_page" accolade.player.pk %}">{{ accolade.player.first }} {{ accolade.player.last }}</a></h2>
+            <ul>
+                <li><p>{{ accolade.award_date }}</p></li>
+                <li><p>{{ accolade.award_org }} {{ accolade.name }}</p></li>
+                
+                {% if accolade.annual_roster %}
+                {% if accolade.annual_roster.team.team_name != "Indiana" %}
+                <li><p>College Team: {{ accolade.annual_roster.team.team_name }}</p></li>
+                {% endif %}
+                {% endif %}
+
+                {% if accolade.summer_assign %}
+                <li><p>Summer Team: {{ accolade.summer_assign.summer_team }} of the {{ accolade.summer_assign.summer_league }} League</p></li>
+                {% endif %}  
+
+            </ul>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

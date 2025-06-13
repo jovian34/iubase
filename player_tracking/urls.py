@@ -1,5 +1,6 @@
 from django.urls import path
 from player_tracking.views import (
+    accolades,
     add_accolade,
     add_player,
     add_roster_year,
@@ -70,6 +71,11 @@ urlpatterns = [
         "incoming_players/<fall_year>/",
         incoming_players.view,
         name="incoming_players",
+    ),
+    path(
+        "accolades/",
+        accolades.view,
+        name="accolades",
     ),
 
     # partials

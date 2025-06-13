@@ -59,9 +59,19 @@ def accolades(players, annual_rosters, summer_assign):
         award_org="B1G",
         description=None,
     )
+    stadler_sports = Accolade.objects.create(
+        player=players.jake_stadler,
+        annual_roster=annual_rosters.js_soph,
+        summer_assign=None,
+        award_date=date.today() - timedelta(days=369),
+        citation="https://www.google.com",
+        name="Sportsmanship",
+        award_org="MAC",
+        description=None,
+    )
     AccoladeObj = namedtuple(
         "AccoladeObj",
-        "dt_ly_ps_aa_second_team dt_ly_aa_second_team dt_ly_b1g_first_team rk_northwoods_pitch_of_year brise_all_fresh"
+        "dt_ly_ps_aa_second_team dt_ly_aa_second_team dt_ly_b1g_first_team rk_northwoods_pitch_of_year brise_all_fresh stadler_sports"
     )
     return AccoladeObj(
         dt_ly_ps_aa_second_team=dt_ly_ps_aa_second_team,
@@ -69,4 +79,5 @@ def accolades(players, annual_rosters, summer_assign):
         dt_ly_b1g_first_team=dt_ly_b1g_first_team,
         rk_northwoods_pitch_of_year=rk_northwoods_pitch_of_year,
         brise_all_fresh=brise_all_fresh,
+        stadler_sports=stadler_sports,
     )

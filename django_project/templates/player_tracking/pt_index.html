@@ -24,13 +24,12 @@
 
          <!--<h3>Spring {{ spring }} Roster Not Yet Announced</h3>-->
         <h3><a href="{% url "accolades" %}">Recent Accolades</a></h3>
+        <h3><a href="{% url "draft_combine_attendees" last_year %}">{{ this_year }} Draft Combine Attendees</a></h3>
         <h3><a href="{% url "fall_players" this_year %}">Players For Fall {{ this_year }}</a></h3>
         <h3><a href="{% url "incoming_players" this_year %}">Incoming Players For Fall {{ this_year }}</a></h3>
         <h3><a href="{% url "portal" this_year %}">Transfer Portal {{ this_year }}</a></h3>
         <h3><a href="{% url "summer_assignments" this_year %}">Summer {{ spring }} Collegiate League Assignments</a></h3>
-        <h3><a href="{% url "drafted_players" last_year %}">Players Selected in the {{ last_year }} MLB Draft</a></h3>
-        <h3><a href="{% url "draft_combine_attendees" last_year %}">{{ last_year }} Draft Combine Attendees</a></h3>
-        <h3><a href="{% url "spring_roster" spring %}">Spring {{ spring }} Roster</a></h3>
+        <h3><a href="{% url "drafted_players" last_year %}">Players Selected in the {{ last_year }} MLB Draft</a></h3><h3><a href="{% url "spring_roster" spring %}">Spring {{ spring }} Roster</a></h3>
         <h3><a href="{% url "spring_depth_chart" spring %}">Spring {{ spring }} Depth Chart</a></h3>
                 <h3><a href="{% url "players"  %}">All Players in the database</a></h3>
         <p>Includes publicly available data for players and commits who were on campus from Fall 2023 forward.

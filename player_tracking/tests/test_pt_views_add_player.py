@@ -24,10 +24,16 @@ this_year = date.today().year
 
 
 @pytest.mark.django_db
-def test_add_player_form_renders(client, logged_user_schwarbs):
+def test_add_player_form_renders_form_prompt_reverse_url(client, logged_user_schwarbs):
     response = client.get(reverse("add_player"))
     assert response.status_code == 200
     assert "First Name" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_player_form_renders_form_prompt_manual_url(client, logged_user_schwarbs):
+    response = client.get("/player_tracking/add_player/")
+    assert response.status_code == 200
     assert "Portrait headshot URL" in str(response.content)
 
 

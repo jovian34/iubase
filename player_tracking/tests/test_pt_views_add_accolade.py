@@ -59,6 +59,15 @@ def test_add_accolade_partial_get_renders_form_with_only_one_players_rosters(cli
 
 
 @pytest.mark.django_db
+def test_add_accolade_partial_get_renders_form_with_only_one_players_rosters_manual_url(client, players, annual_rosters, teams, logged_user_schwarbs):
+    response = client.get(
+        f"/player_tracking/add_accolade/{players.devin_taylor.pk}/"
+    )
+    assert response.status_code == 200
+    assert "Devin Taylor" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_add_accolade_partial_post_redirects(client, players, logged_user_schwarbs, summer_leagues, summer_teams, summer_assign, forms, prof_orgs):
     response = client.post(
         reverse("add_accolade", args=[str(players.devin_taylor.pk)]),

@@ -102,6 +102,7 @@ def set_leaving_player(this_player, last_effective_transaction):
     if this_player.hsgrad_year >= last_spring:
         this_player.first_spring = None
         this_player.last_spring = None
+    this_player.via_exhaust = False
     this_player.save()
 
 

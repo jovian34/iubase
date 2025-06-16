@@ -25,6 +25,7 @@ class Player(models.Model):
     weight = models.IntegerField(null=True, blank=True)
     first_spring = models.IntegerField(null=True, blank=True)
     last_spring = models.IntegerField(null=True, blank=True)
+    via_exhaust = models.BooleanField(default=True)
     
     class Meta:
         ordering = [ "last", "first"]

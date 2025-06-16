@@ -45,6 +45,22 @@ def test_set_player_properties_correctly_sets_mid_year_transfer(
 
 
 @pytest.mark.django_db
+def test_set_player_properties_correctly_marks_via_exhaust(
+    client, players, annual_rosters, transactions, logged_user_schwarbs
+):
+    response = client.get(reverse("players"), follow=True)
+    evan_mac = Player.objects.get(pk=players.evan_mac.pk)
+    cole_gilley = Player.objects.get(pk=players.cole_gilley.pk)
+    assert evan_mac.via_exhaust
+    assert cole_gilley.via_exhaust
+    response = client.get(reverse("set_player_properties"), follow=True)
+    evan_mac = Player.objects.get(pk=players.evan_mac.pk)
+    cole_gilley = Player.objects.get(pk=players.cole_gilley.pk)
+    assert not evan_mac.via_exhaust
+    assert cole_gilley.via_exhaust
+
+
+@pytest.mark.django_db
 def test_set_player_properties_produces_correct_end_date_future_commit(
     client, players, annual_rosters, transactions, logged_user_schwarbs
 ):

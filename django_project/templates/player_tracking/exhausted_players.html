@@ -1,0 +1,26 @@
+
+
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+
+
+{% block content %}
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+
+        <h3>Count of Players: {{ count }}</h3>
+
+        {% for player in players %}
+            <div class="column-12 clear-both">
+                <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

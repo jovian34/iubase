@@ -17,7 +17,8 @@ from player_tracking.views import (
     set_player_properties,
     single_player_page, 
     summer_assignments, 
-    transfer_portal
+    transfer_portal,
+    exhausted_players,
 )
 from player_tracking.views.fall import(
     fall_all_eligible,
@@ -76,6 +77,11 @@ urlpatterns = [
         "accolades/",
         accolades.view,
         name="accolades",
+    ),
+    path(
+        "exhausted_players/<spring_year>/",
+        exhausted_players.view,
+        name="exhausted_players",
     ),
 
     # partials

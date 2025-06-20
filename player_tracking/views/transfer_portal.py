@@ -8,7 +8,7 @@ from index.views import save_traffic_data
 
 
 def view(request, portal_year):
-    start = date(year=int(portal_year)-1, month=9, day=1)
+    start = date(year=int(portal_year) - 1, month=9, day=1)
     end = date(year=int(portal_year), month=8, day=31)
     outgoing = Transaction.objects.filter(
         trans_event="Entered Transfer Portal",

@@ -45,7 +45,9 @@ def test_add_game(client, logged_user_schwarbs, teams, games, scoreboards, forms
 
 
 @pytest.mark.django_db
-def test_add_tourney_game(client, logged_user_schwarbs, teams, games, forms, scoreboards):
+def test_add_tourney_game(
+    client, logged_user_schwarbs, teams, games, forms, scoreboards
+):
     response = client.post(
         reverse("add_game"),
         forms.uk_tourney,

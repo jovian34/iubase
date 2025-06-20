@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("player_tracking", "0020_alter_annualroster_status"),
     ]

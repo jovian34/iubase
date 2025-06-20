@@ -74,11 +74,13 @@ def save_initial_transaction(form):
         primary_position=form.cleaned_data["primary_position"],
     )
     add_initial_transaction.save()
-    
+
 
 def get_current_player(form):
-    first=form.cleaned_data["first"]
-    last=form.cleaned_data["last"]
-    hsgrad_year=int(form.cleaned_data["hsgrad_year"])
-    this_player = Player.objects.filter(first=first, last=last, hsgrad_year=hsgrad_year).first()
+    first = form.cleaned_data["first"]
+    last = form.cleaned_data["last"]
+    hsgrad_year = int(form.cleaned_data["hsgrad_year"])
+    this_player = Player.objects.filter(
+        first=first, last=last, hsgrad_year=hsgrad_year
+    ).first()
     return this_player

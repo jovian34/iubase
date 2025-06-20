@@ -49,7 +49,7 @@ class NewPlayerForm(PlayerForm):
         required=True,
     )
     trans_date = forms.DateField(label="Transaction Date")
-    citation = forms.CharField(label="Citation", required=False)    
+    citation = forms.CharField(label="Citation", required=False)
 
 
 class AnnualRosterForm(forms.Form):
@@ -59,7 +59,9 @@ class AnnualRosterForm(forms.Form):
         label="Team",
     )
     jersey = forms.IntegerField(label="Jersey Number", required=False)
-    status = forms.ChoiceField(label="Eligibility Status", choices=choices.STATUS_CHOICES)
+    status = forms.ChoiceField(
+        label="Eligibility Status", choices=choices.STATUS_CHOICES
+    )
     primary_position = forms.ChoiceField(
         label="Primary Fielding Position", choices=choices.POSITIONS
     )
@@ -111,7 +113,8 @@ class SummerAssignForm(forms.Form):
         label="League",
     )
     summer_team = forms.ModelChoiceField(
-        queryset=pt_models.SummerTeam.objects.all().order_by("name"), label="Summer Team"
+        queryset=pt_models.SummerTeam.objects.all().order_by("name"),
+        label="Summer Team",
     )
     source = forms.CharField(required=False, label="Source")
     citation = forms.URLField(
@@ -125,8 +128,12 @@ class AccoladeForm(forms.Form):
     def __init__(self, *args, player_id, **kwargs):
         self.player_id = int(player_id)
         super().__init__(*args, **kwargs)
-        self.fields['annual_roster'].queryset = pt_models.AnnualRoster.objects.filter(player=self.player_id)
-        self.fields['summer_assign'].queryset = pt_models.SummerAssign.objects.filter(player=self.player_id)
+        self.fields["annual_roster"].queryset = pt_models.AnnualRoster.objects.filter(
+            player=self.player_id
+        )
+        self.fields["summer_assign"].queryset = pt_models.SummerAssign.objects.filter(
+            player=self.player_id
+        )
 
     name = forms.CharField(label="Name of accolade")
     award_date = forms.DateField(label="Date issued")

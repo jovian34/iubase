@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('player_tracking', '0043_alter_transaction_trans_event'),
+        ("player_tracking", "0043_alter_transaction_trans_event"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='player',
-            name='via_exhaust',
+            model_name="player",
+            name="via_exhaust",
             field=models.BooleanField(default=True),
         ),
     ]

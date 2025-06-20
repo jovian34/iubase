@@ -1,10 +1,10 @@
 from django.urls import path
 from live_game_blog.views import (
-    games, 
-    add_blog_entry_only, 
-    add_blog_plus_scoreboard, 
-    add_team, 
-    add_game, 
+    games,
+    add_blog_entry_only,
+    add_blog_plus_scoreboard,
+    add_team,
+    add_game,
     edit_blog_entry,
     live_game_blog,
 )

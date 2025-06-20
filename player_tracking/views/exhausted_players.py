@@ -4,8 +4,11 @@ from django.db.models import Q
 from player_tracking import models as pt_models
 from index.views import save_traffic_data
 
+
 def view(request, spring_year):
-    players = pt_models.Player.objects.filter(Q(last_spring=spring_year) & Q(via_exhaust=True))
+    players = pt_models.Player.objects.filter(
+        Q(last_spring=spring_year) & Q(via_exhaust=True)
+    )
     context = {
         "spring_year": spring_year,
         "players": players,

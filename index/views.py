@@ -5,7 +5,7 @@ import pytz
 
 from index import models as index_models
 
-timezone = pytz.timezone('US/Eastern')
+timezone = pytz.timezone("US/Eastern")
 
 
 def index(request):
@@ -56,9 +56,9 @@ def current_months_traffic(request):
 @decorators.login_required
 def one_days_traffic(request, day):
     end, start = get_start_and_end_of_day(day)
-    traf = index_models.TrafficCounter.objects.filter(timestamp__gte=start, timestamp__lte=end).order_by(
-        "-timestamp"
-    )
+    traf = index_models.TrafficCounter.objects.filter(
+        timestamp__gte=start, timestamp__lte=end
+    ).order_by("-timestamp")
     agent_info = AgentInfo()
     for row in traf:
         row.agent_group = agent_info.categorize_user_agent(row)
@@ -68,7 +68,9 @@ def one_days_traffic(request, day):
         "month_day": f"{start:%B %-d}",
         "prior_day": int(day) - 1,
     }
-    return shortcuts.render(request, "index/partials/one_days_traffic.html", context=context)
+    return shortcuts.render(
+        request, "index/partials/one_days_traffic.html", context=context
+    )
 
 
 def get_start_and_end_of_day(day):
@@ -88,8 +90,8 @@ def get_start_and_end_of_day(day):
         hour=0,
         minute=0,
         second=0,
-    )    
-    start = timezone.localize(unaware_start) 
+    )
+    start = timezone.localize(unaware_start)
     return end, start
 
 
@@ -106,7 +108,7 @@ def get_first_of_current_month():
     return first_of_month
 
 
-class AgentInfo():
+class AgentInfo:
     def __init__(self) -> None:
         self.bots = [
             "bot",
@@ -125,9 +127,14 @@ class AgentInfo():
             "panscient",
             "owler",
         ]
-        self.ios = ["iphone", "ipad",]
-        self. linux_comp = ["linux x86", "linux i686",]
-
+        self.ios = [
+            "iphone",
+            "ipad",
+        ]
+        self.linux_comp = [
+            "linux x86",
+            "linux i686",
+        ]
 
     def categorize_user_agent(self, row):
         user_agent = str(row.user_agent).lower()

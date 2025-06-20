@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('player_tracking', '0034_transaction_comment'),
+        ("player_tracking", "0034_transaction_comment"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='player',
-            name='action_shot',
+            model_name="player",
+            name="action_shot",
             field=models.URLField(blank=True, null=True),
         ),
     ]

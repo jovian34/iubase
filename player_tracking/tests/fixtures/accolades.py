@@ -71,7 +71,7 @@ def accolades(players, annual_rosters, summer_assign):
     )
     AccoladeObj = namedtuple(
         "AccoladeObj",
-        "dt_ly_ps_aa_second_team dt_ly_aa_second_team dt_ly_b1g_first_team rk_northwoods_pitch_of_year brise_all_fresh stadler_sports"
+        "dt_ly_ps_aa_second_team dt_ly_aa_second_team dt_ly_b1g_first_team rk_northwoods_pitch_of_year brise_all_fresh stadler_sports",
     )
     return AccoladeObj(
         dt_ly_ps_aa_second_team=dt_ly_ps_aa_second_team,

@@ -40,7 +40,13 @@ def test_add_summer_assignment_get_renders_form(
 
 @pytest.mark.django_db
 def test_add_summer_assignment_post_adds_assignment(
-    client, players, summer_leagues, summer_teams, logged_user_schwarbs, forms, annual_rosters,
+    client,
+    players,
+    summer_leagues,
+    summer_teams,
+    logged_user_schwarbs,
+    forms,
+    annual_rosters,
 ):
     response = client.post(
         reverse("add_summer_assignment", args=[str(players.brayden_risedorph.pk)]),

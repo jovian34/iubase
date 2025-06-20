@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("live_game_blog", "0013_alter_blogentry_is_raw_html"),
     ]

@@ -86,7 +86,7 @@ def transactions(players, prof_orgs, teams):
         player=players.brooks_ey,
         trans_event="Entered Transfer Portal",
         trans_date=date(year=this_year, month=6, day=15),
-        citation="https://x.com/brooks_ey/status/1794162572117303480"
+        citation="https://x.com/brooks_ey/status/1794162572117303480",
     )
     be_new_school = Transaction.objects.create(
         player=players.brooks_ey,
@@ -182,7 +182,7 @@ def transactions(players, prof_orgs, teams):
     ja_verbal = Transaction.objects.create(
         player=players.jason_amalbert,
         trans_event="Verbal Commitment from High School",
-        trans_date=date(year=this_year-2, month=9, day=26),
+        trans_date=date(year=this_year - 2, month=9, day=26),
     )
     ja_decommit = Transaction.objects.create(
         player=players.jason_amalbert,

@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0023_game_featured_image'),
+        ("live_game_blog", "0023_game_featured_image"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blogentry',
-            name='is_photo_only',
+            model_name="blogentry",
+            name="is_photo_only",
             field=models.BooleanField(blank=True, null=True),
         ),
     ]

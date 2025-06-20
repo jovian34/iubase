@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("player_tracking", "0027_summerassign_citation_summerleague_url_and_more"),
     ]

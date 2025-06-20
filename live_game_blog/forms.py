@@ -36,9 +36,7 @@ class AddGameForm(forms.Form):
     neutral_site = forms.BooleanField(
         label="Is this a neutral site or host is designated away?", required=False
     )
-    event = forms.CharField(
-        label="Describe the event: ", required=False
-    )
+    event = forms.CharField(label="Describe the event: ", required=False)
 
     home_team = forms.ModelChoiceField(
         queryset=Team.objects.all().order_by("team_name"),

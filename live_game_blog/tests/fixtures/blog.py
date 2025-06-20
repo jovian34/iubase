@@ -63,4 +63,3 @@ def entries(client, games, user_not_logged_in, scoreboards):
         blog_coast_ip_third=blog_coast_ip_third,
         blog_coast_ip_seventh=blog_coast_ip_seventh,
     )
-

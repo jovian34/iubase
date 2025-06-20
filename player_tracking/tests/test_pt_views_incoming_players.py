@@ -14,9 +14,7 @@ this_year = date.today().year
 
 
 @pytest.mark.django_db
-def test_incoming_players_renders(
-    client, players, transactions
-):
+def test_incoming_players_renders(client, players, transactions):
     set_player_properties.set_player_props_get_errors()
     response = client.get(reverse("incoming_players", args=[f"{this_year + 1}"]))
     assert "Owen" in str(response.content)
@@ -24,7 +22,7 @@ def test_incoming_players_renders(
 
 
 @pytest.mark.django_db
-def test_incoming_players_places_hs_under_correct_nli_headers_player (
+def test_incoming_players_places_hs_under_correct_nli_headers_player(
     client, players, transactions
 ):
     set_player_properties.set_player_props_get_errors()
@@ -38,7 +36,7 @@ def test_incoming_players_places_hs_under_correct_nli_headers_player (
 
 
 @pytest.mark.django_db
-def test_incoming_players_places_transfers_under_correct_header (
+def test_incoming_players_places_transfers_under_correct_header(
     client, players, transactions
 ):
     set_player_properties.set_player_props_get_errors()
@@ -47,4 +45,3 @@ def test_incoming_players_places_transfers_under_correct_header (
     gilley = output.find("Gilley")
     transfer_head = output.find("Transfer Commits")
     assert gilley > transfer_head
-

@@ -40,7 +40,7 @@ def test_game_model_string_def(client, games):
 @pytest.mark.django_db
 def test_game_model_string_def_neutral(client, games):
     assert "George Mason vs. Indiana" in str(games.iu_gm)
-    
+
 
 @pytest.mark.django_db
 def test_scoreboard_sets_default_time(client, scoreboards, user_not_logged_in):

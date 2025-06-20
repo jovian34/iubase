@@ -15,6 +15,7 @@ from live_game_blog.tests.fixtures.teams import teams
 
 this_year = date.today().year
 
+
 @pytest.mark.django_db
 def test_summer_assignments_page_renders(
     client, players, summer_assign, summer_leagues, summer_teams

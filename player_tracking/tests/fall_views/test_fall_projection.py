@@ -4,8 +4,8 @@ from datetime import date
 
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.mlb_draft_date import (
-    typical_mlb_draft_date, 
-    very_soon_mlb_draft_date, 
+    typical_mlb_draft_date,
+    very_soon_mlb_draft_date,
     past_mlb_draft_date,
     today_complete_mlb_draft_date,
     today_incomplete_mlb_draft_date,
@@ -27,7 +27,7 @@ def test_projected_players_renders_current_players(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
@@ -41,7 +41,7 @@ def test_projected_players_excludes_transfer_portal_entrants(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
@@ -54,7 +54,7 @@ def test_projected_players_includes_incoming_high_school_commit(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
@@ -67,7 +67,7 @@ def test_projected_players_excludes_future_high_school_commit(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
@@ -80,7 +80,7 @@ def test_projected_players_includes_transfer_commit(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
@@ -94,7 +94,7 @@ def test_projected_players_excludes_expected_draftee(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert "Devin Taylor" not in str(response.content)
@@ -106,10 +106,13 @@ def test_projected_players_draft_pending_explains_draft_exceptions(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
-    assert "This projection excludes players expected to go professional in the MLB Draft." in str(response.content)
+    assert (
+        "This projection excludes players expected to go professional in the MLB Draft."
+        in str(response.content)
+    )
 
 
 @pytest.mark.django_db
@@ -118,10 +121,13 @@ def test_projected_players_alpha_draft_pending_explains_draft_exceptions(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_alpha", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_alpha", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
-    assert "This projection excludes players expected to go professional in the MLB Draft." in str(response.content)
+    assert (
+        "This projection excludes players expected to go professional in the MLB Draft."
+        in str(response.content)
+    )
 
 
 @pytest.mark.django_db
@@ -130,7 +136,7 @@ def test_projected_players_draft_pending_flags_draft_eligible_player(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
@@ -143,7 +149,7 @@ def test_projected_players_draft_past_not_flag_draft_eligible_player(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
@@ -156,7 +162,7 @@ def test_projected_players_draft_complete_today_not_flag_draft_eligible_player(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
@@ -169,7 +175,7 @@ def test_projected_players_draft_pending_today_flags_draft_eligible_player(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
@@ -182,7 +188,7 @@ def test_projected_players_depth_lists_pitcher_before_infielder(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
@@ -198,7 +204,7 @@ def test_projected_players_alpha_lists_alphabetical_order_by_last_name(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_alpha", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_alpha", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
@@ -223,7 +229,10 @@ def test_projected_players_not_from_HTMX_redirects_to_fall_players(
     )
     assert response.status_code == 200
     assert "<title>Players for Fall Seasons by Year</title>" in str(response.content)
-    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year}/" hx-trigger="load"' in str(response.content)
+    assert (
+        f'hx-get="/player_tracking/fall_players_redirect/{this_year}/" hx-trigger="load"'
+        in str(response.content)
+    )
 
 
 @pytest.mark.django_db
@@ -232,12 +241,16 @@ def test_fall_projection_includes_buttons_that_point_HTMX_to_prior_and_next_year
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
-        reverse("projected_players_fall_depth", args=[f"{this_year}"]), 
+        reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
-    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 1}/"' in str(response.content)
-    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year - 1}/"' in str(response.content)
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year + 1}/"' in str(
+        response.content
+    )
+    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year - 1}/"' in str(
+        response.content
+    )
 
 
 @pytest.mark.django_db
@@ -255,8 +268,10 @@ def test_fall_projection_depth_not_called_by_HTMX_redirects_to_fall_players(
     )
     assert response.status_code == 200
     assert "<title>Players for Fall Seasons by Year</title>" in str(response.content)
-    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year}/" hx-trigger="load"' in str(response.content)
-
+    assert (
+        f'hx-get="/player_tracking/fall_players_redirect/{this_year}/" hx-trigger="load"'
+        in str(response.content)
+    )
 
 
 @pytest.mark.django_db
@@ -274,4 +289,7 @@ def test_fall_projection_alpha_not_called_by_HTMX_redirects_to_fall_players(
     )
     assert response.status_code == 200
     assert "<title>Players for Fall Seasons by Year</title>" in str(response.content)
-    assert f'hx-get="/player_tracking/fall_players_redirect/{this_year}/" hx-trigger="load"' in str(response.content)
+    assert (
+        f'hx-get="/player_tracking/fall_players_redirect/{this_year}/" hx-trigger="load"'
+        in str(response.content)
+    )

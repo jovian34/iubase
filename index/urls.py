@@ -9,11 +9,10 @@ urlpatterns = [
         views.current_months_traffic,
         name="current_months_traffic",
     ),
-
     # partials
     path(
         "one_days_traffic/<day>/",
         views.one_days_traffic,
         name="one_days_traffic",
-    )
+    ),
 ]

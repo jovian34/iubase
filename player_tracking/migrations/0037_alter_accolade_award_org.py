@@ -4,16 +4,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('player_tracking', '0036_accolade'),
+        ("player_tracking", "0036_accolade"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='accolade',
-            name='award_org',
-            field=models.CharField(default='B1G', max_length=64),
+            model_name="accolade",
+            name="award_org",
+            field=models.CharField(default="B1G", max_length=64),
             preserve_default=False,
         ),
     ]

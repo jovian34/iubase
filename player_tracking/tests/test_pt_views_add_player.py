@@ -65,7 +65,9 @@ def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs, 
 
 
 @pytest.mark.django_db
-def test_add_player_form_adds_new_transaction(client, players, logged_user_schwarbs, forms):
+def test_add_player_form_adds_new_transaction(
+    client, players, logged_user_schwarbs, forms
+):
     response = client.post(
         reverse("add_player"),
         forms.phillip_glasser_new,

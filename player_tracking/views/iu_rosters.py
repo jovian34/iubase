@@ -10,10 +10,11 @@ def fall(request, fall_year):
         return render_fall_roster_partial_template(request, fall_year)
     else:
         return shortcuts.redirect(urls.reverse("fall_players", args=[fall_year]))
-    
+
 
 def render_fall_roster_partial_template(request, fall_year):
-    players = (pt_models.AnnualRoster.objects.filter(spring_year=int(fall_year) + 1)
+    players = (
+        pt_models.AnnualRoster.objects.filter(spring_year=int(fall_year) + 1)
         .filter(team__team_name="Indiana")
         .order_by("jersey")
     )
@@ -39,7 +40,9 @@ def spring(request, spring_year):
         "players": players_for_year,
         "page_title": set_page_title_by_roster_status(spring_year, players_for_year),
         "total": len(players_for_year),
-        "accolades": pt_models.Accolade.objects.filter(annual_roster__in=players_for_year),
+        "accolades": pt_models.Accolade.objects.filter(
+            annual_roster__in=players_for_year
+        ),
     }
     index_views.save_traffic_data(request=request, page=context["page_title"])
     template_path = "player_tracking/roster.html"

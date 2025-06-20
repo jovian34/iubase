@@ -40,9 +40,9 @@ def set_roster_url_to_game_year(game, spring_year):
         game.away_team.roster += f"{spring_year - 1}-{spring_year - 2000}"
     else:
         game.away_team.roster += f"{spring_year}/"
-        
+
     if game.home_team.roster[-7:] == "season/":
-        game.home_team.roster += f"{spring_year - 1}-{spring_year - 2000}"    
+        game.home_team.roster += f"{spring_year - 1}-{spring_year - 2000}"
     else:
         game.home_team.roster += f"{spring_year}/"
 
@@ -68,7 +68,9 @@ def get_game_or_raise_404(game_pk):
 
 
 def is_game_over(game_pk):
-    latest_scoreboard = lgb_models.Scoreboard.objects.filter(game=game_pk).order_by("-update_time")[0]
+    latest_scoreboard = lgb_models.Scoreboard.objects.filter(game=game_pk).order_by(
+        "-update_time"
+    )[0]
     if latest_scoreboard.game_status in ["final", "cancelled", "post-game"]:
         return True
     return False

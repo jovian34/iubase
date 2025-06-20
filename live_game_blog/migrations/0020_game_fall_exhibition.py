@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0019_game_audio_primary_game_audio_student_and_more'),
+        ("live_game_blog", "0019_game_audio_primary_game_audio_student_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='game',
-            name='fall_exhibition',
+            model_name="game",
+            name="fall_exhibition",
             field=models.BooleanField(db_default=False),
         ),
     ]

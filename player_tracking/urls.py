@@ -7,20 +7,20 @@ from player_tracking.views import (
     add_summer_assignment,
     add_transaction,
     all_players,
-    depth_charts, 
-    draft_combine, 
-    drafted_players, 
+    depth_charts,
+    draft_combine,
+    drafted_players,
     edit_player,
-    incoming_players, 
+    incoming_players,
     iu_rosters,
-    pt_index, 
+    pt_index,
     set_player_properties,
-    single_player_page, 
-    summer_assignments, 
+    single_player_page,
+    summer_assignments,
     transfer_portal,
     exhausted_players,
 )
-from player_tracking.views.fall import(
+from player_tracking.views.fall import (
     fall_all_eligible,
     fall_landing,
     fall_projection,
@@ -83,14 +83,9 @@ urlpatterns = [
         exhausted_players.view,
         name="exhausted_players",
     ),
-
     # partials
-    path(
-        "add_roster_year/<player_id>/", add_roster_year.view, name="add_roster_year"
-    ),
-    path(
-        "add_transaction/<player_id>/", add_transaction.view, name="add_transaction"
-    ),
+    path("add_roster_year/<player_id>/", add_roster_year.view, name="add_roster_year"),
+    path("add_transaction/<player_id>/", add_transaction.view, name="add_transaction"),
     path(
         "add_summer_assignment/<player_id>/",
         add_summer_assignment.view,

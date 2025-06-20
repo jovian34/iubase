@@ -21,6 +21,7 @@ def test_games_list_page_renders_road_future(client, teams, games, scoreboards):
     actual = str(response.content).replace(" ", "").replace("\\n", "")
     assert expected in actual
 
+
 @pytest.mark.django_db
 def test_games_list_page_renders_neutral_future(client, teams, games):
     response = client.get(reverse("games"))
@@ -45,7 +46,9 @@ def test_games_list_page_does_not_render_past_games(client, teams, games, scoreb
 
 
 @pytest.mark.django_db
-def test_games_list_page_renders_add_game_and_team_if_staff(admin_client, teams, games, scoreboards):
+def test_games_list_page_renders_add_game_and_team_if_staff(
+    admin_client, teams, games, scoreboards
+):
     response = admin_client.get(reverse("games"))
     assert response.status_code == 200
     assert "Add game" in str(response.content)
@@ -53,16 +56,16 @@ def test_games_list_page_renders_add_game_and_team_if_staff(admin_client, teams,
 
 
 @pytest.mark.django_db
-def test_games_list_page_no_add_game_if_logged_not_staff(client, logged_user_schwarbs, teams, games, scoreboards):
+def test_games_list_page_no_add_game_if_logged_not_staff(
+    client, logged_user_schwarbs, teams, games, scoreboards
+):
     response = client.get(reverse("games"))
     assert response.status_code == 200
     assert "Add game" not in str(response.content)
 
 
 @pytest.mark.django_db
-def test_games_list_shows_event(
-    client, teams, games, scoreboards
-):
+def test_games_list_shows_event(client, teams, games, scoreboards):
     response = client.get(reverse("games"))
     assert response.status_code == 200
     assert "George Mason" in str(response.content)
@@ -97,7 +100,9 @@ def test_past_game_renders_partial_with_weekday(client, teams, games, scoreboard
 
 
 @pytest.mark.django_db
-def test_past_game_renders_partial_with_seed_and_score(client, teams, games, scoreboards):
+def test_past_game_renders_partial_with_seed_and_score(
+    client, teams, games, scoreboards
+):
     response = client.get(
         reverse("past_games"),
         HTTP_HX_REQUEST="true",
@@ -108,12 +113,17 @@ def test_past_game_renders_partial_with_seed_and_score(client, teams, games, sco
 
 
 @pytest.mark.django_db
-def test_past_game_partial_redirects_to_games_when_not_requested_by_HTMX(client, teams, games, scoreboards):
+def test_past_game_partial_redirects_to_games_when_not_requested_by_HTMX(
+    client, teams, games, scoreboards
+):
     response = client.get(reverse("past_games"))
     assert response.status_code == 302
-    response = client.get(reverse("past_games"), follow=True,)    
+    response = client.get(
+        reverse("past_games"),
+        follow=True,
+    )
     assert response.status_code == 200
     expected = "Indiana<em>@</em>Coastal".replace(" ", "")
     actual = str(response.content).replace(" ", "").replace("\\n", "")
-    assert expected in actual    
+    assert expected in actual
     assert "Kentucky-4" not in str(response.content)

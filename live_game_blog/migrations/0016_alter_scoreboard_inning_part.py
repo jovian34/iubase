@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("live_game_blog", "0015_alter_scoreboard_inning_part"),
     ]

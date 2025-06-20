@@ -31,7 +31,9 @@ def games(client, teams):
         home_team=teams.duke,
         away_team=teams.indiana,
         neutral_site=True,
-        first_pitch=datetime.datetime(2023, 10, 4, 21, 5, 00, tzinfo=datetime.timezone.utc),
+        first_pitch=datetime.datetime(
+            2023, 10, 4, 21, 5, 00, tzinfo=datetime.timezone.utc
+        ),
     )
     iu_coastal = Game.objects.create(
         home_team=teams.coastal,
@@ -55,7 +57,9 @@ def games(client, teams):
         home_team=teams.iowa,
         away_team=teams.indiana,
         neutral_site=False,
-        first_pitch=datetime.datetime(timezone.now().year + 3, 4, 4, 21, 5, 00, tzinfo=datetime.timezone.utc),
+        first_pitch=datetime.datetime(
+            timezone.now().year + 3, 4, 4, 21, 5, 00, tzinfo=datetime.timezone.utc
+        ),
     )
     iu_mo_rain = Game.objects.create(
         home_team=teams.indiana,

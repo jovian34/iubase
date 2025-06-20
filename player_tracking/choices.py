@@ -16,7 +16,10 @@ LEFT_TUPLES = [
     ("Decommit", "Decommit"),
     ("Entered Transfer Portal", "Entered Transfer Portal"),
     ("Attending MLB Draft Combine", "Attending MLB Draft Combine"),
-    ("Ranked MLB Draft Prospect for Next Draft", "Ranked MLB Draft Prospect for Next Draft"),
+    (
+        "Ranked MLB Draft Prospect for Next Draft",
+        "Ranked MLB Draft Prospect for Next Draft",
+    ),
     ("Drafted", "Drafted"),
     (
         "Signed Professional Contract - Undrafted",

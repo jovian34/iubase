@@ -175,12 +175,17 @@ def test_set_player_properties_properly_shows_error_for_missing_annual_roster(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    assert f"missing roster year {this_year - 2} for Jake Stadler" in str(response.content)
+    assert f"missing roster year {this_year - 2} for Jake Stadler" in str(
+        response.content
+    )
 
 
 @pytest.mark.django_db
 def test_set_player_properties_properly_sets_start_for_early_juco_commit(
-    client, players, annual_rosters, transactions,
+    client,
+    players,
+    annual_rosters,
+    transactions,
 ):
     holton = Player.objects.get(pk=players.holton_compton.pk)
     assert not holton.first_spring or holton.last_spring
@@ -192,7 +197,10 @@ def test_set_player_properties_properly_sets_start_for_early_juco_commit(
 
 @pytest.mark.django_db
 def test_set_player_properties_properly_sets_no_starts_for_decommit(
-    client, players, annual_rosters, transactions,
+    client,
+    players,
+    annual_rosters,
+    transactions,
 ):
     sinke = Player.objects.get(pk=players.gibson_sinke.pk)
     assert not sinke.first_spring or sinke.last_spring
@@ -203,7 +211,10 @@ def test_set_player_properties_properly_sets_no_starts_for_decommit(
 
 @pytest.mark.django_db
 def test_set_player_properties_properly_sets_no_starts_for_future_year_decommit(
-    client, players, annual_rosters, transactions,
+    client,
+    players,
+    annual_rosters,
+    transactions,
 ):
     amalbert = Player.objects.get(pk=players.jason_amalbert.pk)
     assert not amalbert.first_spring

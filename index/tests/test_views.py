@@ -7,7 +7,6 @@ from index import models as index_models
 from accounts.tests.fixtures import logged_user_schwarbs
 
 
-
 @pytest.mark.django_db
 def test_index_renders(client):
     response = client.get(urls.reverse("index"))
@@ -49,7 +48,9 @@ def test_index_hit_adds_traffic(client, agents):
 
 
 @pytest.mark.django_db
-def test_index_hit_adds_no_traffic_for_logged_in_user(client, agents, logged_user_schwarbs):
+def test_index_hit_adds_no_traffic_for_logged_in_user(
+    client, agents, logged_user_schwarbs
+):
     traffic = index_models.TrafficCounter.objects.all()
     initial_count = len(traffic)
     response = client.get(urls.reverse("index"))
@@ -90,4 +91,3 @@ def test_current_months_traffic_asks_for_password_not_logged_in(client, agents):
     assert "Traffic Count" not in str(response.content)
     assert "2024 Transfer Portal" not in str(response.content)
     assert "Password:" in str(response.content)
-

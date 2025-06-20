@@ -34,7 +34,9 @@ def test_single_player_page_renders_one_player_only(client, players, annual_rost
 
 
 @pytest.mark.django_db
-def test_single_player_page_raises_404_if_not_in_database(client, players, annual_rosters):
+def test_single_player_page_raises_404_if_not_in_database(
+    client, players, annual_rosters
+):
     response = client.get(
         reverse(
             "single_player_page",
@@ -64,7 +66,9 @@ def test_single_player_page_renders_summer_teams(
 
 
 @pytest.mark.django_db
-def test_single_player_page_renders_transfer_player_old_team(client, annual_rosters, players):
+def test_single_player_page_renders_transfer_player_old_team(
+    client, annual_rosters, players
+):
     response = client.get(
         reverse(
             "single_player_page",
@@ -78,30 +82,44 @@ def test_single_player_page_renders_transfer_player_old_team(client, annual_rost
 
 
 @pytest.mark.django_db
-def test_single_player_page_renders_action_shot_for_that_player(client, players, annual_rosters):
+def test_single_player_page_renders_action_shot_for_that_player(
+    client, players, annual_rosters
+):
     response = client.get(
         reverse(
             "single_player_page",
             args=[players.devin_taylor.pk],
         )
     )
-    assert "https://live.staticflickr.com/65535/54014518896_5c58571da6_o.jpg" in str(response.content)
-    assert "https://iubase.com/wp-content/uploads/2024/11/53704071552_13227a46a0_k.jpg" not in str(response.content)
+    assert "https://live.staticflickr.com/65535/54014518896_5c58571da6_o.jpg" in str(
+        response.content
+    )
+    assert (
+        "https://iubase.com/wp-content/uploads/2024/11/53704071552_13227a46a0_k.jpg"
+        not in str(response.content)
+    )
 
 
 @pytest.mark.django_db
-def test_single_player_page_renders_generic_action_shot_if_one_does_not_exist(client, players, annual_rosters):
+def test_single_player_page_renders_generic_action_shot_if_one_does_not_exist(
+    client, players, annual_rosters
+):
     response = client.get(
         reverse(
             "single_player_page",
             args=[players.brayden_risedorph.pk],
         )
     )
-    assert "https://iubase.com/wp-content/uploads/2024/11/53704071552_13227a46a0_k.jpg" in str(response.content)
+    assert (
+        "https://iubase.com/wp-content/uploads/2024/11/53704071552_13227a46a0_k.jpg"
+        in str(response.content)
+    )
 
 
 @pytest.mark.django_db
-def test_single_player_page_renders_accolade_org_and_name(client, players, annual_rosters, accolades):
+def test_single_player_page_renders_accolade_org_and_name(
+    client, players, annual_rosters, accolades
+):
     response = client.get(
         reverse(
             "single_player_page",
@@ -114,7 +132,9 @@ def test_single_player_page_renders_accolade_org_and_name(client, players, annua
 
 
 @pytest.mark.django_db
-def test_single_player_page_renders_add_accolade_button(client, players, annual_rosters, logged_user_schwarbs):
+def test_single_player_page_renders_add_accolade_button(
+    client, players, annual_rosters, logged_user_schwarbs
+):
     response = client.get(
         reverse(
             "single_player_page",
@@ -127,7 +147,9 @@ def test_single_player_page_renders_add_accolade_button(client, players, annual_
 
 
 @pytest.mark.django_db
-def test_single_player_page_renders_accolades_in_reverse_date_order(client, players, annual_rosters, logged_user_schwarbs, accolades):
+def test_single_player_page_renders_accolades_in_reverse_date_order(
+    client, players, annual_rosters, logged_user_schwarbs, accolades
+):
     response = client.get(
         reverse(
             "single_player_page",
@@ -143,7 +165,16 @@ def test_single_player_page_renders_accolades_in_reverse_date_order(client, play
 
 
 @pytest.mark.django_db
-def test_single_player_page_renders_summer_accolades_after_summer_header(client, players, annual_rosters, logged_user_schwarbs, accolades, summer_assign, summer_leagues, summer_teams):
+def test_single_player_page_renders_summer_accolades_after_summer_header(
+    client,
+    players,
+    annual_rosters,
+    logged_user_schwarbs,
+    accolades,
+    summer_assign,
+    summer_leagues,
+    summer_teams,
+):
     response = client.get(
         reverse(
             "single_player_page",
@@ -158,6 +189,3 @@ def test_single_player_page_renders_summer_accolades_after_summer_header(client,
     award = str(response.content).find("Northwoods League Pitcher of the Year")
     assert head < award
     assert award < other
-
-
-

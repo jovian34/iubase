@@ -24,7 +24,9 @@ def test_spring_depth_chart_renders_indiana_players(
 
 @pytest.mark.django_db
 def test_spring_depth_chart_shows_no_roster_without_rosters(
-    client, players, teams,
+    client,
+    players,
+    teams,
 ):
     response = client.get(reverse("spring_depth_chart", args=[f"{this_year - 1}"]))
     assert response.status_code == 200

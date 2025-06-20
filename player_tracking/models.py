@@ -16,7 +16,9 @@ class Player(models.Model):
     headshot = models.URLField(null=True, blank=True)
     action_shot = models.URLField(null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
-    primary_position = models.CharField(null=True, blank=True, choices=choices.POSITIONS)
+    primary_position = models.CharField(
+        null=True, blank=True, choices=choices.POSITIONS
+    )
     bats = models.CharField(choices=choices.HAND, max_length=16, null=True, blank=True)
     throws = models.CharField(
         choices=choices.HAND, max_length=16, null=True, blank=True
@@ -26,9 +28,9 @@ class Player(models.Model):
     first_spring = models.IntegerField(null=True, blank=True)
     last_spring = models.IntegerField(null=True, blank=True)
     via_exhaust = models.BooleanField(default=True)
-    
+
     class Meta:
-        ordering = [ "last", "first"]
+        ordering = ["last", "first"]
 
     def __str__(self) -> str:
         return f"{self.first} {self.last} {self.hsgrad_year}"
@@ -47,7 +49,9 @@ class Transaction(models.Model):
     trans_event = models.CharField(choices=choices.TRANSACTIONS, max_length=64)
     trans_date = models.DateField(db_default=model_func.Now())
     citation = models.URLField(null=True, blank=True)
-    primary_position = models.CharField(null=True, blank=True, choices=choices.POSITIONS)
+    primary_position = models.CharField(
+        null=True, blank=True, choices=choices.POSITIONS
+    )
     other_team = models.ForeignKey(
         lgb_models.Team,
         on_delete=models.CASCADE,
@@ -83,9 +87,9 @@ class AnnualRoster(models.Model):
     secondary_position = models.CharField(
         choices=choices.POSITIONS, null=True, blank=True
     )
-    
+
     class Meta:
-        ordering = [ "player", "spring_year"]
+        ordering = ["player", "spring_year"]
 
     def __str__(self) -> str:
         return (
@@ -135,16 +139,20 @@ class SummerAssign(models.Model):
 
 class Accolade(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    annual_roster = models.ForeignKey(AnnualRoster, on_delete=models.CASCADE, null=True, blank=True)
-    summer_assign = models.ForeignKey(SummerAssign, on_delete=models.CASCADE, null=True, blank=True)
+    annual_roster = models.ForeignKey(
+        AnnualRoster, on_delete=models.CASCADE, null=True, blank=True
+    )
+    summer_assign = models.ForeignKey(
+        SummerAssign, on_delete=models.CASCADE, null=True, blank=True
+    )
     award_date = models.DateField(db_default=model_func.Now())
     citation = models.URLField(null=True, blank=True)
     name = models.CharField(null=False, max_length=64)
     award_org = models.CharField(null=False, max_length=64)
     description = models.TextField(null=True, blank=True)
-    
+
     class Meta:
-        ordering = [ "-award_date", "name" ]
-    
+        ordering = ["-award_date", "name"]
+
     def __str__(self):
         return f"{self.player.first} {self.player.last} {self.award_date.year} {self.award_org} {self.name}"

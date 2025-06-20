@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("live_game_blog", "0014_alter_team_team_name"),
         ("player_tracking", "0004_annualroster_team"),

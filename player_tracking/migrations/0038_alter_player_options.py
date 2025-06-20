@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('player_tracking', '0037_alter_accolade_award_org'),
+        ("player_tracking", "0037_alter_accolade_award_org"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='player',
-            options={'ordering': ['last', 'first']},
+            name="player",
+            options={"ordering": ["last", "first"]},
         ),
     ]

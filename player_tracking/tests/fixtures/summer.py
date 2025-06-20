@@ -8,6 +8,7 @@ from player_tracking.tests.fixtures.players import players
 
 this_year = date.today().year
 
+
 @pytest.fixture
 def summer_leagues():
     nw = SummerLeague.objects.create(league="Northwoods")
@@ -55,4 +56,8 @@ def summer_assign(players, summer_leagues, summer_teams):
         summer_team=summer_teams.kg,
     )
     SummerAssignObj = namedtuple("SummerAssignObj", "dt_usa_ty rk_kg_ty dt_kg_ly")
-    return SummerAssignObj(dt_usa_ty=dt_usa_ty, rk_kg_ty=rk_kg_ty, dt_kg_ly=dt_kg_ly,)
+    return SummerAssignObj(
+        dt_usa_ty=dt_usa_ty,
+        rk_kg_ty=rk_kg_ty,
+        dt_kg_ly=dt_kg_ly,
+    )

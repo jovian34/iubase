@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('player_tracking', '0039_alter_annualroster_options'),
+        ("player_tracking", "0039_alter_annualroster_options"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='accolade',
-            options={'ordering': ['-award_date', 'name']},
+            name="accolade",
+            options={"ordering": ["-award_date", "name"]},
         ),
     ]

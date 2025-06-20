@@ -17,7 +17,9 @@ this_year = date.today().year
 
 
 @pytest.fixture
-def forms(summer_leagues, summer_teams, summer_assign, teams, prof_orgs, annual_rosters):
+def forms(
+    summer_leagues, summer_teams, summer_assign, teams, prof_orgs, annual_rosters
+):
     phillip_glasser_new = {
         "first": ["Phillip"],
         "last": ["Glasser"],
@@ -71,8 +73,12 @@ def forms(summer_leagues, summer_teams, summer_assign, teams, prof_orgs, annual_
         "home_city": ["Cincinnati"],
         "home_state": ["OH"],
         "home_country": ["USA"],
-        "headshot": ["https://iubase.com/wp-content/uploads/2023/03/Taylor-still_00001-2.jpg"],
-        "action_shot": ["https://live.staticflickr.com/65535/54132418776_e7cc1bcd11_k.jpg"],
+        "headshot": [
+            "https://iubase.com/wp-content/uploads/2023/03/Taylor-still_00001-2.jpg"
+        ],
+        "action_shot": [
+            "https://live.staticflickr.com/65535/54132418776_e7cc1bcd11_k.jpg"
+        ],
         "birthdate": [],
         "bats": ["Left"],
         "throws": ["Left"],
@@ -82,19 +88,23 @@ def forms(summer_leagues, summer_teams, summer_assign, teams, prof_orgs, annual_
     }
     dt_foy = {
         "name": ["Freshman of the Year"],
-        "award_date": [date(this_year-1, 5, 23)],
+        "award_date": [date(this_year - 1, 5, 23)],
         "award_org": ["B1G"],
-        "description": [ "devindude "],
-        "citation": ["https://iuhoosiers.com/news/2023/5/23/baseball-b1g-honors-for-taylor-and-co"],
+        "description": ["devindude "],
+        "citation": [
+            "https://iuhoosiers.com/news/2023/5/23/baseball-b1g-honors-for-taylor-and-co"
+        ],
         "annual_roster": [annual_rosters.dt_fresh.pk],
         "summer_assign": [],
     }
     dt_roy = {
         "name": ["Rookie of the Year"],
-        "award_date": [date(this_year-1, 7, 23)],
+        "award_date": [date(this_year - 1, 7, 23)],
         "award_org": ["Northwoods League"],
-        "description": [ "devinrookie" ],
-        "citation": ["https://www.idsnews.com/article/2023/08/indiana-baseball-devin-taylor-necbl-rookie-of-the-year-tyler-cerny-appalachian-league"],
+        "description": ["devinrookie"],
+        "citation": [
+            "https://www.idsnews.com/article/2023/08/indiana-baseball-devin-taylor-necbl-rookie-of-the-year-tyler-cerny-appalachian-league"
+        ],
         "summer_assign": [summer_assign.dt_kg_ly.pk],
         "annual_roster": [],
     }
@@ -111,6 +121,3 @@ def forms(summer_leagues, summer_teams, summer_assign, teams, prof_orgs, annual_
         dt_foy=dt_foy,
         dt_roy=dt_roy,
     )
-
-
-

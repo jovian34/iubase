@@ -11,18 +11,18 @@ BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
 
 
 def get_version():
-    file_path = BASE_DIR / "pyproject.toml"    
+    file_path = BASE_DIR / "pyproject.toml"
     try:
         with file_path.open("r", encoding="utf-8") as file:
             for line in file:
                 if line.strip().startswith("version ="):
-                    return line.split("=")[1].strip().strip('"')                    
-        return "Version not found"    
+                    return line.split("=")[1].strip().strip('"')
+        return "Version not found"
     except FileNotFoundError:
         return "pyproject.toml not found"
     except Exception as e:
         return f"Error reading pyproject.toml: {e}"
-    
+
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
@@ -97,7 +97,7 @@ DATABASES = {
 
 log_level = "WARNING"
 if DEBUG:
-    log_level = "DEBUG"    
+    log_level = "DEBUG"
 
 LOGGING = {
     "version": 1,
@@ -116,7 +116,7 @@ LOGGING = {
         "file": {
             "level": log_level,
             "class": "logging.FileHandler",
-            "filename": f"{BASE_DIR}/logs/{today.year}_{today.strftime("%m")}_logging.log",
+            "filename": f"{BASE_DIR}/logs/{today.year}_{today.strftime('%m')}_logging.log",
             "formatter": "verbose",
         },
     },
@@ -181,5 +181,4 @@ if bool(int(os.environ.get("DEVELOP"))):
 
 project_version = get_version()
 os.environ.setdefault("PROJECT_VERSION", project_version)
-print(f"Project version: {os.environ.get("PROJECT_VERSION")}")
-
+print(f"Project version: {os.environ.get('PROJECT_VERSION')}")

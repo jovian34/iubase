@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.db import models
 from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
 
 

@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.db.models.functions import Lower
-from datetime import date, timedelta
 from player_tracking.models import Player, MLBDraftDate
 
 

@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.db.models.functions import Lower
 from django.db.models import Q
 
 from player_tracking.models import Player, Transaction

@@ -1,8 +1,6 @@
-from django.shortcuts import render, redirect
-from django.db.models.functions import Lower
+from django.shortcuts import render
 from django import http
 
-from datetime import date
 
 from player_tracking.models import (
     Player,

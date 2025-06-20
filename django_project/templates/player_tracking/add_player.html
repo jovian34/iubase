@@ -6,15 +6,17 @@
 
 
 {% block content %}
-<div class="column-3"></div>
-<div class="column-6">
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
 
-    <form action="{% url "add_player" %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit" value="Submit">Add Player</button>
-    </form>
+        <form action="{% url "add_player" %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" value="Submit">Add Player</button>
+        </form>
 
 
+    </div>
 </div>
 {% endblock %}

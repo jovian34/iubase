@@ -1,7 +1,6 @@
 from django import forms
-from django.db import models
 
-from live_game_blog.models import Scoreboard, BlogEntry, Game, Team
+from live_game_blog.models import Team
 from live_game_blog.choices import GAME_STATUS, INNING_PART_CHOICES, OUTS_CHOICES
 
 

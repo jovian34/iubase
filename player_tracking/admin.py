@@ -53,7 +53,7 @@ class SummerLeagueAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.ProfOrg)
-class SummerTeamAdmin(admin.ModelAdmin):
+class ProfOrgAdmin(admin.ModelAdmin):
     model = models.ProfOrg
     list_display = (
         "city",

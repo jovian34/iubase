@@ -1,12 +1,12 @@
 import pytest
 import os
 
-from ..models import CustomUser
+from accounts import models as acct_models
 
 
 @pytest.fixture()
 def user_1(db):
-    user = CustomUser.objects.create_user("user_one")
+    user = acct_models.CustomUser.objects.create_user("user_one")
     return user
 
 

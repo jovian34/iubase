@@ -54,7 +54,7 @@
           <p>Copyright &#169;{% this_year %} <a href="{% url 'index' %}">iubase.com</a></p>
             <hr>
             {% if user.is_authenticated %}
-            <p>Welcome, {{ user.first_name }}!</p>
+            <p>Welcome, {{ user.email }}!</p>
             {% block logout_footer %}<p><a href="{% url 'account_logout' %}">logout</a></p>{% endblock %}
             {% else %}
             <p><a href="{% url 'account_login' %}">login</a> or <a href="{% url 'account_signup' %}">sign-up</a> </p>

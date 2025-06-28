@@ -4,7 +4,7 @@ from datetime import datetime
 
 from index.tests.fixtures import agents
 from index import models as index_models
-from accounts.tests.fixtures import logged_user_schwarbs
+from accounts.tests.fixtures import logged_user_schwarbs, superuser_houston
 
 
 @pytest.mark.django_db
@@ -15,7 +15,7 @@ def test_index_renders(client):
 
 
 @pytest.mark.django_db
-def test_last_month_is_deleted(client, agents, logged_user_schwarbs):
+def test_last_month_is_deleted(client, agents, superuser_houston):
     traffic = index_models.TrafficCounter.objects.all()
     initial_count = len(traffic)
     response = client.get(urls.reverse("last_months_traffic"))
@@ -27,6 +27,17 @@ def test_last_month_is_deleted(client, agents, logged_user_schwarbs):
 
 @pytest.mark.django_db
 def test_last_month_is_not_deleted_user_not_logged_in(client, agents):
+    traffic = index_models.TrafficCounter.objects.all()
+    initial_count = len(traffic)
+    response = client.get(urls.reverse("last_months_traffic"))
+    assert response.status_code == 302
+    traffic = index_models.TrafficCounter.objects.all()
+    after_count = len(traffic)
+    assert initial_count == after_count
+
+
+@pytest.mark.django_db
+def test_last_month_is_not_deleted_standard_user_logged_in(client, agents, logged_user_schwarbs):
     traffic = index_models.TrafficCounter.objects.all()
     initial_count = len(traffic)
     response = client.get(urls.reverse("last_months_traffic"))
@@ -61,7 +72,7 @@ def test_index_hit_adds_no_traffic_for_logged_in_user(
 
 
 @pytest.mark.django_db
-def test_current_days_traffic_renders(client, agents, logged_user_schwarbs):
+def test_current_days_traffic_renders(client, agents, superuser_houston):
     day = datetime.today().day
     response = client.get(urls.reverse("one_days_traffic", args=[day]))
     assert response.status_code == 200
@@ -72,7 +83,20 @@ def test_current_days_traffic_renders(client, agents, logged_user_schwarbs):
 
 
 @pytest.mark.django_db
-def test_current_months_traffic_renders(client, agents, logged_user_schwarbs):
+def test_current_days_traffic_redirects_without_perms(client, agents, logged_user_schwarbs):
+    day = datetime.today().day
+    response = client.get(urls.reverse("one_days_traffic", args=[day]))
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_current_months_traffic_redirects_without_perms(client, agents, logged_user_schwarbs):
+    response = client.get(urls.reverse("current_months_traffic"))
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_current_months_traffic_renders(client, agents, superuser_houston):
     response = client.get(urls.reverse("current_months_traffic"))
     assert response.status_code == 200
     assert "Traffic for" in str(response.content)

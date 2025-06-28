@@ -1,14 +1,15 @@
 from django import shortcuts, urls
 from django.contrib.auth import decorators as auth
-
+from django.contrib.auth import models as auth_models
 from accounts import models as acc_models
 from live_game_blog import forms as lgb_forms
 from live_game_blog import models as lgb_models
 
 
-@auth.login_required
 def view(request, game_pk):
-    if request.method == "POST":
+    if not request.user.has_perm("live_game_blog.add_blogentry"):
+        return shortcuts.render(request, "403.html")
+    elif request.method == "POST":
         return process_form_validate_and_save_new_blog(request, game_pk)
     else:
         return render_clean_add_blog_entry_form(request, game_pk)

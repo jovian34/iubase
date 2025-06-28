@@ -14,7 +14,7 @@ from player_tracking.tests.fixtures.summer import (
 )
 from player_tracking.tests.fixtures.accolades import accolades
 from live_game_blog.tests.fixtures.teams import teams
-from accounts.tests.fixtures import logged_user_schwarbs
+from accounts.tests.fixtures import logged_user_schwarbs, superuser_houston
 
 
 this_year = date.today().year
@@ -133,7 +133,7 @@ def test_single_player_page_renders_accolade_org_and_name(
 
 @pytest.mark.django_db
 def test_single_player_page_renders_add_accolade_button(
-    client, players, annual_rosters, logged_user_schwarbs
+    client, players, annual_rosters, superuser_houston,
 ):
     response = client.get(
         reverse(

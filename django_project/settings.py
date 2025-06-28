@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "allauth",
     "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
 ]
 
 MIDDLEWARE = [
@@ -158,9 +160,8 @@ ACCOUNT_LOGOUT_REDIRECT = "index"
 
 ACCOUNT_SESSION_REMEMBER = True
 
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGIN_METHODS= {'email'}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
@@ -174,6 +175,29 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_HOST_USER")
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "EMAIL_AUTHENTICATION": True,
+        "APPS": [
+            {
+                "client_id": os.environ.get("GOOGLE_CLIENT_ID"),
+                "secret": os.environ.get("GOOGLE_CLIENT_SECRET"),
+                "key": "",
+                "settings": {
+                    # You can fine tune these settings per app:
+                    "scope": [
+                        "profile",
+                        "email",
+                    ],
+                    "auth_params": {
+                        "access_type": "online",
+                    },
+                },
+            },
+        ],
+    }
+}
 
 
 LANGUAGE_CODE = "en-us"

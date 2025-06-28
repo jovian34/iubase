@@ -57,7 +57,8 @@
             <p>Welcome, {{ user.email }}!</p>
             {% block logout_footer %}<p><a href="{% url 'account_logout' %}">logout</a></p>{% endblock %}
             {% else %}
-            <p><a href="{% url 'account_login' %}">login</a> or <a href="{% url 'account_signup' %}">sign-up</a> </p>
+            <p><a href="{% url 'account_login' %}">Legacy Login*</a> or <a href="/accounts/google/login/">Google Login</a></p>
+            <p>*Legacy login will not be supported for new users going forward</p>
             {% endif %}
           
       </footer>

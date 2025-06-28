@@ -44,6 +44,22 @@ def logged_user_schwarbs(client):
 
 
 @pytest.fixture
+def superuser_houston(client):
+    houston = CustomUser.objects.create_user(
+        username="jhouston",
+        first_name="Jeremy",
+        last_name="Houston",
+        password="dbwrwbrj7499677693skjhkasH72!",
+        is_superuser=True,
+    )
+    client.login(
+        username="jhouston",
+        password="dbwrwbrj7499677693skjhkasH72!",
+    )
+    return houston
+
+
+@pytest.fixture
 def user_forms(client):
     new_user = {
         "email": "newuser@email.com",

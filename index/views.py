@@ -11,6 +11,7 @@ timezone = pytz.timezone("US/Eastern")
 
 def index(request):
     save_traffic_data(request, page="Main Index")
+    """
     mail.send_mail(
         "Test message",
         "Testing the message within the iubase app.",
@@ -18,6 +19,7 @@ def index(request):
         ["carl@jovian34.com", "jovian34@yahoo.com", "carljame@iu.edu"],
         fail_silently=False,
     )
+    """
     return shortcuts.render(request, "index/index.html")
 
 

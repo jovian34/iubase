@@ -5,7 +5,7 @@ from live_game_blog import forms as lgb_forms
 from live_game_blog import models as lgb_models
 
 
-@auth.login_required
+@auth.permission_required("live_game_blog.add_team")
 def view(request):
     if request.method == "POST":
         return validate_posted_add_team_form_save_then_redirect(request)

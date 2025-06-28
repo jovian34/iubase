@@ -21,3 +21,9 @@ def test_new_user_created(client, user_forms):
     )
     assert response.status_code == 200
     assert f"{user_forms.new_user['email']}" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_allauth_google_login_page_renders(client):
+    response = client.get('/accounts/google/login/', follow=True)
+    assert response.status_code == 200

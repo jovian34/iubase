@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load allauth %}
+{% block head_title %}
+    {% trans "Login Cancelled" %}
+{% endblock head_title %}
+
+{% block content %}
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+    {% element h1 %}
+        {% trans "Login Cancelled" %}
+    {% endelement %}
+    {% url 'account_login' as login_url %}
+    {% element p %}
+        {% blocktrans %}You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href="{{login_url}}">sign in</a>.{% endblocktrans %}
+    {% endelement %}
+    </div>
+</div>
+{% endblock content %}

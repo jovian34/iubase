@@ -54,11 +54,10 @@
           <p>Copyright &#169;{% this_year %} <a href="{% url 'index' %}">iubase.com</a></p>
             <hr>
             {% if user.is_authenticated %}
-            <p>Welcome, {{ user.email }}!</p>
+            <p>Welcome, {{ user.first_name }}!</p>
             {% block logout_footer %}<p><a href="{% url 'account_logout' %}">logout</a></p>{% endblock %}
             {% else %}
-            <p><a href="{% url 'account_login' %}">Legacy Login*</a> or <a href="/accounts/google/login/">Google Login</a></p>
-            <p>*Legacy login will not be supported for new users going forward</p>
+            {% block google_footer %}<h2><a href="/accounts/google/login/">Google Login</a></h2>{% endblock google_footer %}
             {% endif %}
           
       </footer>

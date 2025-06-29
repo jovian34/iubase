@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse
+from django.contrib.auth import decorators as auth
+from django import http, shortcuts, urls
 
 from player_tracking.forms import TransactionForm
 from player_tracking.views.set_player_properties import set_player_props_get_errors
@@ -9,14 +8,16 @@ from player_tracking.models import Player, Transaction
 from datetime import date
 
 
-@login_required
+@auth.login_required
 def view(request, player_id):
-    if request.method == "POST":
+    if not request.user.has_perm("player_tracking.add_transaction"):
+        return http.HttpResponseForbidden()
+    elif request.method == "POST":
         form = TransactionForm(request.POST)
         if form.is_valid():
             save_transaction_form(player_id, form)
             set_player_props_get_errors()
-        return redirect(reverse("single_player_page", args=[player_id]))
+        return shortcuts.redirect(urls.reverse("single_player_page", args=[player_id]))
     else:
         form = TransactionForm(
             initial={
@@ -27,7 +28,7 @@ def view(request, player_id):
             "form": form,
             "player_id": player_id,
         }
-        return render(
+        return shortcuts.render(
             request,
             "player_tracking/partials/add_transaction.html",
             context,

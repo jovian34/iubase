@@ -1,5 +1,4 @@
-from django import shortcuts
-from django import urls
+from django import http, shortcuts, urls
 from django.contrib.auth import decorators as auth
 
 from player_tracking import forms
@@ -8,7 +7,9 @@ from player_tracking import models as pt_models
 
 @auth.login_required
 def view(request, player_id):
-    if request.method == "POST":
+    if not request.user.has_perm("player_tracking.add_accolade"):
+        return http.HttpResponseForbidden()
+    elif request.method == "POST":
         return validate_accolade_form_post_save_then_redirect(request, player_id)
     else:
         context = {

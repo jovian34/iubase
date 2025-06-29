@@ -9,7 +9,7 @@
 <div class="column-12 clear-left">
     <div class="column-3"></div>
     <div class="column-6">
-        {% if user.is_authenticated %}
+        {% if perms.player_tracking.add_player %}
         <a href="{% url "add_player" %}"><button>Add Player</button></a>
         <a href="{% url "set_player_properties" %}"><button>Calculate last eliigible spring</button></a>
         {% endif %}

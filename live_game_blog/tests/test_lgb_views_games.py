@@ -56,7 +56,7 @@ def test_games_list_page_renders_add_game_and_team_if_staff(
 
 
 @pytest.mark.django_db
-def test_games_list_page_no_add_game_if_logged_not_staff(
+def test_games_list_page_no_add_game_if_user_has_no_perms(
     client, logged_user_schwarbs, teams, games, scoreboards
 ):
     response = client.get(reverse("games"))

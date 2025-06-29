@@ -24,15 +24,15 @@ this_year = date.today().year
 
 
 @pytest.mark.django_db
-def test_add_player_form_renders_form_prompt_reverse_url(client, logged_user_schwarbs):
-    response = client.get(reverse("add_player"))
+def test_add_player_form_renders_form_prompt_reverse_url(admin_client):
+    response = admin_client.get(reverse("add_player"))
     assert response.status_code == 200
     assert "First Name" in str(response.content)
 
 
 @pytest.mark.django_db
-def test_add_player_form_renders_form_prompt_manual_url(client, logged_user_schwarbs):
-    response = client.get("/player_tracking/add_player/")
+def test_add_player_form_renders_form_prompt_manual_url(admin_client):
+    response = admin_client.get("/player_tracking/add_player/")
     assert response.status_code == 200
     assert "Portrait headshot URL" in str(response.content)
 
@@ -44,6 +44,12 @@ def test_add_player_get_redirects_not_logged_in(client):
 
 
 @pytest.mark.django_db
+def test_add_player_get_forbidden_without_perms(client, logged_user_schwarbs):
+    response = client.get(reverse("add_player"))
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
 def test_add_player_get_ask_for_password_not_logged_in(client):
     response = client.get(reverse("add_player"), follow=True)
     assert response.status_code == 200
@@ -51,8 +57,18 @@ def test_add_player_get_ask_for_password_not_logged_in(client):
 
 
 @pytest.mark.django_db
-def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs, forms):
+def test_add_player_post_form_forbidden_without_perms(client, players, logged_user_schwarbs, forms):
     response = client.post(
+        reverse("add_player"),
+        forms.phillip_glasser_new,
+        follow=True,
+    )
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_add_player_post_form_adds_new_player(admin_client, players, forms):
+    response = admin_client.post(
         reverse("add_player"),
         forms.phillip_glasser_new,
         follow=True,
@@ -66,9 +82,9 @@ def test_add_player_form_adds_new_player(client, players, logged_user_schwarbs, 
 
 @pytest.mark.django_db
 def test_add_player_form_adds_new_transaction(
-    client, players, logged_user_schwarbs, forms
+    admin_client, players, forms
 ):
-    response = client.post(
+    response = admin_client.post(
         reverse("add_player"),
         forms.phillip_glasser_new,
         follow=True,

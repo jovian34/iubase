@@ -19,10 +19,22 @@ this_year = date.today().year
 
 
 @pytest.mark.django_db
-def test_add_transaction_partial_post_adds_transaction(
+def test_add_transaction_partial_post_forbidden_without_perms(
     client, players, teams, annual_rosters, logged_user_schwarbs, prof_orgs, forms
 ):
     response = client.post(
+        reverse("add_transaction", args=[players.brayden_risedorph.pk]),
+        forms.risedorph_drafted,
+        follow=True,
+    )
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_add_transaction_partial_post_adds_transaction(
+    admin_client, players, teams, annual_rosters, prof_orgs, forms
+):
+    response = admin_client.post(
         reverse("add_transaction", args=[players.brayden_risedorph.pk]),
         forms.risedorph_drafted,
         follow=True,
@@ -31,7 +43,7 @@ def test_add_transaction_partial_post_adds_transaction(
     assert "Drafted" in str(response.content)
     assert "July 17" in str(response.content)
     assert 'href="https://www.mlb.com/draft/tracker"'
-    response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
+    response = admin_client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
     assert "Brayden Risedorph" in str(response.content)
     assert "he can get a bonus value of $150,000" in str(response.content)
@@ -40,10 +52,23 @@ def test_add_transaction_partial_post_adds_transaction(
 
 
 @pytest.mark.django_db
-def test_add_transaction_partial_get_renders_form_fields(
+def test_add_transaction_partial_get_forbidden_without_perms(
     client, players, teams, logged_user_schwarbs
 ):
     response = client.get(
+        reverse(
+            "add_transaction",
+            args=[players.nick_mitchell.pk],
+        )
+    )
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_add_transaction_partial_get_renders_form_fields(
+    admin_client, players, teams
+):
+    response = admin_client.get(
         reverse(
             "add_transaction",
             args=[players.nick_mitchell.pk],

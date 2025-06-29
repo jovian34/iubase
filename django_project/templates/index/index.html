@@ -14,13 +14,13 @@
             <li><h2><a href="{% url "games" %}">Live Game Blogs</a></h2></li>
             <li><h2><a href="{% url "pt_index" %}">Player Tracking</a></h2></li>
 
-            {% if user.is_authenticated %}
+            {% if perms.index.view_trafficcounter %}
             <li><h2><a href="{% url "current_months_traffic" %}">Current Month's Traffic</a></h2></li>
             {% endif %}
 
         </ul>
 
-            {% if user.is_authenticated %}
+            {% if perms.index.delete_trafficcounter %}
             <br>
             <hr>
             <button hx-delete="{% url "last_months_traffic" %}" 

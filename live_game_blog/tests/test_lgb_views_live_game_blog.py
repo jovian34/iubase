@@ -181,3 +181,30 @@ def test_lgb_shows_weekday(client, games, scoreboards, entries):
     response = client.get(reverse("live_game_blog", args=[games.iu_duke_23_fall.pk]))
     assert response.status_code == 200
     assert "Wed, Oct. 4, 2023," in str(response.content)
+
+
+@pytest.mark.django_db
+def test_lgb_shows_adds_and_edits_with_perms(admin_client, games, scoreboards, entries):
+    response = admin_client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
+    assert response.status_code == 200
+    assert "Add Blog Entry Only" in str(response.content)
+    assert "Add Blog Entry plus Scoreboard" in str(response.content)
+    assert "Edit Entry" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_lgb_shows_no_adds_or_edits_without_perms(client, games, logged_user_schwarbs, scoreboards, entries):
+    response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
+    assert response.status_code == 200
+    assert "Add Blog Entry Only" not in str(response.content)
+    assert "Add Blog Entry plus Scoreboard" not in str(response.content)
+    assert "Edit Entry" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_lgb_shows_no_adds_or_edits_not_logged_in(client, games, scoreboards, entries):
+    response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
+    assert response.status_code == 200
+    assert "Add Blog Entry Only" not in str(response.content)
+    assert "Add Blog Entry plus Scoreboard" not in str(response.content)
+    assert "Edit Entry" not in str(response.content)

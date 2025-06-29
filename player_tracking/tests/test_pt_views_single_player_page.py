@@ -128,11 +128,30 @@ def test_single_player_page_renders_accolade_org_and_name(
     )
     assert response.status_code == 200
     assert "Devin Taylor" in str(response.content)
-    assert "B1G First Team All-Conference Outfielder" in str(response.content)
 
 
 @pytest.mark.django_db
-def test_single_player_page_renders_add_accolade_button(
+def test_single_player_page_omits_add_and_edit_buttons_not_logged_in(
+    client, players, annual_rosters
+):
+    response = client.get(
+        reverse(
+            "single_player_page",
+            args=[players.devin_taylor.pk],
+        )
+    )
+    assert response.status_code == 200
+    assert "Devin Taylor" in str(response.content)
+    assert "add accolade</button>" not in str(response.content)
+    assert "add summer assignment</button>" not in str(response.content)
+    assert "add transaction</button>" not in str(response.content)
+    assert "add roster year</button>"not  in str(response.content)
+    assert "edit player info</button>" not in str(response.content)
+    assert "B1G First Team All-Conference Outfielder" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_single_player_page_omits_add_and_edit_buttons_without_perms(
     client, players, annual_rosters, logged_user_schwarbs
 ):
     response = client.get(
@@ -143,12 +162,36 @@ def test_single_player_page_renders_add_accolade_button(
     )
     assert response.status_code == 200
     assert "Devin Taylor" in str(response.content)
+    assert "add accolade</button>" not in str(response.content)
+    assert "add summer assignment</button>" not in str(response.content)
+    assert "add transaction</button>" not in str(response.content)
+    assert "add roster year</button>"not  in str(response.content)
+    assert "edit player info</button>" not in str(response.content)
+    assert "B1G First Team All-Conference Outfielder" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_single_player_page_renders_add_and_edit_buttons_with_perms(
+    admin_client, players, annual_rosters,
+):
+    response = admin_client.get(
+        reverse(
+            "single_player_page",
+            args=[players.devin_taylor.pk],
+        )
+    )
+    assert response.status_code == 200
+    assert "Devin Taylor" in str(response.content)
     assert "add accolade</button>" in str(response.content)
+    assert "add summer assignment</button>" in str(response.content)
+    assert "add transaction</button>" in str(response.content)
+    assert "add roster year</button>" in str(response.content)
+    assert "edit player info</button>" in str(response.content)
 
 
 @pytest.mark.django_db
 def test_single_player_page_renders_accolades_in_reverse_date_order(
-    client, players, annual_rosters, logged_user_schwarbs, accolades
+    client, players, annual_rosters, accolades
 ):
     response = client.get(
         reverse(
@@ -169,7 +212,6 @@ def test_single_player_page_renders_summer_accolades_after_summer_header(
     client,
     players,
     annual_rosters,
-    logged_user_schwarbs,
     accolades,
     summer_assign,
     summer_leagues,

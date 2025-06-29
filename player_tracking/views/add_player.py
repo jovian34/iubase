@@ -1,5 +1,5 @@
-from django import shortcuts, urls
-from django.contrib.auth import decorators as auth_dec
+from django import http, shortcuts, urls
+from django.contrib.auth import decorators as auth
 
 from datetime import date
 
@@ -8,9 +8,11 @@ from player_tracking.forms import NewPlayerForm
 from player_tracking.views.set_player_properties import set_player_props_get_errors
 
 
-@auth_dec.login_required
+@auth.login_required
 def view(request):
-    if request.method == "POST":
+    if not request.user.has_perm("player_tracking.add_player"):
+        return http.HttpResponseForbidden()
+    elif request.method == "POST":
         return validate_post_new_player_form_save_then_redirect(request)
     else:
         context = {

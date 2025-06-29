@@ -7,7 +7,7 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
+{% if perms.player_tracking.add_player %}
 <div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6">    

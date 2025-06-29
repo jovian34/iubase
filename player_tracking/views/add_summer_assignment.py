@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse
+from django.contrib.auth import decorators as auth
+from django import http, shortcuts, urls
 
 from datetime import date
 
@@ -8,13 +7,15 @@ from player_tracking.forms import SummerAssignForm
 from player_tracking.models import Player, SummerAssign
 
 
-@login_required
+@auth.login_required
 def view(request, player_id):
-    if request.method == "POST":
+    if not request.user.has_perm("player_tracking.add_summerassign"):
+        return http.HttpResponseForbidden()
+    elif request.method == "POST":
         form = SummerAssignForm(request.POST)
         if form.is_valid():
             save_summer_assign(player_id, form)
-        return redirect(reverse("single_player_page", args=[player_id]))
+        return shortcuts.redirect(urls.reverse("single_player_page", args=[player_id]))
     else:
         form = SummerAssignForm(
             initial={
@@ -25,7 +26,7 @@ def view(request, player_id):
             "player_id": player_id,
             "form": form,
         }
-        return render(
+        return shortcuts.render(
             request,
             "player_tracking/partials/add_summer_assignment.html",
             context,

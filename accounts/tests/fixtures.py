@@ -1,4 +1,5 @@
 import pytest
+from collections import namedtuple
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from accounts.models import CustomUser
@@ -40,3 +41,32 @@ def logged_user_schwarbs(client):
         password="Hdbwrwbrj7239293skjhkasH72!",
     )
     return schwarber
+
+
+@pytest.fixture
+def superuser_houston(client):
+    houston = CustomUser.objects.create_user(
+        username="jhouston",
+        first_name="Jeremy",
+        last_name="Houston",
+        password="dbwrwbrj7499677693skjhkasH72!",
+        is_superuser=True,
+    )
+    client.login(
+        username="jhouston",
+        password="dbwrwbrj7499677693skjhkasH72!",
+    )
+    return houston
+
+
+@pytest.fixture
+def user_forms(client):
+    new_user = {
+        "email": "newuser@email.com",
+        "password": "Hdbwrwbrj72yu39293skjhkasH72"
+    }
+    FormObj = namedtuple(
+        "FormObj",
+        "new_user"
+    )
+    return FormObj(new_user=new_user)

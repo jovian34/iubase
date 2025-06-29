@@ -64,6 +64,11 @@ p, button {
 	font-family: var(--font-text);
 }
 
+li {
+	font-size:24px;
+	font-family: var(--font-text);
+}
+
 button {
 	border: 5pt;
 	border-color: var(--crimson);

@@ -54,15 +54,10 @@
           <p>Copyright &#169;{% this_year %} <a href="{% url 'index' %}">iubase.com</a></p>
             <hr>
             {% if user.is_authenticated %}
-            <p>Welcome, {{ user.first_name }}.
-              You can <a href="{% url 'index' %}">add dynamic content</a> 
-              or</p>
-              <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit">Sign Out</button>
-              </form>
+            <p>Welcome, {{ user.first_name }}!</p>
+            {% block logout_footer %}<p><a href="{% url 'account_logout' %}">logout</a></p>{% endblock %}
             {% else %}
-            <p><a href="{% url 'login' %}">Staff login</a></p>
+            {% block google_footer %}<h2><a href="/accounts/google/login/">Google Login</a></h2>{% endblock google_footer %}
             {% endif %}
           
       </footer>
@@ -70,8 +65,7 @@
 
 </div>
 
-<script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js" integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 from django import shortcuts
-from django.contrib.auth import decorators
+from django.core import mail
+from django.contrib.auth import decorators as auth
 from datetime import datetime
 import pytz
 
@@ -32,7 +33,7 @@ def get_client_ip(request):
     return ip
 
 
-@decorators.login_required
+@auth.permission_required("index.delete_trafficcounter")
 def last_months_traffic(request):
     first_of_month = get_first_of_current_month()
     traf = index_models.TrafficCounter.objects.filter(timestamp__lt=first_of_month)
@@ -40,7 +41,7 @@ def last_months_traffic(request):
     return shortcuts.redirect(index)
 
 
-@decorators.login_required
+@auth.permission_required("index.view_trafficcounter")
 def current_months_traffic(request):
     today = datetime.today()
     prior_day = today.day - 1
@@ -53,7 +54,7 @@ def current_months_traffic(request):
     return shortcuts.render(request, "index/one_months_traffic.html", context=context)
 
 
-@decorators.login_required
+@auth.permission_required("index.view_trafficcounter")
 def one_days_traffic(request, day):
     end, start = get_start_and_end_of_day(day)
     traf = index_models.TrafficCounter.objects.filter(

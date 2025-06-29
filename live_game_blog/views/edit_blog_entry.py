@@ -1,5 +1,5 @@
 from django.contrib.auth import decorators as auth
-from django import urls, shortcuts
+from django import http, urls, shortcuts
 
 from live_game_blog import models as lgb_models
 from live_game_blog import forms as lgb_forms
@@ -7,6 +7,8 @@ from live_game_blog import forms as lgb_forms
 
 @auth.login_required
 def view(request, entry_pk):
+    if not request.user.has_perm("live_game_blog.change_gameblogentry"):
+        return http.HttpResponseForbidden()
     edit_entry = lgb_models.BlogEntry.objects.get(pk=entry_pk)
     if edit_entry.include_scoreboard:
         return edit_blog_plus_scoreboard_entry(request, edit_entry)

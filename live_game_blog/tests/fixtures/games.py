@@ -10,6 +10,7 @@ from accounts.tests.fixtures import (
     user_not_logged_in,
     user_iubase17,
     logged_user_schwarbs,
+    superuser_houston,
 )
 
 

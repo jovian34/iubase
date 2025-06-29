@@ -136,7 +136,7 @@
 
                 {% endif %}         
 
-                {% if user.is_authenticated %}
+                {% if perms.live_game_blog.edit_blogentry %}
 
                 <button hx-get="{% url "edit_blog_entry" entry.pk %}"
                 hx-target="#entry-{{ entry.pk }}">Edit Entry</button>

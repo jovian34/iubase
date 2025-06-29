@@ -17,7 +17,7 @@
 <div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6">
-        {% if user.is_authenticated %}
+        {% if perms.player_tracking.edit_player %}
         <button hx-get="{% url "edit_player" player.pk %}" hx-target="#add_roster_or_transaction">edit player info</button>
         <button hx-get="{% url "add_roster_year" player.pk %}" hx-target="#add_roster_or_transaction">add roster year</button>
         {% endif %}
@@ -45,7 +45,7 @@
 
         <hr>
         <h3>Transactions:</h3>
-        {% if user.is_authenticated %}
+        {% if perms.player_tracking.add_transaction %}
         <button hx-get="{% url "add_transaction" player.pk %}" hx-target="#add_roster_or_transaction">add transaction</button>
         {% endif %}
         
@@ -62,7 +62,7 @@
         </ul>
 
         <h3>Summer Ball:</h3>
-        {% if user.is_authenticated %}
+        {% if perms.player_tracking.add_summerassign %}
         <button hx-get="{% url "add_summer_assignment" player.pk %}" hx-target="#add_roster_or_transaction">add summer assignment</button>
     {% endif %} 
     
@@ -88,7 +88,7 @@
 
     <hr>
     <h3>Other Accolades:</h3>
-    {% if user.is_authenticated %}
+    {% if perms.player_tracking.add_accolade %}
     <button hx-get="{% url "add_accolade" player.pk %}" hx-target="#add_roster_or_transaction">add accolade</button>
     {% endif %}
     

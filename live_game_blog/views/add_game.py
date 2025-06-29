@@ -1,4 +1,4 @@
-from django import shortcuts, urls
+from django import http, shortcuts, urls
 from django.contrib.auth import decorators as auth
 
 from live_game_blog import forms as lgb_forms
@@ -7,7 +7,9 @@ from live_game_blog import models as lgb_models
 
 @auth.login_required
 def view(request):
-    if request.method == "POST":
+    if not request.user.has_perm("live_game_blog.add_game"):
+        return http.HttpResponseForbidden()
+    elif request.method == "POST":
         return validate_and_save_posted_game_form_then_redirect(request)
     else:
         return render_add_game_form_in_template(request)

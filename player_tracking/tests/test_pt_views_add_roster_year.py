@@ -20,10 +20,23 @@ this_year = date.today().year
 
 
 @pytest.mark.django_db
-def test_add_roster_year_partial_get_renders_form_fields(
+def test_add_roster_year_partial_get_forbidden_without_perms(
     client, players, teams, logged_user_schwarbs
 ):
     response = client.get(
+        reverse(
+            "add_roster_year",
+            args=[players.nick_mitchell.pk],
+        )
+    )
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_add_roster_year_partial_get_renders_form_fields(
+    admin_client, players, teams
+):
+    response = admin_client.get(
         reverse(
             "add_roster_year",
             args=[players.nick_mitchell.pk],
@@ -37,10 +50,10 @@ def test_add_roster_year_partial_get_renders_form_fields(
 
 @pytest.mark.django_db
 def test_add_roster_year_partial_get_renders_form_fields_manual_url(
-    client, players, teams, logged_user_schwarbs
+    admin_client, players, teams
 ):
     url = f"/player_tracking/add_roster_year/{players.nick_mitchell.pk}/"
-    response = client.get(url)
+    response = admin_client.get(url)
     assert response.status_code == 200
     assert "Spring Year" in str(response.content)
     assert "Indiana" in str(response.content)
@@ -59,10 +72,22 @@ def test_add_roster_year_partial_get_redirects_not_logged_in(client, players, te
 
 
 @pytest.mark.django_db
-def test_add_roster_year_partial_post_adds_roster_year(
+def test_add_roster_year_partial_post_forbidden_without_perms(
     client, players, teams, annual_rosters, logged_user_schwarbs, forms
 ):
     response = client.post(
+        reverse("add_roster_year", args=[players.nick_mitchell.pk]),
+        forms.nick_mitchell_two_years_past,
+        follow=True,
+    )
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_add_roster_year_partial_post_adds_roster_year(
+    admin_client, players, teams, annual_rosters, forms
+):
+    response = admin_client.post(
         reverse("add_roster_year", args=[players.nick_mitchell.pk]),
         forms.nick_mitchell_two_years_past,
         follow=True,

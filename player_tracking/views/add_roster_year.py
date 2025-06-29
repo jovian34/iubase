@@ -1,6 +1,6 @@
 from django import shortcuts
 from django.contrib.auth import decorators as auth
-from django import urls
+from django import http, urls
 
 import datetime
 
@@ -12,7 +12,9 @@ from live_game_blog import models as lgb_models
 
 @auth.login_required
 def view(request, player_id):
-    if request.method == "POST":
+    if not request.user.has_perm("player_tracking.add_annualroster"):
+        return http.HttpResponseForbidden()
+    elif request.method == "POST":
         return validate_post_annual_roster_form_save_then_redirect(request, player_id)
     else:
         context = {

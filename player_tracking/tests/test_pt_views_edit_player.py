@@ -18,23 +18,31 @@ from accounts.tests.fixtures import logged_user_schwarbs, user_not_logged_in
 
 
 @pytest.mark.django_db
-def test_edit_player_renders(
+def test_edit_player_forbidden_without_perms(
     client, logged_user_schwarbs, players, transactions, prof_orgs
 ):
     response = client.get(reverse("edit_player", args=[players.devin_taylor.pk]))
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_edit_player_renders(
+    admin_client, players, transactions, prof_orgs
+):
+    response = admin_client.get(reverse("edit_player", args=[players.devin_taylor.pk]))
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
 def test_edit_player_renders_current_info_in_form(
-    client, logged_user_schwarbs, players, transactions, prof_orgs
+    admin_client, players, transactions, prof_orgs
 ):
-    response = client.get(reverse("edit_player", args=[players.devin_taylor.pk]))
+    response = admin_client.get(reverse("edit_player", args=[players.devin_taylor.pk]))
     assert "Devin" in str(response.content)
 
 
 @pytest.mark.django_db
-def test_edit_player_good_post_redirects_to_player_page(
+def test_edit_player_post_forbidden_without_permission(
     client,
     logged_user_schwarbs,
     players,
@@ -48,21 +56,37 @@ def test_edit_player_good_post_redirects_to_player_page(
         forms.devin_taylor_edited,
         follow=True,
     )
-    assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
+    assert response.status_code == 403
 
 
 @pytest.mark.django_db
-def test_edit_player_good_post_adds_action_shot(
-    client,
-    logged_user_schwarbs,
+def test_edit_player_good_post_redirects_to_player_page(
+    admin_client,
     players,
     transactions,
     prof_orgs,
     forms,
     annual_rosters,
 ):
-    response = client.post(
+    response = admin_client.post(
+        reverse("edit_player", args=[players.devin_taylor.pk]),
+        forms.devin_taylor_edited,
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "Devin Taylor" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_edit_player_good_post_adds_action_shot(
+    admin_client,
+    players,
+    transactions,
+    prof_orgs,
+    forms,
+    annual_rosters,
+):
+    response = admin_client.post(
         reverse("edit_player", args=[players.devin_taylor.pk]),
         forms.devin_taylor_edited,
         follow=True,
@@ -78,7 +102,7 @@ def test_edit_player_good_post_adds_action_shot(
 
 @pytest.mark.django_db
 def test_edit_player_post_redirects_and_makes_no_change_not_logged_in(
-    client, user_not_logged_in, players, transactions, prof_orgs, forms, annual_rosters
+    client, players, transactions, prof_orgs, forms, annual_rosters
 ):
     response = client.post(
         reverse("edit_player", args=[players.devin_taylor.pk]),

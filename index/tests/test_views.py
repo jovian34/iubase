@@ -4,7 +4,7 @@ from datetime import datetime
 
 from index.tests.fixtures import agents
 from index import models as index_models
-from accounts.tests.fixtures import logged_user_schwarbs, superuser_houston
+from accounts.tests.fixtures import logged_user_schwarbs
 
 
 @pytest.mark.django_db
@@ -15,10 +15,10 @@ def test_index_renders(client):
 
 
 @pytest.mark.django_db
-def test_last_month_is_deleted(client, agents, superuser_houston):
+def test_last_month_is_deleted(admin_client, agents):
     traffic = index_models.TrafficCounter.objects.all()
     initial_count = len(traffic)
-    response = client.get(urls.reverse("last_months_traffic"))
+    response = admin_client.get(urls.reverse("last_months_traffic"))
     assert response.status_code == 302
     traffic = index_models.TrafficCounter.objects.all()
     after_count = len(traffic)
@@ -72,9 +72,9 @@ def test_index_hit_adds_no_traffic_for_logged_in_user(
 
 
 @pytest.mark.django_db
-def test_current_days_traffic_renders(client, agents, superuser_houston):
+def test_current_days_traffic_renders(admin_client, agents):
     day = datetime.today().day
-    response = client.get(urls.reverse("one_days_traffic", args=[day]))
+    response = admin_client.get(urls.reverse("one_days_traffic", args=[day]))
     assert response.status_code == 200
     assert "47.128.55.115" in str(response.content)
     assert "AJ Shepard" in str(response.content)
@@ -96,8 +96,8 @@ def test_current_months_traffic_redirects_without_perms(client, agents, logged_u
 
 
 @pytest.mark.django_db
-def test_current_months_traffic_renders(client, agents, superuser_houston):
-    response = client.get(urls.reverse("current_months_traffic"))
+def test_current_months_traffic_renders(admin_client, agents):
+    response = admin_client.get(urls.reverse("current_months_traffic"))
     assert response.status_code == 200
     assert "Traffic for" in str(response.content)
 

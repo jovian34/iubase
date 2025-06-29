@@ -28,10 +28,20 @@ def test_add_summer_assignment_get_redirects_not_logged_in(
 
 
 @pytest.mark.django_db
-def test_add_summer_assignment_get_renders_form(
+def test_add_summer_assignment_get_forbidden_without_perms(
     client, players, summer_leagues, summer_teams, logged_user_schwarbs
 ):
     response = client.get(
+        reverse("add_summer_assignment", args=[str(players.devin_taylor.pk)])
+    )
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_add_summer_assignment_get_renders_form(
+    admin_client, players, summer_leagues, summer_teams
+):
+    response = admin_client.get(
         reverse("add_summer_assignment", args=[str(players.devin_taylor.pk)])
     )
     assert response.status_code == 200
@@ -39,7 +49,7 @@ def test_add_summer_assignment_get_renders_form(
 
 
 @pytest.mark.django_db
-def test_add_summer_assignment_post_adds_assignment(
+def test_add_summer_assignment_post_forbidden_without_perms(
     client,
     players,
     summer_leagues,
@@ -49,6 +59,23 @@ def test_add_summer_assignment_post_adds_assignment(
     annual_rosters,
 ):
     response = client.post(
+        reverse("add_summer_assignment", args=[str(players.brayden_risedorph.pk)]),
+        forms.summer_assignment_new,
+        follow=True,
+    )
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_add_summer_assignment_post_adds_assignment(
+    admin_client,
+    players,
+    summer_leagues,
+    summer_teams,
+    forms,
+    annual_rosters,
+):
+    response = admin_client.post(
         reverse("add_summer_assignment", args=[str(players.brayden_risedorph.pk)]),
         forms.summer_assignment_new,
         follow=True,

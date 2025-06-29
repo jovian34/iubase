@@ -7,7 +7,7 @@ from live_game_blog.tests.fixtures.games import (
     logged_user_schwarbs,
     user_not_logged_in,
     user_iubase17,
-    superuser_houston
+    superuser_houston,
 )
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.blog import entries
@@ -24,8 +24,7 @@ def test_add_blog_entry_plus_scoreboard_form_no_perms_shows_forbidden(
         forms.iu_holds_duke,
         follow=True,
     )
-    assert response.status_code == 200
-    assert "Forbidden Error Recorded" in str(response.content)
+    assert response.status_code == 403
 
 
 @pytest.mark.django_db
@@ -45,9 +44,9 @@ def test_add_blog_entry_plus_scoreboard_form(
 
 @pytest.mark.django_db
 def test_add_blog_entry_plus_scoreboard_markkdown_to_html(
-    client, superuser_houston, games, forms, scoreboards
+    admin_client, games, forms, scoreboards
 ):
-    response = client.post(
+    response = admin_client.post(
         reverse("add_blog_plus_scoreboard", args=[games.iu_duke.pk]),
         forms.iu_slams_duke,
         follow=True,
@@ -59,34 +58,20 @@ def test_add_blog_entry_plus_scoreboard_markkdown_to_html(
 
 @pytest.mark.django_db
 def test_add_blog_entry_plus_scoreboard_form_shows_forbidden_not_logged_in(
-    client, user_not_logged_in, games, forms
+    client, games, forms
 ):
     response = client.post(
         reverse("add_blog_plus_scoreboard", args=[games.iu_duke.pk]),
         forms.iu_holds_duke,
     )
-    assert response.status_code == 200
-    assert "Forbidden Error Recorded" in str(response.content)
-
-
-@pytest.mark.django_db
-def test_add_blog_entry_plus_scoreboard_form_shows_forbidden_not_logged_in(
-    client, user_not_logged_in, games, forms
-):
-    response = client.post(
-        reverse("add_blog_plus_scoreboard", args=[games.iu_duke.pk]),
-        forms.iu_holds_duke,
-        follow=True,
-    )
-    assert response.status_code == 200
-    assert "Forbidden Error Recorded" in str(response.content)
+    assert response.status_code == 403
 
 
 @pytest.mark.django_db
 def test_get_add_blog_plus_scoreboard_end_of_bottom_fills_form_with_top_of_inning(
-    client, superuser_houston, games, scoreboards
+    admin_client, games, scoreboards
 ):
-    response = client.get(
+    response = admin_client.get(
         reverse("add_blog_plus_scoreboard", args=[games.iu_mo_rain.pk]),
     )
     assert response.status_code == 200
@@ -95,9 +80,9 @@ def test_get_add_blog_plus_scoreboard_end_of_bottom_fills_form_with_top_of_innin
 
 @pytest.mark.django_db
 def test_get_add_blog_plus_scoreboard_end_of_top_fills_form_with_bottom_of_inning(
-    client, superuser_houston, games, scoreboards
+    admin_client, games, scoreboards
 ):
-    response = client.get(
+    response = admin_client.get(
         reverse("add_blog_plus_scoreboard", args=[games.iu_uk_sat.pk]),
     )
     assert response.status_code == 200
@@ -106,9 +91,9 @@ def test_get_add_blog_plus_scoreboard_end_of_top_fills_form_with_bottom_of_innin
 
 @pytest.mark.django_db
 def test_get_add_blog_plus_scoreboard_ip_fills_form_with_top_of_inning(
-    client, superuser_houston, games, scoreboards
+    admin_client, games, scoreboards
 ):
-    response = client.get(
+    response = admin_client.get(
         reverse("add_blog_plus_scoreboard", args=[games.iu_coastal_ip.pk]),
     )
     assert response.status_code == 200

@@ -16,9 +16,9 @@ from live_game_blog.tests.fixtures.scoreboards import scoreboards
 
 @pytest.mark.django_db
 def test_add_blog_entry_only_get_renders(
-    client, superuser_houston, games, scoreboards
+    admin_client, games, scoreboards
 ):
-    response = client.get(reverse("add_blog_entry_only", args=[games.iu_duke.pk]))
+    response = admin_client.get(reverse("add_blog_entry_only", args=[games.iu_duke.pk]))
     assert response.status_code == 200
     assert "Content of Blog" in str(response.content)
 
@@ -28,8 +28,7 @@ def test_add_blog_entry_only_get_no_perms_shows_forbidden(
     client, logged_user_schwarbs, games, scoreboards
 ):
     response = client.get(reverse("add_blog_entry_only", args=[games.iu_duke.pk]))
-    assert response.status_code == 200
-    assert "Forbidden Error Recorded" in str(response.content)
+    assert response.status_code == 403
 
 
 @pytest.mark.django_db
@@ -50,7 +49,7 @@ def test_add_blog_entry_only_post_form(
 
 
 @pytest.mark.django_db
-def test_add_blog_entry_only_photo_post_form_shows_forbidden(
+def test_add_blog_entry_only_photo_post_form_shows_forbidden_without_perms(
     client, logged_user_schwarbs, games, scoreboards
 ):
     response = client.post(
@@ -61,12 +60,11 @@ def test_add_blog_entry_only_photo_post_form_shows_forbidden(
             "is_photo_only": True,
         },
     )
-    assert response.status_code == 200
-    assert "Forbidden Error Recorded" in str(response.content)
+    assert response.status_code == 403
 
 
 @pytest.mark.django_db
-def test_add_blog_entry_only_photo_post_form_no_perms_shows_forbidden(
+def test_add_blog_entry_only_photo_post_form_no_perms_shows_forbidden_without_perms(
     client, logged_user_schwarbs, games, scoreboards
 ):
     response = client.post(
@@ -78,15 +76,14 @@ def test_add_blog_entry_only_photo_post_form_no_perms_shows_forbidden(
         },
         follow=True,
     )
-    assert response.status_code == 200
-    assert "Forbidden Error Recorded" in str(response.content)
+    assert response.status_code == 403
 
 
 @pytest.mark.django_db
 def test_add_blog_entry_only_photo_post_form(
-    client, superuser_houston, games, scoreboards
+    admin_client, games, scoreboards
 ):
-    response = client.post(
+    response = admin_client.post(
         reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
         {
             "blog_entry": "https://live.staticflickr.com/65535/54013610622_61d5c92ebc_o.jpg",
@@ -125,8 +122,7 @@ def test_add_blog_entry_only_post_not_logged_in_shows_forbidden(
             "is_x_embed": False,
         },
     )
-    assert response.status_code == 200
-    assert "Forbidden Error Recorded" in str(response.content)
+    assert response.status_code == 403
 
 
 @pytest.mark.django_db
@@ -141,15 +137,14 @@ def test_add_blog_entry_only_x_embed_post_no_perms_shows_forbidden(
             "is_x_embed": True,
         },
     )
-    assert response.status_code == 200
-    assert "Forbidden Error Recorded" in str(response.content)
+    assert response.status_code == 403
 
 
 @pytest.mark.django_db
 def test_add_blog_entry_only_x_embed_post_form(
-    client, superuser_houston, user_iubase17, games, scoreboards
+    admin_client, user_iubase17, games, scoreboards
 ):
-    response = client.post(
+    response = admin_client.post(
         reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
         {
             "blog_entry": "<li>Adding to the Duke Blog",
@@ -165,9 +160,9 @@ def test_add_blog_entry_only_x_embed_post_form(
 
 @pytest.mark.django_db
 def test_add_blog_entry_only_markdown_converts_to_html(
-    client, superuser_houston, games, scoreboards
+    admin_client, games, scoreboards
 ):
-    response = client.post(
+    response = admin_client.post(
         reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
         {
             "blog_entry": "# Adding to the Duke Blog",

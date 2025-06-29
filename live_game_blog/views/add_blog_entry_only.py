@@ -1,4 +1,4 @@
-from django import shortcuts, urls
+from django import http, shortcuts, urls
 from django.contrib.auth import decorators as auth
 from django.contrib.auth import models as auth_models
 from accounts import models as acc_models
@@ -8,7 +8,7 @@ from live_game_blog import models as lgb_models
 
 def view(request, game_pk):
     if not request.user.has_perm("live_game_blog.add_blogentry"):
-        return shortcuts.render(request, "403.html")
+        return http.HttpResponseForbidden()
     elif request.method == "POST":
         return process_form_validate_and_save_new_blog(request, game_pk)
     else:

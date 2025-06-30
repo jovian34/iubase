@@ -2,6 +2,7 @@
 .ruff_cache
 .venv/
 .vscode/
+.env
 /django_project/.env
 /django_project/static/admin/
 .vscode/launch.json

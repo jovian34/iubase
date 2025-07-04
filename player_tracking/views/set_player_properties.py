@@ -26,7 +26,9 @@ def view(request):
             "errors": errors,
             "page_title": "Errors From Last Spring Calculations",
         }
-        return shortcuts.render(request, "player_tracking/calc_last_spring.html", context)
+        return shortcuts.render(
+            request, "player_tracking/calc_last_spring.html", context
+        )
 
 
 def set_player_props_get_errors():

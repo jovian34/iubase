@@ -14,7 +14,7 @@ from player_tracking.views import set_player_properties
 
 this_year = date.today().year
 
-def test_manual_url_is_correct():
+def test_manual_url_exhausted_player_is_correct():
     manual = f"/player_tracking/exhausted_players/{this_year}/"
     reversed = reverse("exhausted_players", args=[f"{this_year}"])
     assert manual == reversed    

@@ -20,28 +20,28 @@ def view(request, player_id):
         }
         template_path = "player_tracking/partials/edit_player.html"
         return shortcuts.render(request, template_path, context)
-    
+
 
 def initialize_form_with_existing_data(edit_info):
     form = forms.PlayerForm(
-            initial={
-                "first": edit_info.first,
-                "last": edit_info.last,
-                "hsgrad_year": edit_info.hsgrad_year,
-                "high_school": edit_info.high_school,
-                "home_city": edit_info.home_city,
-                "home_state": edit_info.home_state,
-                "home_country": edit_info.home_country,
-                "headshot": edit_info.headshot,
-                "action_shot": edit_info.action_shot,
-                "birthdate": edit_info.birthdate,
-                "bats": edit_info.bats,
-                "throws": edit_info.throws,
-                "height": edit_info.height,
-                "weight": edit_info.weight,
-                "primary_position": edit_info.primary_position,
-            },
-        )    
+        initial={
+            "first": edit_info.first,
+            "last": edit_info.last,
+            "hsgrad_year": edit_info.hsgrad_year,
+            "high_school": edit_info.high_school,
+            "home_city": edit_info.home_city,
+            "home_state": edit_info.home_state,
+            "home_country": edit_info.home_country,
+            "headshot": edit_info.headshot,
+            "action_shot": edit_info.action_shot,
+            "birthdate": edit_info.birthdate,
+            "bats": edit_info.bats,
+            "throws": edit_info.throws,
+            "height": edit_info.height,
+            "weight": edit_info.weight,
+            "primary_position": edit_info.primary_position,
+        },
+    )
     return form
 
 

@@ -12,6 +12,11 @@ from player_tracking.tests.fixtures.prof_org import prof_orgs
 this_year = date.today().year
 last_year = this_year - 1
 
+def test_manual_url_portal_is_correct():
+    manual = f"/player_tracking/portal/{last_year}/"
+    reversed = reverse("portal", args=[f"{last_year}"])
+    assert manual == reversed   
+
 
 @pytest.mark.django_db
 def test_portal_page_renders(client, players, teams, annual_rosters, transactions):

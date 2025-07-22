@@ -22,7 +22,7 @@ def test_group_draft_transactions_render(client):
 @pytest.mark.django_db
 def test_group_draft_transactions_list_player(client, transactions, players):
     response = client.get(urls.reverse("draft_transactions"))
-    assert "Nick Mitchell" in str(response.content)
+    assert "Nick Mitchell, Drafted" in str(response.content)
 
 
 @pytest.mark.xfail
@@ -30,6 +30,6 @@ def test_group_draft_transactions_list_player(client, transactions, players):
 def test_group_draft_transactions_reverse_chron_order(client, transactions, players):
     response = client.get(urls.reverse("draft_transactions"))
     output = str(response.content)
-    nm = output.find("Nick Mitchell")
-    gh = output.find("Grant Hollister")
+    nm = output.find("Nick Mitchell, Drafted")
+    gh = output.find("Grant Hollister, Drafted")
     assert nm < gh

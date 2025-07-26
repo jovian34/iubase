@@ -2,12 +2,8 @@ import pytest
 from django import urls
 
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
-from player_tracking.tests.fixtures.mlb_draft_date import typical_mlb_draft_date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
-from player_tracking.tests.fixtures.transactions import transactions
-from player_tracking.views import drafted_players
-from player_tracking.views import set_player_properties
 from live_game_blog.tests.fixtures.teams import teams
 
 

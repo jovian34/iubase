@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+
+
+{% block content %}
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        {% for trans in transactions %}
+        <p>
+            {{ trans.trans_date }}:
+            <a href="{% url "single_player_page" trans.player.id %}">
+            {{ trans.player.first }} {{ trans.player.last }}</a>, 
+            {{ trans.trans_event }}
+            {% if trans.trans_event == "Drafted" %}
+                by
+            {% else %}
+                with
+            {% endif %}
+            the {{ trans.prof_org.city }} {{ trans.prof_org.mascot }} organization.
+        </p>
+        
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

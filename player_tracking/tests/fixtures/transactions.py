@@ -25,6 +25,11 @@ def transactions(players, prof_orgs, teams):
         trans_event="Verbal Commitment from High School",
         trans_date=date(year=this_year - 4, month=3, day=11),
     )
+    rk_signed = Transaction.objects.create(
+        player=players.ryan_kraft,
+        trans_event="Signed Professional Contract - Undrafted",
+        trans_date=date(year=this_year + 2, month=7, day=24),
+    )
     dt_verbal = Transaction.objects.create(
         player=players.devin_taylor,
         trans_event="Verbal Commitment from High School",
@@ -191,11 +196,12 @@ def transactions(players, prof_orgs, teams):
     )
     TransObj = namedtuple(
         "TransObj",
-        "js_verbal rk_verbal dt_verbal dt_nli be_commit be_portal be_new_school dt_draft_ranked br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal xc_verbal gs_verbal gs_decommit xc_nli oo_verbal em_verbal em_portal ja_verbal ja_decommit",
+        "js_verbal rk_verbal rk_signed dt_verbal dt_nli be_commit be_portal be_new_school dt_draft_ranked br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal xc_verbal gs_verbal gs_decommit xc_nli oo_verbal em_verbal em_portal ja_verbal ja_decommit",
     )
     return TransObj(
         js_verbal=js_verbal,
         rk_verbal=rk_verbal,
+        rk_signed=rk_signed,
         dt_verbal=dt_verbal,
         dt_nli=dt_nli,
         be_commit=be_commit,

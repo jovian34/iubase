@@ -30,6 +30,22 @@
 /*-------Prevents iPhone from resizing in landscape mode --------*/
 html {-webkit-text-size-adjust: none; }
 
+
+/*-------------------Fades between full page loads-----------------------*/
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: fade 0.3s ease both;
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /*------ apply a natural box layout model to all elements ----------*/
 *{
 box-sizing:border-box;

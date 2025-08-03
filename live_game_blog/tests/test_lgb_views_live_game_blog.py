@@ -14,6 +14,9 @@ from live_game_blog.tests.fixtures.blog import entries
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
 from django_project.tests import clean_text
 
+from live_game_blog.views import live_game_blog
+from live_game_blog import models as lgb_models
+
 
 this_year = datetime.today().year
 
@@ -129,8 +132,9 @@ def test_roster_url_renders_with_year_specified_and_adds_slash_before_year(
     client, games, scoreboards, entries
 ):
     response = client.get(reverse("live_game_blog", args=[games.iu_duke.pk]))
+    spring_year = live_game_blog.set_spring_year(games.iu_duke)
     assert response.status_code == 200
-    assert f"https://iuhoosiers.com/sports/baseball/roster/{this_year}/" in str(
+    assert f"https://iuhoosiers.com/sports/baseball/roster/{spring_year}/" in str(
         response.content
     )
 
@@ -150,8 +154,9 @@ def test_roster_url_renders_with_year_specified_and_keeps_slash_before_year(
     client, games, scoreboards, entries
 ):
     response = client.get(reverse("live_game_blog", args=[games.iu_duke.pk]))
+    spring_year = live_game_blog.set_spring_year(games.iu_duke)
     assert response.status_code == 200
-    assert f"https://goduke.com/sports/baseball/roster/{this_year}/" in str(
+    assert f"https://goduke.com/sports/baseball/roster/{spring_year}/" in str(
         response.content
     )
 
@@ -161,8 +166,9 @@ def test_roster_url_renders_with_last_year_specified_and_keeps_slash_before_year
     client, games, scoreboards, entries
 ):
     response = client.get(reverse("live_game_blog", args=[games.iu_duke_ly.pk]))
+    spring_year = live_game_blog.set_spring_year(games.iu_duke_ly)
     assert response.status_code == 200
-    assert f"https://goduke.com/sports/baseball/roster/{this_year - 1}/" in str(
+    assert f"https://goduke.com/sports/baseball/roster/{spring_year}/" in str(
         response.content
     )
 
@@ -208,3 +214,13 @@ def test_lgb_shows_no_adds_or_edits_not_logged_in(client, games, scoreboards, en
     assert "Add Blog Entry Only" not in str(response.content)
     assert "Add Blog Entry plus Scoreboard" not in str(response.content)
     assert "Edit Entry" not in str(response.content)
+
+
+@pytest.mark.django_db
+def test_set_spring_year_sets_october_to_next_spring(games):
+    assert live_game_blog.set_spring_year(games.iu_duke_23_fall) == 2024
+
+
+@pytest.mark.django_db
+def test_set_spring_year_sets_february_to_same_spring(games):
+    assert live_game_blog.set_spring_year(games.iu_duke_69_spring) == 2069

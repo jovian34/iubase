@@ -36,6 +36,14 @@ def games(client, teams):
             2023, 10, 4, 21, 5, 00, tzinfo=datetime.timezone.utc
         ),
     )
+    iu_duke_69_spring = Game.objects.create(
+        home_team=teams.duke,
+        away_team=teams.indiana,
+        neutral_site=True,
+        first_pitch=datetime.datetime(
+            2069, 2, 24, 21, 5, 00, tzinfo=datetime.timezone.utc
+        ),
+    )
     iu_coastal = Game.objects.create(
         home_team=teams.coastal,
         away_team=teams.indiana,
@@ -102,12 +110,13 @@ def games(client, teams):
     )
     GameObj = namedtuple(
         "GameObj",
-        "iu_duke iu_duke_ly iu_duke_23_fall iu_coastal iu_coastal_ip iu_gm iu_mo iu_iowa iu_mo_rain iu_uk_mon iu_uk_sun iu_uk_sat iu_gm_fall",
+        "iu_duke iu_duke_ly iu_duke_23_fall iu_duke_69_spring iu_coastal iu_coastal_ip iu_gm iu_mo iu_iowa iu_mo_rain iu_uk_mon iu_uk_sun iu_uk_sat iu_gm_fall",
     )
     return GameObj(
         iu_duke=iu_duke,
         iu_duke_ly=iu_duke_ly,
         iu_duke_23_fall=iu_duke_23_fall,
+        iu_duke_69_spring=iu_duke_69_spring,
         iu_coastal=iu_coastal,
         iu_coastal_ip=iu_coastal_ip,
         iu_gm=iu_gm,

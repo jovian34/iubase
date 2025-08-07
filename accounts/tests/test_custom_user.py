@@ -24,4 +24,4 @@ def test_set_check_passphrase(user_1):
 def test_admin_page_renders(client):
     response = client.get(f"/{os.getenv('ADMIN_WORD')}/", follow=True)
     assert response.status_code == 200
-    assert "jovian34_iubase" in str(response.content)
+    assert "apps_iubase" in str(response.content)

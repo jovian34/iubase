@@ -1,11 +1,11 @@
 [project]
 name = "iubase"
-version = "2025.08.02.1836"
+version = "2025.08.06.2013"
 requires-python = ">=3.13.5"
 dependencies = [
     "asgiref==3.9.1",
-    "coverage==7.10.1",
-    "django==5.2.4",
+    "coverage==7.10.2",
+    "django==5.2.5",
     "django-allauth[socialaccount]==65.10.0",
     "execnet==2.1.1",
     "gunicorn==23.0.0",

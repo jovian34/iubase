@@ -9,6 +9,7 @@ class TeamAdmin(admin.ModelAdmin):
         "team_name",
         "mascot",
     )
+    ordering = ["team_name"]
 
 
 @admin.register(Game)

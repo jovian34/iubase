@@ -34,4 +34,4 @@ def get_conf_teams_for_requested_year(spring_year, conference, all_conf_teams):
                 this_conf_teams.append(conf_joins[0].team)
         except IndexError:
             pass
-    return this_conf_teams
+    return sorted(this_conf_teams, key=lambda team: team.team_name)

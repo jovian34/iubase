@@ -157,6 +157,13 @@ h3 {
 	float: right;
 }
 
+.conf-logo {
+	width: 30%;
+	height: auto;
+	margin: 1px;
+	float: right;
+}
+
 .large-headshot {
 	width: 40%;
 	height: auto;

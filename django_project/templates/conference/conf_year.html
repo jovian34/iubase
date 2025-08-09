@@ -3,7 +3,7 @@
 {% block title %}{{ page_title }}{% endblock %}
 
 {% block header %}
-    <img src={{ conference.logo_url }} class="thumbnail" alt="{{ conference.long_name }}">
+    <img src={{ conference.logo_url }} class="conf-logo" alt="{{ conference.long_name }}">
     <h1>{{ page_title }}</h1>
 {% endblock %}
 
@@ -16,7 +16,10 @@
 
         {% for team in teams %}
 
+            <div class="column-12 clear-both">
+            <img src="{{ team.logo }}" class="team-logo">
             <h3>{{ team.team_name }}</h3>
+            </div>
 
         {% endfor %}
 

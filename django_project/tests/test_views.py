@@ -17,6 +17,13 @@ def test_redirect_goes_to_index(client):
     assert "Player Tracking" in str(response.content)
 
 
+def test_robot_dot_txt_renders(client):
+    response = client.get("/robots.txt")
+    assert "Perplexity-User" in str(response.content)
+    assert response.status_code == 200
+    assert response["content-type"] == "text/plain"
+
+
 @pytest.mark.django_db
 def test_django_admin_renders(admin_client):
     response = admin_client.get(f"/{os.getenv('ADMIN_WORD')}/")

@@ -1,10 +1,15 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import base
 import os
 from django_project import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path(
+        "robots.txt", 
+        base.TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+    ),
     path("index/", include("index.urls")),
     path("accounts/", include("allauth.urls")),
     # path("accounts/", include("django.contrib.auth.urls")),

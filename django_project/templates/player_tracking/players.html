@@ -25,7 +25,17 @@
             {{player.first}} {{player.last}}    
         </a></h3>
         <ul>
-            <li><p>{{ player.first_spring }} to {{ player.last_spring }}<p></li>
+            <li><p>
+                {% if player.first_spring == player.last_spring %}
+                    {% if player.first_spring == None %}
+                        Committed, but did not come to campus as a player
+                    {% else %}
+                        {{ player.first_spring }}
+                    {% endif %}
+                {% else %}
+                    {{ player.first_spring }} to {{ player.last_spring }}
+                {% endif %}
+            </p></li>
             <li><p>Height: {{ player.height }}"<p></li>
             <li><p>Weight: {{ player.weight }} lbs.<p></li>
             <li><p>Hometown: {{ player.home_city }}, {{ player.home_state }}, {{ player.home_country }}<p></li>                

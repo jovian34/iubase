@@ -31,7 +31,7 @@ def test_set_player_properties_produces_correct_html_output(
     admin_client, players, annual_rosters, transactions
 ):
     response = admin_client.get(reverse("players"), follow=True)
-    assert "None to None" in str(response.content)
+    assert "Committed, but did not come to campus as a player" in str(response.content)
     response = admin_client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
     assert f"{this_year - 1}-{this_year}" in str(response.content)

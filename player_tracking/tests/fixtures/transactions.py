@@ -194,10 +194,48 @@ def transactions(players, prof_orgs, teams):
         trans_event="Decommit",
         trans_date=date(year=this_year, month=2, day=5),
     )
-    TransObj = namedtuple(
-        "TransObj",
-        "js_verbal rk_verbal rk_signed dt_verbal dt_nli be_commit be_portal be_new_school dt_draft_ranked br_nli nm_verbal nm_combine nm_draft nm_signed aw_nli jm_verb_port gh_verbal gh_draft gh_not_sign gh_combine cg_port nb_verbal nb_diff_role hc_verbal xc_verbal gs_verbal gs_decommit xc_nli oo_verbal em_verbal em_portal ja_verbal ja_decommit",
+    pd_commit = Transaction.objects.create(
+        player=players.peter_dubie,
+        trans_event="Verbal Commitment from College",
+        trans_date=date(year=this_year, month=10, day=15)
     )
+    trans_list = [
+        "js_verbal",
+        "rk_verbal",
+        "rk_signed",
+        "dt_verbal",
+        "dt_nli",
+        "be_commit",
+        "be_portal",
+        "be_new_school",
+        "dt_draft_ranked",
+        "br_nli",
+        "nm_verbal",
+        "nm_combine",
+        "nm_draft",
+        "nm_signed",
+        "aw_nli",
+        "jm_verb_port",
+        "gh_verbal",
+        "gh_draft",
+        "gh_not_sign",
+        "gh_combine",
+        "cg_port",
+        "nb_verbal",
+        "nb_diff_role",
+        "hc_verbal",
+        "xc_verbal",
+        "gs_verbal",
+        "gs_decommit",
+        "xc_nli",
+        "oo_verbal",
+        "em_verbal",
+        "em_portal",
+        "ja_verbal",
+        "ja_decommit",
+        "pd_commit",
+    ]
+    TransObj = namedtuple("TransObj", trans_list)
     return TransObj(
         js_verbal=js_verbal,
         rk_verbal=rk_verbal,
@@ -232,4 +270,5 @@ def transactions(players, prof_orgs, teams):
         em_portal=em_portal,
         ja_verbal=ja_verbal,
         ja_decommit=ja_decommit,
+        pd_commit=pd_commit,
     )

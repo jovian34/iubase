@@ -209,10 +209,69 @@ def annual_rosters(players, teams):
         jersey=48,
         primary_position="Corner Outfield",
     )
-    AnnualRosterObj = namedtuple(
-        "AnnualRosterObj",
-        "js_jr js_soph rk_fresh rk_soph rk_jr dt_fresh dt_soph nm_fresh nm_soph nm_jr hc_fresh hc_soph br_fresh jm_fresh jm_soph jm_jr jm_sr jm2024 cg_fresh cg_soph cg_jr cg_sr nb_fresh em_fresh",
+    pd_fresh = AnnualRoster.objects.create(
+        spring_year=this_year-2,
+        status="Spring Roster",
+        player=players.peter_dubie,
+        team=teams.miami_oh,
+        jersey=15,
+        primary_position="Pitcher"
     )
+    pd_soph = AnnualRoster.objects.create(
+        spring_year=this_year-1,
+        status="Not on Spring Roster",
+        player=players.peter_dubie,
+        team=teams.miami_oh,
+        jersey=15,
+        primary_position="Pitcher"
+    )
+    pd_jr = AnnualRoster.objects.create(
+        spring_year=this_year,
+        status="Spring Roster",
+        player=players.peter_dubie,
+        team=teams.miami_oh,
+        jersey=15,
+        primary_position="Pitcher"
+    )
+    pd_sr = AnnualRoster.objects.create(
+        spring_year=this_year + 1,
+        status="Spring Roster",
+        player=players.peter_dubie,
+        team=teams.miami_oh,
+        jersey=15,
+        primary_position="Pitcher"
+    )
+    annual_rosters_list = [
+        "js_jr",
+        "js_soph",
+        "rk_fresh",
+        "rk_soph",
+        "rk_jr",
+        "dt_fresh",
+        "dt_soph",
+        "nm_fresh",
+        "nm_soph",
+        "nm_jr",
+        "hc_fresh",
+        "hc_soph",
+        "br_fresh",
+        "jm_fresh",
+        "jm_soph",
+        "jm_jr",
+        "jm_sr",
+        "jm2024",
+        "cg_fresh",
+        "cg_soph",
+        "cg_jr",
+        "cg_sr",
+        "nb_fresh",
+        "em_fresh",
+        "pd_fresh",
+        "pd_soph",
+        "pd_jr",
+        "pd_sr",
+    ]
+    AnnualRosterObj = namedtuple("AnnualRosterObj", annual_rosters_list)
     return AnnualRosterObj(
         js_jr=js_jr,
         js_soph=js_soph,
@@ -238,4 +297,8 @@ def annual_rosters(players, teams):
         cg_sr=cg_sr,
         nb_fresh=nb_fresh,
         em_fresh=em_fresh,
+        pd_fresh=pd_fresh,
+        pd_soph=pd_soph,
+        pd_jr=pd_jr,
+        pd_sr=pd_sr,
     )

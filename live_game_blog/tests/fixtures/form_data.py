@@ -1,6 +1,8 @@
 import pytest
 
 from collections import namedtuple
+from django.utils import timezone
+import datetime
 
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.stadiums import stadiums
@@ -75,9 +77,16 @@ def forms(teams, stadiums):
         "home_errors": "1",
         "away_errors": "2",
     }
+    edit_iu_coastal_ip = {
+        "home_team": [str(teams.coastal.pk)],
+        "away_team": [str(teams.indiana.pk)],
+        "first_pitch": (timezone.now() - datetime.timedelta(hours=1)),
+        "first_pitch_wind_direction": "ENE",
+        "event": ["Baseball at the Beach"],
+    }
     FormObj = namedtuple(
         "FormObj",
-        "pfw iu_v_gm iu_holds_duke iu_slams_duke uk_tourney edit_blog_uk_wins",
+        "pfw iu_v_gm iu_holds_duke iu_slams_duke uk_tourney edit_blog_uk_wins edit_iu_coastal_ip",
     )
     return FormObj(
         pfw=pfw,
@@ -86,4 +95,5 @@ def forms(teams, stadiums):
         iu_slams_duke=iu_slams_duke,
         uk_tourney=uk_tourney,
         edit_blog_uk_wins=edit_blog_uk_wins,
+        edit_iu_coastal_ip=edit_iu_coastal_ip,
     )

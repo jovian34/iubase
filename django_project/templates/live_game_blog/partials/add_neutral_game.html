@@ -1,0 +1,6 @@
+            <a href="{% url "add_game" %}"><button> Game at Home Site</button></a>
+            <form action="{% url "add_neutral_game" %}" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" value="Submit">{{ page_title }}</button>
+            </form>

@@ -46,13 +46,12 @@ def test_games_list_page_does_not_render_past_games(client, teams, games, scoreb
 
 
 @pytest.mark.django_db
-def test_games_list_page_renders_add_game_and_team_if_staff(
+def test_games_list_page_renders_add_game_if_staff(
     admin_client, teams, games, scoreboards
 ):
     response = admin_client.get(reverse("games"))
     assert response.status_code == 200
     assert "Add game" in str(response.content)
-    assert "Add team" in str(response.content)
 
 
 @pytest.mark.django_db

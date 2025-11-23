@@ -56,3 +56,12 @@ def test_add_team_post_forbidden_without_perms(client, forms, logged_user_schwar
         forms.pfw,
     )
     assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_add_game_page_renders_add_team_if_staff(
+    admin_client
+):
+    response = admin_client.get(reverse("add_game"))
+    assert response.status_code == 200
+    assert "Add team" in str(response.content)

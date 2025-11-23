@@ -17,7 +17,7 @@ from live_game_blog.tests.fixtures.form_data import forms
 def test_add_game_page_renders_template(admin_client,):
     response = admin_client.get(reverse("add_game"))
     assert response.status_code == 200
-    assert "Is this a neutral site or host is designated away?" in str(response.content)
+    assert "Game at Neutral Site" in str(response.content)
     assert "Away team D1Baseball.com national ranking" in str(response.content)
     assert "Away team national tournament seed" in str(response.content)
     assert "Home team tournament seed" in str(response.content)

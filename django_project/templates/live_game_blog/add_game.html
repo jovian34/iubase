@@ -10,11 +10,22 @@
 <div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6">
-        <form action="{% url "add_game" %}" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <button type="submit" value="Submit">{{ page_title }}</button>
-        </form>
+        {% if perms.live_game_blog.add_team %}
+            <a href="{% url "add_team" %}"><button>Add team</button></a>
+        {% endif %}
+
+        <div class="column-12 clear-both" id="add-game-form">
+            <button hx-get="{% url "add_neutral_game" %}"
+                    hx-target="#add-game-form">
+                    Game at Neutral Site
+            </button>
+            <form action="{% url "add_game" %}" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" value="Submit">{{ page_title }}</button>
+            </form>
+        </div>
+
     </div>
     <div class="column-3"></div>
 </div>

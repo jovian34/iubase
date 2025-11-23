@@ -1,6 +1,6 @@
 from django import forms
 
-from live_game_blog.models import Team
+from live_game_blog.models import Team, Stadium
 from live_game_blog.choices import GAME_STATUS, INNING_PART_CHOICES, OUTS_CHOICES
 
 
@@ -28,19 +28,21 @@ class BlogEntryForm(forms.Form):
 
 
 class AddGameForm(forms.Form):
-    first_pitch = forms.DateTimeField(
-        input_formats=["%Y-%m-%d-%H%M"],
-        label="Date and Time of First Pitch YYYY-MM-DD-HHMM in ET military time",
-    )
-    neutral_site = forms.BooleanField(
-        label="Is this a neutral site or host is designated away?", required=False
-    )
-    event = forms.CharField(label="Describe the event: ", required=False)
-
     home_team = forms.ModelChoiceField(
         queryset=Team.objects.all().order_by("team_name"),
         label="Home Team",
     )
+    away_team = forms.ModelChoiceField(
+        queryset=Team.objects.all().order_by("team_name"),
+        label="Away Team",
+    )
+
+    first_pitch = forms.DateTimeField(
+        input_formats=["%Y-%m-%d-%H%M"],
+        label="Date and Time of First Pitch YYYY-MM-DD-HHMM in ET military time",
+    )
+    event = forms.CharField(label="Describe the event: ", required=False)
+    
     home_rank = forms.IntegerField(
         label="Home team D1Baseball.com national ranking",
         required=False,
@@ -53,11 +55,7 @@ class AddGameForm(forms.Form):
         label="Home team national tournament seed",
         required=False,
     )
-
-    away_team = forms.ModelChoiceField(
-        queryset=Team.objects.all().order_by("team_name"),
-        label="Away Team",
-    )
+    
     away_rank = forms.IntegerField(
         label="Away team D1Baseball.com national ranking",
         required=False,
@@ -70,6 +68,7 @@ class AddGameForm(forms.Form):
         label="Away team national tournament seed",
         required=False,
     )
+
     featured_image = forms.URLField(
         label="Featured Image",
         required=False,
@@ -98,6 +97,25 @@ class AddGameForm(forms.Form):
         label="Student Audio Link",
         required=False,
         assume_scheme="https",  # remove argument for Django 6.0
+    )
+    first_pitch_temp = forms.IntegerField(
+        label="AccuWeather RealFeel Temperature (F) at First Pitch",
+        required=False,
+    )
+    first_pitch_wind_speed = forms.IntegerField(
+        label="Wind speed (MPH) at first pitch",
+        required=False,
+    )
+    first_pitch_wind_direction = forms.CharField(
+        label="Wind direction at first pitch",
+        required=False
+    )
+    
+
+class AddNeutralGame(AddGameForm):
+    stadium = forms.ModelChoiceField(
+        queryset=Stadium.objects.all().order_by("name"),
+        label="Stadium",
     )
 
 

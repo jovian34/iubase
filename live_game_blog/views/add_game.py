@@ -15,8 +15,26 @@ def view(request):
         return render_add_game_form_in_template(request)
 
 
+@auth.login_required
+def neutral(request):
+    if not request.user.has_perm("live_game_blog.add_game"):
+        return http.HttpResponseForbidden()
+    elif request.method == "POST":
+        return validate_and_save_posted_neutral_game_form_then_redirect(request)
+    else:
+        return render_add_neutral_game_form_in_template(request)
+
+
 def validate_and_save_posted_game_form_then_redirect(request):
     form = lgb_forms.AddGameForm(request.POST)
+    if form.is_valid():
+        save_game(form)
+        this_game = save_initial_scoreboard(request)
+    return shortcuts.redirect(urls.reverse("live_game_blog", args=[this_game.pk]))
+
+
+def validate_and_save_posted_neutral_game_form_then_redirect(request):
+    form = lgb_forms.AddNeutralGame(request.POST)
     if form.is_valid():
         save_game(form)
         this_game = save_initial_scoreboard(request)
@@ -33,7 +51,7 @@ def save_game(form):
         away_rank=form.cleaned_data["away_rank"],
         away_seed=form.cleaned_data["away_seed"],
         away_nat_seed=form.cleaned_data["away_nat_seed"],
-        neutral_site=form.cleaned_data["neutral_site"],
+        neutral_site=False,
         event=form.cleaned_data["event"],
         featured_image=form.cleaned_data["featured_image"],
         live_stats=form.cleaned_data["live_stats"],
@@ -42,6 +60,30 @@ def save_game(form):
         audio_primary=form.cleaned_data["audio_primary"],
         audio_student=form.cleaned_data["audio_student"],
         first_pitch=form.cleaned_data["first_pitch"],
+    )
+    add_game.save()
+
+
+def save_neutral_game(form):
+    add_game = lgb_models.Game(
+        home_team=form.cleaned_data["home_team"],
+        home_rank=form.cleaned_data["home_rank"],
+        home_seed=form.cleaned_data["home_seed"],
+        home_nat_seed=form.cleaned_data["home_nat_seed"],
+        away_team=form.cleaned_data["away_team"],
+        away_rank=form.cleaned_data["away_rank"],
+        away_seed=form.cleaned_data["away_seed"],
+        away_nat_seed=form.cleaned_data["away_nat_seed"],
+        neutral_site=True,
+        event=form.cleaned_data["event"],
+        featured_image=form.cleaned_data["featured_image"],
+        live_stats=form.cleaned_data["live_stats"],
+        video=form.cleaned_data["video"],
+        video_url=form.cleaned_data["video_url"],
+        audio_primary=form.cleaned_data["audio_primary"],
+        audio_student=form.cleaned_data["audio_student"],
+        first_pitch=form.cleaned_data["first_pitch"],
+        stadium=form.cleaned_data["stadium"]
     )
     add_game.save()
 
@@ -72,4 +114,13 @@ def render_add_game_form_in_template(request):
         "page_title": "Add Game",
     }
     template_path = "live_game_blog/add_game.html"
+    return shortcuts.render(request, template_path, context)
+
+
+def render_add_neutral_game_form_in_template(request):
+    context = {
+        "form": lgb_forms.AddNeutralGame(),
+        "page_title": "Add Neutral Game",
+    }
+    template_path = "live_game_blog/partials/add_neutral_game.html"
     return shortcuts.render(request, template_path, context)

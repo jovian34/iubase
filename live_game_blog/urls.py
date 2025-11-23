@@ -33,4 +33,7 @@ urlpatterns = [
         edit_blog_entry.view,
         name="edit_blog_entry",
     ),
+
+    # partials
+    path("add_neutral_game", add_game.neutral, name="add_neutral_game"),
 ]

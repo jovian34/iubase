@@ -19,11 +19,26 @@ def stadium_configs(client, stadiums):
         left=330,
         center=400,
         right=330,
+        capacity=2500,
+    )
+    surprise_2002 = lgb_models.StadiumConfig.objects.create(
+        stadium=stadiums.surprise,
+        config_date=date(2002,12,8),
+        surface_inf="natural",
+        surface_out="natural",
+        surface_mound="natural",
+        photo="https://en.wikipedia.org/wiki/Surprise_Stadium#/media/File:Surprise_Stadium_during_Spring_Training_(2023).jpg",
+        left=350,
+        center=400,
+        right=350,
+        capacity=10714,
     )
     config_list = [
         "bart_2013",
+        "surprise_2002"
     ]
     StadiumConfigObj = namedtuple("StadiumConfigObj", config_list)
     return StadiumConfigObj(
         bart_2013=bart_2013,
+        surprise_2002=surprise_2002,
     )

@@ -50,6 +50,9 @@ def test_stadium_config_model_stored_all_fields(client, stadiums, stadium_config
     assert stadium_configs.bart_2013.left == 330
     assert stadium_configs.bart_2013.right == 330
     assert stadium_configs.bart_2013.center == 400
+    assert stadium_configs.surprise_2002.lights
+    assert stadium_configs.surprise_2002.capacity == 10714
+    assert stadium_configs.bart_2013.home_dugout == "third"
 
 
 @pytest.mark.django_db

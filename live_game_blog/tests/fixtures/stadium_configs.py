@@ -20,6 +20,7 @@ def stadium_configs(client, stadiums):
         center=400,
         right=330,
         capacity=2500,
+        home_dugout="third"
     )
     surprise_2002 = lgb_models.StadiumConfig.objects.create(
         stadium=stadiums.surprise,

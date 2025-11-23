@@ -9,6 +9,7 @@ from live_game_blog.tests.fixtures.games import (
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.stadiums import stadiums
 from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
+from live_game_blog.tests.fixtures.home_stadium import home_stadium
 from live_game_blog.tests.fixtures.blog import entries
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
 
@@ -54,6 +55,18 @@ def test_stadium_config_model_stored_all_fields(client, stadiums, stadium_config
 @pytest.mark.django_db
 def test_stadium_config_model_string_def(client, stadiums, stadium_configs):
     assert str(stadium_configs.bart_2013) == "Bart Kaufman Field - 2013"
+
+
+@pytest.mark.django_db
+def test_home_stadium_model_stored_all_fields(client, stadiums, home_stadium, teams):
+    assert home_stadium.bart_2013.team == teams.indiana
+    assert home_stadium.bart_2013.stadium == stadiums.bart
+    assert home_stadium.bart_2013.designate_date == date(2013,3,1)
+
+
+@pytest.mark.django_db
+def test_home_stadium_model_string_def(client, stadiums, home_stadium):
+    assert str(home_stadium.bart_2013) == "Indiana: Bart Kaufman Field - 2013"
 
 
 @pytest.mark.django_db

@@ -112,4 +112,13 @@ class StadiumConfig(models.Model):
 
     def __str__(self):
         return f"{self.stadium} - {self.config_date.year}"
+    
+
+class HomeStadium(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    stadium = models.ForeignKey(Stadium, on_delete=models.CASCADE)
+    designate_date = models.DateField(null=False)
+
+    def __str__(self):
+        return f"{self.team}: {self.stadium} - {self.designate_date.year}"
 

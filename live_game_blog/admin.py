@@ -1,10 +1,10 @@
 from django.contrib import admin
-from live_game_blog.models import Game, Team, Scoreboard, BlogEntry
+from live_game_blog import models as lgb_models
 
 
-@admin.register(Team)
+@admin.register(lgb_models.Team)
 class TeamAdmin(admin.ModelAdmin):
-    model = Team
+    model = lgb_models.Team
     list_display = (
         "team_name",
         "mascot",
@@ -12,9 +12,9 @@ class TeamAdmin(admin.ModelAdmin):
     ordering = ["team_name"]
 
 
-@admin.register(Game)
+@admin.register(lgb_models.Game)
 class GameAdmin(admin.ModelAdmin):
-    model = Game
+    model = lgb_models.Game
     list_display = (
         "home_team",
         "away_team",
@@ -25,9 +25,9 @@ class GameAdmin(admin.ModelAdmin):
     ordering = ["-first_pitch"]
 
 
-@admin.register(Scoreboard)
+@admin.register(lgb_models.Scoreboard)
 class ScoreboardAdmin(admin.ModelAdmin):
-    model = Scoreboard
+    model = lgb_models.Scoreboard
     list_display = (
         "game",
         "scorekeeper",
@@ -40,9 +40,9 @@ class ScoreboardAdmin(admin.ModelAdmin):
     ordering = ["-update_time"]
 
 
-@admin.register(BlogEntry)
+@admin.register(lgb_models.BlogEntry)
 class BlogEntryAdmin(admin.ModelAdmin):
-    model = BlogEntry
+    model = lgb_models.BlogEntry
     list_display = (
         "game",
         "author",
@@ -51,3 +51,35 @@ class BlogEntryAdmin(admin.ModelAdmin):
         "scoreboard",
     )
     ordering = ["game", "-blog_time"]
+
+
+@admin.register(lgb_models.Stadium)
+class StadiumAdmin(admin.ModelAdmin):
+    model = lgb_models.Stadium
+    list_display = (
+        "name",
+        "city",
+        "state",
+    )
+    ordering = ["name"]
+
+
+@admin.register(lgb_models.StadiumConfig)
+class StadiumConfigAdmin(admin.ModelAdmin):
+    model = lgb_models.Stadium
+    list_display = (
+        "stadium",
+        "config_date",
+    )
+    ordering = ["stadium", "-config_date"]
+
+
+@admin.register(lgb_models.HomeStadium)
+class HomeStadiumAdmin(admin.ModelAdmin):
+    model = lgb_models.HomeStadium
+    list_display = (
+        "team",
+        "stadium",
+        "designate_date",
+    )
+    ordering = ["team", "-designate_date"]

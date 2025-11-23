@@ -7,6 +7,7 @@ from live_game_blog.tests.fixtures.games import (
     user_not_logged_in,
 )
 from live_game_blog.tests.fixtures.teams import teams
+from live_game_blog.tests.fixtures.stadiums import stadiums
 from live_game_blog.tests.fixtures.blog import entries
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
 
@@ -24,6 +25,16 @@ def test_team_model_stored_all_fields(client, teams):
 @pytest.mark.django_db
 def test_team_model_string_def(client, teams):
     assert str(teams.indiana) == "Indiana"
+
+
+@pytest.mark.django_db
+def test_stadium_model_stored_all_fields(client, stadiums):
+    assert stadiums.bart.name == "Bart Kaufman Field"
+
+
+@pytest.mark.django_db
+def test_stadium_model_string_def(client, stadiums):
+    assert str(stadiums.bart) == "Bart Kaufman Field"
 
 
 @pytest.mark.django_db

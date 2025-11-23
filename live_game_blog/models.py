@@ -84,3 +84,16 @@ class BlogEntry(models.Model):
 
     def __str__(self) -> str:
         return f"{self.author}: {self.blog_time}"
+    
+
+class Stadium(models.Model):
+    name = models.CharField(null=False, max_length=64)
+    address = models.CharField(null=False, max_length=128)
+    city = models.CharField(null=False, max_length=64)
+    state = models.CharField(null=True, max_length=2)
+    country = models.CharField(null=False, max_length=64)
+    timezone = models.CharField(null=False, max_length=64)
+    orientation = models.CharField(null=False, max_length=16)
+
+    def __str__(self):
+        return f"{self.name}"

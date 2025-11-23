@@ -90,10 +90,26 @@ class Stadium(models.Model):
     name = models.CharField(null=False, max_length=64)
     address = models.CharField(null=False, max_length=128)
     city = models.CharField(null=False, max_length=64)
-    state = models.CharField(null=True, max_length=2)
+    state = models.CharField(null=True, blank=True, max_length=2)
     country = models.CharField(null=False, max_length=64)
     timezone = models.CharField(null=False, max_length=64)
     orientation = models.CharField(null=False, max_length=16)
 
     def __str__(self):
         return f"{self.name}"
+    
+
+class StadiumConfig(models.Model):
+    stadium = models.ForeignKey(Stadium, on_delete=models.CASCADE)
+    config_date = models.DateField(null=False)
+    surface_inf = models.CharField(null=True, blank=True, max_length=16)
+    surface_out = models.CharField(null=True, blank=True, max_length=16)
+    surface_mound = models.CharField(null=True, blank=True, max_length=16)
+    photo = models.URLField(null=True, blank=True)
+    left = models.IntegerField(null=True, blank=True)
+    center = models.IntegerField(null=True, blank=True)
+    right = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.stadium} - {self.config_date.year}"
+

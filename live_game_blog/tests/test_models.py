@@ -1,6 +1,6 @@
 import pytest
 
-from datetime import timedelta
+from datetime import timedelta, date
 from django.utils import timezone
 from live_game_blog.tests.fixtures.games import (
     games,
@@ -8,6 +8,7 @@ from live_game_blog.tests.fixtures.games import (
 )
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.stadiums import stadiums
+from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from live_game_blog.tests.fixtures.blog import entries
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
 
@@ -35,6 +36,24 @@ def test_stadium_model_stored_all_fields(client, stadiums):
 @pytest.mark.django_db
 def test_stadium_model_string_def(client, stadiums):
     assert str(stadiums.bart) == "Bart Kaufman Field"
+
+
+@pytest.mark.django_db
+def test_stadium_config_model_stored_all_fields(client, stadiums, stadium_configs):
+    assert stadium_configs.bart_2013.stadium == stadiums.bart
+    assert stadium_configs.bart_2013.config_date == date(2013,3,1)
+    assert stadium_configs.bart_2013.surface_inf == "artificial"
+    assert stadium_configs.bart_2013.surface_out == "artificial"
+    assert stadium_configs.bart_2013.surface_mound == "artificial"
+    assert stadium_configs.bart_2013.photo == "https://live.staticflickr.com/65535/54870456854_577c2962c0_c.jpg"
+    assert stadium_configs.bart_2013.left == 330
+    assert stadium_configs.bart_2013.right == 330
+    assert stadium_configs.bart_2013.center == 400
+
+
+@pytest.mark.django_db
+def test_stadium_config_model_string_def(client, stadiums, stadium_configs):
+    assert str(stadium_configs.bart_2013) == "Bart Kaufman Field - 2013"
 
 
 @pytest.mark.django_db

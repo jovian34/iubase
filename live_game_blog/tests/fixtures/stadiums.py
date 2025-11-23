@@ -16,10 +16,21 @@ def stadiums(client):
         timezone="America/New_York",
         orientation="NE",
     )
+    surprise = lgb_models.Stadium.objects.create(
+        name="Surprise Satdium",
+        address="15850 N. Bullard Ave.",
+        city="Surprise",
+        state="AZ",
+        country="USA",
+        timezone="America/Phoenix",
+        orientation="NE"
+    )
     stadium_list = [
         "bart",
+        "surprise"
     ]
     StadiumObj = namedtuple("StadiumObj", stadium_list)
     return StadiumObj(
         bart=bart,
+        surprise=surprise,
     )

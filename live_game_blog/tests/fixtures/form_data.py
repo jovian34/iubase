@@ -3,10 +3,11 @@ import pytest
 from collections import namedtuple
 
 from live_game_blog.tests.fixtures.teams import teams
+from live_game_blog.tests.fixtures.stadiums import stadiums
 
 
 @pytest.fixture
-def forms(teams):
+def forms(teams, stadiums):
     pfw = {
         "team_name": "Purdue Ft. Wayne",
         "mascot": "Mastodons",
@@ -17,11 +18,11 @@ def forms(teams):
     iu_v_gm = {
         "home_team": [str(teams.indiana.pk)],
         "away_team": [str(teams.gm.pk)],
-        "neutral_site": ["on"],
         "live_stats": [
             "https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind"
         ],
         "first_pitch": ["2025-02-14-1830"],
+        "stadium": [str(stadiums.surprise.pk)]
     }
     iu_holds_duke = {
         "game_status": "in-progress",

@@ -5,6 +5,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 from live_game_blog.tests.fixtures.games import games
+from live_game_blog.tests.fixtures.stadiums import stadiums
 from accounts.tests.fixtures import (
     user_not_logged_in,
     user_iubase17,

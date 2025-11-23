@@ -9,6 +9,7 @@ from live_game_blog.tests.fixtures.games import (
     user_iubase17,
 )
 from live_game_blog.tests.fixtures.teams import teams
+from live_game_blog.tests.fixtures.stadiums import stadiums
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
 from live_game_blog.tests.fixtures.form_data import forms
 
@@ -37,9 +38,9 @@ def test_add_game_get_shows_forbidden_without_perms(client, logged_user_schwarbs
 
 
 @pytest.mark.django_db
-def test_add_game(admin_client, teams, games, scoreboards, forms):
+def test_add_neutral_game(admin_client, teams, stadiums, games, scoreboards, forms):
     response = admin_client.post(
-        reverse("add_game"),
+        reverse("add_neutral_game"),
         forms.iu_v_gm,
         follow=True,
     )
@@ -51,9 +52,9 @@ def test_add_game(admin_client, teams, games, scoreboards, forms):
 
 
 @pytest.mark.django_db
-def test_add_game_post_shows_forbidden_without_perms(client, logged_user_schwarbs, teams, games, scoreboards, forms):
+def test_add_neutral_game_post_shows_forbidden_without_perms(client, logged_user_schwarbs, teams, games, scoreboards, forms):
     response = client.post(
-        reverse("add_game"),
+        reverse("add_neutral_game"),
         forms.iu_v_gm,
     )
     assert response.status_code == 403
@@ -80,7 +81,7 @@ def test_add_tourney_game(
 def test_add_game_post_asks_for_login_when_not_logged_in(client, forms, teams):
     response = client.post(
         reverse("add_game"),
-        forms.iu_v_gm,
+        forms.uk_tourney,
         follow=True,
     )
     assert response.status_code == 200

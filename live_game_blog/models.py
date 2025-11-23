@@ -14,6 +14,19 @@ class Team(models.Model):
 
     def __str__(self) -> str:
         return self.team_name
+    
+
+class Stadium(models.Model):
+    name = models.CharField(null=False, max_length=64)
+    address = models.CharField(null=False, max_length=128)
+    city = models.CharField(null=False, max_length=64)
+    state = models.CharField(null=True, blank=True, max_length=2)
+    country = models.CharField(null=False, max_length=64)
+    timezone = models.CharField(null=False, max_length=64)
+    orientation = models.CharField(null=False, max_length=16)
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class Game(models.Model):
@@ -39,6 +52,10 @@ class Game(models.Model):
     video_url = models.URLField(null=True, blank=True)
     audio_primary = models.URLField(null=True, blank=True)
     audio_student = models.URLField(null=True, blank=True)
+    stadium = models.ForeignKey(Stadium, on_delete=models.CASCADE, null=True, blank=True)
+    first_pitch_temp = models.IntegerField(null=True, blank=True)
+    first_pitch_wind_speed = models.IntegerField(null=True, blank=True)
+    first_pitch_wind_direction = models.CharField(max_length=16, null=True, blank=True)
 
     def __str__(self) -> str:
         vs = "at"
@@ -84,19 +101,6 @@ class BlogEntry(models.Model):
 
     def __str__(self) -> str:
         return f"{self.author}: {self.blog_time}"
-    
-
-class Stadium(models.Model):
-    name = models.CharField(null=False, max_length=64)
-    address = models.CharField(null=False, max_length=128)
-    city = models.CharField(null=False, max_length=64)
-    state = models.CharField(null=True, blank=True, max_length=2)
-    country = models.CharField(null=False, max_length=64)
-    timezone = models.CharField(null=False, max_length=64)
-    orientation = models.CharField(null=False, max_length=16)
-
-    def __str__(self):
-        return f"{self.name}"
     
 
 class StadiumConfig(models.Model):

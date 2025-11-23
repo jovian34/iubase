@@ -6,6 +6,7 @@ from live_game_blog.views import (
     add_team,
     add_game,
     edit_blog_entry,
+    edit_game_info,
     live_game_blog,
 )
 
@@ -35,5 +36,6 @@ urlpatterns = [
     ),
 
     # partials
-    path("add_neutral_game", add_game.neutral, name="add_neutral_game"),
+    path("add_neutral_game/", add_game.neutral, name="add_neutral_game"),
+    path("edit_game_info/<game_pk>", edit_game_info.view, name="edit_game_info"),
 ]

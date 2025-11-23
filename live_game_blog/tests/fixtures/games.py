@@ -12,21 +12,24 @@ from accounts.tests.fixtures import (
     logged_user_schwarbs,
     superuser_houston,
 )
+from live_game_blog.tests.fixtures.stadiums import stadiums
 
 
 @pytest.fixture
-def games(client, teams):
+def games(client, teams, stadiums):
     iu_duke = Game.objects.create(
         home_team=teams.duke,
         away_team=teams.indiana,
         neutral_site=True,
         first_pitch=(timezone.now() + datetime.timedelta(days=1)),
+        stadium=stadiums.surprise,
     )
     iu_duke_ly = Game.objects.create(
         home_team=teams.duke,
         away_team=teams.indiana,
         neutral_site=True,
         first_pitch=(timezone.now() - datetime.timedelta(days=365)),
+        stadium=stadiums.surprise,
     )
     iu_duke_23_fall = Game.objects.create(
         home_team=teams.duke,
@@ -35,6 +38,7 @@ def games(client, teams):
         first_pitch=datetime.datetime(
             2023, 10, 4, 21, 5, 00, tzinfo=datetime.timezone.utc
         ),
+        stadium=stadiums.surprise,
     )
     iu_duke_69_spring = Game.objects.create(
         home_team=teams.duke,
@@ -43,6 +47,7 @@ def games(client, teams):
         first_pitch=datetime.datetime(
             2069, 2, 24, 21, 5, 00, tzinfo=datetime.timezone.utc
         ),
+        stadium=stadiums.surprise,
     )
     iu_coastal = Game.objects.create(
         home_team=teams.coastal,
@@ -61,6 +66,7 @@ def games(client, teams):
         away_team=teams.gm,
         neutral_site=True,
         first_pitch=(timezone.now() + datetime.timedelta(days=3)),
+        stadium=stadiums.surprise,
     )
     iu_iowa = Game.objects.create(
         home_team=teams.iowa,
@@ -94,12 +100,14 @@ def games(client, teams):
         away_team=teams.kentucky,
         neutral_site=True,
         first_pitch=(timezone.now() - datetime.timedelta(days=301)),
+        stadium=stadiums.surprise,
     )
     iu_uk_sat = Game.objects.create(
         home_team=teams.indiana,
         away_team=teams.kentucky,
         neutral_site=True,
         first_pitch=(timezone.now() - datetime.timedelta(days=302)),
+        stadium=stadiums.surprise,
     )
     iu_gm_fall = Game.objects.create(
         home_team=teams.indiana,

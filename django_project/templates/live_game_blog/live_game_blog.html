@@ -13,6 +13,8 @@
     {% endif %}
 {% endblock %}
 
+
+
 {% block header %}
     <div class="column-12 clear-both">
         <h1>  
@@ -47,6 +49,19 @@
             <img src="{{ game.featured_image }}" class="lgb-featured-image">
         {% endif %}
     </div>
+
+    {% if perms.live_game_blog.change_game %}
+        <div class="column-12 clear-both" id="edit-game-info">
+            <div class="column-3"></div>
+            <div class="column-6">
+                <button hx-get="{% url "edit_game_info" game.pk %}"
+                        hx-target="#edit-game-info">
+                        Edit Game Info
+                </button>
+            </div>
+        </div>
+    {% endif %}
+
             
             
 

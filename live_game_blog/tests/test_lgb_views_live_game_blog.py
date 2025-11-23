@@ -10,6 +10,7 @@ from live_game_blog.tests.fixtures.games import (
     user_iubase17,
 )
 from live_game_blog.tests.fixtures.teams import teams
+from live_game_blog.tests.fixtures.stadiums import stadiums
 from live_game_blog.tests.fixtures.blog import entries
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
 from django_project.tests import clean_text
@@ -196,6 +197,7 @@ def test_lgb_shows_adds_and_edits_with_perms(admin_client, games, scoreboards, e
     assert "Add Blog Entry Only" in str(response.content)
     assert "Add Blog Entry plus Scoreboard" in str(response.content)
     assert "Edit Entry" in str(response.content)
+    assert "Edit Game Info" in str(response.content)
 
 
 @pytest.mark.django_db
@@ -205,6 +207,7 @@ def test_lgb_shows_no_adds_or_edits_without_perms(client, games, logged_user_sch
     assert "Add Blog Entry Only" not in str(response.content)
     assert "Add Blog Entry plus Scoreboard" not in str(response.content)
     assert "Edit Entry" not in str(response.content)
+    assert "Edit Game Info" not in str(response.content)
 
 
 @pytest.mark.django_db

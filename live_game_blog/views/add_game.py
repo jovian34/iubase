@@ -60,6 +60,9 @@ def save_game(form):
         audio_primary=form.cleaned_data["audio_primary"],
         audio_student=form.cleaned_data["audio_student"],
         first_pitch=form.cleaned_data["first_pitch"],
+        first_pitch_temp = form.cleaned_data["first_pitch_temp"],
+        first_pitch_wind_speed = form.cleaned_data["first_pitch_wind_speed"],
+        first_pitch_wind_angle = form.cleaned_data["first_pitch_wind_angle"],
     )
     add_game.save()
 
@@ -83,6 +86,9 @@ def save_neutral_game(form):
         audio_primary=form.cleaned_data["audio_primary"],
         audio_student=form.cleaned_data["audio_student"],
         first_pitch=form.cleaned_data["first_pitch"],
+        first_pitch_temp = form.cleaned_data["first_pitch_temp"],
+        first_pitch_wind_speed = form.cleaned_data["first_pitch_wind_speed"],
+        first_pitch_wind_angle = form.cleaned_data["first_pitch_wind_angle"],
         stadium=form.cleaned_data["stadium"]
     )
     add_game.save()

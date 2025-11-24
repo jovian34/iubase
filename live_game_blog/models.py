@@ -23,7 +23,7 @@ class Stadium(models.Model):
     state = models.CharField(null=True, blank=True, max_length=2)
     country = models.CharField(null=False, max_length=64)
     timezone = models.CharField(null=False, max_length=64)
-    orientation = models.CharField(null=False, max_length=16)
+    orientation = models.IntegerField(null=False)
 
     def __str__(self):
         return f"{self.name}"
@@ -55,7 +55,7 @@ class Game(models.Model):
     stadium = models.ForeignKey(Stadium, on_delete=models.CASCADE, null=True, blank=True)
     first_pitch_temp = models.IntegerField(null=True, blank=True)
     first_pitch_wind_speed = models.IntegerField(null=True, blank=True)
-    first_pitch_wind_direction = models.CharField(max_length=16, null=True, blank=True)
+    first_pitch_wind_angle = models.IntegerField(null=True, blank=False)
 
     def __str__(self) -> str:
         vs = "at"

@@ -47,7 +47,7 @@ def get_form_with_current_game_info(edit_game):
             "audio_student": edit_game.audio_student,
             "first_pitch_temp": edit_game.first_pitch_temp,
             "first_pitch_wind_speed": edit_game.first_pitch_wind_speed,
-            "first_pitch_wind_direction": edit_game.first_pitch_wind_direction,
+            "first_pitch_wind_angle": edit_game.first_pitch_wind_angle,
         }
     )
     
@@ -72,5 +72,5 @@ def save_edited_game(edit_game, form):
     edit_game.first_pitch = form.cleaned_data["first_pitch"]
     edit_game.first_pitch_temp = form.cleaned_data["first_pitch_temp"]
     edit_game.first_pitch_wind_speed = form.cleaned_data["first_pitch_wind_speed"]
-    edit_game.first_pitch_wind_direction = form.cleaned_data["first_pitch_wind_direction"]
+    edit_game.first_pitch_wind_angle = form.cleaned_data["first_pitch_wind_angle"]
     edit_game.save()

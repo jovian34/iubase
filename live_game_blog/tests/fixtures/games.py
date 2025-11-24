@@ -60,8 +60,8 @@ def games(client, teams, stadiums):
         away_team=teams.indiana,
         neutral_site=False,
         first_pitch=(timezone.now() - datetime.timedelta(hours=1)),
-        first_pitch_wind_direction="ENE",
         event="Pre-season Tournament",
+        first_pitch_wind_angle=20,
     )
     iu_gm = Game.objects.create(
         home_team=teams.indiana,

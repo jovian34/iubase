@@ -14,7 +14,7 @@ def stadiums(client):
         state="IN",
         country="USA",
         timezone="America/New_York",
-        orientation="NE",
+        orientation=43,
     )
     surprise = lgb_models.Stadium.objects.create(
         name="Surprise Satdium",
@@ -23,7 +23,7 @@ def stadiums(client):
         state="AZ",
         country="USA",
         timezone="America/Phoenix",
-        orientation="NE"
+        orientation=45
     )
     stadium_list = [
         "bart",

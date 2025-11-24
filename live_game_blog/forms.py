@@ -106,8 +106,8 @@ class AddGameForm(forms.Form):
         label="Wind speed (MPH) at first pitch",
         required=False,
     )
-    first_pitch_wind_direction = forms.CharField(
-        label="Wind direction at first pitch",
+    first_pitch_wind_angle = forms.IntegerField(
+        label="Wind direction at first pitch with N at 0-degrees and E at 90-degrees",
         required=False
     )
     

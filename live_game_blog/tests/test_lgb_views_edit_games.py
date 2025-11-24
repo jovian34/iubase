@@ -28,7 +28,7 @@ def test_edit_lgb_game_renders_change_form(admin_client, games, scoreboards, ent
     response = admin_client.get(reverse("edit_game_info", args=[games.iu_coastal_ip.pk]))
     assert response.status_code == 200
     output = clean_text.get_and_clean_content_from_response(response)
-    assert "ENE" in output
+    assert "20" in output
 
 
 @pytest.mark.django_db

@@ -15,15 +15,19 @@ def stadiums(client):
         country="USA",
         timezone="America/New_York",
         orientation=43,
+        lat=39.18452321031082,
+        long=-86.52270607828599,
     )
     surprise = lgb_models.Stadium.objects.create(
-        name="Surprise Satdium",
+        name="Surprise Stadium",
         address="15850 N. Bullard Ave.",
         city="Surprise",
         state="AZ",
         country="USA",
         timezone="America/Phoenix",
-        orientation=45
+        orientation=45,
+        lat=33.62763265256799,
+        long=-112.37849762588196,
     )
     stadium_list = [
         "bart",

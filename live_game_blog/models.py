@@ -24,6 +24,8 @@ class Stadium(models.Model):
     country = models.CharField(null=False, max_length=64)
     timezone = models.CharField(null=False, max_length=64)
     orientation = models.IntegerField(null=False)
+    lat = models.DecimalField(decimal_places=14, max_digits=32)
+    long = models.DecimalField(decimal_places=14, max_digits=32)
 
     def __str__(self):
         return f"{self.name}"

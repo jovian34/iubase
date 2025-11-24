@@ -37,6 +37,8 @@ def test_stadium_model_stored_all_fields(client, stadiums):
     assert stadiums.bart.country == "USA"
     assert stadiums.bart.timezone == "America/New_York"
     assert stadiums.bart.orientation == 43
+    assert stadiums.bart.lat == 39.18452321031082
+    assert stadiums.bart.long == -86.52270607828599
 
 
 @pytest.mark.django_db

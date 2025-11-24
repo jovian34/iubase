@@ -41,56 +41,44 @@ def validate_and_save_posted_neutral_game_form_then_redirect(request):
     return shortcuts.redirect(urls.reverse("live_game_blog", args=[this_game.pk]))
 
 
+def build_game_kwargs(form):
+    return {
+        "home_team": form.cleaned_data["home_team"],
+        "home_rank": form.cleaned_data["home_rank"],
+        "home_seed": form.cleaned_data["home_seed"],
+        "home_nat_seed": form.cleaned_data["home_nat_seed"],
+        "away_team": form.cleaned_data["away_team"],
+        "away_rank": form.cleaned_data["away_rank"],
+        "away_seed": form.cleaned_data["away_seed"],
+        "away_nat_seed": form.cleaned_data["away_nat_seed"],
+        "event": form.cleaned_data["event"],
+        "featured_image": form.cleaned_data["featured_image"],
+        "live_stats": form.cleaned_data["live_stats"],
+        "video": form.cleaned_data["video"],
+        "video_url": form.cleaned_data["video_url"],
+        "audio_primary": form.cleaned_data["audio_primary"],
+        "audio_student": form.cleaned_data["audio_student"],
+        "first_pitch": form.cleaned_data["first_pitch"],
+        "first_pitch_temp": form.cleaned_data["first_pitch_temp"],
+        "first_pitch_wind_speed": form.cleaned_data["first_pitch_wind_speed"],
+        "first_pitch_wind_angle": form.cleaned_data["first_pitch_wind_angle"],
+    }
+
+
 def save_game(form):
-    add_game = lgb_models.Game(
-        home_team=form.cleaned_data["home_team"],
-        home_rank=form.cleaned_data["home_rank"],
-        home_seed=form.cleaned_data["home_seed"],
-        home_nat_seed=form.cleaned_data["home_nat_seed"],
-        away_team=form.cleaned_data["away_team"],
-        away_rank=form.cleaned_data["away_rank"],
-        away_seed=form.cleaned_data["away_seed"],
-        away_nat_seed=form.cleaned_data["away_nat_seed"],
-        neutral_site=False,
-        event=form.cleaned_data["event"],
-        featured_image=form.cleaned_data["featured_image"],
-        live_stats=form.cleaned_data["live_stats"],
-        video=form.cleaned_data["video"],
-        video_url=form.cleaned_data["video_url"],
-        audio_primary=form.cleaned_data["audio_primary"],
-        audio_student=form.cleaned_data["audio_student"],
-        first_pitch=form.cleaned_data["first_pitch"],
-        first_pitch_temp = form.cleaned_data["first_pitch_temp"],
-        first_pitch_wind_speed = form.cleaned_data["first_pitch_wind_speed"],
-        first_pitch_wind_angle = form.cleaned_data["first_pitch_wind_angle"],
-    )
+    kwargs = build_game_kwargs(form)
+    kwargs["neutral_site"] = False
+
+    add_game = lgb_models.Game(**kwargs)
     add_game.save()
 
 
 def save_neutral_game(form):
-    add_game = lgb_models.Game(
-        home_team=form.cleaned_data["home_team"],
-        home_rank=form.cleaned_data["home_rank"],
-        home_seed=form.cleaned_data["home_seed"],
-        home_nat_seed=form.cleaned_data["home_nat_seed"],
-        away_team=form.cleaned_data["away_team"],
-        away_rank=form.cleaned_data["away_rank"],
-        away_seed=form.cleaned_data["away_seed"],
-        away_nat_seed=form.cleaned_data["away_nat_seed"],
-        neutral_site=True,
-        event=form.cleaned_data["event"],
-        featured_image=form.cleaned_data["featured_image"],
-        live_stats=form.cleaned_data["live_stats"],
-        video=form.cleaned_data["video"],
-        video_url=form.cleaned_data["video_url"],
-        audio_primary=form.cleaned_data["audio_primary"],
-        audio_student=form.cleaned_data["audio_student"],
-        first_pitch=form.cleaned_data["first_pitch"],
-        first_pitch_temp = form.cleaned_data["first_pitch_temp"],
-        first_pitch_wind_speed = form.cleaned_data["first_pitch_wind_speed"],
-        first_pitch_wind_angle = form.cleaned_data["first_pitch_wind_angle"],
-        stadium=form.cleaned_data["stadium"]
-    )
+    kwargs = build_game_kwargs(form)
+    kwargs["neutral_site"] = True
+    kwargs["stadium"] = form.cleaned_data["stadium"]
+
+    add_game = lgb_models.Game(**kwargs)
     add_game.save()
 
 

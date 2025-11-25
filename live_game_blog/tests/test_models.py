@@ -31,19 +31,17 @@ def test_team_model_string_def(client, teams):
 
 @pytest.mark.django_db
 def test_stadium_model_stored_all_fields(client, stadiums):
-    assert stadiums.bart.name == "Bart Kaufman Field"
     assert stadiums.bart.address == "1873 N Fee Ln"
     assert stadiums.bart.city == "Bloomington"
     assert stadiums.bart.country == "USA"
     assert stadiums.bart.timezone == "America/New_York"
-    assert stadiums.bart.orientation == 43
     assert stadiums.bart.lat == 39.18452321031082
     assert stadiums.bart.long == -86.52270607828599
 
 
 @pytest.mark.django_db
 def test_stadium_model_string_def(client, stadiums):
-    assert str(stadiums.bart) == "Bart Kaufman Field"
+    assert str(stadiums.bart) == "1873 N Fee Ln | Bloomington, IN USA"
 
 
 @pytest.mark.django_db
@@ -60,6 +58,7 @@ def test_stadium_config_model_stored_all_fields(client, stadiums, stadium_config
     assert stadium_configs.surprise_2002.lights
     assert stadium_configs.surprise_2002.capacity == 10714
     assert stadium_configs.bart_2013.home_dugout == "third"
+    assert stadium_configs.bart_2013.orientation == 45
 
 
 @pytest.mark.django_db
@@ -68,9 +67,9 @@ def test_stadium_config_model_string_def(client, stadiums, stadium_configs):
 
 
 @pytest.mark.django_db
-def test_home_stadium_model_stored_all_fields(client, stadiums, home_stadium, teams):
+def test_home_stadium_model_stored_all_fields(client, stadiums, home_stadium, teams, stadium_configs):
     assert home_stadium.bart_2013.team == teams.indiana
-    assert home_stadium.bart_2013.stadium == stadiums.bart
+    assert home_stadium.bart_2013.stadium_config == stadium_configs.bart_2013
     assert home_stadium.bart_2013.designate_date == date(2013,3,1)
 
 

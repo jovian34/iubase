@@ -114,7 +114,7 @@ class AddGameForm(forms.Form):
 
 class AddNeutralGame(AddGameForm):
     stadium = forms.ModelChoiceField(
-        queryset=Stadium.objects.all().order_by("name"),
+        queryset=Stadium.objects.all().order_by("address"),
         label="Stadium",
     )
 

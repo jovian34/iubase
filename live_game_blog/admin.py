@@ -57,21 +57,21 @@ class BlogEntryAdmin(admin.ModelAdmin):
 class StadiumAdmin(admin.ModelAdmin):
     model = lgb_models.Stadium
     list_display = (
-        "name",
+        "address",
         "city",
         "state",
     )
-    ordering = ["name"]
+    ordering = ["address"]
 
 
 @admin.register(lgb_models.StadiumConfig)
 class StadiumConfigAdmin(admin.ModelAdmin):
     model = lgb_models.Stadium
     list_display = (
-        "stadium",
+        "stadium_name",
         "config_date",
     )
-    ordering = ["stadium", "-config_date"]
+    ordering = ["stadium_name", "-config_date"]
 
 
 @admin.register(lgb_models.HomeStadium)
@@ -79,7 +79,7 @@ class HomeStadiumAdmin(admin.ModelAdmin):
     model = lgb_models.HomeStadium
     list_display = (
         "team",
-        "stadium",
+        "stadium_config",
         "designate_date",
     )
     ordering = ["team", "-designate_date"]

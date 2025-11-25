@@ -10,6 +10,7 @@ from live_game_blog.tests.fixtures.stadiums import stadiums
 @pytest.fixture
 def stadium_configs(client, stadiums):
     bart_2013 = lgb_models.StadiumConfig.objects.create(
+        stadium_name="Bart Kaufman Field",
         stadium=stadiums.bart,
         config_date=date(2013,3,1),
         surface_inf="artificial",
@@ -20,9 +21,11 @@ def stadium_configs(client, stadiums):
         center=400,
         right=330,
         capacity=2500,
+        orientation=45,
         home_dugout="third"
     )
     surprise_2002 = lgb_models.StadiumConfig.objects.create(
+        stadium_name="Surprise Stadium",
         stadium=stadiums.surprise,
         config_date=date(2002,12,8),
         surface_inf="natural",
@@ -33,6 +36,7 @@ def stadium_configs(client, stadiums):
         center=400,
         right=350,
         capacity=10714,
+        orientation=45,
     )
     config_list = [
         "bart_2013",

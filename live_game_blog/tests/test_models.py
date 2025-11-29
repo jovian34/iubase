@@ -79,13 +79,13 @@ def test_home_stadium_model_string_def(client, stadiums, home_stadium):
 
 
 @pytest.mark.django_db
-def test_games_stored_neutral_site(client, games):
+def test_game_model_stored_neutral_site(client, games):
     assert games.iu_gm.neutral_site
     assert not games.iu_mo.neutral_site
 
 
 @pytest.mark.django_db
-def test_games_stored_stadium_for_neutral_game(client, games, stadiums):
+def test_game_model_stored_stadium_for_neutral_game(client, games, stadiums):
     assert games.iu_duke.stadium == stadiums.surprise
 
 

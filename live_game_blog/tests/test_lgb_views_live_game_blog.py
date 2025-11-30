@@ -227,3 +227,13 @@ def test_set_spring_year_sets_october_to_next_spring(games):
 @pytest.mark.django_db
 def test_set_spring_year_sets_february_to_same_spring(games):
     assert live_game_blog.set_spring_year(games.iu_duke_69_spring) == 2069
+
+
+@pytest.mark.xfail
+@pytest.mark.django_db
+def test_game_without_weather_renders_get_weather_button(client, games, scoreboards):
+    response = client.get(reverse("live_game_blog", args=[games.iu_duke_ly.pk]))
+    assert response.status_code == 200
+    assert not games.iu_duke_ly.first_pitch_temp
+    assert not games.iu_duke_ly.first_pitch_weather_describe
+    assert "Get and store weather data" in str(response.content)

@@ -8,6 +8,7 @@ from live_game_blog.views import (
     edit_blog_entry,
     edit_game_info,
     live_game_blog,
+    stadiums,
 )
 
 
@@ -17,6 +18,8 @@ urlpatterns = [
     path("live_game_blog/<game_pk>/", live_game_blog.view, name="live_game_blog"),
     path("add_game", add_game.view, name="add_game"),
     path("add_team", add_team.view, name="add_team"),
+    path("stadiums", stadiums.view, name="stadiums"),
+
     # partials
     path("past_games/", games.past, name="past_games"),
     path(
@@ -34,8 +37,6 @@ urlpatterns = [
         edit_blog_entry.view,
         name="edit_blog_entry",
     ),
-
-    # partials
     path("add_neutral_game/", add_game.neutral, name="add_neutral_game"),
     path("edit_game_info/<game_pk>", edit_game_info.view, name="edit_game_info"),
 ]

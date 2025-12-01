@@ -1,7 +1,7 @@
 from django import forms
 
 from live_game_blog.models import Team, Stadium
-from live_game_blog.choices import GAME_STATUS, INNING_PART_CHOICES, OUTS_CHOICES
+from live_game_blog.choices import GAME_STATUS, INNING_PART_CHOICES, OUTS_CHOICES, TIMEZONE_CHOICES, SURFACE_CHOICES, DUGOUT_CHOICES
 
 
 class BlogAndScoreboardForm(forms.Form):
@@ -137,3 +137,46 @@ class AddTeamForm(forms.Form):
         required=False,
         assume_scheme="https",  # remove argument for Django 6.0
     )
+
+
+class AddHomeStadiumDataForm(forms.Form):
+    address = forms.CharField(label="Address")
+    city = forms.CharField(label="City")
+    state = forms.CharField(label="State")
+    country = forms.CharField(label="Country")
+    timezone = forms.ChoiceField(
+        choices=TIMEZONE_CHOICES,
+        label="Select Timezone",
+    )
+    lat = forms.DecimalField(label="Latitude")
+    long = forms.DecimalField(label="Longitude")
+    stadium_name = forms.CharField(label="Full name of the stadium")
+    config_date = forms.DateField(label="Date stadium was set to this configuration (including name)")
+    designate_date = forms.DateField(label="Date this configuration became exclusive home field")
+    surface_inf = forms.ChoiceField(
+        choices=SURFACE_CHOICES,
+        label="Infield Surface",
+    )
+    surface_out = forms.ChoiceField(
+        choices=SURFACE_CHOICES,
+        label="Outfield Surface",
+    )
+    surface_mound = forms.ChoiceField(
+        choices=SURFACE_CHOICES,
+        label="Pitching Mound Surface",
+    )
+    photo = forms.URLField(
+        label="Photo URL", 
+        required=False,
+    )
+    orientation = forms.IntegerField(label="Out to centerfield orientation")
+    left = forms.IntegerField(label="Distance from home to left field fence")
+    center = forms.IntegerField(label="Distance from home to centerfield fence")
+    right = forms.IntegerField(label="Distance from home to right field fence")
+    capacity = forms.IntegerField(label="Fan Capacity")
+    lights = forms.BooleanField(label="Does this stadium have working lights?")
+    home_dugout = forms.ChoiceField(
+        choices=DUGOUT_CHOICES,
+        label="Which side is the home team dugout?"
+    )
+    

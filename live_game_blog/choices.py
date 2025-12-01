@@ -18,3 +18,22 @@ OUTS_CHOICES = [
     (2, "two"),
     (3, "three"),
 ]
+
+TIMEZONE_CHOICES = [
+    ("America/New_York", "Eastern"),
+    ("America/Chicago", "Central"),
+    ("America/Denver", "Mountain"),
+    ("America/Phoenix", "Arizona"),
+    ("America/Los_Angeles", "Pacific"),
+    ("America/Honolulu", "Hawaii"),
+]
+
+SURFACE_CHOICES = [
+    ("natural", "natural"),
+    ("artificial", "artificial"),
+]
+
+DUGOUT_CHOICES = [
+    ("third", "third"),
+    ("first", "first"),
+]

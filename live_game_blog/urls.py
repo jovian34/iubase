@@ -3,6 +3,7 @@ from live_game_blog.views import (
     games,
     add_blog_entry_only,
     add_blog_plus_scoreboard,
+    add_home_stadium_data,
     add_team,
     add_game,
     edit_blog_entry,
@@ -19,6 +20,11 @@ urlpatterns = [
     path("add_game", add_game.view, name="add_game"),
     path("add_team", add_team.view, name="add_team"),
     path("stadiums", stadiums.view, name="stadiums"),
+    path(
+        "add_home_stadium_data/<team_pk>/",
+        add_home_stadium_data.view,
+        name="add_home_stadium_data",
+    ),
 
     # partials
     path("past_games/", games.past, name="past_games"),
@@ -51,5 +57,5 @@ urlpatterns = [
         "teams_wo_stad_config", 
         stadiums.teams_wo_stad_config,
         name="teams_wo_stad_config"
-        )
+        ),
 ]

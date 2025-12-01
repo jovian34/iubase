@@ -3,7 +3,7 @@
 {% for team in teams %}
     <li>
         <h2>{{ team.team_name }}</h2>
-        <a href=""><button>Add Stadium Data</button></a>
+        <a href="{% url "add_home_stadium_data" team.pk %}"><button>Add Stadium Data for {{ team.team_name }}</button></a>
     </li>
 {% endfor %}
 </ol>

@@ -44,7 +44,7 @@ def test_add_stadium_data_kentucky_post_saves_form_data(admin_client, teams, for
     assert response.status_code == 200
     assert "Kentucky" not in str(response.content)
     stadium = lgb_models.Stadium.objects.get(
-        long=-84.50317,
+        city="Lexington",
     )
     stadium_config = lgb_models.StadiumConfig.objects.get(
         stadium=stadium,
@@ -52,7 +52,7 @@ def test_add_stadium_data_kentucky_post_saves_form_data(admin_client, teams, for
     ky_home_stadium_assign = lgb_models.HomeStadium.objects.get(
         stadium_config=stadium_config,
     )
-    assert stadium.long == -84.50317
+    assert stadium.address == "510 Wildcat Ct."
     assert stadium_config.orientation == 100
     assert stadium_config.stadium_name == "Kentucky Proud Park"
     assert ky_home_stadium_assign.designate_date == datetime.date(2019,2,15)

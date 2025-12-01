@@ -10,22 +10,38 @@ def view(request, team_pk):
     elif request.method == "POST":
         form = forms.AddHomeStadiumDataForm(request.POST)
         if form.is_valid():
-            add_stadium = lgb_models.Stadium(
-                address = form.cleaned_data["address"],
-                city = form.cleaned_data["city"],
-                state = form.cleaned_data["state"],
-                country = form.cleaned_data["country"],
-                timezone = form.cleaned_data["timezone"],
-                lat = form.cleaned_data["lat"],
-                long = form.cleaned_data["long"],
-            )
-            add_stadium.save()
+            add_stadium_and_save(form)
             this_stadium = lgb_models.Stadium.objects.get(
                 address=form.cleaned_data["address"],
                 city = form.cleaned_data["city"],
                 state = form.cleaned_data["state"],
             )
-            add_stadium_config = lgb_models.StadiumConfig(
+            add_stadium_config_and_save(form, this_stadium)
+            this_stadium_config = lgb_models.StadiumConfig.objects.get(
+                stadium_name = form.cleaned_data["stadium_name"],
+            )
+            add_home_stadium_and_save(team_pk, form, this_stadium_config)
+            return shortcuts.redirect(urls.reverse("stadiums"))
+    else:
+        team = lgb_models.Team.objects.get(pk=team_pk)
+        template_path = "live_game_blog/add_home_stadium_data.html"
+        context = {
+            "team": team,
+            "page_title": f"Add Home Stadium Data for {team.team_name}",
+            "form": forms.AddHomeStadiumDataForm(),
+        }
+        return shortcuts.render(request, template_path, context)
+
+def add_home_stadium_and_save(team_pk, form, this_stadium_config):
+    add_home_stadium = lgb_models.HomeStadium(
+                team = lgb_models.Team.objects.get(pk=team_pk),
+                stadium_config = this_stadium_config,
+                designate_date = form.cleaned_data["designate_date"],
+            )
+    add_home_stadium.save()
+
+def add_stadium_config_and_save(form, this_stadium):
+    add_stadium_config = lgb_models.StadiumConfig(
                 stadium = this_stadium,
                 stadium_name = form.cleaned_data["stadium_name"],
                 config_date = form.cleaned_data["config_date"],
@@ -41,25 +57,16 @@ def view(request, team_pk):
                 lights = form.cleaned_data["lights"],
                 home_dugout = form.cleaned_data["home_dugout"],
             )
-            add_stadium_config.save()
-            this_stadium_config = lgb_models.StadiumConfig.get(
-                stadium_name = form.cleaned_data["stadium_name"],
+    add_stadium_config.save()
+
+def add_stadium_and_save(form):
+    add_stadium = lgb_models.Stadium(
+                address = form.cleaned_data["address"],
+                city = form.cleaned_data["city"],
+                state = form.cleaned_data["state"],
+                country = form.cleaned_data["country"],
+                timezone = form.cleaned_data["timezone"],
+                lat = form.cleaned_data["lat"],
+                long = form.cleaned_data["long"],
             )
-            add_home_stadium = lgb_models.HomeStadium(
-                team = lgb_models.Team.objects.get(pk=team_pk),
-                stadium_config = this_stadium_config,
-                designate_date = form.cleaned_data["designate_date"],
-            )
-            add_home_stadium.save()
-            return shortcuts.redirect(urls.reverse("stadiums"))
-        else:
-            print("FORM NOT VALID!!!!!!!")
-    else:
-        team = lgb_models.Team.objects.get(pk=team_pk)
-        template_path = "live_game_blog/add_home_stadium_data.html"
-        context = {
-            "team": team,
-            "page_title": f"Add Home Stadium Data for {team.team_name}",
-            "form": forms.AddHomeStadiumDataForm,
-        }
-        return shortcuts.render(request, template_path, context)
+    add_stadium.save()

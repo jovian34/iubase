@@ -84,9 +84,32 @@ def forms(teams, stadiums):
         "first_pitch_wind_direction": "ENE",
         "event": ["Baseball at the Beach"],
     }
+    uk_stadium = {
+        "address": ["510 Wildcat Ct."],
+        "city": ["Lexington"],
+        "state": ["Kentucky"],
+        "country": ["USA"],
+        "timezone": ["America/New_York"],
+        "lat": ["38.01822"],
+        "long": ["-84.50317"],
+        "stadium_name": ["Kentucky Proud Park"],
+        "config_date": ["2019-01-01"],
+        "designate_date": ["2019-02-15"],
+        "surface_inf": ["artificial"],
+        "surface_out": ["artificial"],
+        "surface_mound": ["artificial"],
+        "photo": ["https://live.staticflickr.com/65535/52947179552_349321280b_c.jpg"],
+        "capacity": ["7000"],
+        "orientation": ["100"],
+        "left": ["335"],
+        "center": ["400"],
+        "right": ["320"],
+        "lights": ["on"],
+        "home_dugout": ["left"],
+    }
     FormObj = namedtuple(
         "FormObj",
-        "pfw iu_v_gm iu_holds_duke iu_slams_duke uk_tourney edit_blog_uk_wins edit_iu_coastal_ip",
+        "pfw iu_v_gm iu_holds_duke iu_slams_duke uk_tourney edit_blog_uk_wins edit_iu_coastal_ip uk_stadium",
     )
     return FormObj(
         pfw=pfw,
@@ -96,4 +119,5 @@ def forms(teams, stadiums):
         uk_tourney=uk_tourney,
         edit_blog_uk_wins=edit_blog_uk_wins,
         edit_iu_coastal_ip=edit_iu_coastal_ip,
+        uk_stadium=uk_stadium,
     )

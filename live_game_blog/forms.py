@@ -168,6 +168,7 @@ class AddHomeStadiumDataForm(forms.Form):
     photo = forms.URLField(
         label="Photo URL", 
         required=False,
+        assume_scheme="https", # remove argument for Django 6.0
     )
     orientation = forms.IntegerField(label="Out to centerfield orientation")
     left = forms.IntegerField(label="Distance from home to left field fence")

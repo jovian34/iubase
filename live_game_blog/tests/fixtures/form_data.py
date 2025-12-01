@@ -97,7 +97,7 @@ def forms(teams, stadiums):
         "designate_date": "2019-02-15",
         "surface_inf": "artificial",
         "surface_out": "artificial",
-        "surface_mound": "artificial",
+        "surface_mound": "natural",
         "photo": "https://live.staticflickr.com/65535/52947179552_349321280b_c.jpg",
         "capacity": "7000",
         "orientation": "100",

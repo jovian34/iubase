@@ -44,7 +44,7 @@ def test_add_blog_entry_plus_scoreboard_form(
 
 
 @pytest.mark.django_db
-def test_add_blog_entry_plus_scoreboard_markkdown_to_html(
+def test_add_blog_entry_plus_scoreboard_markdown_to_html(
     admin_client, games, forms, scoreboards
 ):
     response = admin_client.post(
@@ -99,3 +99,17 @@ def test_get_add_blog_plus_scoreboard_ip_fills_form_with_top_of_inning(
     )
     assert response.status_code == 200
     assert 'value="Top" selected' in str(response.content)
+
+
+@pytest.mark.xfail
+@pytest.mark.django_db
+def test_get_add_blog_plus_scoreboard_shows_team_names_in_form_labels(
+    admin_client, games, scoreboards
+):
+    response = admin_client.get(
+        reverse("add_blog_plus_scoreboard", args=[games.iu_coastal_ip.pk]),
+    )
+    assert response.status_code == 200
+    assert "Coastal Carolina Runs Scored" in str(response.content)
+    assert "Coastal Carolina Hits" in str(response.content)
+    assert "Indiana Errors" in str(response.content)

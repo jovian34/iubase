@@ -17,6 +17,32 @@ class BlogAndScoreboardForm(forms.Form):
     home_errors = forms.IntegerField(label="Home Team Errors")
     blog_entry = forms.CharField(label="Content of Blog", widget=forms.Textarea())
 
+    def __init__(
+            self, 
+            *args, 
+            label_away_runs=None,
+            label_away_hits=None,
+            label_away_errors=None,
+            label_home_runs=None,
+            label_home_hits=None,
+            label_home_errors=None,
+            **kwargs,
+    ):
+        super().__init__(*args, **kwargs)
+        if label_away_runs:
+            self.fields['away_runs'].label = label_away_runs
+        if label_away_hits:
+            self.fields['away_hits'].label = label_away_hits
+        if label_away_errors:
+            self.fields['away_errors'].label = label_away_errors
+        if label_home_runs:
+            self.fields['home_runs'].label = label_home_runs
+        if label_home_hits:
+            self.fields['home_hits'].label = label_home_hits
+        if label_home_errors:
+            self.fields['home_errors'].label = label_home_errors
+
+
 
 class BlogEntryForm(forms.Form):
     is_raw_html = forms.BooleanField(label="Entry is RAW HTML code", required=False)

@@ -101,7 +101,6 @@ def test_get_add_blog_plus_scoreboard_ip_fills_form_with_top_of_inning(
     assert 'value="Top" selected' in str(response.content)
 
 
-@pytest.mark.xfail
 @pytest.mark.django_db
 def test_get_add_blog_plus_scoreboard_shows_team_names_in_form_labels(
     admin_client, games, scoreboards

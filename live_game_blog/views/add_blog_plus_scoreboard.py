@@ -59,6 +59,7 @@ def save_blog_entry(request, game_pk, form):
 
 
 def fill_initial_blog_and_scoreboard(game_pk):
+    game = lgb_models.Game.objects.get(pk=game_pk)
     last_score = lgb_models.Scoreboard.objects.filter(game=game_pk).last()
     inning, outs, part = set_initial_inning_outs_and_part(last_score)
     return lgb_forms.BlogAndScoreboardForm(
@@ -74,6 +75,13 @@ def fill_initial_blog_and_scoreboard(game_pk):
             "home_errors": last_score.home_errors,
             "away_errors": last_score.away_errors,
         },
+        label_away_runs=f"{game.away_team.team_name} Runs Scored",
+        label_away_hits=f"{game.away_team.team_name} Hits",
+        label_away_errors=f"{game.away_team.team_name} Errors",
+        label_home_runs=f"{game.home_team.team_name} Runs Scored",
+        label_home_hits=f"{game.home_team.team_name} Hits",
+        label_home_errors=f"{game.home_team.team_name} Errors",
+
     )
 
 

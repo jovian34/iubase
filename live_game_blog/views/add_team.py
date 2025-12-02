@@ -18,8 +18,13 @@ def view(request):
 def validate_posted_add_team_form_save_then_redirect(request):
     form = lgb_forms.AddTeamForm(request.POST)
     if form.is_valid():
-        save_team(form)
-    return shortcuts.redirect(urls.reverse("games"))
+        new_team = save_team(form)
+        return shortcuts.redirect(
+            urls.reverse("add_home_stadium_data", args=[new_team.pk])
+        )
+    else:
+        
+        return shortcuts.redirect(urls.reverse("games"))
 
 
 def save_team(form):
@@ -31,6 +36,9 @@ def save_team(form):
         roster=form.cleaned_data["roster"],
     )
     add_team.save()
+    return lgb_models.Team.objects.get(
+        team_name=form.cleaned_data["team_name"],
+    )
 
 
 def initialize_blank_add_team_form_and_render_template(request):

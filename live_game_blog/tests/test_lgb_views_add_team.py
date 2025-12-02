@@ -22,6 +22,19 @@ def test_add_team_get_forbidden_with_no_add_perms(client, logged_user_schwarbs):
 
 
 @pytest.mark.django_db
+def test_add_team_and_verify_redirect_to_add_stadium_for_team(
+    admin_client, forms
+):
+    response = admin_client.post(
+        reverse("add_team"),
+        forms.pfw,
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "Add Home Stadium Data for Purdue F" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_add_team_and_confirm_team_is_selectable_for_add_game(
     admin_client, forms
 ):

@@ -15,12 +15,10 @@ class PlayerForm(forms.Form):
     headshot = forms.URLField(
         label="Portrait headshot URL",
         required=False,
-        assume_scheme="https",  # remove argument for Django 6.0
     )
     action_shot = forms.URLField(
         label="Landscape action shot URL",
         required=False,
-        assume_scheme="https",  # remove argument for Django 6.0
     )
     birthdate = forms.DateField(label="Date of Birth", required=False)
     bats = forms.ChoiceField(
@@ -120,7 +118,6 @@ class SummerAssignForm(forms.Form):
     citation = forms.URLField(
         required=False,
         label="Citation",
-        assume_scheme="https",  # remove argument for Django 6.0
     )
 
 
@@ -146,7 +143,6 @@ class AccoladeForm(forms.Form):
     )
     citation = forms.URLField(
         label="Web link for announcement",
-        assume_scheme="https",  # remove argument for Django 6.0
     )
     annual_roster = forms.ModelChoiceField(
         queryset=pt_models.AnnualRoster.objects.all(),

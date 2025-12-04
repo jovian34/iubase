@@ -98,12 +98,10 @@ class AddGameForm(forms.Form):
     featured_image = forms.URLField(
         label="Featured Image",
         required=False,
-        assume_scheme="https",  # remove argument for Django 6.0
     )
     live_stats = forms.URLField(
         label="Live Stats Link",
         required=False,
-        assume_scheme="https",  # remove argument for Django 6.0
     )
     video = forms.CharField(
         label="Video Stream or TV provider",
@@ -112,17 +110,14 @@ class AddGameForm(forms.Form):
     video_url = forms.URLField(
         label="Video Stream or TV link",
         required=False,
-        assume_scheme="https",  # remove argument for Django 6.0
     )
     audio_primary = forms.URLField(
         label="Primary Audio Link",
         required=False,
-        assume_scheme="https",  # remove argument for Django 6.0
     )
     audio_student = forms.URLField(
         label="Student Audio Link",
         required=False,
-        assume_scheme="https",  # remove argument for Django 6.0
     )
     first_pitch_temp = forms.IntegerField(
         label="AccuWeather RealFeel Temperature (F) at First Pitch",
@@ -151,17 +146,14 @@ class AddTeamForm(forms.Form):
     logo = forms.URLField(
         label="URL for the team's logo",
         required=False,
-        assume_scheme="https",  # remove argument for Django 6.0
     )
     stats = forms.URLField(
         label="URL for the team's stats page",
         required=False,
-        assume_scheme="https",  # remove argument for Django 6.0
     )
     roster = forms.URLField(
         label="URL for the team's roster page",
         required=False,
-        assume_scheme="https",  # remove argument for Django 6.0
     )
 
 
@@ -194,7 +186,6 @@ class AddHomeStadiumDataForm(forms.Form):
     photo = forms.URLField(
         label="Photo URL", 
         required=False,
-        assume_scheme="https", # remove argument for Django 6.0
     )
     orientation = forms.IntegerField(label="Out to centerfield orientation")
     left = forms.IntegerField(label="Distance from home to left field fence")

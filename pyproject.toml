@@ -1,10 +1,10 @@
 [project]
 name = "iubase"
-version = "2025.12.04.1701"
-requires-python = "==3.14.0"
+version = "2025.12.10.1707"
+requires-python = "==3.14.2"
 dependencies = [
     "asgiref==3.11.0",
-    "coverage==7.12.0",
+    "coverage==7.13.0",
     "django==6.0",
     "django-allauth[socialaccount]==65.13.1",
     "execnet==2.1.2",
@@ -13,9 +13,9 @@ dependencies = [
     "markdown==3.10",
     "packaging==25.0",
     "pluggy==1.6.0",
-    "psycopg==3.3.1",
-    "psycopg-binary==3.3.1",
-    "pytest==9.0.1",
+    "psycopg==3.3.2",
+    "psycopg-binary==3.3.2",
+    "pytest==9.0.2",
     "pytest-cov==7.0.0",
     "pytest-django==4.11.1",
     "pytest-xdist==3.8.0",

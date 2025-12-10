@@ -71,6 +71,12 @@ def get_form_with_current_blog_entry_plus_scoreboard_data(edit_entry, edit_score
             "home_errors": edit_scoreboard.home_errors,
             "away_errors": edit_scoreboard.away_errors,
         },
+        label_away_runs=f"{edit_entry.game.away_team.team_name} Runs Scored",
+        label_away_hits=f"{edit_entry.game.away_team.team_name} Hits",
+        label_away_errors=f"{edit_entry.game.away_team.team_name} Errors",
+        label_home_runs=f"{edit_entry.game.home_team.team_name} Runs Scored",
+        label_home_hits=f"{edit_entry.game.home_team.team_name} Hits",
+        label_home_errors=f"{edit_entry.game.home_team.team_name} Errors",
     )
 
 

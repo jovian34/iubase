@@ -27,10 +27,22 @@ def test_edit_blog_entry_get_shows_forbidden_without_perms(
 def test_edit_blog_entry_get_renders_with_scoreboard(
     admin_client, games, entries, scoreboards
 ):
-    response = admin_client.get(reverse("edit_blog_entry", args=[entries.blog_uk_mon_y.pk]))
+    response = admin_client.get(reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]))
     assert response.status_code == 200
     assert "Content of Blog" in str(response.content)
-    assert "Bothwell walks the first batter" in str(response.content)
+    assert "Kentucky moves on to Super Regionals" in str(response.content)
+    assert 'name="home_errors" value="1"' in str(response.content)
+
+
+@pytest.mark.django_db
+def test_edit_blog_entry_get_renders_with_team_names_in_scoreboard_labels(
+    admin_client, games, entries, scoreboards
+):
+    response = admin_client.get(reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]))
+    assert response.status_code == 200
+    assert "Kentucky Runs Scored" in str(response.content)
+    assert "Kentucky Hits" in str(response.content)
+    assert "Indiana Errors" in str(response.content)
 
 
 @pytest.mark.django_db

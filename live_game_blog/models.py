@@ -53,13 +53,13 @@ class Game(models.Model):
     audio_primary = models.URLField(null=True, blank=True)
     audio_student = models.URLField(null=True, blank=True)
     stadium = models.ForeignKey(Stadium, on_delete=models.CASCADE, null=True, blank=True)
-    first_pitch_temp = models.DecimalField(max_digits=8, decimal_places=1, null=True)
-    first_pitch_feels_like = models.DecimalField(max_digits=8, decimal_places=1, null=True)
-    first_pitch_wind_speed = models.DecimalField(max_digits=8, decimal_places=1, null=True)
-    first_pitch_wind_angle = models.IntegerField(null=True)
-    first_pitch_wind_gusts = models.DecimalField(max_digits=8, decimal_places=1, null=True)
-    first_pitch_weather_describe = models.CharField(max_length=128, null=True)
-    gameday_sunset = models.DateTimeField(null=True)
+    first_pitch_temp = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
+    first_pitch_feels_like = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
+    first_pitch_wind_speed = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
+    first_pitch_wind_angle = models.IntegerField(null=True, blank=True)
+    first_pitch_wind_gusts = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
+    first_pitch_weather_describe = models.CharField(max_length=128, null=True, blank=True)
+    gameday_sunset = models.DateTimeField(null=True, blank=True)
 
     def __str__(self) -> str:
         vs = "at"

@@ -1,6 +1,6 @@
 [project]
 name = "iubase"
-version = "2025.12.10.1738"
+version = "2025.12.19.1424"
 requires-python = "==3.14.2"
 dependencies = [
     "asgiref==3.11.0",
@@ -21,7 +21,7 @@ dependencies = [
     "pytest-xdist==3.8.0",
     "python-dotenv==1.2.1",
     "pytz==2025.2",
-    "sqlparse==0.5.4",
+    "sqlparse==0.5.5",
     "typing-extensions==4.15.0",
 ]
 

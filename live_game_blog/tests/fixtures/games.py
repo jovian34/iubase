@@ -62,6 +62,7 @@ def games(client, teams, stadiums):
         first_pitch=(timezone.now() - datetime.timedelta(hours=1)),
         event="Pre-season Tournament",
         first_pitch_wind_angle=20,
+        live_stats="http://stats.statbroadcast.com/broadcast/?id=499358",
     )
     iu_gm = Game.objects.create(
         home_team=teams.indiana,
@@ -96,6 +97,7 @@ def games(client, teams, stadiums):
         away_team=teams.indiana,
         neutral_site=False,
         first_pitch=(timezone.now() - datetime.timedelta(days=300)),
+        live_stats="https://t.co/Odg1uF46xM",
     )
     iu_uk_sun = Game.objects.create(
         home_team=teams.indiana,

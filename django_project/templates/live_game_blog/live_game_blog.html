@@ -34,11 +34,13 @@
         {% if game.event %}<em>{{ game.event }}</em>{% endif %}
         </h2>
 
-        <p>{{ game.first_pitch | date:"D" }}, {{ game.first_pitch }} first pitch |
-        {% if game.video and game.video_url %}video: <a href="{{ game.video_url }}">{{ game.video }}</a> |{% endif %}
-        {% if game.audio_primary %}<a href="{{ game.audio_primary }}">audio</a> |{% endif %}
-        {% if game.audio_student %}<a href="{{ game.audio_student }}">student audio</a> |{% endif %}
-        {% if game.live_stats %}<a href="{{ game.live_stats}}">live stats</a>{% endif %}
+        <p>{{ game.first_pitch | date:"D" }}, {{ game.first_pitch }} first pitch
+        {% if not game_over %} |
+            {% if game.video and game.video_url %}video: <a href="{{ game.video_url }}">{{ game.video }}</a> |{% endif %}
+            {% if game.audio_primary %}<a href="{{ game.audio_primary }}">audio</a> |{% endif %}
+            {% if game.audio_student %}<a href="{{ game.audio_student }}">student audio</a> |{% endif %}
+            {% if game.live_stats %}<a href="{{ game.live_stats}}">live stats</a>{% endif %}
+        {% endif %}
         </p>
         <p>{{ game.away_team }} {{ game.away_team.mascot }}: <a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a><p>
         <p>{{ game.home_team }} {{ game.home_team.mascot }}: <a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a></p>

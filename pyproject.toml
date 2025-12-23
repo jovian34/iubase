@@ -1,6 +1,6 @@
 [project]
 name = "iubase"
-version = "2025.12.23.1020"
+version = "2025.12.23.1548"
 requires-python = "==3.14.2"
 dependencies = [
     "asgiref==3.11.0",

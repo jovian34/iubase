@@ -73,7 +73,7 @@ def save_game(form):
 def save_neutral_game(form):
     kwargs = build_game_kwargs(form)
     kwargs["neutral_site"] = True
-    kwargs["stadium"] = form.cleaned_data["stadium"]
+    kwargs["stadium_config"] = form.cleaned_data["stadium_config"]
 
     add_game = lgb_models.Game(**kwargs)
     add_game.save()

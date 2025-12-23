@@ -1,6 +1,6 @@
 from django import forms
 
-from live_game_blog.models import Team, Stadium
+from live_game_blog.models import Team, StadiumConfig
 from live_game_blog.choices import GAME_STATUS, INNING_PART_CHOICES, OUTS_CHOICES, TIMEZONE_CHOICES, SURFACE_CHOICES, DUGOUT_CHOICES
 
 
@@ -122,9 +122,9 @@ class AddGameForm(forms.Form):
     
 
 class AddNeutralGame(AddGameForm):
-    stadium = forms.ModelChoiceField(
-        queryset=Stadium.objects.all().order_by("address"),
-        label="Stadium",
+    stadium_config = forms.ModelChoiceField(
+        queryset=StadiumConfig.objects.all().order_by("stadium_name"),
+        label="Stadium Configuration",
     )
 
 

@@ -31,6 +31,6 @@ def test_teams_wo_stad_config_partial_fails_wo_perms(client, logged_user_schwarb
 def test_teams_wo_stad_config_partial_renders_correct_teams(admin_client, teams, home_stadium, stadium_configs, stadiums):
     response = admin_client.get(urls.reverse("teams_wo_stad_config"))
     assert response.status_code == 200
-    assert "Kentucky" in str(response.content)
+    assert "North Carolina" in str(response.content)
     assert "Indiana" not in str(response.content)
     assert "Add Stadium Data" in str(response.content)

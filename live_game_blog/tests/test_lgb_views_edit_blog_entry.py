@@ -13,6 +13,7 @@ from live_game_blog.tests.fixtures.blog import entries
 from live_game_blog.tests.fixtures.form_data import forms
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
 from live_game_blog.tests.fixtures.stadiums import stadiums
+from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 
 
 @pytest.mark.django_db

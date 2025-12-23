@@ -5,6 +5,7 @@ from live_game_blog.tests.fixtures.games import logged_user_schwarbs
 from live_game_blog.tests.fixtures.form_data import forms
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.stadiums import stadiums
+from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 
 
 @pytest.mark.django_db

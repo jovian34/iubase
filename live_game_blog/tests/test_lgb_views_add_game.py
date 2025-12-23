@@ -10,6 +10,7 @@ from live_game_blog.tests.fixtures.games import (
 )
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.stadiums import stadiums
+from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
 from live_game_blog.tests.fixtures.form_data import forms
 
@@ -38,7 +39,7 @@ def test_add_game_get_shows_forbidden_without_perms(client, logged_user_schwarbs
 
 
 @pytest.mark.django_db
-def test_add_neutral_game(admin_client, teams, stadiums, games, scoreboards, forms):
+def test_add_neutral_game(admin_client, teams, stadiums, stadium_configs, games, scoreboards, forms):
     response = admin_client.post(
         reverse("add_neutral_game"),
         forms.iu_v_gm,

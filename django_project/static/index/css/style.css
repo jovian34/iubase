@@ -361,6 +361,17 @@ td {
 	padding: .5em 2%;
 }
 
+.sidebar {
+	background-color: var(--body-background-color);
+	border-style: solid;
+	border-color: var(--green-lite);
+	padding-left: 1em;
+	padding-right: .5em;
+	margin-top: 2%;
+
+
+}
+
 .column-6{
 	background-color: var(--body-background-color);
 }

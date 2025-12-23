@@ -46,36 +46,36 @@ def test_stadium_model_string_def(client, stadiums):
 
 @pytest.mark.django_db
 def test_stadium_config_model_stored_all_fields(client, stadiums, stadium_configs):
-    assert stadium_configs.bart_2013.stadium == stadiums.bart
-    assert stadium_configs.bart_2013.config_date == date(2013,3,1)
-    assert stadium_configs.bart_2013.surface_inf == "artificial"
-    assert stadium_configs.bart_2013.surface_out == "artificial"
-    assert stadium_configs.bart_2013.surface_mound == "artificial"
-    assert stadium_configs.bart_2013.photo == "https://live.staticflickr.com/65535/54870456854_577c2962c0_c.jpg"
-    assert stadium_configs.bart_2013.left == 330
-    assert stadium_configs.bart_2013.right == 330
-    assert stadium_configs.bart_2013.center == 400
-    assert stadium_configs.surprise_2002.lights
-    assert stadium_configs.surprise_2002.capacity == 10714
-    assert stadium_configs.bart_2013.home_dugout == "third"
-    assert stadium_configs.bart_2013.orientation == 45
+    assert stadium_configs.bart.stadium == stadiums.bart
+    assert stadium_configs.bart.config_date == date(2013,3,1)
+    assert stadium_configs.bart.surface_inf == "artificial"
+    assert stadium_configs.bart.surface_out == "artificial"
+    assert stadium_configs.bart.surface_mound == "artificial"
+    assert stadium_configs.bart.photo == "https://live.staticflickr.com/65535/54870456854_577c2962c0_c.jpg"
+    assert stadium_configs.bart.left == 330
+    assert stadium_configs.bart.right == 330
+    assert stadium_configs.bart.center == 400
+    assert stadium_configs.surprise.lights
+    assert stadium_configs.surprise.capacity == 10714
+    assert stadium_configs.bart.home_dugout == "third"
+    assert stadium_configs.bart.orientation == 45
 
 
 @pytest.mark.django_db
 def test_stadium_config_model_string_def(client, stadiums, stadium_configs):
-    assert str(stadium_configs.bart_2013) == "Bart Kaufman Field - 2013"
+    assert str(stadium_configs.bart) == "Bart Kaufman Field - 2013"
 
 
 @pytest.mark.django_db
 def test_home_stadium_model_stored_all_fields(client, stadiums, home_stadium, teams, stadium_configs):
-    assert home_stadium.bart_2013.team == teams.indiana
-    assert home_stadium.bart_2013.stadium_config == stadium_configs.bart_2013
-    assert home_stadium.bart_2013.designate_date == date(2013,3,1)
+    assert home_stadium.bart.team == teams.indiana
+    assert home_stadium.bart.stadium_config == stadium_configs.bart
+    assert home_stadium.bart.designate_date == date(date.today().year-12,3,1)
 
 
 @pytest.mark.django_db
 def test_home_stadium_model_string_def(client, stadiums, home_stadium):
-    assert str(home_stadium.bart_2013) == "Indiana: Bart Kaufman Field - 2013"
+    assert str(home_stadium.bart) == "Indiana: Bart Kaufman Field - 2013"
 
 
 @pytest.mark.django_db
@@ -85,8 +85,8 @@ def test_game_model_stored_neutral_site(client, games):
 
 
 @pytest.mark.django_db
-def test_game_model_stored_stadium_for_neutral_game(client, games, stadiums):
-    assert games.iu_duke.stadium == stadiums.surprise
+def test_game_model_stored_stadium_config_for_neutral_game(client, games, stadiums, stadium_configs):
+    assert games.iu_duke.stadium_config == stadium_configs.surprise
 
 
 @pytest.mark.django_db

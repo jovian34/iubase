@@ -11,6 +11,7 @@ from live_game_blog.tests.fixtures.games import (
 )
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.stadiums import stadiums
+from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from live_game_blog.tests.fixtures.blog import entries
 from live_game_blog.tests.fixtures.form_data import forms
 from live_game_blog.tests.fixtures.scoreboards import scoreboards

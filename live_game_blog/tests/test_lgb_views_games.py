@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from live_game_blog.tests.fixtures.games import games
 from live_game_blog.tests.fixtures.stadiums import stadiums
+from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from accounts.tests.fixtures import (
     logged_user_schwarbs,
     user_not_logged_in,

@@ -69,6 +69,21 @@
 
 {% endblock %}
 
+{% block sidebar %}
+{% if game.first_pitch_temp %}
+<br>
+<div class="sidebar clear-both">
+    <h3>Weather {% if last_score.game_status == "pre-game" %}Forecast{% endif %}</h3>
+    <ul>
+        <li><p>{{ game.first_pitch_weather_describe }}</p></li>
+        <li><p>afternoon temperature: {{ game.first_pitch_temp|floatformat:0 }}&deg; F</p></li>
+        <li><p>wind: {{ game.first_pitch_wind_speed|floatformat:0 }} mph {{ wind_dir }}<p></li>
+    </ul>
+</div>
+{% endif %}
+
+{% endblock sidebar %}
+
 {% block content %}
 
 {% block edit_buttons %}

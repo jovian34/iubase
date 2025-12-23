@@ -3,6 +3,7 @@ from django import http
 
 from index.views import save_traffic_data
 from live_game_blog import models as lgb_models
+from live_game_blog import weather
 
 
 def view(request, game_pk):
@@ -17,6 +18,7 @@ def view(request, game_pk):
             "-update_time"
         )[0],
         "game_over": game_over,
+        "wind_dir": get_wind_dir(game),
     }
     template_path = "live_game_blog/live_game_blog.html"
     save_traffic_data(request=request, page=context["game"].__str__())
@@ -74,3 +76,13 @@ def is_game_over(game_pk):
     if latest_scoreboard.game_status in ["final", "cancelled", "post-game"]:
         return True
     return False
+
+
+def get_wind_dir(game):
+    if game.stadium_config and game.first_pitch_temp:
+        return weather.get_wind_description(
+            cf=game.stadium_config.orientation,
+            blowing=game.first_pitch_wind_angle
+        )   
+    else:
+        return None

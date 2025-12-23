@@ -29,6 +29,26 @@ class Stadium(models.Model):
         return f"{self.address} | {self.city}, {self.state} {self.country}"
 
 
+class StadiumConfig(models.Model):
+    stadium = models.ForeignKey(Stadium, on_delete=models.CASCADE)
+    stadium_name = models.CharField(null=False, max_length=128)
+    config_date = models.DateField(null=False)
+    surface_inf = models.CharField(null=True, blank=True, max_length=16)
+    surface_out = models.CharField(null=True, blank=True, max_length=16)
+    surface_mound = models.CharField(null=True, blank=True, max_length=16)
+    photo = models.URLField(null=True, blank=True)
+    orientation = models.IntegerField(null=False)
+    left = models.IntegerField(null=True, blank=True)
+    center = models.IntegerField(null=True, blank=True)
+    right = models.IntegerField(null=True, blank=True)
+    capacity = models.IntegerField(null=True, blank=True)
+    lights = models.BooleanField(default=True)
+    home_dugout = models.CharField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.stadium_name} - {self.config_date.year}"
+    
+
 class Game(models.Model):
     home_team = models.ForeignKey(
         Team, on_delete=models.CASCADE, related_name="home_team_set"
@@ -52,7 +72,7 @@ class Game(models.Model):
     video_url = models.URLField(null=True, blank=True)
     audio_primary = models.URLField(null=True, blank=True)
     audio_student = models.URLField(null=True, blank=True)
-    stadium = models.ForeignKey(Stadium, on_delete=models.CASCADE, null=True, blank=True)
+    stadium_config = models.ForeignKey(StadiumConfig, on_delete=models.CASCADE, null=True, blank=True)
     first_pitch_temp = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
     first_pitch_feels_like = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
     first_pitch_wind_speed = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
@@ -105,26 +125,6 @@ class BlogEntry(models.Model):
 
     def __str__(self) -> str:
         return f"{self.author}: {self.blog_time}"
-    
-
-class StadiumConfig(models.Model):
-    stadium = models.ForeignKey(Stadium, on_delete=models.CASCADE)
-    stadium_name = models.CharField(null=False, max_length=128)
-    config_date = models.DateField(null=False)
-    surface_inf = models.CharField(null=True, blank=True, max_length=16)
-    surface_out = models.CharField(null=True, blank=True, max_length=16)
-    surface_mound = models.CharField(null=True, blank=True, max_length=16)
-    photo = models.URLField(null=True, blank=True)
-    orientation = models.IntegerField(null=False)
-    left = models.IntegerField(null=True, blank=True)
-    center = models.IntegerField(null=True, blank=True)
-    right = models.IntegerField(null=True, blank=True)
-    capacity = models.IntegerField(null=True, blank=True)
-    lights = models.BooleanField(default=True)
-    home_dugout = models.CharField(null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.stadium_name} - {self.config_date.year}"
     
 
 class HomeStadium(models.Model):

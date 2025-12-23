@@ -6,16 +6,18 @@ import datetime
 
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.stadiums import stadiums
+from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 
 
 @pytest.fixture
-def forms(teams, stadiums):
+def forms(teams, stadiums, stadium_configs):
     pfw = {
         "team_name": "Purdue Ft. Wayne",
         "mascot": "Mastodons",
         "logo": "https://cdn.d1baseball.com/uploads/2023/12/21143914/iupufw.png",
         "stats": "https://d1baseball.com/team/iupufw/stats/",
         "roster": "https://gomastodons.com/sports/baseball/roster",
+        "stadium_config": [str(stadium_configs.bart.pk)]
     }
     iu_v_gm = {
         "home_team": [str(teams.indiana.pk)],
@@ -24,7 +26,7 @@ def forms(teams, stadiums):
             "https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind"
         ],
         "first_pitch": ["2025-02-14-1830"],
-        "stadium": [str(stadiums.surprise.pk)]
+        "stadium_config": [str(stadium_configs.surprise.pk)]
     }
     iu_holds_duke = {
         "game_status": "in-progress",
@@ -83,32 +85,32 @@ def forms(teams, stadiums):
         "first_pitch": (timezone.now() - datetime.timedelta(hours=1)),
         "event": ["Baseball at the Beach"],
     }
-    uk_stadium = {
-        "address": "510 Wildcat Ct.",
-        "city": "Lexington",
-        "state": "KY",
+    unc_stadium = {
+        "address": "235 Ridge Rd.",
+        "city": "Chapel Hill",
+        "state": "NC",
         "country": "USA",
         "timezone": "America/New_York",
-        "lat": "38.01822",
-        "long": "-84.50317",
-        "stadium_name": "Kentucky Proud Park",
-        "config_date": "2019-01-01",
-        "designate_date": "2019-02-15",
-        "surface_inf": "artificial",
-        "surface_out": "artificial",
+        "lat": "35.90630",
+        "long": "-79.04304",
+        "stadium_name": "Bryson Field at Boshamer Stadium",
+        "config_date": "2009-02-02",
+        "designate_date": "2009-02-02",
+        "surface_inf": "natural",
+        "surface_out": "natural",
         "surface_mound": "natural",
-        "photo": "https://live.staticflickr.com/65535/52947179552_349321280b_c.jpg",
-        "capacity": "7000",
-        "orientation": "100",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Cary_C._Boshamer_Stadium.JPG/250px-Cary_C._Boshamer_Stadium.JPG",
+        "capacity": "5000",
+        "orientation": "194",
         "left": "335",
         "center": "400",
-        "right": "320",
+        "right": "340",
         "lights": "on",
         "home_dugout": "third",
     }
     FormObj = namedtuple(
         "FormObj",
-        "pfw iu_v_gm iu_holds_duke iu_slams_duke uk_tourney edit_blog_uk_wins edit_iu_coastal_ip uk_stadium",
+        "pfw iu_v_gm iu_holds_duke iu_slams_duke uk_tourney edit_blog_uk_wins edit_iu_coastal_ip unc_stadium",
     )
     return FormObj(
         pfw=pfw,
@@ -118,5 +120,5 @@ def forms(teams, stadiums):
         uk_tourney=uk_tourney,
         edit_blog_uk_wins=edit_blog_uk_wins,
         edit_iu_coastal_ip=edit_iu_coastal_ip,
-        uk_stadium=uk_stadium,
+        unc_stadium=unc_stadium,
     )

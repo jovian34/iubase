@@ -55,6 +55,12 @@ def teams(client):
         logo="https://web2.ncaa.org/ncaa_style/img/All_Logos/sm/110.gif",
         roster="https://uclabruins.com/sports/baseball/roster"
     )
+    unc = lgb_models.Team.objects.create(
+        team_name="North Carolina",
+        mascot="Tarheels",
+        logo="https://www.ncaa.com/sites/default/files/images/logos/schools/bgl/north-carolina.svg",
+        roster="https://goheels.com/sports/baseball/roster"
+    )
     team_list = [
         "indiana",
         "duke", 
@@ -64,6 +70,7 @@ def teams(client):
         "miami_oh",
         "iowa",
         "ucla",
+        "unc",
     ]
     TeamObj = namedtuple("TeamObj", team_list)
     return TeamObj(
@@ -75,4 +82,5 @@ def teams(client):
         miami_oh=miami_oh,
         iowa=iowa,
         ucla=ucla,
+        unc=unc,
     )

@@ -13,23 +13,24 @@ from accounts.tests.fixtures import (
     superuser_houston,
 )
 from live_game_blog.tests.fixtures.stadiums import stadiums
+from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 
 
 @pytest.fixture
-def games(client, teams, stadiums):
+def games(client, teams, stadiums, stadium_configs):
     iu_duke = Game.objects.create(
         home_team=teams.duke,
         away_team=teams.indiana,
         neutral_site=True,
         first_pitch=(timezone.now() + datetime.timedelta(days=1)),
-        stadium=stadiums.surprise,
+        stadium_config=stadium_configs.surprise,
     )
     iu_duke_ly = Game.objects.create(
         home_team=teams.duke,
         away_team=teams.indiana,
         neutral_site=True,
         first_pitch=(timezone.now() - datetime.timedelta(days=365)),
-        stadium=stadiums.surprise,
+        stadium_config=stadium_configs.surprise,
     )
     iu_duke_23_fall = Game.objects.create(
         home_team=teams.duke,
@@ -38,7 +39,7 @@ def games(client, teams, stadiums):
         first_pitch=datetime.datetime(
             2023, 10, 4, 21, 5, 00, tzinfo=datetime.timezone.utc
         ),
-        stadium=stadiums.surprise,
+        stadium_config=stadium_configs.surprise,
     )
     iu_duke_69_spring = Game.objects.create(
         home_team=teams.duke,
@@ -47,13 +48,14 @@ def games(client, teams, stadiums):
         first_pitch=datetime.datetime(
             2069, 2, 24, 21, 5, 00, tzinfo=datetime.timezone.utc
         ),
-        stadium=stadiums.surprise,
+        stadium_config=stadium_configs.surprise,
     )
     iu_coastal = Game.objects.create(
         home_team=teams.coastal,
         away_team=teams.indiana,
         neutral_site=False,
         first_pitch=(timezone.now() + datetime.timedelta(days=2, hours=7)),
+        stadium_config=stadium_configs.springs,
     )
     iu_coastal_ip = Game.objects.create(
         home_team=teams.coastal,
@@ -62,6 +64,7 @@ def games(client, teams, stadiums):
         first_pitch=(timezone.now() - datetime.timedelta(hours=1)),
         event="Pre-season Tournament",
         first_pitch_wind_angle=20,
+        stadium_config=stadium_configs.springs,
         live_stats="http://stats.statbroadcast.com/broadcast/?id=499358",
     )
     iu_gm = Game.objects.create(
@@ -69,7 +72,7 @@ def games(client, teams, stadiums):
         away_team=teams.gm,
         neutral_site=True,
         first_pitch=(timezone.now() + datetime.timedelta(days=3)),
-        stadium=stadiums.surprise,
+        stadium_config=stadium_configs.surprise,
     )
     iu_iowa = Game.objects.create(
         home_team=teams.iowa,
@@ -78,18 +81,21 @@ def games(client, teams, stadiums):
         first_pitch=datetime.datetime(
             timezone.now().year + 3, 4, 4, 21, 5, 00, tzinfo=datetime.timezone.utc
         ),
+        stadium_config=stadium_configs.banks,
     )
     iu_mo_rain = Game.objects.create(
         home_team=teams.indiana,
         away_team=teams.miami_oh,
         neutral_site=False,
         first_pitch=(timezone.now() + datetime.timedelta(days=-315)),
+        stadium_config=stadium_configs.bart,
     )
     iu_mo = Game.objects.create(
         home_team=teams.indiana,
         away_team=teams.miami_oh,
         neutral_site=False,
         first_pitch=(timezone.now() + datetime.timedelta(days=5)),
+        stadium_config=stadium_configs.bart,
     )
     iu_uk_mon = Game.objects.create(
         home_team=teams.kentucky,
@@ -104,14 +110,14 @@ def games(client, teams, stadiums):
         away_team=teams.kentucky,
         neutral_site=True,
         first_pitch=(timezone.now() - datetime.timedelta(days=301)),
-        stadium=stadiums.surprise,
+        stadium_config=stadium_configs.surprise,
     )
     iu_uk_sat = Game.objects.create(
         home_team=teams.indiana,
         away_team=teams.kentucky,
         neutral_site=True,
         first_pitch=(timezone.now() - datetime.timedelta(days=302)),
-        stadium=stadiums.surprise,
+        stadium_config=stadium_configs.surprise,
     )
     iu_gm_fall = Game.objects.create(
         home_team=teams.indiana,
@@ -119,12 +125,14 @@ def games(client, teams, stadiums):
         neutral_site=False,
         event="Fall exhibition",
         first_pitch=(timezone.now() + datetime.timedelta(days=1)),
+        stadium_config=stadium_configs.bart,
     )
     iu_uk_far_future = Game.objects.create(
         home_team=teams.indiana,
         away_team=teams.kentucky,
         neutral_site=False,
         first_pitch=(timezone.now() + datetime.timedelta(days=8)),
+        stadium_config=stadium_configs.bart,
     )
     game_list = [
         "iu_duke",

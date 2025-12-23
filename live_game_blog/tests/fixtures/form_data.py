@@ -81,7 +81,6 @@ def forms(teams, stadiums):
         "home_team": [str(teams.coastal.pk)],
         "away_team": [str(teams.indiana.pk)],
         "first_pitch": (timezone.now() - datetime.timedelta(hours=1)),
-        "first_pitch_wind_direction": "ENE",
         "event": ["Baseball at the Beach"],
     }
     uk_stadium = {

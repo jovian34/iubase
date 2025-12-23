@@ -119,18 +119,6 @@ class AddGameForm(forms.Form):
         label="Student Audio Link",
         required=False,
     )
-    first_pitch_temp = forms.IntegerField(
-        label="AccuWeather RealFeel Temperature (F) at First Pitch",
-        required=False,
-    )
-    first_pitch_wind_speed = forms.IntegerField(
-        label="Wind speed (MPH) at first pitch",
-        required=False,
-    )
-    first_pitch_wind_angle = forms.IntegerField(
-        label="Wind direction at first pitch with N at 0-degrees and E at 90-degrees",
-        required=False
-    )
     
 
 class AddNeutralGame(AddGameForm):

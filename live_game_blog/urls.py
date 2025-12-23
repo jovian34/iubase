@@ -17,9 +17,9 @@ urlpatterns = [
     path("", games.upcoming, name="games"),
     path("games/", games.upcoming, name="games"),
     path("live_game_blog/<game_pk>/", live_game_blog.view, name="live_game_blog"),
-    path("add_game", add_game.view, name="add_game"),
-    path("add_team", add_team.view, name="add_team"),
-    path("stadiums", stadiums.view, name="stadiums"),
+    path("add_game/", add_game.view, name="add_game"),
+    path("add_team/", add_team.view, name="add_team"),
+    path("stadiums/", stadiums.view, name="stadiums"),
     path(
         "add_home_stadium_data/<team_pk>/",
         add_home_stadium_data.view,
@@ -54,7 +54,7 @@ urlpatterns = [
         name="edit_game_info"
         ),
     path(
-        "teams_wo_stad_config", 
+        "teams_wo_stad_config/", 
         stadiums.teams_wo_stad_config,
         name="teams_wo_stad_config"
         ),

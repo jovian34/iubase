@@ -28,15 +28,22 @@ def neutral(request):
 def validate_and_save_posted_game_form_then_redirect(request):
     form = lgb_forms.AddGameForm(request.POST)
     if form.is_valid():
-        save_game(form)
+        errors = save_game(form)
         this_game = save_initial_scoreboard(request)
+    if errors:
+        context = {
+            "errors": errors,
+            "page_title": "Errors from Add Game",
+        }
+        template_path = "live_game_blog/errors.html"
+        return shortcuts.render(request, template_path, context)
     return shortcuts.redirect(urls.reverse("live_game_blog", args=[this_game.pk]))
 
 
 def validate_and_save_posted_neutral_game_form_then_redirect(request):
     form = lgb_forms.AddNeutralGame(request.POST)
     if form.is_valid():
-        save_game(form)
+        save_neutral_game(form)
         this_game = save_initial_scoreboard(request)
     return shortcuts.redirect(urls.reverse("live_game_blog", args=[this_game.pk]))
 
@@ -63,11 +70,17 @@ def build_game_kwargs(form):
 
 
 def save_game(form):
+    errors = []
     kwargs = build_game_kwargs(form)
     kwargs["neutral_site"] = False
-
+    try:
+        home_stadium_config_latest = lgb_models.HomeStadium.objects.filter(team=form.cleaned_data["home_team"]).order_by("-designate_date")[0]
+        kwargs["stadium_config"] = home_stadium_config_latest.stadium_config
+    except IndexError:
+        errors.append(f"{form.cleaned_data["home_team"].team_name} has no home stadium configuration to apply.")
     add_game = lgb_models.Game(**kwargs)
     add_game.save()
+    return errors
 
 
 def save_neutral_game(form):

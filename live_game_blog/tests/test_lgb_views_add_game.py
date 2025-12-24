@@ -11,6 +11,7 @@ from live_game_blog.tests.fixtures.games import (
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.stadiums import stadiums
 from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
+from live_game_blog.tests.fixtures.home_stadium import home_stadium
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
 from live_game_blog.tests.fixtures.form_data import forms
 
@@ -63,7 +64,7 @@ def test_add_neutral_game_post_shows_forbidden_without_perms(client, logged_user
 
 @pytest.mark.django_db
 def test_add_tourney_game(
-    admin_client, teams, games, forms, scoreboards
+    admin_client, teams, games, forms, scoreboards, stadiums, stadium_configs, home_stadium
 ):
     response = admin_client.post(
         reverse("add_game"),
@@ -76,6 +77,20 @@ def test_add_tourney_game(
     assert "no. 20" in str(response.content)
     assert "Kentucky (1-seed)" in str(response.content)
     assert "(#14 National Seed)" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_road_game_without_stadium(
+    admin_client, teams, games, forms, scoreboards, stadiums, stadium_configs, home_stadium
+):
+    response = admin_client.post(
+        reverse("add_game"),
+        forms.gm_hosts_iu,
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "Errors from Add Game" in str(response.content)
+    assert "George Mason has no home stadium configuration to apply." in str(response.content)
 
 
 @pytest.mark.django_db

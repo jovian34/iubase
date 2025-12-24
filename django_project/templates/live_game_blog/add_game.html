@@ -13,6 +13,9 @@
         {% if perms.live_game_blog.add_team %}
             <a href="{% url "add_team" %}"><button>Add team</button></a>
         {% endif %}
+        {% if perms.live_game_blog.add_stadium %}
+            <a href="{% url "stadiums" %}"><button>Stadiums</button></a>
+        {% endif %}
 
         <div class="column-12 clear-both" id="add-game-form">
             <button hx-get="{% url "add_neutral_game" %}"

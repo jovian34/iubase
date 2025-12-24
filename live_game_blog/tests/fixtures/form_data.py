@@ -28,6 +28,14 @@ def forms(teams, stadiums, stadium_configs):
         "first_pitch": ["2025-02-14-1830"],
         "stadium_config": [str(stadium_configs.surprise.pk)]
     }
+    gm_hosts_iu = {
+        "home_team": [str(teams.gm.pk)],
+        "away_team": [str(teams.indiana.pk)],
+        "live_stats": [
+            "https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind"
+        ],
+        "first_pitch": ["2026-02-14-1830"],
+    }
     iu_holds_duke = {
         "game_status": "in-progress",
         "inning_num": "2",
@@ -110,11 +118,12 @@ def forms(teams, stadiums, stadium_configs):
     }
     FormObj = namedtuple(
         "FormObj",
-        "pfw iu_v_gm iu_holds_duke iu_slams_duke uk_tourney edit_blog_uk_wins edit_iu_coastal_ip unc_stadium",
+        "pfw iu_v_gm gm_hosts_iu iu_holds_duke iu_slams_duke uk_tourney edit_blog_uk_wins edit_iu_coastal_ip unc_stadium",
     )
     return FormObj(
         pfw=pfw,
         iu_v_gm=iu_v_gm,
+        gm_hosts_iu=gm_hosts_iu,
         iu_holds_duke=iu_holds_duke,
         iu_slams_duke=iu_slams_duke,
         uk_tourney=uk_tourney,

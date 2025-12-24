@@ -17,8 +17,8 @@ def get_weather_for_games_over_one_week_from_now():
     )
     for game in games_seven_days_out:
         if game.neutral_site:
-            lat = game.stadium.lat
-            long = game.stadium.long
+            lat = game.stadium_config.stadium.lat
+            long = game.stadium_config.stadium.long
         else:
             home_stadiums = lgb_models.HomeStadium.objects.filter(team=game.home_team.pk).order_by("-designate_date")
             for home_stadium in home_stadiums:

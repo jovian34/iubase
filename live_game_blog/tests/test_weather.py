@@ -1,6 +1,7 @@
 import pytest
 
 from django import urls
+from django.template.defaultfilters import floatformat
 
 from live_game_blog.tests.fixtures.games import games
 from live_game_blog.tests.fixtures.stadiums import stadiums
@@ -34,8 +35,10 @@ def test_get_weather_for_game_over_one_week_and_render(
     assert fut_games.first_pitch_wind_angle
     assert "rain" in fut_games.first_pitch_weather_describe
     response = client.get(urls.reverse("live_game_blog", args=[games.iu_uk_far_future.pk]))
-    assert "rain" in str(response.content)
-    assert f"afternoon temperature: {fut_games.first_pitch_temp:.0f}&deg; F" in str(response.content)
+    assert "rain" in response.content.decode()
+    temp = floatformat(fut_games.first_pitch_temp, 0)
+    expected = f"afternoon temperature: {temp}&deg; F"
+    assert expected in response.content.decode()
 
 
 testdata = [

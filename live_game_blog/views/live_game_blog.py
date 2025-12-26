@@ -4,6 +4,7 @@ from django import http
 from index.views import save_traffic_data
 from live_game_blog import models as lgb_models
 from live_game_blog import weather
+from conference import models as conf_models
 
 
 def view(request, game_pk):
@@ -11,6 +12,7 @@ def view(request, game_pk):
     game_over = is_game_over(game_pk)
     spring_year = set_spring_year(game)
     set_roster_url_to_game_year(game, spring_year)
+    away_conference, home_conference = get_conf_model(game)
     context = {
         "game": game,
         "entries": get_blog_entries(game_pk, game_over),
@@ -19,6 +21,8 @@ def view(request, game_pk):
         )[0],
         "game_over": game_over,
         "wind_dir": get_wind_dir(game),
+        "away_conference": away_conference,
+        "home_conference": home_conference,
     }
     template_path = "live_game_blog/live_game_blog.html"
     save_traffic_data(request=request, page=context["game"].__str__())
@@ -86,3 +90,18 @@ def get_wind_dir(game):
         )   
     else:
         return None
+    
+
+def get_conf_model(game):
+    try:
+        away_conference = conf_models.ConfTeam.objects.filter(
+            team=game.away_team,
+            fall_year_joined__lt=game.first_pitch.year,
+        ).order_by("-fall_year_joined")[0]
+        home_conference = conf_models.ConfTeam.objects.filter(
+            team=game.home_team,
+            fall_year_joined__lt=game.first_pitch.year,
+        ).order_by("-fall_year_joined")[0]
+        return away_conference, home_conference
+    except IndexError:
+        return None, None

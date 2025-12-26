@@ -40,8 +40,20 @@
             {% if game.live_stats %}<a href="{{ game.live_stats}}">live stats</a>{% endif %}
         {% endif %}
         </p>
-        <p>{{ game.away_team }} {{ game.away_team.mascot }}: <a href="{{ game.away_team.stats}}">stats</a> | <a href="{{ game.away_team.roster}}">roster</a><p>
-        <p>{{ game.home_team }} {{ game.home_team.mascot }}: <a href="{{ game.home_team.stats}}">stats</a> | <a href="{{ game.home_team.roster}}">roster</a></p>
+        <div class="team-box">
+        <p>{{ game.away_team }} {{ game.away_team.mascot }}: 
+            <a href="{{ game.away_team.stats}}">stats</a> | 
+            <a href="{{ game.away_team.roster}}">roster</a> |
+            <img class="conf-logo-lgb" src="{{ away_conference.conference.logo_url}}" alt={{ away_conference.conference.long_name }}>
+        <p>
+        </div>
+        <div class="team-box">
+        <p>{{ game.home_team }} {{ game.home_team.mascot }}: 
+            <a href="{{ game.home_team.stats}}">stats</a> | 
+            <a href="{{ game.home_team.roster}}">roster</a> |
+            <img class="conf-logo-lgb" src="{{ home_conference.conference.logo_url}}" alt={{ home_conference.conference.long_name }}>
+        </p>
+        </div>
     </div>
 
     <div class="column-12 clear-both">

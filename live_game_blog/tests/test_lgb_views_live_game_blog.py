@@ -14,6 +14,8 @@ from live_game_blog.tests.fixtures.stadiums import stadiums
 from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from live_game_blog.tests.fixtures.blog import entries
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
+from conference.tests.fixtures.conf_teams import conf_teams
+from conference.tests.fixtures.conferences import conferences
 from django_project.tests import clean_text
 
 from live_game_blog.views import live_game_blog
@@ -24,7 +26,7 @@ this_year = datetime.today().year
 
 
 @pytest.mark.django_db
-def test_live_single_game_blog_page_renders(client, games, scoreboards, entries):
+def test_live_single_game_blog_page_renders(client, games, scoreboards, entries, conf_teams, conferences):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
     assert "Joey" in str(response.content)
@@ -33,6 +35,7 @@ def test_live_single_game_blog_page_renders(client, games, scoreboards, entries)
     assert "Kentucky moves on to Super Regionals" in str(response.content)
     assert "stats" in str(response.content)
     assert "roster" in str(response.content)
+    assert "https://cdn.d1baseball.com/uploads/2023/12/21135542/southeastern-conference.png" in str(response.content)
 
 
 @pytest.mark.django_db

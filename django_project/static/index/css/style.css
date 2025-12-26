@@ -157,6 +157,15 @@ h3 {
 	float: right;
 }
 
+
+
+.conf-logo-lgb {
+	width: 15%;
+	height: auto;
+    display: inline-flex;
+	vertical-align: middle;
+}
+
 .conf-logo {
 	width: 30%;
 	height: auto;

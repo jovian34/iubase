@@ -44,10 +44,10 @@ def get_weather_for_games_over_one_week_from_now():
 
 
 def make_description_from_predicted_rain(data_dict, edit_game):
-    rain = float(data_dict["precipitation"]["total"])
-    if rain > 2:
+    rain = float(data_dict["precipitation"]["total"]) # in mm
+    if rain > 50:
         edit_game.first_pitch_weather_describe = "heavy rain"
-    elif rain > 1:
+    elif rain > 25:
         edit_game.first_pitch_weather_describe = "moderate rain"
     elif rain > 0:
         edit_game.first_pitch_weather_describe = "light rain"

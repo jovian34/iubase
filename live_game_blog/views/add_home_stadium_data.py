@@ -54,7 +54,6 @@ def add_stadium_config_and_save(form, this_stadium):
                 center = form.cleaned_data["center"],
                 right = form.cleaned_data["right"],
                 capacity = form.cleaned_data["capacity"],
-                lights = form.cleaned_data["lights"],
                 home_dugout = form.cleaned_data["home_dugout"],
             )
     add_stadium_config.save()

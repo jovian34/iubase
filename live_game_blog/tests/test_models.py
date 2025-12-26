@@ -55,7 +55,6 @@ def test_stadium_config_model_stored_all_fields(client, stadiums, stadium_config
     assert stadium_configs.bart.left == 330
     assert stadium_configs.bart.right == 330
     assert stadium_configs.bart.center == 400
-    assert stadium_configs.surprise.lights
     assert stadium_configs.surprise.capacity == 10714
     assert stadium_configs.bart.home_dugout == "third"
     assert stadium_configs.bart.orientation == 45

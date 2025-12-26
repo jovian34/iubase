@@ -42,7 +42,6 @@ class StadiumConfig(models.Model):
     center = models.IntegerField(null=True, blank=True)
     right = models.IntegerField(null=True, blank=True)
     capacity = models.IntegerField(null=True, blank=True)
-    lights = models.BooleanField(default=True)
     home_dugout = models.CharField(null=True, blank=True)
 
     def __str__(self):

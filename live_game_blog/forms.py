@@ -190,7 +190,6 @@ class AddHomeStadiumDataForm(forms.Form):
     center = forms.IntegerField(label="Distance from home to centerfield fence")
     right = forms.IntegerField(label="Distance from home to right field fence")
     capacity = forms.IntegerField(label="Fan Capacity")
-    lights = forms.BooleanField(label="Does this stadium have working lights?")
     home_dugout = forms.ChoiceField(
         choices=DUGOUT_CHOICES,
         label="Which side is the home team dugout?"

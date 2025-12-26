@@ -7,17 +7,21 @@ import datetime
 from live_game_blog.tests.fixtures.teams import teams
 from live_game_blog.tests.fixtures.stadiums import stadiums
 from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
+from conference.tests.fixtures.conferences import conferences
+
 
 
 @pytest.fixture
-def forms(teams, stadiums, stadium_configs):
+def forms(teams, stadiums, stadium_configs, conferences):
     pfw = {
         "team_name": "Purdue Ft. Wayne",
         "mascot": "Mastodons",
         "logo": "https://cdn.d1baseball.com/uploads/2023/12/21143914/iupufw.png",
         "stats": "https://d1baseball.com/team/iupufw/stats/",
         "roster": "https://gomastodons.com/sports/baseball/roster",
-        "stadium_config": [str(stadium_configs.bart.pk)]
+        "stadium_config": [str(stadium_configs.bart.pk)],
+        "conference": [str(conferences.hor.pk)],
+        "joined": "2022",
     }
     iu_v_gm = {
         "home_team": [str(teams.indiana.pk)],

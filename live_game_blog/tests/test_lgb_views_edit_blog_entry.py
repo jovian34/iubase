@@ -14,7 +14,7 @@ from live_game_blog.tests.fixtures.form_data import forms
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
 from live_game_blog.tests.fixtures.stadiums import stadiums
 from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
-
+from conference.tests.fixtures.conferences import conferences
 
 @pytest.mark.django_db
 def test_edit_blog_entry_get_shows_forbidden_without_perms(
@@ -101,7 +101,7 @@ def test_edit_blog_entry_changes_hit_to_error(
 
 @pytest.mark.django_db
 def test_edit_blog_entry_post_redirects_and_asks_for_password_when_not_logged_in(
-    client, games, entries, forms, scoreboards
+    client, games, entries, forms, scoreboards, conferences
 ):
     response = client.post(
         reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]),

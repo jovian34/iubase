@@ -10,6 +10,7 @@ from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from live_game_blog.tests.fixtures.home_stadium import home_stadium
 from live_game_blog import models as lgb_models
 from accounts.tests.fixtures import logged_user_schwarbs
+from conference.tests.fixtures.conferences import conferences
 
 
 @pytest.mark.django_db

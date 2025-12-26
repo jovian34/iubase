@@ -14,6 +14,7 @@ from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from live_game_blog.tests.fixtures.home_stadium import home_stadium
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
 from live_game_blog.tests.fixtures.form_data import forms
+from conference.tests.fixtures.conferences import conferences
 
 
 @pytest.mark.django_db

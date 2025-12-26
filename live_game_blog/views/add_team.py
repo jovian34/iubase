@@ -3,6 +3,7 @@ from django.contrib.auth import decorators as auth
 
 from live_game_blog import forms as lgb_forms
 from live_game_blog import models as lgb_models
+from conference import models as conf_models
 
 
 @auth.login_required
@@ -19,11 +20,16 @@ def validate_posted_add_team_form_save_then_redirect(request):
     form = lgb_forms.AddTeamForm(request.POST)
     if form.is_valid():
         new_team = save_team(form)
+        add_team_conf = conf_models.ConfTeam(
+            team=new_team,
+            conference=form.cleaned_data["conference"],
+            fall_year_joined=form.cleaned_data["joined"],
+        )
+        add_team_conf.save()
         return shortcuts.redirect(
             urls.reverse("add_home_stadium_data", args=[new_team.pk])
         )
-    else:
-        
+    else:        
         return shortcuts.redirect(urls.reverse("games"))
 
 

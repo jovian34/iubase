@@ -1,7 +1,8 @@
 from django import forms
 
-from live_game_blog.models import Team, StadiumConfig
+from live_game_blog import models as lgb_models
 from live_game_blog.choices import GAME_STATUS, INNING_PART_CHOICES, OUTS_CHOICES, TIMEZONE_CHOICES, SURFACE_CHOICES, DUGOUT_CHOICES
+from conference import models as conf_models
 
 
 class BlogAndScoreboardForm(forms.Form):
@@ -55,11 +56,11 @@ class BlogEntryForm(forms.Form):
 
 class AddGameForm(forms.Form):
     home_team = forms.ModelChoiceField(
-        queryset=Team.objects.all().order_by("team_name"),
+        queryset=lgb_models.Team.objects.all().order_by("team_name"),
         label="Home Team",
     )
     away_team = forms.ModelChoiceField(
-        queryset=Team.objects.all().order_by("team_name"),
+        queryset=lgb_models.Team.objects.all().order_by("team_name"),
         label="Away Team",
     )
 
@@ -123,7 +124,7 @@ class AddGameForm(forms.Form):
 
 class AddNeutralGame(AddGameForm):
     stadium_config = forms.ModelChoiceField(
-        queryset=StadiumConfig.objects.all().order_by("stadium_name"),
+        queryset=lgb_models.StadiumConfig.objects.all().order_by("stadium_name"),
         label="Stadium Configuration",
     )
 
@@ -143,6 +144,15 @@ class AddTeamForm(forms.Form):
         label="URL for the team's roster page",
         required=False,
     )
+    conference = forms.ModelChoiceField(
+        queryset=conf_models.Conference.objects.all().order_by("abbrev"),
+        label="Current Conference",
+    )
+    joined = forms.IntegerField(
+        label="Year team joined current conference",
+        min_value=1800,
+    )
+
 
 
 class AddHomeStadiumDataForm(forms.Form):

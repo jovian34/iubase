@@ -15,6 +15,7 @@ from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from live_game_blog.tests.fixtures.blog import entries
 from live_game_blog.tests.fixtures.form_data import forms
 from live_game_blog.tests.fixtures.scoreboards import scoreboards
+from conference.tests.fixtures.conferences import conferences
 from django_project.tests import clean_text
 
 from live_game_blog.views import live_game_blog

@@ -37,7 +37,7 @@ def games_annual(client, teams, stadiums, stadium_configs):
         home_team=teams.duke,
         away_team=teams.indiana,
         neutral_site=True,
-        first_pitch=eastern.localize(datetime.datetime(spring_year, 2, 15, 18, 0, 0, 0)),
+        first_pitch=eastern.localize(datetime.datetime(spring_year, 5, 15, 18, 0, 0, 0)),
         stadium_config=stadium_configs.surprise,
     )
     iu_iowa = Game.objects.create(

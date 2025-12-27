@@ -22,4 +22,19 @@ def test_schedule_renders_selected_season_games_only(client, games_annual, stadi
     assert "Indiana <em>vs.</em>  Duke" in response.content.decode()
     assert "Kentucky" not in response.content.decode()
     assert "Coastal" not in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_schedule_renders_selected_season_games_in_date_order(client, games_annual, stadiums, stadium_configs, teams):
+    if datetime.date.today().month > 8:
+        spring_year = datetime.date.today().year + 1
+    else:
+        spring_year = datetime.date.today().year
+    response = client.get(urls.reverse("schedule", args=[spring_year]))
+    assert response.status_code == 200
+    output = response.content.decode()
+    duke = output.find("Duke")
+    iowa = output.find("Iowa")
+    assert duke > iowa
+    
     

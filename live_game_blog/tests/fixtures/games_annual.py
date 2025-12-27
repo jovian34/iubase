@@ -40,6 +40,13 @@ def games_annual(client, teams, stadiums, stadium_configs):
         first_pitch=eastern.localize(datetime.datetime(spring_year, 5, 15, 18, 0, 0, 0)),
         stadium_config=stadium_configs.surprise,
     )
+    ucla_unc = Game.objects.create(
+        home_team=teams.ucla,
+        away_team=teams.unc,
+        neutral_site=True,
+        first_pitch=eastern.localize(datetime.datetime(spring_year, 5, 15, 9, 0, 0, 0)),
+        stadium_config=stadium_configs.surprise,
+    )
     iu_iowa = Game.objects.create(
         home_team=teams.iowa,
         away_team=teams.indiana,
@@ -64,6 +71,7 @@ def games_annual(client, teams, stadiums, stadium_configs):
     game_list = [
         "iu_ky_ly",
         "iu_duke",
+        "ucla_unc",
         "iu_iowa",
         "iu_mo",
         "iu_coastal_ny",
@@ -72,6 +80,7 @@ def games_annual(client, teams, stadiums, stadium_configs):
     return GameObj(
         iu_ky_ly=iu_ky_ly,
         iu_duke=iu_duke,
+        ucla_unc=ucla_unc,
         iu_mo=iu_mo,
         iu_iowa=iu_iowa,
         iu_coastal_ny=iu_coastal_ny,

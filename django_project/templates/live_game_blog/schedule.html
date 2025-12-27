@@ -2,7 +2,13 @@
 
 {% block title %}{{ page_title }}{% endblock %}
 
-{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+{% block header %}<h1>{{ page_title }}</h1>
+    {% if spring_year < 2026 %}
+        <p><em>*Schedules for years before 2026 are limited to games with 
+            complete live game blogs via this app. Not all games are listed.</em?
+        </p>
+    {% endif %}
+{% endblock %}
 
 
 {% block content %}

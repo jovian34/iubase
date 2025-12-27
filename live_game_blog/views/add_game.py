@@ -1,5 +1,6 @@
 from django import http, shortcuts, urls
 from django.contrib.auth import decorators as auth
+from django.db.models import Q
 
 from live_game_blog import forms as lgb_forms
 from live_game_blog import models as lgb_models
@@ -74,7 +75,10 @@ def save_game(form):
     kwargs = build_game_kwargs(form)
     kwargs["neutral_site"] = False
     try:
-        home_stadium_config_latest = lgb_models.HomeStadium.objects.filter(team=form.cleaned_data["home_team"]).order_by("-designate_date")[0]
+        home_stadium_config_latest = lgb_models.HomeStadium.objects.filter(
+            Q(team=form.cleaned_data["home_team"]) &
+            Q(designate_date__lt=form.cleaned_data["first_pitch"].date())
+        ).order_by("-designate_date")[0]
         kwargs["stadium_config"] = home_stadium_config_latest.stadium_config
     except IndexError:
         errors.append(f"{form.cleaned_data["home_team"].team_name} has no home stadium configuration to apply.")

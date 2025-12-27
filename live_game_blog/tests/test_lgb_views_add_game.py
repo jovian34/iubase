@@ -16,6 +16,8 @@ from live_game_blog.tests.fixtures.scoreboards import scoreboards
 from live_game_blog.tests.fixtures.form_data import forms
 from conference.tests.fixtures.conferences import conferences
 
+from live_game_blog import models as lgb_models
+
 
 @pytest.mark.django_db
 def test_add_game_page_renders_template(admin_client,):
@@ -78,6 +80,20 @@ def test_add_tourney_game(
     assert "no. 20" in str(response.content)
     assert "Kentucky (1-seed)" in str(response.content)
     assert "(#14 National Seed)" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_add_tourney_game_saves_stadium_config(
+    admin_client, teams, games, forms, scoreboards, stadiums, stadium_configs, home_stadium
+):
+    response = admin_client.post(
+        reverse("add_game"),
+        forms.uk_tourney,
+        follow=True,
+    )
+    assert response.status_code == 200
+    game = lgb_models.Game.objects.get(live_stats="https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind")
+    assert game.stadium_config.stadium_name == "Kentucky Proud Park"
 
 
 @pytest.mark.django_db

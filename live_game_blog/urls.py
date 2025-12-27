@@ -9,6 +9,7 @@ from live_game_blog.views import (
     edit_blog_entry,
     edit_game_info,
     live_game_blog,
+    schedule,
     stadiums,
 )
 
@@ -16,6 +17,7 @@ from live_game_blog.views import (
 urlpatterns = [
     path("", games.upcoming, name="games"),
     path("games/", games.upcoming, name="games"),
+    path("schedule/<spring_year>/", schedule.view, name="schedule"),
     path("live_game_blog/<game_pk>/", live_game_blog.view, name="live_game_blog"),
     path("add_game/", add_game.view, name="add_game"),
     path("add_team/", add_team.view, name="add_team"),

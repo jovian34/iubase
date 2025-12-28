@@ -25,6 +25,7 @@
                     {{ game.first_pitch | date:"D" }}, {{ game.first_pitch }}
                     {% if game.event %}{{ game.event }}.{% endif %}
                 </p>
+                {% if game.stadium_config %}
                 <p>
                     {{ game.stadium_config.stadium_name }}:
                     {{ game.stadium_config.stadium.city }}, {{ game.stadium_config.stadium.state }}
@@ -34,9 +35,13 @@
                             target="_blank"
                         >Driving Directions</a>)
                 </p>
+                {% endif %}
+                {% if game.first_pitch_temp %}
                 <p>Weather Forecast:
                     {{ game.first_pitch_temp|floatformat:0 }}&deg; F
                     with {{ game.first_pitch_weather_describe }}
+                </p>
+                {% endif %}
             </div>
 
             <div class="column-12 clear-both">    

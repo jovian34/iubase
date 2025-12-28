@@ -88,8 +88,8 @@
     <p><em>{{ game.stadium_config.stadium_name }}: {{ game.stadium_config.stadium.city }}, {{ game.stadium_config.stadium.state }}</em></p>
     <ul>
         <li><p>{{ game.first_pitch_weather_describe }}</p></li>
-        <li><p>afternoon temperature: {{ game.first_pitch_temp|floatformat:0 }}&deg; F</p></li>
-        <li><p>wind: {{ game.first_pitch_wind_speed|floatformat:0 }} mph {{ wind_dir }}<p></li>
+        <li><p>{{ game.first_pitch_temp|floatformat:0 }}&deg; F</p></li>
+        <li><p>{{ game.first_pitch_wind_speed|floatformat:0 }} mph wind {{ wind_dir }}<p></li>
     </ul>
 </div>
 {% endif %}

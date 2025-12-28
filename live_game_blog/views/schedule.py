@@ -8,8 +8,12 @@ from django.db.models import Q
 
 
 eastern = pytz.timezone('America/New_York')
+spring_year = datetime.date.today().year
+if datetime.date.today().month > 8:
+    spring_year = datetime.date.today().year + 1
 
-def view(request, spring_year):
+
+def view(request, spring_year=spring_year):
     template_path = "live_game_blog/schedule.html"
     iu = lgb_models.Team.objects.get(team_name="Indiana")
     context = {

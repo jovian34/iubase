@@ -1,0 +1,48 @@
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        <img  class="fade-me-in-2s" src="https://live.staticflickr.com/65535/54527844941_0fe3d2b308_b.jpg" id="player-photo">  
+        <hr>
+        {% for game in games %}
+            <div class="column-12 clear-both">
+                <img class="team-logo" src="{{ game.home_team.logo }}">
+                <img class="team-logo" src="{{ game.away_team.logo }}">
+                <h3>
+                    <a href="{% url "live_game_blog" game.pk %}">
+                        {% if game.away_rank %}no.{{ game.away_rank }}{% endif %} {{ game.away_team }} <em>{% if game.neutral_site %}vs.{% else %}@{% endif %}</em> {% if game.home_rank %}no. {{ game.home_rank }}{% endif %} {{ game.home_team }}
+                    </a>
+                </h3>
+                <p>
+                    {% if game.away_seed %}{{ game.away_team }}({{ game.away_seed }}-seed){% endif %}
+                    {% if game.away_nat_seed %}(#{{ game.away_nat_seed }} National Seed){% endif %}            
+                </p>
+                <p>
+                    {% if game.home_seed %}{{ game.home_team }}({{ game.home_seed }}-seed){% endif %}
+                    {% if game.home_nat_seed %}(#{{ game.home_nat_seed }} National Seed){% endif %}
+                    
+                </p>
+                <p>
+                    {{ game.first_pitch | date:"D" }}, {{ game.first_pitch }}
+                    {% if game.event %}{{ game.event }}.{% endif %}
+                </p>
+                <p>
+                    {{ game.stadium_config.stadium_name }}:
+                    {{ game.stadium_config.stadium.city }}, {{ game.stadium_config.stadium.state }}
+                    (<a href="https://www.google.com/maps/dir/?api=1&destination=
+                            {{ game.stadium_config.stadium.lat }},
+                            {{ game.stadium_config.stadium.long }}&travelmode=driving"
+                            target="_blank"
+                        >Driving Directions</a>)
+                </p>
+                <p>Weather Forecast:
+                    {{ game.first_pitch_temp|floatformat:0 }}&deg; F
+                    with {{ game.first_pitch_weather_describe }}
+            </div>
+
+            <div class="column-12 clear-both">    
+                <p></p>
+                <hr class="crimson">
+            </div>
+        {% endfor %}
+    </div>
+</div>

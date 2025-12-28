@@ -1,5 +1,5 @@
 import pytest
-from datetime import date
+import datetime
 from django import urls
 
 from live_game_blog.tests.fixtures.teams import teams
@@ -7,20 +7,34 @@ from conference.tests.fixtures.conferences import conferences
 from conference.tests.fixtures.conf_teams import conf_teams
 
 
+spring_year = datetime.date.today().year
+if datetime.date.today().month > 8:
+    spring_year = spring_year + 1
+
 
 @pytest.mark.django_db
 def test_current_year_b1g_shows_correct_members(client, teams, conferences, conf_teams):
     response = client.get(
         urls.reverse(
             "conf_year", 
-            kwargs = {"conf": "B1G", "spring_year": str(date.today().year)}
+            kwargs = {"conf": "B1G", "spring_year": str(datetime.date.today().year)}
         )
     )
     assert response.status_code == 200
     assert "UCLA" in str(response.content)
     assert "Indiana" in str(response.content)
     assert "Iowa" in str(response.content)
-    assert f"Big Ten Conference members for {str(date.today().year)}"
+    assert f"Big Ten Conference members for {str(datetime.date.today().year)}"
+    
+
+@pytest.mark.django_db
+def test_default_year_b1g_shows_correct_members(client, teams, conferences, conf_teams):
+    response = client.get(urls.reverse("conf_year_default", args=["B1G"]))
+    assert response.status_code == 200
+    assert "UCLA" in str(response.content)
+    assert "Indiana" in str(response.content)
+    assert "Iowa" in str(response.content)
+    assert f"Big Ten Conference members for {spring_year}"
 
 
 @pytest.mark.django_db
@@ -28,7 +42,7 @@ def test_last_year_b1g_does_not_show_ucla(client, teams, conferences, conf_teams
     response = client.get(
         urls.reverse(
             "conf_year", 
-            kwargs = {"conf": "B1G", "spring_year": str(date.today().year - 1)}
+            kwargs = {"conf": "B1G", "spring_year": str(datetime.date.today().year - 1)}
         )
     )
     assert response.status_code == 200
@@ -43,7 +57,7 @@ def test_current_year_b1g_shows_correct_member_order(client, teams, conferences,
     response = client.get(
         urls.reverse(
             "conf_year", 
-            kwargs = {"conf": "B1G", "spring_year": str(date.today().year)}
+            kwargs = {"conf": "B1G", "spring_year": str(datetime.date.today().year)}
         )
     )
     output = str(response.content)

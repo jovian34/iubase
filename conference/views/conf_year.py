@@ -1,10 +1,17 @@
+import datetime
+
 from django import shortcuts
 from django.db.models import Q
 
 from conference import models as conf_models
 
 
-def view(request, conf, spring_year):
+spring_year = datetime.date.today().year
+if datetime.date.today().month > 8:
+    spring_year = spring_year + 1
+
+
+def view(request, conf, spring_year=spring_year):
     conference = conf_models.Conference.objects.get(abbrev=conf)
     all_conf_teams = conf_models.ConfTeam.objects.filter(conference=conference)
     this_conf_teams = get_conf_teams_for_requested_year(spring_year, conference, all_conf_teams)

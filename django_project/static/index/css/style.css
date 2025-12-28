@@ -390,6 +390,7 @@ td {
 
 .column-6{
 	background-color: var(--body-background-color);
+	display: flow-root;
 }
 
 .column-2{width: 50%; float: left;}

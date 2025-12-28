@@ -1,9 +1,14 @@
 import pytest
+import datetime
 
 from django import urls
+
+spring_year = datetime.date.today().year
+if datetime.date.today().month > 8:
+    spring_year = spring_year + 1
 
 
 @pytest.mark.django_db
 def test_add_series_get_renders(admin_client):
-    response = admin_client.get(urls.reverse("add_series"))
+    response = admin_client.get(urls.reverse("add_series", args=[spring_year]))
     assert response.status_code == 200

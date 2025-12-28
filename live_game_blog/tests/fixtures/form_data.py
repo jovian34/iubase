@@ -1,3 +1,5 @@
+import pytz
+
 import pytest
 
 from collections import namedtuple
@@ -10,6 +12,7 @@ from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from conference.tests.fixtures.conferences import conferences
 
 
+eastern = pytz.timezone('America/New_York')
 
 @pytest.fixture
 def forms(teams, stadiums, stadium_configs, conferences):
@@ -29,7 +32,7 @@ def forms(teams, stadiums, stadium_configs, conferences):
         "live_stats": [
             "https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind"
         ],
-        "first_pitch": ["2025-02-14-1830"],
+        "first_pitch": [f"{datetime.date.today().year}-02-14-1830"],
         "stadium_config": [str(stadium_configs.surprise.pk)]
     }
     gm_hosts_iu = {
@@ -38,7 +41,7 @@ def forms(teams, stadiums, stadium_configs, conferences):
         "live_stats": [
             "https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind"
         ],
-        "first_pitch": ["2026-02-14-1830"],
+        "first_pitch": [f"{datetime.date.today().year+1}-02-14-1830"],
     }
     iu_holds_duke = {
         "game_status": "in-progress",
@@ -76,7 +79,19 @@ def forms(teams, stadiums, stadium_configs, conferences):
         "live_stats": [
             "https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind"
         ],
-        "first_pitch": ["2025-06-03-1800"],
+        "first_pitch": [f"{datetime.date.today().year}-06-03-1800"],
+    }
+    uk_tourney_future = {
+        "home_team": [str(teams.kentucky.pk)],
+        "home_rank": ["20"],
+        "home_seed": ["1"],
+        "home_nat_seed": ["14"],
+        "away_team": [str(teams.indiana.pk)],
+        "away_seed": ["3"],
+        "live_stats": [
+            "https://stats.statbroadcast.com/broadcast/?id=8975433245&vislive=ind"
+        ],
+        "first_pitch": [f"{datetime.date.today().year+9}-06-03-1800"],
     }
     edit_blog_uk_wins = {
         "blog_entry": "Kentucky moves on to Super Regionals",
@@ -120,10 +135,19 @@ def forms(teams, stadiums, stadium_configs, conferences):
         "lights": "on",
         "home_dugout": "third",
     }
-    FormObj = namedtuple(
-        "FormObj",
-        "pfw iu_v_gm gm_hosts_iu iu_holds_duke iu_slams_duke uk_tourney edit_blog_uk_wins edit_iu_coastal_ip unc_stadium",
-    )
+    form_list = [
+        "pfw",
+        "iu_v_gm",
+        "gm_hosts_iu",
+        "iu_holds_duke",
+        "iu_slams_duke",
+        "uk_tourney",
+        "uk_tourney_future",
+        "edit_blog_uk_wins",
+        "edit_iu_coastal_ip",
+        "unc_stadium",    
+    ]
+    FormObj = namedtuple("FormObj", form_list)
     return FormObj(
         pfw=pfw,
         iu_v_gm=iu_v_gm,
@@ -131,6 +155,7 @@ def forms(teams, stadiums, stadium_configs, conferences):
         iu_holds_duke=iu_holds_duke,
         iu_slams_duke=iu_slams_duke,
         uk_tourney=uk_tourney,
+        uk_tourney_future=uk_tourney_future,
         edit_blog_uk_wins=edit_blog_uk_wins,
         edit_iu_coastal_ip=edit_iu_coastal_ip,
         unc_stadium=unc_stadium,

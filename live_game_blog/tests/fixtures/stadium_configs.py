@@ -82,12 +82,28 @@ def stadium_configs(client, stadiums):
         orientation=100,
         home_dugout="third",
     )
+    proud_future = lgb_models.StadiumConfig.objects.create(
+        stadium_name="Kentucky Very Proud Park",
+        stadium=stadiums.proud,
+        config_date=date(date.today().year+7,2,1),
+        surface_inf="artificial",
+        surface_out="artificial",
+        surface_mound="artificial",
+        photo="https://live.staticflickr.com/65535/52947179552_349321280b_c.jpg",
+        left=335,
+        center=400,
+        right=320,
+        capacity=7000,
+        orientation=100,
+        home_dugout="third",
+    )
     config_list = [
         "bart",
         "surprise",
         "springs",
         "banks",
         "proud",
+        "proud_future",
     ]
     StadiumConfigObj = namedtuple("StadiumConfigObj", config_list)
     return StadiumConfigObj(
@@ -96,4 +112,5 @@ def stadium_configs(client, stadiums):
         springs=springs,
         banks=banks,
         proud=proud,
+        proud_future=proud_future,
     )

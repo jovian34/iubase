@@ -83,7 +83,7 @@ def test_add_tourney_game(
 
 
 @pytest.mark.django_db
-def test_add_tourney_game_saves_stadium_config(
+def test_add_tourney_game_saves_present_stadium_config(
     admin_client, teams, games, forms, scoreboards, stadiums, stadium_configs, home_stadium
 ):
     response = admin_client.post(
@@ -94,6 +94,20 @@ def test_add_tourney_game_saves_stadium_config(
     assert response.status_code == 200
     game = lgb_models.Game.objects.get(live_stats="https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind")
     assert game.stadium_config.stadium_name == "Kentucky Proud Park"
+
+
+@pytest.mark.django_db
+def test_add_future_tourney_game_saves_stadium_config(
+    admin_client, teams, games, forms, scoreboards, stadiums, stadium_configs, home_stadium
+):
+    response = admin_client.post(
+        reverse("add_game"),
+        forms.uk_tourney_future,
+        follow=True,
+    )
+    assert response.status_code == 200
+    game = lgb_models.Game.objects.get(live_stats="https://stats.statbroadcast.com/broadcast/?id=8975433245&vislive=ind")
+    assert game.stadium_config.stadium_name == "Kentucky Very Proud Park"
 
 
 @pytest.mark.django_db

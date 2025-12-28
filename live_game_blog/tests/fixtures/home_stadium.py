@@ -30,11 +30,17 @@ def home_stadium(client, stadium_configs, teams):
         stadium_config=stadium_configs.proud,
         designate_date=date(date.today().year-7,2,1),   
     )
+    proud_future = lgb_models.HomeStadium.objects.create(
+        team=teams.kentucky,
+        stadium_config=stadium_configs.proud_future,
+        designate_date=date(date.today().year+7,2,1),   
+    )
     home_stad_list = [
         "bart",
         "springs",
         "banks",
         "proud",
+        "proud_future",
     ]
     HomeStadiumObj = namedtuple("HomeStadiumObj", home_stad_list)
     return HomeStadiumObj(
@@ -42,4 +48,5 @@ def home_stadium(client, stadium_configs, teams):
         springs=springs,
         banks=banks,
         proud=proud,
+        proud_future=proud_future,
     )

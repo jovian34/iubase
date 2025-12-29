@@ -32,9 +32,14 @@ def conferences(client):
         long_name = "Horizon League",
         logo_url = "https://cdn.d1baseball.com/uploads/2023/12/21135517/horizon-league.png",
     )
+    non_d1 = conf_models.Conference.objects.create(
+        abbrev = "nonD1",
+        long_name = "Not in NCAA Division I",
+        logo_url = "https://seeklogo.com/images/B/baseball-logo-8DD18EC9B4-seeklogo.com.png",
+    )
     ConfObj = namedtuple(
         "ConfObj",
-        "b1g sec p10 p12 hor",
+        "b1g sec p10 p12 hor non_d1",
     )
     return ConfObj(
         b1g=b1g,
@@ -42,4 +47,5 @@ def conferences(client):
         p10=p10,
         p12=p12,
         hor=hor,
+        non_d1=non_d1,
     )

@@ -39,9 +39,24 @@ def conf_teams(client, teams, conferences):
         conference = conferences.sec,
         fall_year_joined = date.today().year - 20,
     )
+    rut_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.rut,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 13,
+    )
+    chi_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.chicago,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 108,
+    )
+    chi_non = conf_models.ConfTeam.objects.create(
+        team = teams.chicago,
+        conference = conferences.non_d1,
+        fall_year_joined = date.today().year - 68,
+    )
     ConfTeamObj = namedtuple(
         "ConfTeamObj",
-        "iu_b1g iowa_b1g ucla_p10 ucla_p12 ucla_b1g uk_sec",
+        "iu_b1g iowa_b1g ucla_p10 ucla_p12 ucla_b1g uk_sec rut_b1g chi_b1g chi_non",
     )
     return ConfTeamObj(
         iu_b1g=iu_b1g,
@@ -50,4 +65,7 @@ def conf_teams(client, teams, conferences):
         ucla_p12=ucla_p12,
         ucla_b1g=ucla_b1g,
         uk_sec=uk_sec,
+        rut_b1g=rut_b1g,
+        chi_b1g=chi_b1g,
+        chi_non=chi_non,
     )

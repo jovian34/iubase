@@ -12,6 +12,11 @@
 <div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6">
+            <form action="{% url "add_series" spring_year %}" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" value="Submit">{{ page_title }}</button>
+            </form>
     </div>
 </div>
 

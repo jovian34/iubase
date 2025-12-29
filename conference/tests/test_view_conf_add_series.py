@@ -5,8 +5,10 @@ from django import urls
 
 from conference.tests.fixtures.conferences import conferences
 from conference.tests.fixtures.conf_teams import conf_teams
+from conference.tests.fixtures.form_data import forms
 from live_game_blog.tests.fixtures.teams import teams
 
+from conference import models as conf_models
 
 spring_year = datetime.date.today().year
 if datetime.date.today().month > 8:
@@ -35,7 +37,7 @@ def test_add_series_get_renders(admin_client, conferences, conf_teams, teams):
 
 
 @pytest.mark.django_db
-def test_add_series_get_renders_Chicago_as_B1G_team_eighty_years_ago(admin_client, conferences, conf_teams, teams):
+def test_add_series_get_renders_former_member_as_B1G_team_eighty_years_ago(admin_client, conferences, conf_teams, teams):
     response = admin_client.get(urls.reverse("add_series", args=[spring_year-80]))
     assert "Chicago" in response.content.decode()
 
@@ -44,3 +46,15 @@ def test_add_series_get_renders_Chicago_as_B1G_team_eighty_years_ago(admin_clien
 def test_add_series_get_is_forbidden_without_perms(client):
     response = client.get(urls.reverse("add_series", args=[spring_year]))
     assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_add_series_post_stores_correct_data(admin_client, conferences, conf_teams, teams, forms):
+    response = admin_client.post(
+        urls.reverse("add_series", args=[spring_year-80]),
+        forms.iu_ucla,
+        follow=True,
+    )
+    assert response.status_code == 200
+    series = conf_models.ConfSeries.objects.get(start_date=datetime.date(spring_year,3,21))
+    assert series.away_team.team_name == "UCLA"

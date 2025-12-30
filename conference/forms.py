@@ -16,7 +16,6 @@ class AddConferenceSeriesForm(forms.Form):
         label="Away Team",
     )
 
-
     def __init__(self, *args, **kwargs):
         spring_year = kwargs.pop("spring_year")
         conference = conf_models.Conference.objects.get(abbrev="B1G")

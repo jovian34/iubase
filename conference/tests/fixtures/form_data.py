@@ -17,8 +17,8 @@ if datetime.date.today().month > 8:
 @pytest.fixture
 def forms(teams, conferences):
     iu_ucla = {
-        "home_team": teams.indiana,
-        "away_team": teams.ucla,
+        "home_team": teams.indiana.pk,
+        "away_team": teams.ucla.pk,
         "start_date": f"{spring_year}-03-21"
     }
     form_list = [

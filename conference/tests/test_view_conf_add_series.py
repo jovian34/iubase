@@ -2,6 +2,7 @@ import pytest
 import datetime
 
 from django import urls
+from django.db.models import Q
 
 from conference.tests.fixtures.conferences import conferences
 from conference.tests.fixtures.conf_teams import conf_teams
@@ -51,10 +52,12 @@ def test_add_series_get_is_forbidden_without_perms(client):
 @pytest.mark.django_db
 def test_add_series_post_stores_correct_data(admin_client, conferences, conf_teams, teams, forms):
     response = admin_client.post(
-        urls.reverse("add_series", args=[spring_year-80]),
+        urls.reverse("add_series", args=[spring_year]),
         forms.iu_ucla,
         follow=True,
     )
     assert response.status_code == 200
-    series = conf_models.ConfSeries.objects.get(start_date=datetime.date(spring_year,3,21))
+    series = conf_models.ConfSeries.objects.filter(
+        Q(home_team=teams.indiana) & Q(away_team=teams.ucla)
+    )[0]
     assert series.away_team.team_name == "UCLA"

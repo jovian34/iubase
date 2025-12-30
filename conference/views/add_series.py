@@ -1,7 +1,8 @@
 import datetime
-from django import shortcuts, http
+from django import shortcuts, http, urls
 
 from conference import forms as conf_forms
+from conference import models as conf_models
 
 
 spring_year = datetime.date.today().year
@@ -12,7 +13,18 @@ if datetime.date.today().month > 8:
 def view(request, spring_year=spring_year):
     if not request.user.has_perm("conference.add_confseries"):
         return http.HttpResponseForbidden()
-    
+    elif request.method == "POST":
+        form = conf_forms.AddConferenceSeriesForm(request.POST, spring_year=spring_year)
+        if form.is_valid():
+            conf_series = conf_models.ConfSeries(
+                home_team=form.cleaned_data["home_team"],
+                away_team=form.cleaned_data["away_team"],
+                start_date=form.cleaned_data["start_date"]
+            )
+            conf_series.save()
+        else:
+            print("FORM IS NOT VALID")
+        return shortcuts.redirect(urls.reverse("index"))
     template_path = "conference/add_series.html",
     context = {
         "page_title": f"Add {spring_year} Conference Series",

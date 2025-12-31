@@ -348,6 +348,22 @@ td {
 	background-color: var(--body-background-color);
 }
 
+.matchup {
+    display: flex;
+    align-items: center; /* vertical centering */
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.at-symbol {
+    font-size: 2rem; /* adjust as needed */
+    line-height: 1;
+}
+
+.team-logo-sched {
+    display: block;
+    height: 80px;
+}
 
 .team-logo {
 	width: 20%;

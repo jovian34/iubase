@@ -10,21 +10,30 @@
 {% block content %}
 
 
+{% for start_date in start_dates %}
 <div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6">
-        {% for start_date in start_dates %}
+        
             <h2>Week {{ forloop.counter }} starting {{ start_date|date:"l, F j" }}:</h2>
             {% for conf_series in series %}
                 {% if conf_series.start_date == start_date %}
-                    <p>{{conf_series.away_team.team_name}} at {{conf_series.home_team.team_name}}</p>
-                {% endif %}
-            
+                    <div class="column-12 clear-both">
+                   
+                    <h1 class="matchup">
+                    <img class="team-logo-sched" src="{{ conf_series.away_team.logo }}" alt="{{conf_series.away_team.team_name}}">
+                    <span class="at-symbol">@</span>
+                    <img class="team-logo-sched" src="{{ conf_series.home_team.logo }}" alt="{{conf_series.home_team.team_name}}">
+                    </h1>
+                    </div>
+                {% endif %}            
             {% endfor %}
-        {% endfor %}
         
+        {% if perms.conference.add_confseries %}
         <a href="{% url "add_series" spring_year %}"><button>Add a series</button></a>
+        {% endif %}
     </div>
 </div>
+{% endfor %}
 
 {% endblock %}

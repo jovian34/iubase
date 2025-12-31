@@ -20,3 +20,13 @@ class ConfTeamAdmin(admin.ModelAdmin):
         "conference",
         "fall_year_joined",
     )
+
+
+@admin.register(conf_models.ConfSeries)
+class ConfSeriesAdmin(admin.ModelAdmin):
+    model = conf_models.ConfSeries
+    list_display = (
+        "home_team",
+        "away_team",
+        "start_date",
+    )

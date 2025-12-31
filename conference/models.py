@@ -39,11 +39,15 @@ class ConfSeries(models.Model):
         on_delete=models.CASCADE,
         related_name="series_away_team",
     )
-    home_wins = models.IntegerField(
-        default=0
+    home_wins = models.DecimalField(
+        max_digits=2,
+        decimal_places=1,
+        default=0,
     )
-    away_wins = models.IntegerField(
-        default=0
+    away_wins = models.DecimalField(
+        max_digits=2,
+        decimal_places=1,
+        default=0,
     )
     start_date = models.DateField()
 

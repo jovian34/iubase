@@ -22,9 +22,7 @@ def view(request, spring_year=spring_year):
                 start_date=form.cleaned_data["start_date"]
             )
             conf_series.save()
-        else:
-            print("FORM IS NOT VALID")
-        return shortcuts.redirect(urls.reverse("index"))
+        return shortcuts.redirect(urls.reverse("conf_schedule", args=[spring_year]))
     template_path = "conference/add_series.html",
     context = {
         "page_title": f"Add {spring_year} Conference Series",

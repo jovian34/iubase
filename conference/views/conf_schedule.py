@@ -20,6 +20,7 @@ def view(request, spring_year):
         "page_title": f"{year.get_spring_year()} B1G Schedule",
         "series": all_series,
         "start_dates": start_dates,
+        "spring_year": spring_year,
     }
     template_path = "conference/conf_schedule.html"
     return shortcuts.render(request, template_path, context)

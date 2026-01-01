@@ -17,8 +17,8 @@ this_year = date.today().year
 def test_incoming_players_renders(client, players, transactions):
     set_player_properties.set_player_props_get_errors()
     response = client.get(reverse("incoming_players", args=[f"{this_year + 1}"]))
-    assert "Owen" in str(response.content)
-    assert f"Incoming players for Fall {this_year + 1}" in str(response.content)
+    assert "Owen" in response.content.decode()
+    assert f"Incoming players for Fall {this_year + 1}" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -27,7 +27,7 @@ def test_incoming_players_places_hs_under_correct_nli_headers_player(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(reverse("incoming_players", args=[f"{this_year + 1}"]))
-    output = str(response.content)
+    output = response.content.decode()
     xavier = output.find("Xavier")
     owen = output.find("Owen")
     nli_head = output.find("from high school pending")
@@ -41,7 +41,7 @@ def test_incoming_players_places_transfers_under_correct_header(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(reverse("incoming_players", args=[f"{this_year}"]))
-    output = str(response.content)
+    output = response.content.decode()
     gilley = output.find("Gilley")
     transfer_head = output.find("Transfer Commits")
     assert gilley > transfer_head

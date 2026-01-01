@@ -29,8 +29,8 @@ def test_single_player_page_renders_one_player_only(client, players, annual_rost
         )
     )
     assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
-    assert "Nick" not in str(response.content)
+    assert "Devin Taylor" in response.content.decode()
+    assert "Nick" not in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -57,11 +57,11 @@ def test_single_player_page_renders_summer_teams(
         )
     )
     assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
-    assert "Summer Ball:" in str(response.content)
+    assert "Devin Taylor" in response.content.decode()
+    assert "Summer Ball:" in response.content.decode()
     assert (
         f"{this_year}: USA Collegiate National Team of the International Friendship League"
-        in str(response.content)
+        in response.content.decode()
     )
 
 
@@ -76,9 +76,9 @@ def test_single_player_page_renders_transfer_player_old_team(
         )
     )
     assert response.status_code == 200
-    assert "Nick Mitchell" in str(response.content)
-    assert "Devin" not in str(response.content)
-    assert "Miami (Ohio)" in str(response.content)
+    assert "Nick Mitchell" in response.content.decode()
+    assert "Devin" not in response.content.decode()
+    assert "Miami (Ohio)" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -96,7 +96,7 @@ def test_single_player_page_renders_action_shot_for_that_player(
     )
     assert (
         "https://iubase.com/wp-content/uploads/2024/11/53704071552_13227a46a0_k.jpg"
-        not in str(response.content)
+        not in response.content.decode()
     )
 
 
@@ -112,7 +112,7 @@ def test_single_player_page_renders_generic_action_shot_if_one_does_not_exist(
     )
     assert (
         "https://iubase.com/wp-content/uploads/2024/11/53704071552_13227a46a0_k.jpg"
-        in str(response.content)
+        in response.content.decode()
     )
 
 
@@ -127,7 +127,7 @@ def test_single_player_page_renders_accolade_org_and_name(
         )
     )
     assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
+    assert "Devin Taylor" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -141,13 +141,13 @@ def test_single_player_page_omits_add_and_edit_buttons_not_logged_in(
         )
     )
     assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
-    assert "add accolade</button>" not in str(response.content)
-    assert "add summer assignment</button>" not in str(response.content)
-    assert "add transaction</button>" not in str(response.content)
-    assert "add roster year</button>"not  in str(response.content)
-    assert "edit player info</button>" not in str(response.content)
-    assert "B1G First Team All-Conference Outfielder" not in str(response.content)
+    assert "Devin Taylor" in response.content.decode()
+    assert "add accolade</button>" not in response.content.decode()
+    assert "add summer assignment</button>" not in response.content.decode()
+    assert "add transaction</button>" not in response.content.decode()
+    assert "add roster year</button>"not  in response.content.decode()
+    assert "edit player info</button>" not in response.content.decode()
+    assert "B1G First Team All-Conference Outfielder" not in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -161,13 +161,13 @@ def test_single_player_page_omits_add_and_edit_buttons_without_perms(
         )
     )
     assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
-    assert "add accolade</button>" not in str(response.content)
-    assert "add summer assignment</button>" not in str(response.content)
-    assert "add transaction</button>" not in str(response.content)
-    assert "add roster year</button>"not  in str(response.content)
-    assert "edit player info</button>" not in str(response.content)
-    assert "B1G First Team All-Conference Outfielder" not in str(response.content)
+    assert "Devin Taylor" in response.content.decode()
+    assert "add accolade</button>" not in response.content.decode()
+    assert "add summer assignment</button>" not in response.content.decode()
+    assert "add transaction</button>" not in response.content.decode()
+    assert "add roster year</button>"not  in response.content.decode()
+    assert "edit player info</button>" not in response.content.decode()
+    assert "B1G First Team All-Conference Outfielder" not in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -181,12 +181,12 @@ def test_single_player_page_renders_add_and_edit_buttons_with_perms(
         )
     )
     assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
-    assert "add accolade</button>" in str(response.content)
-    assert "add summer assignment</button>" in str(response.content)
-    assert "add transaction</button>" in str(response.content)
-    assert "add roster year</button>" in str(response.content)
-    assert "edit player info</button>" in str(response.content)
+    assert "Devin Taylor" in response.content.decode()
+    assert "add accolade</button>" in response.content.decode()
+    assert "add summer assignment</button>" in response.content.decode()
+    assert "add transaction</button>" in response.content.decode()
+    assert "add roster year</button>" in response.content.decode()
+    assert "edit player info</button>" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -200,9 +200,9 @@ def test_single_player_page_renders_accolades_in_reverse_date_order(
         )
     )
     assert response.status_code == 200
-    pre = str(response.content).find("Pre-season second team All-American Outfielder")
-    first = str(response.content).find("First Team All-Conference")
-    sec = str(response.content).find("2nd team All-American Outfielder")
+    pre = response.content.decode().find("Pre-season second team All-American Outfielder")
+    first = response.content.decode().find("First Team All-Conference")
+    sec = response.content.decode().find("2nd team All-American Outfielder")
     assert sec < first
     assert first < pre
 
@@ -224,10 +224,10 @@ def test_single_player_page_renders_summer_accolades_after_summer_header(
         )
     )
     assert response.status_code == 200
-    assert "Ryan Kraft" in str(response.content)
-    assert "Northwoods League Pitcher of the Year" in str(response.content)
-    other = str(response.content).find("Other Accolades:")
-    head = str(response.content).find("Summer Ball:")
-    award = str(response.content).find("Northwoods League Pitcher of the Year")
+    assert "Ryan Kraft" in response.content.decode()
+    assert "Northwoods League Pitcher of the Year" in response.content.decode()
+    other = response.content.decode().find("Other Accolades:")
+    head = response.content.decode().find("Summer Ball:")
+    award = response.content.decode().find("Northwoods League Pitcher of the Year")
     assert head < award
     assert award < other

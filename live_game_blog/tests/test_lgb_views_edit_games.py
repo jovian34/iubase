@@ -41,4 +41,4 @@ def test_edit_lgb_game_changes_event_name(admin_client, games, scoreboards, entr
         follow=True,
     )
     assert response.status_code == 200
-    assert "Baseball at the Beach" in str(response.content)
+    assert "Baseball at the Beach" in response.content.decode()

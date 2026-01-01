@@ -24,7 +24,7 @@ def test_accolade_page_shows_accolade(
     client, accolades, players, annual_rosters, teams
 ):
     response = client.get(urls.reverse("accolades"))
-    assert "Pre-season second team All-American Outfielder" in str(response.content)
+    assert "Pre-season second team All-American Outfielder" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -32,5 +32,5 @@ def test_accolade_page_shows_college_team_if_not_indiana(
     client, accolades, players, annual_rosters, teams
 ):
     response = client.get(urls.reverse("accolades"))
-    assert "College Team: Miami" in str(response.content)
-    assert "College Team: Indiana" not in str(response.content)
+    assert "College Team: Miami" in response.content.decode()
+    assert "College Team: Indiana" not in response.content.decode()

@@ -18,22 +18,24 @@ from conference.tests.fixtures.conferences import conferences
 
 from live_game_blog import models as lgb_models
 
+from conference import year
+
 
 @pytest.mark.django_db
 def test_add_game_page_renders_template(admin_client,):
     response = admin_client.get(reverse("add_game"))
     assert response.status_code == 200
-    assert "Game at Neutral Site" in str(response.content)
-    assert "Away team D1Baseball.com national ranking" in str(response.content)
-    assert "Away team national tournament seed" in str(response.content)
-    assert "Home team tournament seed" in str(response.content)
-    assert "Live Stats Link" in str(response.content)
-    assert "Video Stream or TV provider" in str(response.content)
-    assert "Student Audio Link" in str(response.content)
+    assert "Game at Neutral Site" in response.content.decode()
+    assert "Away team D1Baseball.com national ranking" in response.content.decode()
+    assert "Away team national tournament seed" in response.content.decode()
+    assert "Home team tournament seed" in response.content.decode()
+    assert "Live Stats Link" in response.content.decode()
+    assert "Video Stream or TV provider" in response.content.decode()
+    assert "Student Audio Link" in response.content.decode()
     assert "Date and Time of First Pitch YYYY-MM-DD-HHMM in ET military time" in str(
         response.content
     )
-    assert "Primary Audio Link" in str(response.content)
+    assert "Primary Audio Link" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -50,10 +52,8 @@ def test_add_neutral_game(admin_client, teams, stadiums, stadium_configs, games,
         follow=True,
     )
     assert response.status_code == 200
-    assert "Feb. 14, 2025, 6:30 p.m. first pitch" in str(response.content)
-    assert "Scoreboard: George Mason-0, Indiana-0 | Top Inning: 1" in str(
-        response.context
-    )
+    assert f"Feb. 14, {year.get_spring_year()}, 6:30 p.m. first pitch" in response.content.decode()
+    assert "Scoreboard: George Mason-0, Indiana-0 | Top Inning: 1" in str(response.context)
 
 
 @pytest.mark.django_db
@@ -75,11 +75,11 @@ def test_add_tourney_game(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Indiana (3-seed)" in str(response.content)
-    assert "at" in str(response.content)
-    assert "no. 20" in str(response.content)
-    assert "Kentucky (1-seed)" in str(response.content)
-    assert "(#14 National Seed)" in str(response.content)
+    assert "Indiana (3-seed)" in response.content.decode()
+    assert "at" in response.content.decode()
+    assert "no. 20" in response.content.decode()
+    assert "Kentucky (1-seed)" in response.content.decode()
+    assert "(#14 National Seed)" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -120,8 +120,8 @@ def test_add_road_game_without_stadium(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Errors from Add Game" in str(response.content)
-    assert "George Mason has no home stadium configuration to apply." in str(response.content)
+    assert "Errors from Add Game" in response.content.decode()
+    assert "George Mason has no home stadium configuration to apply." in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -132,4 +132,4 @@ def test_add_game_post_asks_for_login_when_not_logged_in(client, forms, teams):
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password:" in str(response.content)
+    assert "Password:" in response.content.decode()

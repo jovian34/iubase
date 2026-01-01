@@ -43,9 +43,9 @@ def test_add_roster_year_partial_get_renders_form_fields(
         )
     )
     assert response.status_code == 200
-    assert "Spring Year" in str(response.content)
-    assert "Indiana" in str(response.content)
-    assert f"{this_year}" in str(response.content)
+    assert "Spring Year" in response.content.decode()
+    assert "Indiana" in response.content.decode()
+    assert f"{this_year}" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -55,9 +55,9 @@ def test_add_roster_year_partial_get_renders_form_fields_manual_url(
     url = f"/player_tracking/add_roster_year/{players.nick_mitchell.pk}/"
     response = admin_client.get(url)
     assert response.status_code == 200
-    assert "Spring Year" in str(response.content)
-    assert "Indiana" in str(response.content)
-    assert f"{this_year}" in str(response.content)
+    assert "Spring Year" in response.content.decode()
+    assert "Indiana" in response.content.decode()
+    assert f"{this_year}" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -93,9 +93,9 @@ def test_add_roster_year_partial_post_adds_roster_year(
         follow=True,
     )
     assert response.status_code == 200
-    assert f"{this_year} Indiana" in str(response.content)
-    assert f"{this_year - 1} Miami (Ohio)" in str(response.content)
-    assert f"{this_year - 2} Duke" in str(response.content)
+    assert f"{this_year} Indiana" in response.content.decode()
+    assert f"{this_year - 1} Miami (Ohio)" in response.content.decode()
+    assert f"{this_year - 2} Duke" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -108,4 +108,4 @@ def test_add_roster_year_partial_post_asks_for_password_not_logged_in(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password" in str(response.content)
+    assert "Password" in response.content.decode()

@@ -23,12 +23,12 @@ def test_fall_roster_renders(client, players, teams, annual_rosters):
         HTTP_HX_REQUEST="true",
     )
     assert response.status_code == 200
-    assert "Total Roster Length: 6" in str(response.content)
-    assert f"Fall {this_year - 1} Roster" in str(response.content)
-    assert "Nathan Ball" in str(response.content)
-    assert "Nick Mitchell" in str(response.content)
-    assert "Jack Moffitt" in str(response.content)
-    assert "Brayden" not in str(response.content)
+    assert "Total Roster Length: 6" in response.content.decode()
+    assert f"Fall {this_year - 1} Roster" in response.content.decode()
+    assert "Nathan Ball" in response.content.decode()
+    assert "Nick Mitchell" in response.content.decode()
+    assert "Jack Moffitt" in response.content.decode()
+    assert "Brayden" not in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -44,10 +44,10 @@ def test_fall_roster_renders_full_page_without_HTMX_call(
         follow=True,
     )
     assert response.status_code == 200
-    assert "<title>Players for Fall Seasons by Year</title>" in str(response.content)
+    assert "<title>Players for Fall Seasons by Year</title>" in response.content.decode()
     assert (
         f'hx-get="/player_tracking/fall_players_redirect/{this_year - 1}/" hx-trigger="load"'
-        in str(response.content)
+        in response.content.decode()
     )
 
 
@@ -55,10 +55,10 @@ def test_fall_roster_renders_full_page_without_HTMX_call(
 def test_spring_roster_renders(client, players, teams, annual_rosters):
     response = client.get(reverse("spring_roster", args=[f"{this_year - 1}"]))
     assert response.status_code == 200
-    assert "Total Roster Length: 3" in str(response.content)
-    assert f"Spring {this_year - 1} Roster" in str(response.content)
-    assert "Nick Mitchell" not in str(response.content)
-    assert "Devin Taylor" in str(response.content)
+    assert "Total Roster Length: 3" in response.content.decode()
+    assert f"Spring {this_year - 1} Roster" in response.content.decode()
+    assert "Nick Mitchell" not in response.content.decode()
+    assert "Devin Taylor" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -67,7 +67,7 @@ def test_spring_roster_renders_accolade(
 ):
     response = client.get(reverse("spring_roster", args=[f"{this_year - 1}"]))
     assert response.status_code == 200
-    assert "B1G All-Conference Freshman Team" in str(response.content)
+    assert "B1G All-Conference Freshman Team" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -76,4 +76,4 @@ def test_spring_roster_future_shows_not_aanounced(
 ):
     response = client.get(reverse("spring_roster", args=[f"{this_year + 1}"]))
     assert response.status_code == 200
-    assert "Roster not fully announced" in str(response.content)
+    assert "Roster not fully announced" in response.content.decode()

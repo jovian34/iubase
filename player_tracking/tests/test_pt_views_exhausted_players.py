@@ -48,4 +48,4 @@ def test_exhausted_players_page_shows_senior_for_his_last_season(
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(reverse("exhausted_players", args=[f"{this_year + 1}"]))
-    assert "Cole Gilley" in str(response.content)
+    assert "Cole Gilley" in response.content.decode()

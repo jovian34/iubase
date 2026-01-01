@@ -11,7 +11,7 @@ from live_game_blog.tests.fixtures.stadiums import stadiums
 from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from conference.tests.fixtures.conferences import conferences
 
-
+from conference import year
 eastern = pytz.timezone('America/New_York')
 
 @pytest.fixture
@@ -32,7 +32,7 @@ def forms(teams, stadiums, stadium_configs, conferences):
         "live_stats": [
             "https://stats.statbroadcast.com/broadcast/?id=491945&vislive=ind"
         ],
-        "first_pitch": [f"{datetime.date.today().year}-02-14-1830"],
+        "first_pitch": [f"{year.get_spring_year()}-02-14-1830"],
         "stadium_config": [str(stadium_configs.surprise.pk)]
     }
     gm_hosts_iu = {

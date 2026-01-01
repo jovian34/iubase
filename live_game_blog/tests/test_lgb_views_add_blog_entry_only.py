@@ -22,7 +22,7 @@ def test_add_blog_entry_only_get_renders(
 ):
     response = admin_client.get(reverse("add_blog_entry_only", args=[games.iu_duke.pk]))
     assert response.status_code == 200
-    assert "Content of Blog" in str(response.content)
+    assert "Content of Blog" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -46,8 +46,8 @@ def test_add_blog_entry_only_post_form(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Adding to the Duke Blog" in str(response.content)
-    assert "Jeremy" in str(response.content)
+    assert "Adding to the Duke Blog" in response.content.decode()
+    assert "Jeremy" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -95,7 +95,7 @@ def test_add_blog_entry_only_photo_post_form(
         follow=True,
     )
     assert response.status_code == 200
-    assert 'class="lgb-featured-image">' in str(response.content)
+    assert 'class="lgb-featured-image">' in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -110,7 +110,7 @@ def test_add_blog_entry_only_post_not_logged_in_shows_forbidden(
         },
     )
     assert response.status_code == 200
-    assert "Forbidden Error Recorded" in str(response.content)
+    assert "Forbidden Error Recorded" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -156,8 +156,8 @@ def test_add_blog_entry_only_x_embed_post_form(
         follow=True,
     )
     assert response.status_code == 200
-    assert "<li>Adding to the Duke Blog" in str(response.content)
-    assert "entry by @iubase17" in str(response.content)
+    assert "<li>Adding to the Duke Blog" in response.content.decode()
+    assert "entry by @iubase17" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -174,4 +174,4 @@ def test_add_blog_entry_only_markdown_converts_to_html(
         follow=True,
     )
     assert response.status_code == 200
-    assert "<h1>Adding to the Duke Blog</h1>" in str(response.content)
+    assert "<h1>Adding to the Duke Blog</h1>" in response.content.decode()

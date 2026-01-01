@@ -38,7 +38,7 @@ def test_edit_player_renders_current_info_in_form(
     admin_client, players, transactions, prof_orgs
 ):
     response = admin_client.get(reverse("edit_player", args=[players.devin_taylor.pk]))
-    assert "Devin" in str(response.content)
+    assert "Devin" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -74,7 +74,7 @@ def test_edit_player_good_post_redirects_to_player_page(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
+    assert "Devin Taylor" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -109,7 +109,7 @@ def test_edit_player_post_redirects_and_makes_no_change_not_logged_in(
         forms.devin_taylor_edited,
         follow=True,
     )
-    assert "Password" in str(response.content)
+    assert "Password" in response.content.decode()
     devin = Player.objects.get(pk=players.devin_taylor.pk)
     assert devin.last == "Taylor"
     assert devin.home_state != "OH"

@@ -43,11 +43,12 @@ def test_stadium_model_stored_all_fields(client, stadiums):
 def test_stadium_model_string_def(client, stadiums):
     assert str(stadiums.bart) == "1873 N Fee Ln | Bloomington, IN USA"
 
+from conference import year
 
 @pytest.mark.django_db
 def test_stadium_config_model_stored_all_fields(client, stadiums, stadium_configs):
     assert stadium_configs.bart.stadium == stadiums.bart
-    assert stadium_configs.bart.config_date == date(2013,3,1)
+    assert stadium_configs.bart.config_date == date(year.get_spring_year()-12,3,1)
     assert stadium_configs.bart.surface_inf == "artificial"
     assert stadium_configs.bart.surface_out == "artificial"
     assert stadium_configs.bart.surface_mound == "artificial"
@@ -62,19 +63,19 @@ def test_stadium_config_model_stored_all_fields(client, stadiums, stadium_config
 
 @pytest.mark.django_db
 def test_stadium_config_model_string_def(client, stadiums, stadium_configs):
-    assert str(stadium_configs.bart) == "Bart Kaufman Field - 2013"
+    assert str(stadium_configs.bart) == f"Bart Kaufman Field - {year.get_spring_year()-12}"
 
 
 @pytest.mark.django_db
 def test_home_stadium_model_stored_all_fields(client, stadiums, home_stadium, teams, stadium_configs):
     assert home_stadium.bart.team == teams.indiana
     assert home_stadium.bart.stadium_config == stadium_configs.bart
-    assert home_stadium.bart.designate_date == date(date.today().year-12,3,1)
+    assert home_stadium.bart.designate_date == date(year.get_spring_year()-12,3,1)
 
 
 @pytest.mark.django_db
 def test_home_stadium_model_string_def(client, stadiums, home_stadium):
-    assert str(home_stadium.bart) == "Indiana: Bart Kaufman Field - 2013"
+    assert str(home_stadium.bart) == f"Indiana: Bart Kaufman Field - {year.get_spring_year()-12}"
 
 
 @pytest.mark.django_db

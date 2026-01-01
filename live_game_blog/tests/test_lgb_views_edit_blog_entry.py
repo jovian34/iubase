@@ -30,9 +30,9 @@ def test_edit_blog_entry_get_renders_with_scoreboard(
 ):
     response = admin_client.get(reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]))
     assert response.status_code == 200
-    assert "Content of Blog" in str(response.content)
-    assert "Kentucky moves on to Super Regionals" in str(response.content)
-    assert 'name="home_errors" value="1"' in str(response.content)
+    assert "Content of Blog" in response.content.decode()
+    assert "Kentucky moves on to Super Regionals" in response.content.decode()
+    assert 'name="home_errors" value="1"' in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -41,9 +41,9 @@ def test_edit_blog_entry_get_renders_with_team_names_in_scoreboard_labels(
 ):
     response = admin_client.get(reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]))
     assert response.status_code == 200
-    assert "Kentucky Runs Scored" in str(response.content)
-    assert "Kentucky Hits" in str(response.content)
-    assert "Indiana Errors" in str(response.content)
+    assert "Kentucky Runs Scored" in response.content.decode()
+    assert "Kentucky Hits" in response.content.decode()
+    assert "Indiana Errors" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -52,8 +52,8 @@ def test_edit_blog_entry_get_renders_without_scoreboard(
 ):
     response = admin_client.get(reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]))
     assert response.status_code == 200
-    assert "Content of Blog" in str(response.content)
-    assert "Kentucky moves on to Super Regionals" in str(response.content)
+    assert "Content of Blog" in response.content.decode()
+    assert "Kentucky moves on to Super Regionals" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -81,8 +81,8 @@ def test_edit_blog_entry_post_adds_text(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Bothwell walks the first batter" not in str(response.content)
-    assert "Ty had a great 2nd inning" in str(response.content)
+    assert "Bothwell walks the first batter" not in response.content.decode()
+    assert "Ty had a great 2nd inning" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -95,8 +95,8 @@ def test_edit_blog_entry_changes_hit_to_error(
         follow=True,
     )
     assert response.status_code == 200
-    assert "8 hits" not in str(response.content)
-    assert "2 errors" in str(response.content)
+    assert "8 hits" not in response.content.decode()
+    assert "2 errors" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -114,7 +114,7 @@ def test_edit_blog_entry_post_redirects_and_asks_for_password_when_not_logged_in
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password:" in str(response.content)
+    assert "Password:" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -130,4 +130,4 @@ def test_edit_blog_entry_get_redirects_asks_for_password_when_not_logged_in(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password:" in str(response.content)
+    assert "Password:" in response.content.decode()

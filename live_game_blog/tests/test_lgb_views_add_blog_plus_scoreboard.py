@@ -40,9 +40,9 @@ def test_add_blog_entry_plus_scoreboard_form(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Indiana holds Duke to one run" in str(response.content)
-    assert "Jeremy" in str(response.content)
-    assert "End of bottom of inning 2" in str(response.content)
+    assert "Indiana holds Duke to one run" in response.content.decode()
+    assert "Jeremy" in response.content.decode()
+    assert "End of bottom of inning 2" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -55,8 +55,8 @@ def test_add_blog_entry_plus_scoreboard_markdown_to_html(
         follow=True,
     )
     assert response.status_code == 200
-    assert "<h2>DEVIN TAYLOR SALAMI!!!!</h2>" in str(response.content)
-    assert "Top of inning 4 with 1 outs" in str(response.content)
+    assert "<h2>DEVIN TAYLOR SALAMI!!!!</h2>" in response.content.decode()
+    assert "Top of inning 4 with 1 outs" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -78,7 +78,7 @@ def test_get_add_blog_plus_scoreboard_end_of_bottom_fills_form_with_top_of_innin
         reverse("add_blog_plus_scoreboard", args=[games.iu_mo_rain.pk]),
     )
     assert response.status_code == 200
-    assert 'value="Top" selected' in str(response.content)
+    assert 'value="Top" selected' in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -89,7 +89,7 @@ def test_get_add_blog_plus_scoreboard_end_of_top_fills_form_with_bottom_of_innin
         reverse("add_blog_plus_scoreboard", args=[games.iu_uk_sat.pk]),
     )
     assert response.status_code == 200
-    assert 'value="Bottom" selected' in str(response.content)
+    assert 'value="Bottom" selected' in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -100,7 +100,7 @@ def test_get_add_blog_plus_scoreboard_ip_fills_form_with_top_of_inning(
         reverse("add_blog_plus_scoreboard", args=[games.iu_coastal_ip.pk]),
     )
     assert response.status_code == 200
-    assert 'value="Top" selected' in str(response.content)
+    assert 'value="Top" selected' in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -111,6 +111,6 @@ def test_get_add_blog_plus_scoreboard_shows_team_names_in_form_labels(
         reverse("add_blog_plus_scoreboard", args=[games.iu_coastal_ip.pk]),
     )
     assert response.status_code == 200
-    assert "Coastal Carolina Runs Scored" in str(response.content)
-    assert "Coastal Carolina Hits" in str(response.content)
-    assert "Indiana Errors" in str(response.content)
+    assert "Coastal Carolina Runs Scored" in response.content.decode()
+    assert "Coastal Carolina Hits" in response.content.decode()
+    assert "Indiana Errors" in response.content.decode()

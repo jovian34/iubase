@@ -22,8 +22,8 @@ def test_summer_assignments_page_renders(
 ):
     response = client.get(reverse("summer_assignments", args=[f"{this_year}"]))
     assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
-    assert "Ryan Kraft" in str(response.content)
+    assert "Devin Taylor" in response.content.decode()
+    assert "Ryan Kraft" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -32,4 +32,4 @@ def test_summer_assignments_include_accolades(
 ):
     response = client.get(reverse("summer_assignments", args=[f"{this_year}"]))
     assert response.status_code == 200
-    assert "Pitcher of the Year" in str(response.content)
+    assert "Pitcher of the Year" in response.content.decode()

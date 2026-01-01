@@ -26,26 +26,26 @@ def test_group_draft_transactions_render(client):
 @pytest.mark.django_db
 def test_group_draft_transactions_shows_link_in_index(client, transactions, players):
     response = client.get(urls.reverse("pt_index"))
-    assert "All MLB Draft and Pro Signing Transactions</a>" in str(response.content)
-    assert "draft_transactions/" in str(response.content)
+    assert "All MLB Draft and Pro Signing Transactions</a>" in response.content.decode()
+    assert "draft_transactions/" in response.content.decode()
 
 
 @pytest.mark.django_db
 def test_group_draft_transactions_shows_title(client, transactions, players):
     response = client.get(urls.reverse("draft_transactions"))
-    assert "All MLB Draft and Pro Signing Transactions" in str(response.content)
+    assert "All MLB Draft and Pro Signing Transactions" in response.content.decode()
 
 
 @pytest.mark.django_db
 def test_group_draft_transactions_list_player(client, transactions, players):
     response = client.get(urls.reverse("draft_transactions"))
-    assert "Nick Mitchell, Signed Professional Contract" in clean_string(str(response.content))
+    assert "Nick Mitchell, Signed Professional Contract" in clean_string(response.content.decode())
 
 
 @pytest.mark.django_db
 def test_group_draft_transactions_reverse_chron_order(client, transactions, players):
     response = client.get(urls.reverse("draft_transactions"))
-    output = clean_string(str(response.content))
+    output = clean_string(response.content.decode())
     draft_index = output.find("Nick Mitchell, Drafted")
     signed_index = output.find("Nick Mitchell, Signed Professional Contract")
     assert signed_index < draft_index

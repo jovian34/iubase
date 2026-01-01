@@ -39,7 +39,7 @@ def test_add_accolade_partial_asks_for_password_not_logged_in(
         reverse("add_accolade", args=[str(players.devin_taylor.pk)]),
         follow=True,
     )
-    assert "Password:" in str(response.content)
+    assert "Password:" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -56,13 +56,13 @@ def test_add_accolade_partial_get_renders_form(admin_client, players):
         reverse("add_accolade", args=[str(players.devin_taylor.pk)]),
     )
     assert response.status_code == 200
-    assert "Name of accolade" in str(response.content)
-    assert "Date issued" in str(response.content)
-    assert "Sponsor Organization" in str(response.content)
-    assert "Detailed description" in str(response.content)
-    assert "Web link for announcement" in str(response.content)
-    assert "Applicable college roster" in str(response.content)
-    assert "Applicable summer assignment" in str(response.content)
+    assert "Name of accolade" in response.content.decode()
+    assert "Date issued" in response.content.decode()
+    assert "Sponsor Organization" in response.content.decode()
+    assert "Detailed description" in response.content.decode()
+    assert "Web link for announcement" in response.content.decode()
+    assert "Applicable college roster" in response.content.decode()
+    assert "Applicable summer assignment" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -73,7 +73,7 @@ def test_add_accolade_partial_get_renders_form_with_only_one_players_rosters(
         reverse("add_accolade", args=[str(players.devin_taylor.pk)]),
     )
     assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
+    assert "Devin Taylor" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -82,7 +82,7 @@ def test_add_accolade_partial_get_renders_form_with_only_one_players_rosters_man
 ):
     response = admin_client.get(f"/player_tracking/add_accolade/{players.devin_taylor.pk}/")
     assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
+    assert "Devin Taylor" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -117,7 +117,7 @@ def test_add_accolade_partial_post_redirects_to_player_page(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Devin Taylor" in str(response.content)
+    assert "Devin Taylor" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -137,8 +137,8 @@ def test_add_accolade_partial_post_submits_form_data(
         follow=True,
     )
     assert response.status_code == 200
-    assert "B1G First Team All-Conference Outfielder" in str(response.content)
-    assert "B1G Freshman of the Year" in str(response.content)
+    assert "B1G First Team All-Conference Outfielder" in response.content.decode()
+    assert "B1G Freshman of the Year" in response.content.decode()
 
 
 @pytest.mark.django_db

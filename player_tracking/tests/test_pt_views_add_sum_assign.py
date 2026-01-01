@@ -24,7 +24,7 @@ def test_add_summer_assignment_get_redirects_not_logged_in(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password" in str(response.content)
+    assert "Password" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -45,7 +45,7 @@ def test_add_summer_assignment_get_renders_form(
         reverse("add_summer_assignment", args=[str(players.devin_taylor.pk)])
     )
     assert response.status_code == 200
-    assert "Summer Year" in str(response.content)
+    assert "Summer Year" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -81,4 +81,4 @@ def test_add_summer_assignment_post_adds_assignment(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Green Bay" in str(response.content)
+    assert "Green Bay" in response.content.decode()

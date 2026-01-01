@@ -6,13 +6,14 @@ from datetime import date, timedelta
 from live_game_blog import models as lgb_models
 from live_game_blog.tests.fixtures.stadiums import stadiums
 
+from conference import year
 
 @pytest.fixture
 def stadium_configs(client, stadiums):
     bart = lgb_models.StadiumConfig.objects.create(
         stadium_name="Bart Kaufman Field",
         stadium=stadiums.bart,
-        config_date=date(date.today().year-12,3,1),
+        config_date=date(year.get_spring_year()-12,3,1),
         surface_inf="artificial",
         surface_out="artificial",
         surface_mound="artificial",
@@ -27,7 +28,7 @@ def stadium_configs(client, stadiums):
     surprise = lgb_models.StadiumConfig.objects.create(
         stadium_name="Surprise Stadium",
         stadium=stadiums.surprise,
-        config_date=date(date.today().year-23,12,8),
+        config_date=date(year.get_spring_year()-23,12,8),
         surface_inf="natural",
         surface_out="natural",
         surface_mound="natural",
@@ -41,7 +42,7 @@ def stadium_configs(client, stadiums):
     springs = lgb_models.StadiumConfig.objects.create(
         stadium_name="Springs Brooks Stadium - Vrooman Field",
         stadium=stadiums.springs,
-        config_date=date(date.today().year-10,2,1),
+        config_date=date(year.get_spring_year()-10,2,1),
         surface_inf="natural",
         surface_out="natural",
         surface_mound="natural",
@@ -55,7 +56,7 @@ def stadium_configs(client, stadiums):
     banks = lgb_models.StadiumConfig.objects.create(
         stadium_name="Duane Banks Field",
         stadium=stadiums.banks,
-        config_date=date(date.today().year-15,3,1),
+        config_date=date(year.get_spring_year()-15,3,1),
         surface_inf="artificial",
         surface_out="artificial",
         surface_mound="artificial",
@@ -70,7 +71,7 @@ def stadium_configs(client, stadiums):
     proud = lgb_models.StadiumConfig.objects.create(
         stadium_name="Kentucky Proud Park",
         stadium=stadiums.proud,
-        config_date=date(date.today().year-7,2,1),
+        config_date=date(year.get_spring_year()-7,2,1),
         surface_inf="artificial",
         surface_out="artificial",
         surface_mound="natural",
@@ -85,7 +86,7 @@ def stadium_configs(client, stadiums):
     proud_future = lgb_models.StadiumConfig.objects.create(
         stadium_name="Kentucky Very Proud Park",
         stadium=stadiums.proud,
-        config_date=date(date.today().year+7,2,1),
+        config_date=date(year.get_spring_year()+7,2,1),
         surface_inf="artificial",
         surface_out="artificial",
         surface_mound="artificial",

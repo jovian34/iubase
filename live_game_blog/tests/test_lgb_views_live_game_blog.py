@@ -29,20 +29,20 @@ this_year = datetime.today().year
 def test_live_single_game_blog_page_renders(client, games, scoreboards, entries, conf_teams, conferences):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
-    assert "Joey" in str(response.content)
-    assert "Indiana at Kentucky," in str(response.content)
-    assert "(FINAL)" in str(response.content)
-    assert "Kentucky moves on to Super Regionals" in str(response.content)
-    assert "stats" in str(response.content)
-    assert "roster" in str(response.content)
-    assert "https://cdn.d1baseball.com/uploads/2023/12/21135542/southeastern-conference.png" in str(response.content)
+    assert "Joey" in response.content.decode()
+    assert "Indiana at Kentucky," in response.content.decode()
+    assert "(FINAL)" in response.content.decode()
+    assert "Kentucky moves on to Super Regionals" in response.content.decode()
+    assert "stats" in response.content.decode()
+    assert "roster" in response.content.decode()
+    assert "https://cdn.d1baseball.com/uploads/2023/12/21135542/southeastern-conference.png" in response.content.decode()
 
 
 @pytest.mark.django_db
 def test_live_single_completed_game_blog_page_does_not_show_live_stats_link(client, games, scoreboards, entries):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
-    assert "https://t.co/Odg1uF46xM" not in str(response.content)
+    assert "https://t.co/Odg1uF46xM" not in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -51,7 +51,7 @@ def test_live_single_in_progress_game_blog_page_renders_in_reverse_order(
 ):
     response = client.get(reverse("live_game_blog", args=[games.iu_coastal_ip.pk]))
     assert response.status_code == 200
-    output = str(response.content)
+    output = response.content.decode()
     late = output.find("Pete Haas warming as the seventh starts")
     early = output.find("Gavin Seebold back out for the third inning")
     assert early != -1  # verifies early was found
@@ -64,7 +64,7 @@ def test_live_single_in_progress_game_blog_page_renders_live_stats_link(
 ):
     response = client.get(reverse("live_game_blog", args=[games.iu_coastal_ip.pk]))
     assert response.status_code == 200
-    assert "http://stats.statbroadcast.com/broadcast/?id=499358" in str(response.content)
+    assert "http://stats.statbroadcast.com/broadcast/?id=499358" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -113,7 +113,7 @@ def test_live_single_complete_game_blog_page_renders_in_chron_order(
 ):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
-    output = str(response.content)
+    output = response.content.decode()
     late = output.find("Kentucky moves on to Super Regionals")
     early = output.find("Bothwell walks the first batter")
     assert early != -1  # verifies early was found
@@ -126,7 +126,7 @@ def test_live_single_complete_game_blog_page_renders_final_scoreboard_at_top(
 ):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
-    output = str(response.content)
+    output = response.content.decode()
     early = output.find("<p><b>Hoosiers</b>: <b>2</b> runs |")
     late = output.find("Bothwell walks the first batter")
     assert early != -1  # verifies early was found
@@ -139,7 +139,7 @@ def test_live_single_complete_game_blog_page_renders_photo_html(
 ):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
-    assert 'class="lgb-featured-image">' in str(response.content)
+    assert 'class="lgb-featured-image">' in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -167,7 +167,7 @@ def test_roster_url_renders_special_case_roster_academic_year(
     response = client.get(reverse("live_game_blog", args=[games.iu_iowa.pk]))
     assert response.status_code == 200
     iowa_roster_url = f"https://hawkeyesports.com/sports/baseball/roster/season/{this_year + 2}-{this_year - 1997}"
-    assert iowa_roster_url in str(response.content)
+    assert iowa_roster_url in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -200,43 +200,43 @@ def test_roster_url_fall_game_renders_with_next_spring_roster(
 ):
     response = client.get(reverse("live_game_blog", args=[games.iu_duke_23_fall.pk]))
     assert response.status_code == 200
-    assert f"https://goduke.com/sports/baseball/roster/2024/" in str(response.content)
+    assert f"https://goduke.com/sports/baseball/roster/2024/" in response.content.decode()
 
 
 @pytest.mark.django_db
 def test_lgb_shows_weekday(client, games, scoreboards, entries):
     response = client.get(reverse("live_game_blog", args=[games.iu_duke_23_fall.pk]))
     assert response.status_code == 200
-    assert "Wed, Oct. 4, 2023," in str(response.content)
+    assert "Wed, Oct. 4, 2023," in response.content.decode()
 
 
 @pytest.mark.django_db
 def test_lgb_shows_adds_and_edits_with_perms(admin_client, games, scoreboards, entries):
     response = admin_client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
-    assert "Add Blog Entry Only" in str(response.content)
-    assert "Add Blog Entry plus Scoreboard" in str(response.content)
-    assert "Edit Entry" in str(response.content)
-    assert "Edit Game Info" in str(response.content)
+    assert "Add Blog Entry Only" in response.content.decode()
+    assert "Add Blog Entry plus Scoreboard" in response.content.decode()
+    assert "Edit Entry" in response.content.decode()
+    assert "Edit Game Info" in response.content.decode()
 
 
 @pytest.mark.django_db
 def test_lgb_shows_no_adds_or_edits_without_perms(client, games, logged_user_schwarbs, scoreboards, entries):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
-    assert "Add Blog Entry Only" not in str(response.content)
-    assert "Add Blog Entry plus Scoreboard" not in str(response.content)
-    assert "Edit Entry" not in str(response.content)
-    assert "Edit Game Info" not in str(response.content)
+    assert "Add Blog Entry Only" not in response.content.decode()
+    assert "Add Blog Entry plus Scoreboard" not in response.content.decode()
+    assert "Edit Entry" not in response.content.decode()
+    assert "Edit Game Info" not in response.content.decode()
 
 
 @pytest.mark.django_db
 def test_lgb_shows_no_adds_or_edits_not_logged_in(client, games, scoreboards, entries):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200
-    assert "Add Blog Entry Only" not in str(response.content)
-    assert "Add Blog Entry plus Scoreboard" not in str(response.content)
-    assert "Edit Entry" not in str(response.content)
+    assert "Add Blog Entry Only" not in response.content.decode()
+    assert "Add Blog Entry plus Scoreboard" not in response.content.decode()
+    assert "Edit Entry" not in response.content.decode()
 
 
 @pytest.mark.django_db

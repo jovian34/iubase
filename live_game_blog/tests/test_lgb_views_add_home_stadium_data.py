@@ -17,14 +17,14 @@ from conference.tests.fixtures.conferences import conferences
 def test_add_stadium_data_renders_with_form(admin_client, teams):
     response = admin_client.get(urls.reverse("add_home_stadium_data", args=[teams.unc.pk]))
     assert response.status_code == 200
-    assert "Add Home Stadium Data for North Carolina" in str(response.content)
-    assert "Address" in str(response.content)
-    assert "Latitude" in str(response.content)
-    assert "Full name of the stadium" in str(response.content)
-    assert "Out to centerfield orientation" in str(response.content)
-    assert "Which side is the home team dugout?" in str(response.content)
-    assert "Date stadium was set to this configuration (including name)" in str(response.content)
-    assert "Date this configuration became exclusive home field" in str(response.content)
+    assert "Add Home Stadium Data for North Carolina" in response.content.decode()
+    assert "Address" in response.content.decode()
+    assert "Latitude" in response.content.decode()
+    assert "Full name of the stadium" in response.content.decode()
+    assert "Out to centerfield orientation" in response.content.decode()
+    assert "Which side is the home team dugout?" in response.content.decode()
+    assert "Date stadium was set to this configuration (including name)" in response.content.decode()
+    assert "Date this configuration became exclusive home field" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -43,7 +43,7 @@ def test_add_stadium_data_unc_post_saves_form_data(admin_client, teams, forms, s
         follow=True,
     )
     assert response.status_code == 200
-    assert "North Carolina" not in str(response.content)
+    assert "North Carolina" not in response.content.decode()
     stadium = lgb_models.Stadium.objects.get(
         city="Chapel Hill",
     )

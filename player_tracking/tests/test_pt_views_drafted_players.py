@@ -39,15 +39,15 @@ def test_drafted_players_renders_drafted_not_signed(
     errors = set_player_properties.set_player_props_get_errors()
     response = client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
-    assert "Grant Hollister" in str(response.content)
+    assert "Grant Hollister" in response.content.decode()
     assert response.context["count"] == 2
-    assert "High School Signee" in str(response.content)
-    assert "IU Player/Alumni" in str(response.content)
+    assert "High School Signee" in response.content.decode()
+    assert "IU Player/Alumni" in response.content.decode()
     assert "He is expected by insiders to require $500,000 to sign." in str(
         response.content
     )
-    assert "$400,100 before" not in str(response.content)
-    assert "Philadelphia Phillies incur" not in str(response.content)
+    assert "$400,100 before" not in response.content.decode()
+    assert "Philadelphia Phillies incur" not in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -60,12 +60,12 @@ def test_drafted_players_renders_signed(
     assert response.context["count"] == 2
     assert (
         "Nick Mitchell signed a professional contract with a bonus of $367,000."
-        in str(response.content)
+        in response.content.decode()
     )
     assert "This bonus was 92% of the assigned value of the draft pick." in str(
         response.content
     )
-    assert "Bonus value was reported two days after signing." in str(response.content)
+    assert "Bonus value was reported two days after signing." in response.content.decode()
 
 
 @pytest.mark.django_db

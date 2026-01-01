@@ -31,11 +31,11 @@ def test_set_player_properties_produces_correct_html_output(
     admin_client, players, annual_rosters, transactions
 ):
     response = admin_client.get(reverse("players"), follow=True)
-    assert "Committed, but did not come to campus as a player" in str(response.content)
+    assert "Committed, but did not come to campus as a player" in response.content.decode()
     response = admin_client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    assert f"{this_year - 1}-{this_year}" in str(response.content)
-    assert "Devin Taylor" in str(response.content)
+    assert f"{this_year - 1}-{this_year}" in response.content.decode()
+    assert "Devin Taylor" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -241,7 +241,7 @@ def test_set_player_properties_asks_for_password_not_logged_in(
 ):
     response = client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    assert "Password" in str(response.content)
+    assert "Password" in response.content.decode()
 
 
 @pytest.mark.django_db

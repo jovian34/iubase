@@ -11,7 +11,7 @@ from accounts.tests.fixtures import logged_user_schwarbs
 def test_index_renders(client):
     response = client.get(urls.reverse("index"))
     assert response.status_code == 200
-    assert "Live Game Blogs" in str(response.content)
+    assert "Live Game Blogs" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -76,10 +76,10 @@ def test_current_days_traffic_renders(admin_client, agents):
     day = datetime.today().day
     response = admin_client.get(urls.reverse("one_days_traffic", args=[day]))
     assert response.status_code == 200
-    assert "47.128.55.115" in str(response.content)
-    assert "AJ Shepard" in str(response.content)
-    assert "iPhone" in str(response.content)
-    assert "Android" in str(response.content)
+    assert "47.128.55.115" in response.content.decode()
+    assert "AJ Shepard" in response.content.decode()
+    assert "iPhone" in response.content.decode()
+    assert "Android" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -99,7 +99,7 @@ def test_current_months_traffic_redirects_without_perms(client, agents, logged_u
 def test_current_months_traffic_renders(admin_client, agents):
     response = admin_client.get(urls.reverse("current_months_traffic"))
     assert response.status_code == 200
-    assert "Traffic for" in str(response.content)
+    assert "Traffic for" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -112,6 +112,6 @@ def test_current_months_traffic_redirects_not_logged_in(client, agents):
 def test_current_months_traffic_asks_for_password_not_logged_in(client, agents):
     response = client.get(urls.reverse("current_months_traffic"), follow=True)
     assert response.status_code == 200
-    assert "Traffic Count" not in str(response.content)
-    assert "2024 Transfer Portal" not in str(response.content)
-    assert "Password:" in str(response.content)
+    assert "Traffic Count" not in response.content.decode()
+    assert "2024 Transfer Portal" not in response.content.decode()
+    assert "Password:" in response.content.decode()

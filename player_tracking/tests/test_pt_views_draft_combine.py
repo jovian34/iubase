@@ -36,4 +36,4 @@ def test_draft_combine_attendees_renders(
     assert response.status_code == 200
     assert response.context["count"] == 2
     for item in ["Nick Mitchell", "College", "Hollister", "Freshman"]:
-        assert item in str(response.content)
+        assert item in response.content.decode()

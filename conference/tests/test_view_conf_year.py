@@ -21,9 +21,9 @@ def test_current_year_b1g_shows_correct_members(client, teams, conferences, conf
         )
     )
     assert response.status_code == 200
-    assert "UCLA" in str(response.content)
-    assert "Indiana" in str(response.content)
-    assert "Iowa" in str(response.content)
+    assert "UCLA" in response.content.decode()
+    assert "Indiana" in response.content.decode()
+    assert "Iowa" in response.content.decode()
     assert f"Big Ten Conference members for {str(datetime.date.today().year)}"
     
 
@@ -31,9 +31,9 @@ def test_current_year_b1g_shows_correct_members(client, teams, conferences, conf
 def test_default_year_b1g_shows_correct_members(client, teams, conferences, conf_teams):
     response = client.get(urls.reverse("conf_year_default", args=["B1G"]))
     assert response.status_code == 200
-    assert "UCLA" in str(response.content)
-    assert "Indiana" in str(response.content)
-    assert "Iowa" in str(response.content)
+    assert "UCLA" in response.content.decode()
+    assert "Indiana" in response.content.decode()
+    assert "Iowa" in response.content.decode()
     assert f"Big Ten Conference members for {spring_year}"
 
 
@@ -46,9 +46,9 @@ def test_last_year_b1g_does_not_show_ucla(client, teams, conferences, conf_teams
         )
     )
     assert response.status_code == 200
-    assert "UCLA" not in str(response.content)
-    assert "Indiana" in str(response.content)
-    assert "Iowa" in str(response.content)
+    assert "UCLA" not in response.content.decode()
+    assert "Indiana" in response.content.decode()
+    assert "Iowa" in response.content.decode()
 
 
 
@@ -60,7 +60,7 @@ def test_current_year_b1g_shows_correct_member_order(client, teams, conferences,
             kwargs = {"conf": "B1G", "spring_year": str(datetime.date.today().year)}
         )
     )
-    output = str(response.content)
+    output = response.content.decode()
     ucla = output.find("UCLA")
     iu = output.find("Indiana")
     assert ucla > iu

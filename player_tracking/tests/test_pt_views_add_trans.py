@@ -40,15 +40,15 @@ def test_add_transaction_partial_post_adds_transaction(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Drafted" in str(response.content)
-    assert "July 17" in str(response.content)
+    assert "Drafted" in response.content.decode()
+    assert "July 17" in response.content.decode()
     assert 'href="https://www.mlb.com/draft/tracker"'
     response = admin_client.get(reverse("drafted_players", args=[f"{this_year}"]))
     assert response.status_code == 200
-    assert "Brayden Risedorph" in str(response.content)
-    assert "he can get a bonus value of $150,000" in str(response.content)
-    assert "Expected to go over slot value." in str(response.content)
-    assert "Arizona Diamondbacks" in str(response.content)
+    assert "Brayden Risedorph" in response.content.decode()
+    assert "he can get a bonus value of $150,000" in response.content.decode()
+    assert "Expected to go over slot value." in response.content.decode()
+    assert "Arizona Diamondbacks" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -75,9 +75,9 @@ def test_add_transaction_partial_get_renders_form_fields(
         )
     )
     assert response.status_code == 200
-    assert "Transaction Event" in str(response.content)
-    assert "Transaction Date" in str(response.content)
-    assert f"{this_year}" in str(response.content)
+    assert "Transaction Event" in response.content.decode()
+    assert "Transaction Date" in response.content.decode()
+    assert f"{this_year}" in response.content.decode()
 
 
 @pytest.mark.django_db

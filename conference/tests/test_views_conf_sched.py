@@ -1,6 +1,7 @@
 import pytest
 import datetime
 from django import urls
+from django.db.models import Q
 
 from live_game_blog.tests.fixtures.teams import teams
 from conference.tests.fixtures.conferences import conferences
@@ -30,3 +31,20 @@ def test_current_year_b1g_schedule_renders_in_correct_order(client, teams, confe
     w1 = output.find("Week 1")
     w2 = output.find("Week 2")
     assert w1 < w2
+
+
+@pytest.mark.django_db
+def test_week_two_conf_sched_renders(client, teams, conferences, conf_teams, conf_series):
+    series = conf_models.ConfSeries.objects.all().filter(
+        Q(start_date=datetime.date(year.get_spring_year(),3,14)) &
+        Q(home_team=teams.iowa)
+    )
+    response = client.get(urls.reverse(
+        "conf_schedule_week",
+        kwargs = { 
+            "spring_year": year.get_spring_year(),
+            "month": 3,
+            "day": 14,
+        }
+    ))
+    assert response.status_code == 200

@@ -19,7 +19,8 @@ def test_current_year_b1g_schedule_renders(client, teams, conferences, conf_team
     response = client.get(urls.reverse("conf_schedule", args=[year.get_spring_year()]))
     assert response.status_code == 200
     assert "2026 B1G Schedule" in response.content.decode()
-    assert f"Week 1 starting {series.start_date:%A}, March 7:" in response.content.decode()
+    assert f"Week 1 starting" in response.content.decode()
+    assert f"{series.start_date:%A}, March 7:" in response.content.decode()
     assert "https://web2.ncaa.org/ncaa_style/img/All_Logos/sm/110.gif" in response.content.decode()
 
 

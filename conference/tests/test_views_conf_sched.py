@@ -15,10 +15,10 @@ from conference import models as conf_models
 
 @pytest.mark.django_db
 def test_current_year_b1g_schedule_renders(client, teams, conferences, conf_teams, conf_series):
-    series = conf_models.ConfSeries.objects.all().order_by("start_date")[0]
+    series = conf_models.ConfSeries.objects.filter(start_date=datetime.date(year.get_spring_year(),3,7))[0]
     response = client.get(urls.reverse("conf_schedule", args=[year.get_spring_year()]))
     assert response.status_code == 200
-    assert "2026 B1G Schedule" in response.content.decode()
+    assert f"{year.get_spring_year()} B1G Schedule" in response.content.decode()
     assert f"Week 1 starting" in response.content.decode()
     assert f"{series.start_date:%A}, March 7:" in response.content.decode()
     assert "https://web2.ncaa.org/ncaa_style/img/All_Logos/sm/110.gif" in response.content.decode()

@@ -1,6 +1,6 @@
 from django import urls
 
-from conference.views import conf_year, add_series, conf_schedule, add_win
+from conference.views import conf_year, add_series, conf_schedule, add_win, standings
 
 
 urlpatterns = [
@@ -13,4 +13,5 @@ urlpatterns = [
     urls.path("add_away_win/<conf_series>/", add_win.away, name="add_away_win"),
     urls.path("add_home_win/<conf_series>/", add_win.home, name="add_home_win"),
     urls.path("add_tie/<conf_series>/", add_win.tie, name="add_tie"),
+    urls.path("standings/<spring_year>/", standings.view, name="standings",)
 ]

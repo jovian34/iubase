@@ -73,6 +73,18 @@ def teams(client):
         logo="https://www.pngkit.com/png/full/267-2678346_chicago-maroons-logo-university-of-chicago-c.png",
         roster="https://athletics.uchicago.edu/sports/baseball/roster",
     )
+    nw = lgb_models.Team.objects.create(
+        team_name="Northwestern",
+        mascot="Wildcats",
+        logo="https://www.ncaa.com/sites/default/files/images/logos/schools/bgl/northwestern.svg",
+        roster="https://nusports.com/sports/baseball/roster",
+    )
+    neb = lgb_models.Team.objects.create(
+        team_name="Nebraska",
+        mascot="Cornhuskers",
+        logo="https://www.ncaa.com/sites/default/files/images/logos/schools/bgl/nebraska.svg",
+        roster="https://huskers.com/sports/baseball/roster",
+    )
     team_list = [
         "indiana",
         "duke", 
@@ -85,6 +97,8 @@ def teams(client):
         "unc",
         "rut",
         "chicago",
+        "nw",
+        "neb",
     ]
     TeamObj = namedtuple("TeamObj", team_list)
     return TeamObj(
@@ -99,4 +113,6 @@ def teams(client):
         unc=unc,
         rut=rut,
         chicago=chicago,
+        nw=nw,
+        neb=neb,
     )

@@ -54,3 +54,15 @@ class ConfSeries(models.Model):
     def __str__(self):
         return f"{self.away_team.team_name} at {self.home_team.team_name}: {self.start_date:%B} {self.start_date.day}-{self.start_date.day + 2}, {self.start_date.year}"
     
+
+class TeamRpi(models.Model):
+    team = models.ForeignKey(
+        lgb_models.Team,
+        on_delete=models.CASCADE,
+    )
+    rpi_rank = models.IntegerField()
+    spring_year = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.year} {self.team.team_name}: {self.rpi}"
+    

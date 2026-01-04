@@ -30,3 +30,13 @@ class ConfSeriesAdmin(admin.ModelAdmin):
         "away_team",
         "start_date",
     )
+
+
+@admin.register(conf_models.TeamRpi)
+class TeamRpiAdmin(admin.ModelAdmin):
+    model = conf_models.TeamRpi
+    list_display = (
+        "team",
+        "rpi_rank",
+        "spring_year",
+    )

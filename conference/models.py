@@ -64,5 +64,5 @@ class TeamRpi(models.Model):
     spring_year = models.IntegerField()
 
     def __str__(self):
-        return f"{self.year} {self.team.team_name}: {self.rpi}"
+        return f"{self.spring_year} {self.team.team_name}: {self.rpi_rank}"
     

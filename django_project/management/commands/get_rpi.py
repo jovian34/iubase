@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from conference import rpis
+from conference import rpis, year
 
 
 class Command(BaseCommand):
@@ -9,4 +9,4 @@ class Command(BaseCommand):
         return super().add_arguments(parser)
     
     def handle(self, *args, **options):
-        rpis.store_b1g_rpi_data_in_database(2025)
+        rpis.store_b1g_rpi_data_in_database(year.get_spring_year())

@@ -13,29 +13,8 @@ if datetime.date.today().month > 8:
 
 
 @pytest.fixture
-def conf_series(conferences, conf_teams, teams):
-    iu_iowa=conf_models.ConfSeries.objects.create(
-        home_team=teams.indiana,
-        away_team=teams.iowa,
-        start_date=datetime.date(spring_year,3,7)
-    )
-    ucla_rut=conf_models.ConfSeries.objects.create(
-        home_team=teams.ucla,
-        away_team=teams.rut,
-        start_date=datetime.date(spring_year,3,7)
-    )
-    rut_iu=conf_models.ConfSeries.objects.create(
-        home_team=teams.rut,
-        away_team=teams.indiana,
-        start_date=datetime.date(spring_year,3,14)
-    )
-    iowa_ucla=conf_models.ConfSeries.objects.create(
-        home_team=teams.iowa,
-        away_team=teams.ucla,
-        start_date=datetime.date(spring_year,3,14)
-    )
-
-    # LY WK1 ---------------------------------------
+def conf_series_ly(conferences, conf_teams, teams):
+    # WK1 ---------------------------------------
     iu_iowa_ly=conf_models.ConfSeries.objects.create(
         home_team=teams.indiana,
         away_team=teams.iowa,
@@ -51,7 +30,7 @@ def conf_series(conferences, conf_teams, teams):
         away_wins=1,
     )
 
-    # LY WK2
+    # WK2 ---------------------------------------
     rut_iu_ly=conf_models.ConfSeries.objects.create(
         home_team=teams.rut,
         away_team=teams.indiana,
@@ -74,7 +53,7 @@ def conf_series(conferences, conf_teams, teams):
         away_wins=2,
     )
 
-    # LY WK3
+    # WK3 -----------------------------------------
     nw_rut_ly=conf_models.ConfSeries.objects.create(
         home_team=teams.nw,
         away_team=teams.rut,
@@ -91,10 +70,6 @@ def conf_series(conferences, conf_teams, teams):
     )
 
     series_list = [
-        "iu_iowa",
-        "ucla_rut",
-        "rut_iu",
-        "iowa_ucla",
         "iu_iowa_ly",
         "ucla_rut_ly",
         "rut_iu_ly",
@@ -107,10 +82,6 @@ def conf_series(conferences, conf_teams, teams):
     ConfSeriesObj = namedtuple("ConfSeriesObj", series_list)
 
     return ConfSeriesObj(
-        iu_iowa=iu_iowa,
-        ucla_rut=ucla_rut,
-        rut_iu=rut_iu,
-        iowa_ucla=iowa_ucla,
         iu_iowa_ly=iu_iowa_ly,
         ucla_rut_ly=ucla_rut_ly,
         rut_iu_ly=rut_iu_ly,

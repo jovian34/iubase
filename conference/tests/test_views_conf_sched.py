@@ -6,7 +6,7 @@ from django.db.models import Q
 from live_game_blog.tests.fixtures.teams import teams
 from conference.tests.fixtures.conferences import conferences
 from conference.tests.fixtures.conf_teams import conf_teams
-from conference.tests.fixtures.conf_series import conf_series
+from conference.tests.fixtures.conf_series_current import conf_series_current
 
 from conference import year
 from conference import models as conf_models
@@ -14,7 +14,7 @@ from conference import models as conf_models
 
 
 @pytest.mark.django_db
-def test_current_year_b1g_schedule_renders(client, teams, conferences, conf_teams, conf_series):
+def test_current_year_b1g_schedule_renders(client, teams, conferences, conf_teams, conf_series_current):
     series = conf_models.ConfSeries.objects.filter(start_date=datetime.date(year.get_spring_year(),3,7))[0]
     response = client.get(urls.reverse("conf_schedule", args=[year.get_spring_year()]))
     assert response.status_code == 200
@@ -25,7 +25,7 @@ def test_current_year_b1g_schedule_renders(client, teams, conferences, conf_team
 
 
 @pytest.mark.django_db
-def test_current_year_b1g_schedule_renders_in_correct_order(client, teams, conferences, conf_teams, conf_series):
+def test_current_year_b1g_schedule_renders_in_correct_order(client, teams, conferences, conf_teams, conf_series_current):
     response = client.get(urls.reverse("conf_schedule", args=[year.get_spring_year()]))
     assert response.status_code == 200
     output = response.content.decode()
@@ -35,7 +35,7 @@ def test_current_year_b1g_schedule_renders_in_correct_order(client, teams, confe
 
 
 @pytest.mark.django_db
-def test_week_two_conf_sched_renders(client, teams, conferences, conf_teams, conf_series):
+def test_week_two_conf_sched_renders(client, teams, conferences, conf_teams, conf_series_current):
     series = conf_models.ConfSeries.objects.all().filter(
         Q(start_date=datetime.date(year.get_spring_year(),3,14)) &
         Q(home_team=teams.iowa)

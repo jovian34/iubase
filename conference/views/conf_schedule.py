@@ -17,7 +17,7 @@ def view(request, spring_year):
     start_dates.sort()
     print(type(start_dates))
     context = {
-        "page_title": f"{year.get_spring_year()} B1G Schedule",
+        "page_title": f"{spring_year} B1G Schedule",
         "series": all_series,
         "start_dates": start_dates,
         "spring_year": spring_year,

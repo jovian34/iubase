@@ -4,14 +4,14 @@ from django import urls
 from conference import year
 
 from live_game_blog.tests.fixtures.teams import teams
-from conference.tests.fixtures.conf_series import conf_series
+from conference.tests.fixtures.conf_series_ly import conf_series_ly
 from conference.tests.fixtures.conf_teams import conf_teams
 from conference.tests.fixtures.conferences import conferences
 from conference.tests.fixtures.team_rpis import team_rpis
 
 
 @pytest.mark.django_db
-def test_standings_page_for_prior_year_renders(client, teams, team_rpis, conf_series, conf_teams, conferences):
+def test_standings_page_for_prior_year_renders(client, teams, team_rpis, conf_series_ly, conf_teams, conferences):
     response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
     assert response.status_code == 200
     output = response.content.decode()

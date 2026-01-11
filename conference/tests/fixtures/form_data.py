@@ -7,7 +7,7 @@ import datetime
 from live_game_blog.tests.fixtures.teams import teams
 from conference.tests.fixtures.conferences import conferences
 from conference.tests.fixtures.conf_teams import conf_teams
-from conference.tests.fixtures.conf_series import conf_series
+from conference.tests.fixtures.conf_series_current import conf_series_current
 
 spring_year = datetime.date.today().year
 if datetime.date.today().month > 8:

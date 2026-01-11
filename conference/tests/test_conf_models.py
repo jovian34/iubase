@@ -3,7 +3,7 @@ import datetime
 
 from conference.tests.fixtures.conferences import conferences
 from conference.tests.fixtures.conf_teams import conf_teams
-from conference.tests.fixtures.conf_series import conf_series
+from conference.tests.fixtures.conf_series_current import conf_series_current
 from live_game_blog.tests.fixtures.teams import teams
 
 spring_year = datetime.date.today().year
@@ -36,13 +36,13 @@ def test_conf_team_model_correct_str_def(client, conferences, teams, conf_teams)
 
 
 @pytest.mark.django_db
-def test_conf_series_model_stores_correct_fields(client, conf_teams, conferences, teams, conf_series):
-    assert conf_series.iu_iowa.home_team == teams.indiana
-    assert conf_series.iowa_ucla.start_date == datetime.date(spring_year, 3, 14)
-    assert conf_series.rut_iu.home_wins == 0
-    assert conf_series.ucla_rut.away_wins == 0
+def test_conf_series_model_stores_correct_fields(client, conf_teams, conferences, teams, conf_series_current):
+    assert conf_series_current.iu_iowa.home_team == teams.indiana
+    assert conf_series_current.iowa_ucla.start_date == datetime.date(spring_year, 3, 14)
+    assert conf_series_current.rut_iu.home_wins == 0
+    assert conf_series_current.ucla_rut.away_wins == 0
 
 
 @pytest.mark.django_db
-def test_conf_series_model_correct_str_def(client, conf_teams, conferences, teams, conf_series):
-    assert str(conf_series.rut_iu) == f"Indiana at Rutgers: March 14-16, {spring_year}"
+def test_conf_series_model_correct_str_def(client, conf_teams, conferences, teams, conf_series_current):
+    assert str(conf_series_current.rut_iu) == f"Indiana at Rutgers: March 14-16, {spring_year}"

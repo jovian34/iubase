@@ -74,7 +74,7 @@ def view(request, spring_year):
             default=Value(0.0),
             output_field=FloatField()
         )
-    ).order_by('-win_pct', 'rpi_rank',)
+    ).order_by('-win_pct',)
     
     template_path = "conference/standings.html"
     context = {

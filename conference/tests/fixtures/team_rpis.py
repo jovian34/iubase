@@ -70,7 +70,7 @@ def team_rpis(teams):
     )
     mich_ly = conf_models.TeamRpi.objects.create(
         team=teams.mich,
-        rpi_rank=70,
+        rpi_rank=65,
         spring_year=spring_year-1
     )
     wash_ly = conf_models.TeamRpi.objects.create(

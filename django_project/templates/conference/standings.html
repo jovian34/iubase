@@ -10,18 +10,24 @@
 {% block content %}
 
 <div class="column-12 clear-both">
-    <div class="column-3"></div>
-    <div class="column-6">
-        {% for team in standings %}
-            <h2>{{ team.team_name }}</h2>
-            <ul>
-                <li><p>{{ team.wins }}</p></li>
-                <li><p>{{ team.losses }}</p></li>
-                <li><p>{{ team.win_pct|floatformat:3 }}</p></li>
-                <li><p>{{ team.rpi_rank }}</p></li>
-            </ul>
-        {% endfor %}
-    </div>
+  <div class="column-3"></div>
+  <div class="column-6">
+    {% for team in standings %}
+      <h2>{{ forloop.counter }}. {{ team.team_name }}</h2>
+      <ul>
+        <li><p>W/L: {{ team.computed_wins }}-{{ team.computed_losses }}</p></li>
+        <li><p>Pct: {{ team.computed_win_pct|floatformat:3 }}</p></li>
+        <li><p>RPI Rank: {{ team.computed_rpi_rank }}</p></li>
+      </ul>
+        {% if team.tie_breaker %}
+          <p><em>{{ team.tie_breaker }}</em></p>
+        {% endif %}
+        <hr>
+        {% if forloop.counter == 12 %}
+            <h2>====== B1G Tournament Cut Line =======</h2>
+        {% endif %}
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock %}

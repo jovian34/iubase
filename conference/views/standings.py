@@ -11,6 +11,9 @@ Rules implemented (in order) for groups of teams with equal conference win_pct:
 4) Order by rpi_rank (ascending: lower = better).
 
 Any remaining ties after applying a rule are re-processed starting at rule 1.
+
+This version annotates each team dict with 'tiebreaker' describing which rule
+was used to separate/place that team (or None).
 """
 
 from decimal import Decimal
@@ -201,8 +204,12 @@ def _pct_from_wl(wins: Decimal, losses: Decimal) -> float:
 def resolve_ties(team_list: List[dict], spring_year: int) -> List[dict]:
     """
     team_list: list of dicts with at least keys: 'pk', 'team_name', 'wins', 'losses', 'win_pct', 'rpi_rank'
-    Returns list ordered with ties resolved per rules.
+    Returns list ordered with ties resolved per rules. Each dict will also have 'tiebreaker'.
     """
+    # ensure each team dict has 'tiebreaker' key
+    for t in team_list:
+        t.setdefault('tiebreaker', None)
+
     # group by primary win_pct (float). Use rounding to avoid tiny float issues.
     def key_win_pct(team):
         return round(float(team.get('win_pct', 0.0)), 8)
@@ -236,21 +243,21 @@ def resolve_ties(team_list: List[dict], spring_year: int) -> List[dict]:
 def _resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[dict]:
     """
     Resolve ordering for a block of tied teams (same primary win_pct).
-    `depth` is used to prevent infinite recursion; if depth grows too large we
-    fall back to deterministic RPI ordering.
-    """
-    # Safety guard: avoid infinite recursion by falling back to rpi after a while
-    MAX_DEPTH = max(20, len(block) * 6)
-    if depth > MAX_DEPTH:
-        # fallback deterministic ordering by rpi_rank
-        def rpi_key(t):
-            r = t.get('rpi_rank')
-            return (r if r is not None else 999999)
-        return sorted(block, key=lambda t: rpi_key(t))
+    Returns ordered list of team dicts (fully resolved). Annotates placed teams'
+    'tiebreaker' where appropriate.
 
+    depth: recursion guard to prevent infinite loops; if exceeded, we fall back to rpi.
+    """
     # Base: if only one
     if len(block) <= 1:
         return block
+
+    # Safety guard: avoid infinite recursion by falling back to rpi after a while
+    MAX_DEPTH = max(20, len(block) * 6)
+    if depth > MAX_DEPTH:
+        for t in block:
+            t['tiebreaker'] = t.get('tiebreaker') or "rpi-fallback"
+        return sorted(block, key=lambda t: (t.get('rpi_rank') if t.get('rpi_rank') is not None else 999999))
 
     pks = [t['pk'] for t in block]
     pks_set = set(pks)
@@ -287,6 +294,8 @@ def _resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[
         for pct in sorted_pcts:
             grp = groups[pct]
             if len(grp) == 1:
+                # this team is uniquely placed by head-to-head
+                grp[0]['tiebreaker'] = grp[0].get('tiebreaker') or "tie broke by head-to-head"
                 out.append(grp[0])
             else:
                 # recursively resolve subgroup (go back to rule 1)
@@ -313,8 +322,6 @@ def _resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[
         played_all[t['pk']] = ok
 
     # Look for a team that has played all and has strictly higher pct_vs_group than every other team's pct_vs_group
-    # award top spot(s) iteratively
-    # First check for a strict best:
     top_candidate = None
     for pk in pks:
         if not played_all.get(pk, False):
@@ -332,8 +339,9 @@ def _resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[
             break
 
     if top_candidate is not None:
-        # place top_candidate first, then resolve remaining block
+        # place top_candidate first, annotate tiebreaker, then resolve remaining block
         top_team = next(t for t in block if t['pk'] == top_candidate)
+        top_team['tiebreaker'] = top_team.get('tiebreaker') or "better record vs all in tied group"
         remaining = [t for t in block if t['pk'] != top_candidate]
         return [top_team] + _resolve_block(remaining, spring_year, depth=depth+1)
 
@@ -356,6 +364,7 @@ def _resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[
 
     if worst_candidate is not None:
         worst_team = next(t for t in block if t['pk'] == worst_candidate)
+        worst_team['tiebreaker'] = worst_team.get('tiebreaker') or "worse record vs all in tied group"
         remaining = [t for t in block if t['pk'] != worst_candidate]
         # put remaining resolved first, then worst at end
         return _resolve_block(remaining, spring_year, depth=depth+1) + [worst_team]
@@ -393,6 +402,8 @@ def _resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[
         for pct in sorted_pcts:
             grp = groups[pct]
             if len(grp) == 1:
+                # uniquely placed by common-opponents
+                grp[0]['tiebreaker'] = grp[0].get('tiebreaker') or "tie broke by record vs. common opponents"
                 out.append(grp[0])
             else:
                 out.extend(_resolve_block(grp, spring_year, depth=depth+1))
@@ -405,10 +416,13 @@ def _resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[
         return (r if r is not None else 999999)
 
     sorted_by_rpi = sorted(block, key=lambda t: rpi_key(t))
-    # if any remain tied by rpi as well (very unlikely), preserve original order by team_name
-    # return as is
+    # annotate with rpi tiebreaker if they don't already have a tiebreaker
+    for t in sorted_by_rpi:
+        t['tiebreaker'] = t.get('tiebreaker') or "tie broke by RPI"
     return sorted_by_rpi
 
+
+# ---------- View ----------
 
 def view(request, spring_year):
     # annotate teams with wins/losses/win_pct/rpi_rank
@@ -432,6 +446,7 @@ def view(request, spring_year):
             'win_pct': float(t.win_pct or 0.0),
             'rpi_rank': int(t.rpi_rank) if t.rpi_rank is not None else None,
             'obj': t,  # keep original model obj for rendering convenience
+            'tiebreaker': None,
         })
 
     # Resolve ties and produce ordered list
@@ -448,7 +463,23 @@ def view(request, spring_year):
         model_obj.computed_win_pct = entry['win_pct']
         model_obj.computed_rpi_rank = entry['rpi_rank']
         model_obj.standings_position = pos
+        # attach the tiebreaker string (None if not applicable)
+        model_obj.tie_breaker = entry.get('tiebreaker')
         ordered_for_template.append(model_obj)
+
+    # Determine conference name for page_title:
+    conference_name = "Conference"
+    try:
+        team_pks = [entry['pk'] for entry in teams_list]
+        conf_names_qs = conf_models.ConfTeam.objects.filter(
+            team_id__in=team_pks,
+            spring_year=spring_year
+        ).values_list('conference__name', flat=True).distinct()
+        conf_names = list(conf_names_qs)
+        if conf_names:
+            conference_name = conf_names[0]
+    except Exception:
+        conference_name = "Conference"
 
     template_path = "conference/standings.html"
     context = {

@@ -50,6 +50,7 @@ def test_standings_shows_three_way_tie_broke_by_common(client, teams, team_rpis,
     mich = output.find("Michigan")
     assert indiana < iowa
     assert iowa < mich
+    assert "tie broke by record vs. common opponents" in output
 
 
 @pytest.mark.django_db
@@ -62,6 +63,7 @@ def test_standings_shows_three_way_tie_broke_by_h2h(client, teams, team_rpis, co
     mich = output.find("Michigan")
     assert indiana < iowa
     assert iowa < mich
+    assert "tie broke by head-to-head" in output
 
 
 @pytest.mark.django_db
@@ -73,7 +75,12 @@ def test_standings_shows_three_way_tie_broke_by_h2h_partial(client, teams, team_
     iowa = output.find("Iowa")
     mich = output.find("Michigan")
     assert indiana < iowa
-    assert mich < iowa # broke by RPI
+    assert mich < iowa # tie broke by RPI
+    assert "better record vs all in tied group" in output
+    assert "tie broke by RPI" in output
+    best = output.find("better record vs all in tied group")
+    rpi = output.find("tie broke by RPI")
+    assert best < rpi
 
 
 @pytest.mark.django_db

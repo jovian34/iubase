@@ -73,11 +73,11 @@ def test_standings_shows_three_way_tie_broke_by_h2h_partial(client, teams, team_
     iowa = output.find("Iowa")
     mich = output.find("Michigan")
     assert indiana < iowa
-    assert iowa < mich
+    assert mich < iowa # broke by RPI
 
 
 @pytest.mark.django_db
-def test_standings_shows_three_way_tie_broke_by_rpi(client, teams, team_rpis, conf_series_three_way_h2h_partial, conf_teams, conferences):
+def test_standings_shows_three_way_tie_broke_by_rpi(client, teams, team_rpis, conf_series_three_way_rpi, conf_teams, conferences):
     response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
     assert response.status_code == 200
     output = response.content.decode()

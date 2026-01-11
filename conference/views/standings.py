@@ -422,8 +422,6 @@ def _resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[
     return sorted_by_rpi
 
 
-# ---------- View ----------
-
 def view(request, spring_year):
     # annotate teams with wins/losses/win_pct/rpi_rank
     teams_qs = _annotated_teams_queryset(spring_year)

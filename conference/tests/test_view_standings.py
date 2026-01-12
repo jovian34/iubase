@@ -7,7 +7,8 @@ from live_game_blog.tests.fixtures.teams import teams
 from conference.tests.fixtures.conf_series_three_way_common import conf_series_three_way_common
 from conference.tests.fixtures.conf_series_three_way_h2h import conf_series_three_way_h2h
 from conference.tests.fixtures.conf_series_two_way_h2h import conf_series_two_way_h2h
-from conference.tests.fixtures.conf_series_three_way_h2h_partial import conf_series_three_way_h2h_partial
+from conference.tests.fixtures.conf_series_three_way_h2h_partial_top import conf_series_three_way_h2h_partial_top
+from conference.tests.fixtures.conf_series_three_way_h2h_partial_bottom import conf_series_three_way_h2h_partial_bottom
 from conference.tests.fixtures.conf_series_three_way_rpi import conf_series_three_way_rpi
 from conference.tests.fixtures.conf_teams import conf_teams
 from conference.tests.fixtures.conferences import conferences
@@ -67,7 +68,7 @@ def test_standings_shows_three_way_tie_broke_by_h2h(client, teams, team_rpis, co
 
 
 @pytest.mark.django_db
-def test_standings_shows_three_way_tie_broke_by_h2h_partial(client, teams, team_rpis, conf_series_three_way_h2h_partial, conf_teams, conferences):
+def test_standings_shows_three_way_tie_broke_by_h2h_partial_best(client, teams, team_rpis, conf_series_three_way_h2h_partial_top, conf_teams, conferences):
     response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
     assert response.status_code == 200
     output = response.content.decode()
@@ -81,6 +82,23 @@ def test_standings_shows_three_way_tie_broke_by_h2h_partial(client, teams, team_
     best = output.find("better record vs all in tied group")
     rpi = output.find("tie broke by RPI")
     assert best < rpi
+
+
+@pytest.mark.django_db
+def test_standings_shows_three_way_tie_broke_by_h2h_partial_worse(client, teams, team_rpis, conf_series_three_way_h2h_partial_bottom, conf_teams, conferences):
+    response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
+    assert response.status_code == 200
+    output = response.content.decode()
+    indiana = output.find("Indiana")
+    iowa = output.find("Iowa")
+    mich = output.find("Michigan")
+    assert indiana > iowa
+    assert mich < iowa # tie broke by RPI
+    assert "worse record vs all in tied group" in output
+    assert "tie broke by RPI" in output
+    worse = output.find("worse record vs all in tied group")
+    rpi = output.find("tie broke by RPI")
+    assert worse > rpi
 
 
 @pytest.mark.django_db

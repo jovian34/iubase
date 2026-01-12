@@ -13,7 +13,7 @@ if datetime.date.today().month > 8:
 
 
 @pytest.fixture
-def conf_series_three_way_h2h_partial(conferences, conf_teams, teams):
+def conf_series_three_way_h2h_partial_top(conferences, conf_teams, teams):
     indiana_mich=conf_models.ConfSeries.objects.create(
         home_team=teams.indiana,
         away_team=teams.mich,

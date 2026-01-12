@@ -5,11 +5,11 @@
                         <a href="{% url "add_away_win" conf_series.pk %}">+1</a>
                     {% endif %}
 
-                    <span class="at-symbol">{{ conf_series.away_wins }}</span>
+                    <span class="at-symbol">{{ conf_series.away_wins|floatformat:"-1" }}</span>
                     <img class="team-logo-sched" src="{{ conf_series.away_team.logo }}" alt="{{conf_series.away_team.team_name}}">
                     <span class="at-symbol">@</span>
                     <img class="team-logo-sched" src="{{ conf_series.home_team.logo }}" alt="{{conf_series.home_team.team_name}}">
-                    <span class="at-symbol">{{ conf_series.home_wins }}</span>
+                    <span class="at-symbol">{{ conf_series.home_wins|floatformat:"-1" }}</span>
                     
                     {% if perms.conference.change_confseries %}
                         <a href="{% url "add_home_win" conf_series.pk %}">+1</a>

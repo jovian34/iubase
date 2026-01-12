@@ -13,19 +13,21 @@
   <div class="column-3"></div>
   <div class="column-6">
     {% for team in standings %}
-      <h2>{{ forloop.counter }}. {{ team.team_name }}</h2>
-      <ul>
-        <li><p>W/L: {{ team.computed_wins }}-{{ team.computed_losses }}</p></li>
-        <li><p>Pct: {{ team.computed_win_pct|floatformat:3 }}</p></li>
-        <li><p>RPI Rank: {{ team.computed_rpi_rank }}</p></li>
-      </ul>
-        {% if team.tie_breaker %}
-          <p><em>{{ team.tie_breaker }}</em></p>
-        {% endif %}
-        <hr>
-        {% if forloop.counter == 12 %}
-            <h2>====== B1G Tournament Cut Line =======</h2>
-        {% endif %}
+      <div class="column-12 clear-both">
+        <img class="team-logo" src="{{ team.logo }}">
+        <h2>{{ forloop.counter }}. {{ team.team_name }}</h2>
+        {% if team.computed_wins %}{% endif %}
+        <p>{{ team.computed_wins|floatformat:"-1" }} wins / {{ team.computed_losses|floatformat:"-1" }} losses
+            ({{ team.computed_win_pct|floatformat:3 }})</p>
+        <p>RPI Rank: {{ team.computed_rpi_rank }}</p>
+          {% if team.tie_breaker %}
+            <p><em>{{ team.tie_breaker }}</em></p>
+          {% endif %}
+          <hr>
+          {% if forloop.counter == 12 %}
+              <h2>====== B1G Tournament Cut Line =======</h2>
+          {% endif %}
+      </div>
     {% endfor %}
   </div>
 </div>

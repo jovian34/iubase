@@ -22,18 +22,29 @@
 
         <img  class="fade-me-in-2s" src="https://live.staticflickr.com/65535/54512564183_362078aa51_b.jpg" id="player-photo">
 
-         <h3>Spring {{ this_year }} Roster Not Yet Announced</h3>
+        <h2>Current team:</h2>
+        <h3><a href="{% url "spring_roster" this_year %}">Spring {{ this_year }} Roster</a></h3>  
+        <h3><a href="{% url "spring_depth_chart" this_year %}">Spring {{ this_year }} Depth Chart</a></h3>        
         <h3><a href="{% url "accolades" %}">Recent Accolades</a></h3>
-        <h3><a href="{% url "fall_players" last_year %}">Players For Fall {{ last_year }}</a></h3>
         <h3><a href="{% url "exhausted_players" this_year %}">Players exhausting eligibility with Spring {{ this_year }}</a></h3>
-        <h3><a href="{% url "drafted_players" last_year %}">Players Selected in the {{ last_year }} MLB Draft</a></h3>
-        <h3><a href="{% url "draft_combine_attendees" last_year %}">{{ last_year }} Draft Combine Attendees</a></h3>
-        <h3><a href="{% url "draft_transactions" %}">All MLB Draft and Pro Signing Transactions</a></h3>
         <h3><a href="{% url "portal" this_year %}">Transfer Portal {{ this_year }}</a></h3>
+        <h3><a href="{% url "summer_assignments" this_year %}">Summer {{ this_year }} Collegiate League Assignments</a></h3>
+        <hr>
+
+        <h2>Prior season:</h2>
+        <h3><a href="{% url "drafted_players" last_year %}">Players Selected in the {{ last_year }} MLB Draft</a></h3>
+        <h3><a href="{% url "draft_transactions" %}">All MLB Draft and Pro Signing Transactions</a></h3>
+        <hr>
+        
+        <h2>Future season:</h2>
         <h3><a href="{% url "incoming_players" this_year %}">Incoming Players For Fall {{ this_year }}</a></h3>
-        <!-- <h3><a href="{% url "summer_assignments" this_year %}">Summer {{ this_year }} Collegiate League Assignments</a></h3>
-        <h3><a href="{% url "spring_roster" this_year %}">Spring {{ this_year }} Roster</a></h3>
-        <h3><a href="{% url "spring_depth_chart" this_year %}">Spring {{ this_year }} Depth Chart</a></h3> -->
+        <h3><a href="{% url "fall_players" last_year %}">Players For Fall {{ this_year }}</a></h3>
+        <hr>
+        <!-- 
+         <h3>Spring {{ this_year }} Roster Not Yet Announced</h3>
+        <h3><a href="{% url "draft_combine_attendees" last_year %}">{{ last_year }} Draft Combine Attendees</a></h3>
+        -->
+        <br>
                 <h3><a href="{% url "players"  %}">All Players in the database</a></h3>
         <p>Includes publicly available data for players and commits who were on campus from Fall 2023 forward.
             There is some data for before 2023, but it is incomplete. Rosters counts and other data will not be accurate.</p>

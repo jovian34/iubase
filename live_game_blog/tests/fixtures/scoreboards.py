@@ -175,10 +175,21 @@ def scoreboards(client, games, user_not_logged_in):
     score_duke = Scoreboard.objects.create(
         game=games.iu_duke, scorekeeper=user_not_logged_in, game_status="pre-game"
     )
-    ScoreboardObj = namedtuple(
-        "ScoreboardObj",
-        "score_uk_mon, score_coast_fut, score_coast_ip, score_gm_fall, score_iu_uk_far, score_iowa_fut, score_miami_rain, score_uk_sun, score_iu_duke_ly, score_iu_duke_23_fall, score_uk_sat score_duke",
-    )
+    scoreboard_list = [
+        "score_uk_mon",
+        "score_coast_fut",
+        "score_coast_ip",
+        "score_gm_fall",
+        "score_iu_uk_far",
+        "score_iowa_fut",
+        "score_miami_rain",
+        "score_uk_sun",
+        "score_iu_duke_ly",
+        "score_iu_duke_23_fall",
+        "score_uk_sat",
+        "score_duke",
+    ]
+    ScoreboardObj = namedtuple("ScoreboardObj", scoreboard_list)
     return ScoreboardObj(
         score_uk_mon=score_uk_mon,
         score_coast_fut=score_coast_fut,

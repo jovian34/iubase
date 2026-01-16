@@ -29,6 +29,7 @@ dependencies = [
 
 [tool.uv]
 package = false
+constraint-dependencies = ["urllib3>=2.6.3"]
 
 [tool.ruff]
 extend-exclude = ["tests"]

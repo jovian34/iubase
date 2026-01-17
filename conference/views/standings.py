@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django import shortcuts
 from conference.logic import resolve_ties, get_standings_data
+from conference import models as conf_models
 
 
 def view(request, spring_year):
@@ -9,11 +10,13 @@ def view(request, spring_year):
     teams_list = create_teams_list_from_queryset(teams_qs)
     ordered = resolve_ties.resolve_ties(teams_list, spring_year)
     ordered_for_template = create_ordered_standings_for_use_in_template(ordered)
+    b1g = conf_models.Conference.objects.get(abbrev="B1G")
     template_path = "conference/standings.html"
     context = {
         "page_title": f"{spring_year} B1G Standings",
         "standings": ordered_for_template,
-        "spring_year": spring_year
+        "spring_year": spring_year,
+        "B1G": b1g,
     }
     return shortcuts.render(request, template_path, context)
 

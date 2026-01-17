@@ -2,7 +2,7 @@ import pytest
 
 from django.db.models import Q
 
-from conference import rpis
+from conference.logic import rpis
 from conference import models as conf_models
 
 from live_game_blog.tests.fixtures.teams import teams

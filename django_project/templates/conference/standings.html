@@ -41,7 +41,13 @@
           {% endif %}
           <hr>
           {% if forloop.counter == 12 %}
-              <h2>====== B1G Tournament Cut Line =======</h2>
+              <div class="column-12 cut-line">
+                <h2 class="matchup">
+                  <img class="team-logo-sched" src="{{ B1G.logo_url }}">
+                  Tournament Cut Line
+                </h2>
+              </div>
+              <hr>
           {% endif %}
       </div>
     {% endfor %}

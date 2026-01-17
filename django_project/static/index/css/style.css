@@ -15,6 +15,7 @@
     --black-subtle: #222;
     --white: white;
     --blue: blue;
+	--big-ten-blue: #0088CE;
     --font-head: "Fjalla One", sans-serif;
     --font-text: "Varela Round", sans-serif;
     --body-background-color: var(--cream);
@@ -358,6 +359,10 @@ td {
 .at-symbol {
     font-size: 2rem; /* adjust as needed */
     line-height: 1;
+}
+
+.cut-line {
+	background-color: var(--grey);
 }
 
 .team-logo-sched {

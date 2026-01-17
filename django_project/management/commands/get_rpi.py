@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from conference import rpis
+from conference.logic import rpis
 from conference.logic import year
 
 

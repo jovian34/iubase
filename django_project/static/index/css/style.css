@@ -16,6 +16,7 @@
     --white: white;
     --blue: blue;
 	--big-ten-blue: #0088CE;
+	--big-ten-gray: #939598;
     --font-head: "Fjalla One", sans-serif;
     --font-text: "Varela Round", sans-serif;
     --body-background-color: var(--cream);
@@ -362,7 +363,7 @@ td {
 }
 
 .cut-line {
-	background-color: var(--grey);
+	background-color: var(--big-ten-gray);
 }
 
 .team-logo-sched {

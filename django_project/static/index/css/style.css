@@ -159,8 +159,6 @@ h3 {
 	float: right;
 }
 
-
-
 .conf-logo-lgb {
 	width: 15%;
 	height: auto;
@@ -265,8 +263,6 @@ a:active {
 }
 
 
-
-
 /*------ PHOTO STYLING ------*/
 
 
@@ -357,13 +353,36 @@ td {
     gap: 0.5rem;
 }
 
+.conf-stand-title {
+    display: flex;
+    align-items: center; /* vertical centering */
+    justify-content: center;
+}
+
+h3.b1g-text a{
+	color: var(--big-ten-blue);
+}
+
+.b1g-text {
+	color: var(--big-ten-blue);
+}
+
 .at-symbol {
     font-size: 2rem; /* adjust as needed */
     line-height: 1;
 }
 
+.b1g-gray {
+	background-color: var(--big-ten-gray);
+}
+
 .cut-line {
 	background-color: var(--big-ten-gray);
+}
+
+.conf-logo-stand {
+    display: block;
+    height: 150px;
 }
 
 .team-logo-sched {

@@ -3,7 +3,10 @@
 {% block title %}{{ page_title }}{% endblock %}
 
 {% block header %}
-    <h1>{{ page_title }}</h1>
+    <h1 class="conf-stand-title">      
+      <img class="conf-logo-stand" src="{{ B1G.logo_url}}" alt="Big Ten (B1G)">
+      Baseball Standings for {{ spring_year }}
+    </h1> 
 {% endblock %}
 
 
@@ -13,21 +16,31 @@
   <div class="column-3"></div>
   <div class="column-6">
     {% if spring_year == "2025" %}
-      <p>
-        This standings application is a preview using the new tiebreaker
-        rules for 2026 with the 2025 standings. The new tiebreaker rules did 
-        not change any team order, but they did change the reason that the 
-        0.500 teams were seeded the way they were. In the old rules head-to-head was 
-        ignored in a 3+ team tie if not every team had played each 
-        other. Going 
-        forward, if one team in the group has a better or worse record against 
-        all other teams in the group, that team will 
-        separate out as best or worst.
-      </p>
-      <h3><a href="https://iubase.com/standings/">2025 Standings with old rules</a></h3>
-    {% endif %}
-    <h3><a href="https://img.boostsport.ai/2025-26%20Big%20Ten%20Baseball%20Tiebreaker%20Process%20copy.pdf">
-      Tiebreaker Rules</a></h3>
+      <div class="column-12 b1g-gray">
+        <p class="">
+          This standings application is a preview using the new tiebreaker
+          rules for 2026 with the 2025 standings. The new tiebreaker rules did 
+          not change any team order, but they did change the reason that the 
+          0.500 teams were seeded the way they were. In the old rules head-to-head was 
+          ignored in a 3+ team tie if not every team had played each 
+          other. Going 
+          forward, if one team in the group has a better or worse record against 
+          all other teams in the group, that team will 
+          separate out as best or worst.
+        </p>
+      </div>
+      {% endif %}
+
+    
+    <h3 class="b1g-text">
+      {% if spring_year == "2025" %}
+      <a href="https://iubase.com/standings/">
+      2025 Standings with old rules
+      </a> 
+      |
+      {% endif %}
+      <a href="https://img.boostsport.ai/2025-26%20Big%20Ten%20Baseball%20Tiebreaker%20Process%20copy.pdf">
+      Current Tiebreaker Rules</a></h3>
     {% for team in standings %}
       <div class="column-12 clear-both">
         <img class="team-logo" src="{{ team.logo }}">
@@ -44,7 +57,7 @@
               <div class="column-12 cut-line">
                 <h2 class="matchup">
                   <img class="team-logo-sched" src="{{ B1G.logo_url }}">
-                  Tournament Cut Line
+                  Tournament Cut <span class="b1g-text">Line</span>
                 </h2>
               </div>
               <hr>

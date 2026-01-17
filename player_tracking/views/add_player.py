@@ -74,6 +74,7 @@ def save_initial_transaction(form):
         trans_date=form.cleaned_data["trans_date"],
         citation=form.cleaned_data["citation"],
         primary_position=form.cleaned_data["primary_position"],
+        other_team=form.cleaned_data["transfer_school"],
     )
     add_initial_transaction.save()
 

@@ -38,6 +38,11 @@ class PlayerForm(forms.Form):
         choices=choices.POSITIONS,
         required=False,
     )
+    transfer_school = forms.ModelChoiceField(
+        queryset=lgb_models.Team.objects.all().order_by("team_name"),
+        required=False,
+        label="Transfer School",
+    )
 
 
 class NewPlayerForm(PlayerForm):

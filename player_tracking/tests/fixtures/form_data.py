@@ -42,6 +42,7 @@ def forms(
         "citation": [
             "https://d1baseball.com/transfers/2021-22-d1baseball-transfer-tracker/"
         ],
+        "transfer_school": [teams.miami_oh.pk],
     }
     summer_assignment_new = {
         "summer_year": [f"{this_year}"],

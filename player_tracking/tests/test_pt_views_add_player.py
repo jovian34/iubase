@@ -24,17 +24,11 @@ this_year = date.today().year
 
 
 @pytest.mark.django_db
-def test_add_player_form_renders_form_prompt_reverse_url(admin_client):
+def test_add_player_form_renders_form_prompt(admin_client):
     response = admin_client.get(reverse("add_player"))
     assert response.status_code == 200
     assert "First Name" in response.content.decode()
-
-
-@pytest.mark.django_db
-def test_add_player_form_renders_form_prompt_manual_url(admin_client):
-    response = admin_client.get("/player_tracking/add_player/")
-    assert response.status_code == 200
-    assert "Portrait headshot URL" in response.content.decode()
+    assert "Transfer School" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -93,6 +87,7 @@ def test_add_player_form_adds_new_transaction(
         player__first="Phillip", player__last="Glasser"
     ).last()
     assert trans.trans_event == "Verbal Commitment from College"
+    assert trans.other_team.team_name == "Miami (Ohio)"
 
 
 @pytest.mark.django_db

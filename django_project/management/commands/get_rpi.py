@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from conference import rpis, year
+from conference import rpis
+from conference.logic import year
 
 
 class Command(BaseCommand):

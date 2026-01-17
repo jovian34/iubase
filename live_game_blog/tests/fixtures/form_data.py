@@ -11,7 +11,7 @@ from live_game_blog.tests.fixtures.stadiums import stadiums
 from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from conference.tests.fixtures.conferences import conferences
 
-from conference import year
+from conference.logic import year
 eastern = pytz.timezone('America/New_York')
 
 @pytest.fixture

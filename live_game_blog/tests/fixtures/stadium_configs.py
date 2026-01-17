@@ -6,7 +6,7 @@ from datetime import date, timedelta
 from live_game_blog import models as lgb_models
 from live_game_blog.tests.fixtures.stadiums import stadiums
 
-from conference import year
+from conference.logic import year
 
 @pytest.fixture
 def stadium_configs(client, stadiums):

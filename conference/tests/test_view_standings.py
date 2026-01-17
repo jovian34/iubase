@@ -1,7 +1,7 @@
 import pytest
 from django import urls
 
-from conference import year
+from conference.logic import year
 
 from live_game_blog.tests.fixtures.teams import teams
 from conference.tests.fixtures.conf_series_three_way_common import conf_series_three_way_common

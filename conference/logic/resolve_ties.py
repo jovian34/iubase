@@ -2,117 +2,36 @@ from decimal import Decimal
 from collections import defaultdict
 from typing import List, Tuple, Dict, Set
 
-from django.db.models import (
-    Sum, OuterRef, Subquery, Value, DecimalField, FloatField, Case, When, Q,
-    F, ExpressionWrapper,
-)
-from django.db.models.functions import Coalesce, Cast
+from django.db.models import (Sum, Value, DecimalField, Q,)
+from django.db.models.functions import Coalesce
 
 from conference import models as conf_models
-from live_game_blog import models as lgb_models
+
+EPS = 1e-9 # Small float tolerance for comparisons
 
 
-# Small float tolerance for comparisons
-EPS = 1e-9
-
-
-def annotated_teams_queryset(spring_year):
-    """
-    Produce a queryset annotated with home_wins/away_wins/home_losses/away_losses,
-    wins, losses, win_pct, rpi_rank — similar to the original implementation.
-    """
-    # team rpi subquery
-    rpi_subquery = conf_models.TeamRpi.objects.filter(
-        team=OuterRef('pk'),
-        spring_year=spring_year
-    ).values('rpi_rank')[:1]
-
-    # per-team home/away wins & losses via subqueries
-    home_wins_sq = conf_models.ConfSeries.objects.filter(
-        home_team=OuterRef('pk'),
-        start_date__year=spring_year
-    ).values('home_team').annotate(total=Sum('home_wins')).values('total')[:1]
-
-    away_wins_sq = conf_models.ConfSeries.objects.filter(
-        away_team=OuterRef('pk'),
-        start_date__year=spring_year
-    ).values('away_team').annotate(total=Sum('away_wins')).values('total')[:1]
-
-    home_losses_sq = conf_models.ConfSeries.objects.filter(
-        home_team=OuterRef('pk'),
-        start_date__year=spring_year
-    ).values('home_team').annotate(total=Sum('away_wins')).values('total')[:1]
-
-    away_losses_sq = conf_models.ConfSeries.objects.filter(
-        away_team=OuterRef('pk'),
-        start_date__year=spring_year
-    ).values('away_team').annotate(total=Sum('home_wins')).values('total')[:1]
-
-    zero_decimal = Value(Decimal('0'), output_field=DecimalField())
-
-    teams_qs = lgb_models.Team.objects.all()
-
-    teams_qs = teams_qs.annotate(
-        home_wins=Coalesce(Subquery(home_wins_sq), zero_decimal),
-        away_wins=Coalesce(Subquery(away_wins_sq), zero_decimal),
-        home_losses=Coalesce(Subquery(home_losses_sq), zero_decimal),
-        away_losses=Coalesce(Subquery(away_losses_sq), zero_decimal),
-        rpi_rank=Subquery(rpi_subquery),
-    ).annotate(
-        wins=F('home_wins') + F('away_wins'),
-        losses=F('home_losses') + F('away_losses'),
-    ).annotate(
-        win_pct=Case(
-            When(Q(wins__gt=0) | Q(losses__gt=0),
-                 then=ExpressionWrapper(
-                     Cast(F('wins'), FloatField()) /
-                     Cast((F('wins') + F('losses')), FloatField()),
-                     output_field=FloatField()
-                 )
-                 ),
-            default=Value(0.0),
-            output_field=FloatField()
-        )
-    )
-
-    return teams_qs
-
-
-# ---------- Helper: access ConfSeries results for pairwise and vs-opponent stats ----------
-
-def pair_series_between(a_pk: int, b_pk: int, spring_year: int):
-    """
-    Return aggregated (a_wins, a_losses, games) for team with pk a_pk
-    against team with pk b_pk in spring_year.
-    Uses ConfSeries where home/away fields indicate which is which.
-    """
+def pair_series_between(team_a_pk: int, team_b_pk: int, spring_year: int):
     # a as home, b as away
     home_series = conf_models.ConfSeries.objects.filter(
-        home_team_id=a_pk, away_team_id=b_pk, start_date__year=spring_year
+        home_team_id=team_a_pk, away_team_id=team_b_pk, start_date__year=spring_year
     ).aggregate(
         a_home_wins=Coalesce(Sum('home_wins'), Value(Decimal('0')), output_field=DecimalField()),
         a_home_losses=Coalesce(Sum('away_wins'), Value(Decimal('0')), output_field=DecimalField()),
     )
     # a as away, b as home
     away_series = conf_models.ConfSeries.objects.filter(
-        away_team_id=a_pk, home_team_id=b_pk, start_date__year=spring_year
+        away_team_id=team_a_pk, home_team_id=team_b_pk, start_date__year=spring_year
     ).aggregate(
         a_away_wins=Coalesce(Sum('away_wins'), Value(Decimal('0')), output_field=DecimalField()),
         a_away_losses=Coalesce(Sum('home_wins'), Value(Decimal('0')), output_field=DecimalField()),
     )
-
     a_wins = Decimal(home_series['a_home_wins']) + Decimal(away_series['a_away_wins'])
     a_losses = Decimal(home_series['a_home_losses']) + Decimal(away_series['a_away_losses'])
     games = a_wins + a_losses
-
     return a_wins, a_losses, games
 
 
 def aggregate_vs_group(team_pk: int, group_pks: Set[int], spring_year: int) -> Tuple[Decimal, Decimal]:
-    """
-    Sum wins and losses for team_pk vs all teams in group_pks (excluding self).
-    Returns (wins, losses) as Decimal.
-    """
     wins = Decimal('0')
     losses = Decimal('0')
     for opp in group_pks:
@@ -124,10 +43,7 @@ def aggregate_vs_group(team_pk: int, group_pks: Set[int], spring_year: int) -> T
     return wins, losses
 
 
-def played_pairwise(team_a_pk: int, team_b_pk: int, spring_year: int) -> bool:
-    """
-    True if there exists at least one ConfSeries between team_a and team_b in spring_year.
-    """
+def have_two_teams_played(team_a_pk: int, team_b_pk: int, spring_year: int) -> bool:
     return conf_models.ConfSeries.objects.filter(
         (Q(home_team_id=team_a_pk) & Q(away_team_id=team_b_pk)) |
         (Q(home_team_id=team_b_pk) & Q(away_team_id=team_a_pk)),
@@ -135,10 +51,7 @@ def played_pairwise(team_a_pk: int, team_b_pk: int, spring_year: int) -> bool:
     ).exists()
 
 
-def opponents_for_team(team_pk: int, spring_year: int) -> Set[int]:
-    """
-    Return set of opponent team PKs that team_pk has any ConfSeries vs in spring_year.
-    """
+def get_all_opponents_for_team(team_pk: int, spring_year: int) -> Set[int]:
     home_opps = conf_models.ConfSeries.objects.filter(
         home_team_id=team_pk, start_date__year=spring_year
     ).values_list('away_team_id', flat=True)
@@ -148,10 +61,7 @@ def opponents_for_team(team_pk: int, spring_year: int) -> Set[int]:
     return set(list(home_opps) + list(away_opps))
 
 
-def wins_losses_vs_opponents(team_pk: int, opponent_pks: Set[int], spring_year: int) -> Tuple[Decimal, Decimal]:
-    """
-    Sum wins/losses for team_pk vs the list of opponent_pks (opponents are outside the tied group).
-    """
+def get_and_sum_wins_losses_vs_opponents(team_pk: int, opponent_pks: Set[int], spring_year: int) -> Tuple[Decimal, Decimal]:
     wins = Decimal('0')
     losses = Decimal('0')
     for opp in opponent_pks:
@@ -161,9 +71,7 @@ def wins_losses_vs_opponents(team_pk: int, opponent_pks: Set[int], spring_year: 
     return wins, losses
 
 
-# ---------- Tie resolution core ----------
-
-def pct_from_wl(wins: Decimal, losses: Decimal) -> float:
+def calculate_win_percentage(wins: Decimal, losses: Decimal) -> float:
     total = wins + losses
     if total == 0:
         return 0.0
@@ -171,13 +79,8 @@ def pct_from_wl(wins: Decimal, losses: Decimal) -> float:
 
 
 def resolve_ties(team_list: List[dict], spring_year: int) -> List[dict]:
-    """
-    team_list: list of dicts with at least keys: 'pk', 'team_name', 'wins', 'losses', 'win_pct', 'rpi_rank'
-    Returns list ordered with ties resolved per rules. Each dict will also have 'tiebreaker'.
-    """
-    # ensure each team dict has 'tiebreaker' key
-    for t in team_list:
-        t.setdefault('tiebreaker', None)
+    for team in team_list:
+        team.setdefault('tiebreaker', None)
 
     # group by primary win_pct (float). Use rounding to avoid tiny float issues.
     def key_win_pct(team):
@@ -188,12 +91,12 @@ def resolve_ties(team_list: List[dict], spring_year: int) -> List[dict]:
 
     result: List[dict] = []
     i = 0
-    n = len(team_list)
+    num_of_teams = len(team_list)
 
-    while i < n:
+    while i < num_of_teams:
         # collect block with same win_pct
         j = i + 1
-        while j < n and abs(key_win_pct(team_list[j]) - key_win_pct(team_list[i])) < EPS:
+        while j < num_of_teams and abs(key_win_pct(team_list[j]) - key_win_pct(team_list[i])) < EPS:
             j += 1
         block = team_list[i:j]
         if len(block) == 1:
@@ -225,7 +128,7 @@ def resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[d
     MAX_DEPTH = max(20, len(block) * 6)
     if depth > MAX_DEPTH:
         for t in block:
-            t['tiebreaker'] = t.get('tiebreaker') or "rpi-fallback"
+            t['tiebreaker'] = t.get('tiebreaker') or "tie broken by RPI"
         return sorted(block, key=lambda t: (t.get('rpi_rank') if t.get('rpi_rank') is not None else 999999))
 
     pks = [t['pk'] for t in block]
@@ -237,7 +140,7 @@ def resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[d
         for b in pks:
             if a == b:
                 continue
-            if not played_pairwise(a, b, spring_year):
+            if not have_two_teams_played(a, b, spring_year):
                 all_pairs_played = False
                 break
         if not all_pairs_played:
@@ -248,7 +151,7 @@ def resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[d
         h2h_map = {}
         for t in block:
             wins, losses = aggregate_vs_group(t['pk'], pks_set, spring_year)
-            pct = pct_from_wl(wins, losses)
+            pct = calculate_win_percentage(wins, losses)
             h2h_map[t['pk']] = (pct, wins, losses)
 
         # group by pct (rounded)
@@ -278,14 +181,14 @@ def resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[d
     for t in block:
         wins, losses = aggregate_vs_group(t['pk'], pks_set, spring_year)
         total = wins + losses
-        pct = pct_from_wl(wins, losses)
+        pct = calculate_win_percentage(wins, losses)
         pct_vs_group[t['pk']] = (pct, wins, losses, total)
         # played all others if for every other pk there's at least one series
         ok = True
         for opp in pks:
             if opp == t['pk']:
                 continue
-            if not played_pairwise(t['pk'], opp, spring_year):
+            if not have_two_teams_played(t['pk'], opp, spring_year):
                 ok = False
                 break
         played_all[t['pk']] = ok
@@ -342,7 +245,7 @@ def resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[d
     # compute each team's opponent set (excluding ties)
     opp_sets = {}
     for t in block:
-        opp_sets[t['pk']] = opponents_for_team(t['pk'], spring_year) - pks_set
+        opp_sets[t['pk']] = get_all_opponents_for_team(t['pk'], spring_year) - pks_set
 
     # common opponents across all tied teams
     common_opps = None
@@ -357,8 +260,8 @@ def resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[d
         # compute pct vs common opponents
         common_pct_map = {}
         for t in block:
-            wins, losses = wins_losses_vs_opponents(t['pk'], common_opps, spring_year)
-            pct = pct_from_wl(wins, losses)
+            wins, losses = get_and_sum_wins_losses_vs_opponents(t['pk'], common_opps, spring_year)
+            pct = calculate_win_percentage(wins, losses)
             common_pct_map[t['pk']] = (pct, wins, losses)
 
         # Group by pct (rounded) and recursively resolve ties inside each group

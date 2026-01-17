@@ -8,7 +8,7 @@ from conference.tests.fixtures.conferences import conferences
 from conference.tests.fixtures.conf_teams import conf_teams
 from conference.tests.fixtures.conf_series_current import conf_series_current
 
-from conference import year
+from conference.logic import year
 from conference import models as conf_models
 
 

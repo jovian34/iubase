@@ -43,7 +43,7 @@ def test_stadium_model_stored_all_fields(client, stadiums):
 def test_stadium_model_string_def(client, stadiums):
     assert str(stadiums.bart) == "1873 N Fee Ln | Bloomington, IN USA"
 
-from conference import year
+from conference.logic import year
 
 @pytest.mark.django_db
 def test_stadium_config_model_stored_all_fields(client, stadiums, stadium_configs):

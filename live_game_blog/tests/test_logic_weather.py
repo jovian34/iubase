@@ -39,5 +39,3 @@ def test_get_weather_for_game_over_one_week_and_render(
     temp = floatformat(fut_games.first_pitch_temp, 0)
     expected = f"{temp}&deg; F"
     assert expected in response.content.decode()
-
-

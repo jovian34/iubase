@@ -9,4 +9,4 @@ class Command(BaseCommand):
         return super().add_arguments(parser)
     
     def handle(self, *args, **options):
-        weather.get_weather_for_games_over_one_week_from_now()
+        weather.get_and_set_weather_data_daily()

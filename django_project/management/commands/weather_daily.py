@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from live_game_blog.logic import weather
+from live_game_blog.logic import weather_daily
 
 
 class Command(BaseCommand):
@@ -9,4 +9,4 @@ class Command(BaseCommand):
         return super().add_arguments(parser)
     
     def handle(self, *args, **options):
-        weather.get_and_set_weather_data_daily()
+        weather_daily.get_and_set_weather_data_daily()

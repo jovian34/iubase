@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from live_game_blog import weather
+from live_game_blog.logic import weather
 
 
 class Command(BaseCommand):

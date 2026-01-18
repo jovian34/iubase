@@ -13,7 +13,7 @@ from live_game_blog.tests.fixtures.teams import teams
 from accounts.tests.fixtures import user_not_logged_in
 
 from live_game_blog import models as lgb_models
-from live_game_blog import weather
+from live_game_blog.logic import weather, wind
 
 
 @pytest.mark.django_db
@@ -67,4 +67,4 @@ testdata = [
 
 @pytest.mark.parametrize("cf,blowing,expected", testdata)
 def test_get_wind_direction(cf, blowing, expected):
-    assert weather.get_wind_description(cf, blowing) == expected
+    assert wind.get_wind_description(cf, blowing) == expected

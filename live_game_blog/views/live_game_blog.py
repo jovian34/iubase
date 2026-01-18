@@ -3,7 +3,7 @@ from django import http
 
 from index.views import save_traffic_data
 from live_game_blog import models as lgb_models
-from live_game_blog import weather
+from live_game_blog.logic import wind
 from conference import models as conf_models
 
 
@@ -84,7 +84,7 @@ def is_game_over(game_pk):
 
 def get_wind_dir(game):
     if game.stadium_config and game.first_pitch_temp:
-        return weather.get_wind_description(
+        return wind.get_wind_description(
             cf=game.stadium_config.orientation,
             blowing=game.first_pitch_wind_angle
         )   

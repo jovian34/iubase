@@ -5,6 +5,7 @@ from django.utils import timezone
 import requests
 
 from live_game_blog import models as lgb_models
+from live_game_blog.logic import location
 
 
 def get_and_set_weather_data_daily():
@@ -18,7 +19,7 @@ def get_and_set_weather_data_daily():
         first_pitch__lte=seven_days_from_now,
     )
     for game in games_two_to_seven_days_out:
-        lat, long = get_lat_and_long_of_stadium(game)
+        lat, long = location.get_lat_and_long_of_stadium(game)
         api_url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={long}&exclude=current,minutely,alerts&appid={api_key}&units=imperial"
         data_dict = get_weather_data_dict(api_url)
         delta = game.first_pitch - timezone.now()
@@ -41,7 +42,7 @@ def get_weather_and_set_data_for_games_more_than_one_week_out(seven_days_from_no
         first_pitch__lte=five_hundred_days_from_now,
     )
     for game in games_seven_days_out:
-        lat, long = get_lat_and_long_of_stadium(game)        
+        lat, long = location.get_lat_and_long_of_stadium(game)        
         data_dict = get_weather_data_more_than_one_week_out(game, lat, long, api_key)
         save_weather_data_more_than_one_week_out(game, data_dict)
     
@@ -64,22 +65,6 @@ def save_weather_data_more_than_one_week_out(game, data_dict):
     edit_game.first_pitch_wind_angle = data_dict["wind"]["max"]["direction"]
     make_description_from_predicted_rain(data_dict, edit_game)
     edit_game.save()
-        
-
-def get_lat_and_long_of_stadium(game):
-    if game.neutral_site:
-        lat = game.stadium_config.stadium.lat
-        long = game.stadium_config.stadium.long
-    else:
-        home_stadiums = lgb_models.HomeStadium.objects.filter(team=game.home_team.pk).order_by("-designate_date")
-        for home_stadium in home_stadiums:
-            if game.first_pitch.date() > home_stadium.designate_date:
-                lat = home_stadium.stadium_config.stadium.lat
-                long = home_stadium.stadium_config.stadium.long
-                break
-        else:
-            raise ValueError(f"No home stadium set for {game.home_team.team_name} for the date of first pitch")
-    return lat,long
 
 
 def make_description_from_predicted_rain(data_dict, edit_game):

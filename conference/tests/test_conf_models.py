@@ -4,11 +4,13 @@ import datetime
 from conference.tests.fixtures.conferences import conferences
 from conference.tests.fixtures.conf_teams import conf_teams
 from conference.tests.fixtures.conf_series_current import conf_series_current
+from conference.tests.fixtures.conf_series_three_way_rpi import conf_series_three_way_rpi
+from conference.tests.fixtures.picks import picks
 from live_game_blog.tests.fixtures.teams import teams
+from accounts.tests.fixtures import logged_user_schwarbs
+from accounts.tests.fixtures import user_not_logged_in
 
-spring_year = datetime.date.today().year
-if datetime.date.today().month > 8:
-    spring_year = spring_year + 1
+from conference.logic import year
 
 
 @pytest.mark.django_db
@@ -38,11 +40,23 @@ def test_conf_team_model_correct_str_def(client, conferences, teams, conf_teams)
 @pytest.mark.django_db
 def test_conf_series_model_stores_correct_fields(client, conf_teams, conferences, teams, conf_series_current):
     assert conf_series_current.iu_iowa.home_team == teams.indiana
-    assert conf_series_current.iowa_ucla.start_date == datetime.date(spring_year, 3, 14)
+    assert conf_series_current.iowa_ucla.start_date == datetime.date(year.get_spring_year(), 3, 14)
     assert conf_series_current.rut_iu.home_wins == 0
     assert conf_series_current.ucla_rut.away_wins == 0
 
 
 @pytest.mark.django_db
 def test_conf_series_model_correct_str_def(client, conf_teams, conferences, teams, conf_series_current):
-    assert str(conf_series_current.rut_iu) == f"Indiana at Rutgers: March 14-16, {spring_year}"
+    assert str(conf_series_current.rut_iu) == f"Indiana at Rutgers: March 14-16, {year.get_spring_year()}"
+
+
+@pytest.mark.django_db
+def test_pick_model_correct_str_def(
+    conf_series_current, 
+    teams, 
+    logged_user_schwarbs, 
+    picks, 
+    user_not_logged_in, 
+    conf_series_three_way_rpi,
+    ):
+    assert str(picks.ty_iu_iowa_schwarb_iu) == f"Kyle Schwarber: March 7, {year.get_spring_year()} - Indiana - Incomplete"

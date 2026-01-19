@@ -2,6 +2,7 @@ from django.db import models
 from datetime import date
 
 from live_game_blog import models as lgb_models
+from accounts import models as acct_models
 
 
 class Conference(models.Model):
@@ -65,4 +66,26 @@ class TeamRpi(models.Model):
 
     def __str__(self):
         return f"{self.spring_year} {self.team.team_name}: {self.rpi_rank}"
+    
+
+class Pick(models.Model):
+    user = models.ForeignKey(
+        acct_models.CustomUser,
+        on_delete=models.CASCADE,
+    )
+    series = models.ForeignKey(
+        ConfSeries,
+        on_delete=models.CASCADE,
+    )
+    pick = models.ForeignKey(
+        lgb_models.Team,
+        on_delete=models.CASCADE,
+    )
+    result = models.CharField(
+        default="Incomplete",
+    )
+
+    def __str__(self):
+        formatted_date = self.series.start_date.strftime("%B %-d, %Y")
+        return f"{self.user.first_name} {self.user.last_name}: {formatted_date} - {self.pick.team_name} - {self.result}"
     

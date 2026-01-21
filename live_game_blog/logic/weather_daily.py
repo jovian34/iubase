@@ -64,6 +64,7 @@ def save_weather_data_more_than_one_week_out(game, data_dict):
     edit_game.first_pitch_wind_speed = data_dict["wind"]["max"]["speed"]
     edit_game.first_pitch_wind_angle = data_dict["wind"]["max"]["direction"]
     make_description_from_predicted_rain(data_dict, edit_game)
+    print(edit_game)
     edit_game.save()
 
 

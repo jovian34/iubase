@@ -16,7 +16,7 @@
     <div class="column-6">
         
             {% for conf_series in series %}
-                    {% include "conference/include/series.html" %}       
+                    {% include "conference/conf_schedule.html#series" %}       
             {% endfor %}
         
         {% if perms.conference.add_confseries %}

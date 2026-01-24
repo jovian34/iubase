@@ -8,14 +8,11 @@ def away(request, conf_series):
     if request.user.has_perm("conference.change_confseries"):
         series.away_wins = series.away_wins + 1
         series.save()
-    return shortcuts.redirect(urls.reverse(
-        "conf_schedule_week",
-        kwargs = { 
-            "spring_year": series.start_date.year,
-            "month": series.start_date.month,
-            "day": series.start_date.day,
-        }
-    ))
+    template_path = "conference/conf_schedule.html#conf-series"
+    context = {
+        "series_pk": conf_series,
+    }
+    return shortcuts.render(request, template_path, context)
 
 
 def home(request, conf_series):

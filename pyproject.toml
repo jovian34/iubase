@@ -1,6 +1,6 @@
 [project]
 name = "iubase"
-version = "2026.01.18.2021"
+version = "2026.01.24.1309"
 requires-python = "==3.14.2"
 dependencies = [
     "asgiref==3.11.0",
@@ -9,10 +9,10 @@ dependencies = [
     "django==6.0.1",
     "django-allauth[socialaccount]==65.14.0",
     "execnet==2.1.2",
-    "gunicorn==23.0.0",
+    "gunicorn==24.1.1",
     "iniconfig==2.3.0",
-    "markdown==3.10",
-    "packaging==25.0",
+    "markdown==3.10.1",
+    "packaging==26.0",
     "pluggy==1.6.0",
     "psycopg==3.3.2",
     "psycopg-binary==3.3.2",

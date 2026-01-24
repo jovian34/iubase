@@ -9,6 +9,41 @@
 
 {% block content %}
 
+{% partialdef series %}
+    <div class="column-12 clear-both" id="series-{{ conf_series.pk }}">
+        <h1 class="matchup">
+        {% if perms.conference.change_confseries %}
+            <button hx-get="{% url "add_away_win" conf_series.pk %}"
+                    hx-target="#series-{{ conf_series.pk }}">
+                +1
+            </button>
+        {% endif %}
+
+        <span class="at-symbol">{{ conf_series.away_wins|floatformat:"-1" }}</span>
+        <img class="team-logo-sched" src="{{ conf_series.away_team.logo }}" alt="{{conf_series.away_team.team_name}}">
+        <span class="at-symbol">@</span>
+        <img class="team-logo-sched" src="{{ conf_series.home_team.logo }}" alt="{{conf_series.home_team.team_name}}">
+        <span class="at-symbol">{{ conf_series.home_wins|floatformat:"-1" }}</span>
+
+        {% if perms.conference.change_confseries %}
+            <button hx-get="{% url "add_home_win" conf_series.pk %}"
+                    hx-target="#series-{{ conf_series.pk }}">
+                +1
+            </button>
+            <button hx-get="{% url "add_tie" conf_series.pk %}"
+                    hx-target="#series-{{ conf_series.pk }}">
+                tie
+            </button>
+        {% endif %}
+        </h1>
+    </div>    
+{% endpartialdef %}
+
+
+{% partialdef conf-series %}
+    <h1>This is where the updated series {{ conf_series }} will go!</h1>
+{% endpartialdef %}
+
 
 {% for start_date in start_dates %}
 <div class="column-12 clear-both">
@@ -22,7 +57,7 @@
             </h2>
             {% for conf_series in series %}
                 {% if conf_series.start_date == start_date %}
-                    {% include "conference/include/series.html" %}
+                    {% partial series %}
                 {% endif %}            
             {% endfor %}
         

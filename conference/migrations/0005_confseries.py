@@ -5,22 +5,43 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('conference', '0004_conference_logo_url'),
-        ('live_game_blog', '0041_remove_stadiumconfig_lights'),
+        ("conference", "0004_conference_logo_url"),
+        ("live_game_blog", "0041_remove_stadiumconfig_lights"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ConfSeries',
+            name="ConfSeries",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('home_wins', models.IntegerField(default=0)),
-                ('away_wins', models.IntegerField(default=0)),
-                ('start_date', models.DateField()),
-                ('away_team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='series_away_team', to='live_game_blog.team')),
-                ('home_team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='series_home_team', to='live_game_blog.team')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("home_wins", models.IntegerField(default=0)),
+                ("away_wins", models.IntegerField(default=0)),
+                ("start_date", models.DateField()),
+                (
+                    "away_team",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="series_away_team",
+                        to="live_game_blog.team",
+                    ),
+                ),
+                (
+                    "home_team",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="series_home_team",
+                        to="live_game_blog.team",
+                    ),
+                ),
             ],
         ),
     ]

@@ -29,7 +29,7 @@ def validate_posted_add_team_form_save_then_redirect(request):
         return shortcuts.redirect(
             urls.reverse("add_home_stadium_data", args=[new_team.pk])
         )
-    else:        
+    else:
         return shortcuts.redirect(urls.reverse("games"))
 
 

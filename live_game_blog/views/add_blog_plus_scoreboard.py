@@ -81,7 +81,6 @@ def fill_initial_blog_and_scoreboard(game_pk):
         label_home_runs=f"{game.home_team.team_name} Runs Scored",
         label_home_hits=f"{game.home_team.team_name} Hits",
         label_home_errors=f"{game.home_team.team_name} Errors",
-
     )
 
 

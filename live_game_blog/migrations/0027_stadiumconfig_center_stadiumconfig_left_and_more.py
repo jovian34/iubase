@@ -4,50 +4,49 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0026_stadiumconfig'),
+        ("live_game_blog", "0026_stadiumconfig"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='center',
+            model_name="stadiumconfig",
+            name="center",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='left',
+            model_name="stadiumconfig",
+            name="left",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='photo',
+            model_name="stadiumconfig",
+            name="photo",
             field=models.URLField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='right',
+            model_name="stadiumconfig",
+            name="right",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='surface_inf',
+            model_name="stadiumconfig",
+            name="surface_inf",
             field=models.CharField(blank=True, max_length=16, null=True),
         ),
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='surface_mound',
+            model_name="stadiumconfig",
+            name="surface_mound",
             field=models.CharField(blank=True, max_length=16, null=True),
         ),
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='surface_out',
+            model_name="stadiumconfig",
+            name="surface_out",
             field=models.CharField(blank=True, max_length=16, null=True),
         ),
         migrations.AlterField(
-            model_name='stadium',
-            name='state',
+            model_name="stadium",
+            name="state",
             field=models.CharField(blank=True, max_length=2, null=True),
         ),
     ]

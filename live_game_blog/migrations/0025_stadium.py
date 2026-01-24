@@ -4,23 +4,30 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0024_blogentry_is_photo_only'),
+        ("live_game_blog", "0024_blogentry_is_photo_only"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Stadium',
+            name="Stadium",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=64)),
-                ('address', models.CharField(max_length=128)),
-                ('city', models.CharField(max_length=64)),
-                ('state', models.CharField(max_length=2, null=True)),
-                ('country', models.CharField(max_length=64)),
-                ('timezone', models.CharField(max_length=64)),
-                ('orientation', models.CharField(max_length=16)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64)),
+                ("address", models.CharField(max_length=128)),
+                ("city", models.CharField(max_length=64)),
+                ("state", models.CharField(max_length=2, null=True)),
+                ("country", models.CharField(max_length=64)),
+                ("timezone", models.CharField(max_length=64)),
+                ("orientation", models.CharField(max_length=16)),
             ],
         ),
     ]

@@ -8,6 +8,6 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         return super().add_arguments(parser)
-    
+
     def handle(self, *args, **options):
         rpis.store_b1g_rpi_data_in_database(year.get_spring_year())

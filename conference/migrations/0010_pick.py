@@ -6,21 +6,46 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('conference', '0009_rename_rpi_teamrpi_rpi_rank_and_more'),
-        ('live_game_blog', '0041_remove_stadiumconfig_lights'),
+        ("conference", "0009_rename_rpi_teamrpi_rpi_rank_and_more"),
+        ("live_game_blog", "0041_remove_stadiumconfig_lights"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Pick',
+            name="Pick",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('pick', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.team')),
-                ('series', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='conference.confseries')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "pick",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="live_game_blog.team",
+                    ),
+                ),
+                (
+                    "series",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="conference.confseries",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

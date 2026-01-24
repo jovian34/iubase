@@ -19,11 +19,11 @@ def view(request, spring_year=spring_year):
             conf_series = conf_models.ConfSeries(
                 home_team=form.cleaned_data["home_team"],
                 away_team=form.cleaned_data["away_team"],
-                start_date=form.cleaned_data["start_date"]
+                start_date=form.cleaned_data["start_date"],
             )
             conf_series.save()
         return shortcuts.redirect(urls.reverse("conf_schedule", args=[spring_year]))
-    template_path = "conference/add_series.html",
+    template_path = ("conference/add_series.html",)
     context = {
         "page_title": f"Add {spring_year} Conference Series",
         "form": conf_forms.AddConferenceSeriesForm(spring_year=spring_year),

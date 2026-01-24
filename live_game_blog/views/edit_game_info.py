@@ -14,17 +14,15 @@ def view(request, game_pk):
         form = lgb_forms.AddGameForm(request.POST)
         if form.is_valid():
             save_edited_game(edit_game, form)
-        return shortcuts.redirect(
-            urls.reverse("live_game_blog", args=[game_pk])
-        )
-    else:        
+        return shortcuts.redirect(urls.reverse("live_game_blog", args=[game_pk]))
+    else:
         context = {
             "form": get_form_with_current_game_info(edit_game),
             "game_pk": game_pk,
         }
         template_path = "live_game_blog/partials/edit_game_info.html"
         return shortcuts.render(request, template_path, context)
-    
+
 
 def get_form_with_current_game_info(edit_game):
     return lgb_forms.AddGameForm(
@@ -47,7 +45,6 @@ def get_form_with_current_game_info(edit_game):
             "audio_student": edit_game.audio_student,
         }
     )
-    
 
 
 def save_edited_game(edit_game, form):

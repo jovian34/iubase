@@ -7,9 +7,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         return super().add_arguments(parser)
-    
+
     def handle(self, *args, **options):
         iu = lgb_models.Team.objects.get(team_name="Indiana")
-        self.stdout.write(
-            f"Indiana is the {iu.mascot}"
-        )
+        self.stdout.write(f"Indiana is the {iu.mascot}")

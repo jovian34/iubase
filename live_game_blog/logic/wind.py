@@ -19,15 +19,15 @@ def get_wind_description(cf, blowing):
     elif 145 > cf_offset >= 125:
         return "blowing in from right field"
     elif -145 < cf_offset <= -125:
-        return "blowing in from left field"        
+        return "blowing in from left field"
     elif 55 < cf_offset < 125:
         return "cross wind from right to left"
     elif -55 > cf_offset > -125:
         return "cross wind from left to right"
     else:
         raise ValueError
-    
-    
+
+
 def angle_difference(angle_cf, angle_wind):
     # Calculate the initial difference
     difference = angle_cf - angle_wind

@@ -1,4 +1,3 @@
-
 RESULT_CHOICES = [
     ("Correct", "Correct"),
     ("Wrong", "Wrong"),

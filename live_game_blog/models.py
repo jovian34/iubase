@@ -14,7 +14,7 @@ class Team(models.Model):
 
     def __str__(self) -> str:
         return self.team_name
-    
+
 
 class Stadium(models.Model):
     address = models.CharField(null=False, max_length=128)
@@ -46,7 +46,7 @@ class StadiumConfig(models.Model):
 
     def __str__(self):
         return f"{self.stadium_name} - {self.config_date.year}"
-    
+
 
 class Game(models.Model):
     home_team = models.ForeignKey(
@@ -71,13 +71,25 @@ class Game(models.Model):
     video_url = models.URLField(null=True, blank=True)
     audio_primary = models.URLField(null=True, blank=True)
     audio_student = models.URLField(null=True, blank=True)
-    stadium_config = models.ForeignKey(StadiumConfig, on_delete=models.CASCADE, null=True, blank=True)
-    first_pitch_temp = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
-    first_pitch_feels_like = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
-    first_pitch_wind_speed = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
+    stadium_config = models.ForeignKey(
+        StadiumConfig, on_delete=models.CASCADE, null=True, blank=True
+    )
+    first_pitch_temp = models.DecimalField(
+        max_digits=8, decimal_places=1, null=True, blank=True
+    )
+    first_pitch_feels_like = models.DecimalField(
+        max_digits=8, decimal_places=1, null=True, blank=True
+    )
+    first_pitch_wind_speed = models.DecimalField(
+        max_digits=8, decimal_places=1, null=True, blank=True
+    )
     first_pitch_wind_angle = models.IntegerField(null=True, blank=True)
-    first_pitch_wind_gusts = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
-    first_pitch_weather_describe = models.CharField(max_length=128, null=True, blank=True)
+    first_pitch_wind_gusts = models.DecimalField(
+        max_digits=8, decimal_places=1, null=True, blank=True
+    )
+    first_pitch_weather_describe = models.CharField(
+        max_length=128, null=True, blank=True
+    )
     gameday_sunset = models.DateTimeField(null=True, blank=True)
 
     def __str__(self) -> str:
@@ -124,7 +136,7 @@ class BlogEntry(models.Model):
 
     def __str__(self) -> str:
         return f"{self.author}: {self.blog_time}"
-    
+
 
 class HomeStadium(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
@@ -133,4 +145,3 @@ class HomeStadium(models.Model):
 
     def __str__(self):
         return f"{self.team}: {self.stadium_config.stadium_name} - {self.designate_date.year}"
-

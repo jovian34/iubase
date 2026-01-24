@@ -30,7 +30,11 @@ urlpatterns = [
     path("", pt_index.view, name="pt_index"),
     path("players/", all_players.view, name="players"),
     path("player/<player_id>/", single_player_page.view, name="single_player_page"),
-    path("player_rosters/<player_id>/", single_player_page.view, name="player_rosters_old"),
+    path(
+        "player_rosters/<player_id>/",
+        single_player_page.view,
+        name="player_rosters_old",
+    ),
     path(
         "spring_depth_chart/<spring_year>/",
         depth_charts.spring_depth_chart,

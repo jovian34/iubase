@@ -5,40 +5,43 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0036_stadium_lat_stadium_long'),
+        ("live_game_blog", "0036_stadium_lat_stadium_long"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='homestadium',
-            name='stadium',
+            model_name="homestadium",
+            name="stadium",
         ),
         migrations.RemoveField(
-            model_name='stadium',
-            name='name',
+            model_name="stadium",
+            name="name",
         ),
         migrations.RemoveField(
-            model_name='stadium',
-            name='orientation',
+            model_name="stadium",
+            name="orientation",
         ),
         migrations.AddField(
-            model_name='homestadium',
-            name='stadium_config',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.stadiumconfig'),
+            model_name="homestadium",
+            name="stadium_config",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="live_game_blog.stadiumconfig",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='orientation',
+            model_name="stadiumconfig",
+            name="orientation",
             field=models.IntegerField(default=45),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='stadium_name',
-            field=models.CharField(default='CHANGE ME', max_length=128),
+            model_name="stadiumconfig",
+            name="stadium_name",
+            field=models.CharField(default="CHANGE ME", max_length=128),
             preserve_default=False,
         ),
     ]

@@ -1,5 +1,4 @@
 from django import shortcuts
-from django.core import mail
 from django.contrib.auth import decorators as auth
 from datetime import datetime
 import pytz

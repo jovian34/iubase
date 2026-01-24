@@ -4,40 +4,42 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0037_remove_homestadium_stadium_remove_stadium_name_and_more'),
+        (
+            "live_game_blog",
+            "0037_remove_homestadium_stadium_remove_stadium_name_and_more",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='game',
-            name='first_pitch_feels_like',
+            model_name="game",
+            name="first_pitch_feels_like",
             field=models.DecimalField(decimal_places=1, max_digits=8, null=True),
         ),
         migrations.AddField(
-            model_name='game',
-            name='first_pitch_weather_describe',
+            model_name="game",
+            name="first_pitch_weather_describe",
             field=models.CharField(max_length=128, null=True),
         ),
         migrations.AddField(
-            model_name='game',
-            name='first_pitch_wind_gusts',
+            model_name="game",
+            name="first_pitch_wind_gusts",
             field=models.DecimalField(decimal_places=1, max_digits=8, null=True),
         ),
         migrations.AddField(
-            model_name='game',
-            name='gameday_sunset',
+            model_name="game",
+            name="gameday_sunset",
             field=models.DateTimeField(null=True),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='first_pitch_temp',
+            model_name="game",
+            name="first_pitch_temp",
             field=models.DecimalField(decimal_places=1, max_digits=8, null=True),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='first_pitch_wind_speed',
+            model_name="game",
+            name="first_pitch_wind_speed",
             field=models.DecimalField(decimal_places=1, max_digits=8, null=True),
         ),
     ]

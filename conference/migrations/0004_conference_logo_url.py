@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('conference', '0003_rename_conference_confteam_conference'),
+        ("conference", "0003_rename_conference_confteam_conference"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='conference',
-            name='logo_url',
+            model_name="conference",
+            name="logo_url",
             field=models.URLField(max_length=256, null=True),
         ),
     ]

@@ -5,15 +5,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0029_stadiumconfig_capacity'),
+        ("live_game_blog", "0029_stadiumconfig_capacity"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='game',
-            name='stadium',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.stadium'),
+            model_name="game",
+            name="stadium",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="live_game_blog.stadium",
+            ),
         ),
     ]

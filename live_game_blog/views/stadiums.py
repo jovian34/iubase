@@ -2,7 +2,7 @@ from django import shortcuts, http
 from django.db.models import Q
 
 from live_game_blog import models as lgb_models
-from conference import models as conf_models
+
 
 def view(request):
     if not request.user.has_perm("live_game_blog.add_stadium"):
@@ -17,9 +17,9 @@ def view(request):
 def teams_wo_stad_config(request):
     if not request.user.has_perm("live_game_blog.add_stadium"):
         return http.HttpResponseForbidden()
-    teams = lgb_models.Team.objects.filter(
-        Q(homestadium__isnull=True)
-    ).order_by("team_name")
+    teams = lgb_models.Team.objects.filter(Q(homestadium__isnull=True)).order_by(
+        "team_name"
+    )
     template_path = "live_game_blog/partials/teams_wo_stad_config.html"
     context = {
         "teams": teams,

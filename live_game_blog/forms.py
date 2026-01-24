@@ -1,7 +1,14 @@
 from django import forms
 
 from live_game_blog import models as lgb_models
-from live_game_blog.choices import GAME_STATUS, INNING_PART_CHOICES, OUTS_CHOICES, TIMEZONE_CHOICES, SURFACE_CHOICES, DUGOUT_CHOICES
+from live_game_blog.choices import (
+    GAME_STATUS,
+    INNING_PART_CHOICES,
+    OUTS_CHOICES,
+    TIMEZONE_CHOICES,
+    SURFACE_CHOICES,
+    DUGOUT_CHOICES,
+)
 from conference import models as conf_models
 
 
@@ -19,30 +26,29 @@ class BlogAndScoreboardForm(forms.Form):
     blog_entry = forms.CharField(label="Content of Blog", widget=forms.Textarea())
 
     def __init__(
-            self, 
-            *args, 
-            label_away_runs=None,
-            label_away_hits=None,
-            label_away_errors=None,
-            label_home_runs=None,
-            label_home_hits=None,
-            label_home_errors=None,
-            **kwargs,
+        self,
+        *args,
+        label_away_runs=None,
+        label_away_hits=None,
+        label_away_errors=None,
+        label_home_runs=None,
+        label_home_hits=None,
+        label_home_errors=None,
+        **kwargs,
     ):
         super().__init__(*args, **kwargs)
         if label_away_runs:
-            self.fields['away_runs'].label = label_away_runs
+            self.fields["away_runs"].label = label_away_runs
         if label_away_hits:
-            self.fields['away_hits'].label = label_away_hits
+            self.fields["away_hits"].label = label_away_hits
         if label_away_errors:
-            self.fields['away_errors'].label = label_away_errors
+            self.fields["away_errors"].label = label_away_errors
         if label_home_runs:
-            self.fields['home_runs'].label = label_home_runs
+            self.fields["home_runs"].label = label_home_runs
         if label_home_hits:
-            self.fields['home_hits'].label = label_home_hits
+            self.fields["home_hits"].label = label_home_hits
         if label_home_errors:
-            self.fields['home_errors'].label = label_home_errors
-
+            self.fields["home_errors"].label = label_home_errors
 
 
 class BlogEntryForm(forms.Form):
@@ -69,7 +75,7 @@ class AddGameForm(forms.Form):
         label="Date and Time of First Pitch YYYY-MM-DD-HHMM in ET military time",
     )
     event = forms.CharField(label="Describe the event: ", required=False)
-    
+
     home_rank = forms.IntegerField(
         label="Home team D1Baseball.com national ranking",
         required=False,
@@ -82,7 +88,7 @@ class AddGameForm(forms.Form):
         label="Home team national tournament seed",
         required=False,
     )
-    
+
     away_rank = forms.IntegerField(
         label="Away team D1Baseball.com national ranking",
         required=False,
@@ -120,7 +126,7 @@ class AddGameForm(forms.Form):
         label="Student Audio Link",
         required=False,
     )
-    
+
 
 class AddNeutralGame(AddGameForm):
     stadium_config = forms.ModelChoiceField(
@@ -154,7 +160,6 @@ class AddTeamForm(forms.Form):
     )
 
 
-
 class AddHomeStadiumDataForm(forms.Form):
     address = forms.CharField(label="Address")
     city = forms.CharField(label="City")
@@ -167,8 +172,12 @@ class AddHomeStadiumDataForm(forms.Form):
     lat = forms.DecimalField(label="Latitude")
     long = forms.DecimalField(label="Longitude")
     stadium_name = forms.CharField(label="Full name of the stadium")
-    config_date = forms.DateField(label="Date stadium was set to this configuration (including name)")
-    designate_date = forms.DateField(label="Date this configuration became exclusive home field")
+    config_date = forms.DateField(
+        label="Date stadium was set to this configuration (including name)"
+    )
+    designate_date = forms.DateField(
+        label="Date this configuration became exclusive home field"
+    )
     surface_inf = forms.ChoiceField(
         choices=SURFACE_CHOICES,
         label="Infield Surface",
@@ -182,7 +191,7 @@ class AddHomeStadiumDataForm(forms.Form):
         label="Pitching Mound Surface",
     )
     photo = forms.URLField(
-        label="Photo URL", 
+        label="Photo URL",
         required=False,
     )
     orientation = forms.IntegerField(label="Out to centerfield orientation")
@@ -191,7 +200,5 @@ class AddHomeStadiumDataForm(forms.Form):
     right = forms.IntegerField(label="Distance from home to right field fence")
     capacity = forms.IntegerField(label="Fan Capacity")
     home_dugout = forms.ChoiceField(
-        choices=DUGOUT_CHOICES,
-        label="Which side is the home team dugout?"
+        choices=DUGOUT_CHOICES, label="Which side is the home team dugout?"
     )
-    

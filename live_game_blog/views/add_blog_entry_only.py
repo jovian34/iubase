@@ -1,6 +1,4 @@
 from django import http, shortcuts, urls
-from django.contrib.auth import decorators as auth
-from django.contrib.auth import models as auth_models
 from accounts import models as acc_models
 from live_game_blog import forms as lgb_forms
 from live_game_blog import models as lgb_models

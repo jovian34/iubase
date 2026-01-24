@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('conference', '0010_pick'),
+        ("conference", "0010_pick"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='pick',
-            name='result',
-            field=models.CharField(default='Incomplete'),
+            model_name="pick",
+            name="result",
+            field=models.CharField(default="Incomplete"),
         ),
     ]

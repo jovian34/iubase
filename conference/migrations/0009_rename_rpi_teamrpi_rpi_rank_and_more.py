@@ -4,20 +4,19 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('conference', '0008_teamrpi'),
+        ("conference", "0008_teamrpi"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='teamrpi',
-            old_name='rpi',
-            new_name='rpi_rank',
+            model_name="teamrpi",
+            old_name="rpi",
+            new_name="rpi_rank",
         ),
         migrations.RenameField(
-            model_name='teamrpi',
-            old_name='year',
-            new_name='spring_year',
+            model_name="teamrpi",
+            old_name="year",
+            new_name="spring_year",
         ),
     ]

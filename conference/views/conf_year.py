@@ -14,12 +14,14 @@ if datetime.date.today().month > 8:
 def view(request, conf, spring_year=spring_year):
     conference = conf_models.Conference.objects.get(abbrev=conf)
     all_conf_teams = conf_models.ConfTeam.objects.filter(conference=conference)
-    this_conf_teams = get_conf_teams_for_requested_year(spring_year, conference, all_conf_teams)
+    this_conf_teams = get_conf_teams_for_requested_year(
+        spring_year, conference, all_conf_teams
+    )
     context = {
         "teams": this_conf_teams,
         "conference": conference,
         "spring_year": spring_year,
-        "page_title": f"{conference.long_name} members for {spring_year}"
+        "page_title": f"{conference.long_name} members for {spring_year}",
     }
 
     return shortcuts.render(request, "conference/conf_year.html", context)

@@ -16,13 +16,14 @@ def view(request, draft_year):
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/drafted_players.html", context)
 
+
 def draft_transactions(request):
     context = {
         "page_title": "All MLB Draft and Pro Signing Transactions",
         "transactions": Transaction.objects.filter(
-            Q(trans_event="Signed Professional Contract") |
-            Q(trans_event="Signed Professional Contract - Undrafted") |
-            Q(trans_event="Drafted")
+            Q(trans_event="Signed Professional Contract")
+            | Q(trans_event="Signed Professional Contract - Undrafted")
+            | Q(trans_event="Drafted")
         ).order_by("-trans_date"),
     }
     return render(request, "player_tracking/draft_transactions.html", context)

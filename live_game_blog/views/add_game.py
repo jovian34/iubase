@@ -76,12 +76,14 @@ def save_game(form):
     kwargs["neutral_site"] = False
     try:
         home_stadium_config_latest = lgb_models.HomeStadium.objects.filter(
-            Q(team=form.cleaned_data["home_team"]) &
-            Q(designate_date__lt=form.cleaned_data["first_pitch"].date())
+            Q(team=form.cleaned_data["home_team"])
+            & Q(designate_date__lt=form.cleaned_data["first_pitch"].date())
         ).order_by("-designate_date")[0]
         kwargs["stadium_config"] = home_stadium_config_latest.stadium_config
     except IndexError:
-        errors.append(f"{form.cleaned_data["home_team"].team_name} has no home stadium configuration to apply.")
+        errors.append(
+            f"{form.cleaned_data['home_team'].team_name} has no home stadium configuration to apply."
+        )
     add_game = lgb_models.Game(**kwargs)
     add_game.save()
     return errors

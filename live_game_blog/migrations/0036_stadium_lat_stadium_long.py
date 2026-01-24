@@ -4,21 +4,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0035_game_first_pitch_wind_angle'),
+        ("live_game_blog", "0035_game_first_pitch_wind_angle"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='stadium',
-            name='lat',
+            model_name="stadium",
+            name="lat",
             field=models.DecimalField(decimal_places=14, default=0, max_digits=32),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='stadium',
-            name='long',
+            model_name="stadium",
+            name="long",
             field=models.DecimalField(decimal_places=14, default=0, max_digits=32),
             preserve_default=False,
         ),

@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0034_remove_game_first_pitch_wind_direction'),
+        ("live_game_blog", "0034_remove_game_first_pitch_wind_direction"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='game',
-            name='first_pitch_wind_angle',
+            model_name="game",
+            name="first_pitch_wind_angle",
             field=models.IntegerField(null=True),
         ),
     ]

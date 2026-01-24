@@ -22,7 +22,7 @@ def store_b1g_rpi_data_in_database(spring_year):
                 spring_year=spring_year,
             )
             add_team_rpi.save()
-            continue  
+            continue
         team_rpi.rpi_rank = rpi_rank
         team_rpi.save()
 
@@ -37,16 +37,13 @@ def make_b1G_rpi_dict(spring_year):
         team_name = cells[1].get_text(strip=True)
         rpi_text = cells[7].get_text(strip=True)
         if rpi_text.isdigit():
-                big_ten_rpi[team_name] = int(rpi_text)
+            big_ten_rpi[team_name] = int(rpi_text)
     return big_ten_rpi
 
 
 def parse_table(spring_year):
     soup = request_table_into_parser(spring_year)
-    table = soup.find(
-        "table",
-        class_="normal-grid alternating-rows stats-table"
-    )
+    table = soup.find("table", class_="normal-grid alternating-rows stats-table")
     if table is None:
         raise RuntimeError("Stats table not found")
     return table

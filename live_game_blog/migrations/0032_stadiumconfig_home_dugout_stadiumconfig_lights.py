@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0031_game_first_pitch_temp_and_more'),
+        ("live_game_blog", "0031_game_first_pitch_temp_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='home_dugout',
+            model_name="stadiumconfig",
+            name="home_dugout",
             field=models.CharField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='lights',
+            model_name="stadiumconfig",
+            name="lights",
             field=models.BooleanField(default=True),
         ),
     ]

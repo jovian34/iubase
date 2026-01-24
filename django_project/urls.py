@@ -7,8 +7,10 @@ from django_project import views
 urlpatterns = [
     path("", views.index, name="index"),
     path(
-        "robots.txt", 
-        base.TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+        "robots.txt",
+        base.TemplateView.as_view(
+            template_name="robots.txt", content_type="text/plain"
+        ),
     ),
     path("index/", include("index.urls")),
     path("accounts/", include("allauth.urls")),

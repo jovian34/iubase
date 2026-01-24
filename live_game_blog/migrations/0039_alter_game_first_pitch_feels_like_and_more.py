@@ -4,45 +4,52 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0038_game_first_pitch_feels_like_and_more'),
+        ("live_game_blog", "0038_game_first_pitch_feels_like_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='game',
-            name='first_pitch_feels_like',
-            field=models.DecimalField(blank=True, decimal_places=1, max_digits=8, null=True),
+            model_name="game",
+            name="first_pitch_feels_like",
+            field=models.DecimalField(
+                blank=True, decimal_places=1, max_digits=8, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='first_pitch_temp',
-            field=models.DecimalField(blank=True, decimal_places=1, max_digits=8, null=True),
+            model_name="game",
+            name="first_pitch_temp",
+            field=models.DecimalField(
+                blank=True, decimal_places=1, max_digits=8, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='first_pitch_weather_describe',
+            model_name="game",
+            name="first_pitch_weather_describe",
             field=models.CharField(blank=True, max_length=128, null=True),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='first_pitch_wind_angle',
+            model_name="game",
+            name="first_pitch_wind_angle",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='first_pitch_wind_gusts',
-            field=models.DecimalField(blank=True, decimal_places=1, max_digits=8, null=True),
+            model_name="game",
+            name="first_pitch_wind_gusts",
+            field=models.DecimalField(
+                blank=True, decimal_places=1, max_digits=8, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='first_pitch_wind_speed',
-            field=models.DecimalField(blank=True, decimal_places=1, max_digits=8, null=True),
+            model_name="game",
+            name="first_pitch_wind_speed",
+            field=models.DecimalField(
+                blank=True, decimal_places=1, max_digits=8, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='gameday_sunset',
+            model_name="game",
+            name="gameday_sunset",
             field=models.DateTimeField(blank=True, null=True),
         ),
     ]

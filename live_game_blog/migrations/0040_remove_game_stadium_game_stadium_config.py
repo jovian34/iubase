@@ -5,19 +5,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0039_alter_game_first_pitch_feels_like_and_more'),
+        ("live_game_blog", "0039_alter_game_first_pitch_feels_like_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='game',
-            name='stadium',
+            model_name="game",
+            name="stadium",
         ),
         migrations.AddField(
-            model_name='game',
-            name='stadium_config',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.stadiumconfig'),
+            model_name="game",
+            name="stadium_config",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="live_game_blog.stadiumconfig",
+            ),
         ),
     ]

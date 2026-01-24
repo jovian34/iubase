@@ -5,20 +5,33 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('conference', '0007_alter_confteam_fall_year_joined'),
-        ('live_game_blog', '0041_remove_stadiumconfig_lights'),
+        ("conference", "0007_alter_confteam_fall_year_joined"),
+        ("live_game_blog", "0041_remove_stadiumconfig_lights"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='TeamRpi',
+            name="TeamRpi",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('rpi', models.IntegerField()),
-                ('year', models.IntegerField()),
-                ('team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.team')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("rpi", models.IntegerField()),
+                ("year", models.IntegerField()),
+                (
+                    "team",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="live_game_blog.team",
+                    ),
+                ),
             ],
         ),
     ]

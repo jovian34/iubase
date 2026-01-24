@@ -85,12 +85,11 @@ def is_game_over(game_pk):
 def get_wind_dir(game):
     if game.stadium_config and game.first_pitch_temp:
         return wind.get_wind_description(
-            cf=game.stadium_config.orientation,
-            blowing=game.first_pitch_wind_angle
-        )   
+            cf=game.stadium_config.orientation, blowing=game.first_pitch_wind_angle
+        )
     else:
         return None
-    
+
 
 def get_conf_model(game):
     try:

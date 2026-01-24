@@ -28,7 +28,6 @@ urlpatterns = [
         add_home_stadium_data.view,
         name="add_home_stadium_data",
     ),
-
     # partials
     path("past_games/", games.past, name="past_games"),
     path(
@@ -46,19 +45,11 @@ urlpatterns = [
         edit_blog_entry.view,
         name="edit_blog_entry",
     ),
+    path("add_neutral_game/", add_game.neutral, name="add_neutral_game"),
+    path("edit_game_info/<game_pk>", edit_game_info.view, name="edit_game_info"),
     path(
-        "add_neutral_game/", 
-        add_game.neutral, 
-        name="add_neutral_game"
-        ),
-    path(
-        "edit_game_info/<game_pk>", 
-        edit_game_info.view, 
-        name="edit_game_info"
-        ),
-    path(
-        "teams_wo_stad_config/", 
+        "teams_wo_stad_config/",
         stadiums.teams_wo_stad_config,
-        name="teams_wo_stad_config"
-        ),
+        name="teams_wo_stad_config",
+    ),
 ]

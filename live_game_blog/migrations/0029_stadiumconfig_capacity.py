@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0028_homestadium'),
+        ("live_game_blog", "0028_homestadium"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='stadiumconfig',
-            name='capacity',
+            model_name="stadiumconfig",
+            name="capacity",
             field=models.IntegerField(blank=True, null=True),
         ),
     ]

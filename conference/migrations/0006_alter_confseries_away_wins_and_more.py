@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('conference', '0005_confseries'),
+        ("conference", "0005_confseries"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='confseries',
-            name='away_wins',
+            model_name="confseries",
+            name="away_wins",
             field=models.DecimalField(decimal_places=1, default=0, max_digits=2),
         ),
         migrations.AlterField(
-            model_name='confseries',
-            name='home_wins',
+            model_name="confseries",
+            name="home_wins",
             field=models.DecimalField(decimal_places=1, default=0, max_digits=2),
         ),
     ]

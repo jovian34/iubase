@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('conference', '0006_alter_confseries_away_wins_and_more'),
+        ("conference", "0006_alter_confseries_away_wins_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='confteam',
-            name='fall_year_joined',
+            model_name="confteam",
+            name="fall_year_joined",
             field=models.IntegerField(default=2026),
         ),
     ]

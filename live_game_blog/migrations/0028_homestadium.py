@@ -5,19 +5,38 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('live_game_blog', '0027_stadiumconfig_center_stadiumconfig_left_and_more'),
+        ("live_game_blog", "0027_stadiumconfig_center_stadiumconfig_left_and_more"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='HomeStadium',
+            name="HomeStadium",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('designate_date', models.DateField()),
-                ('stadium', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.stadium')),
-                ('team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='live_game_blog.team')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("designate_date", models.DateField()),
+                (
+                    "stadium",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="live_game_blog.stadium",
+                    ),
+                ),
+                (
+                    "team",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="live_game_blog.team",
+                    ),
+                ),
             ],
         ),
     ]

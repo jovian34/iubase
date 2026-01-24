@@ -20,9 +20,7 @@ def view(request, fall_year=date.today().year):
 def redirect_to_roster_projection_or_eligible(request, fall_year):
     spring_year = int(fall_year) + 1
     iu = Team.objects.get(team_name="Indiana")
-    if AnnualRoster.objects.filter(
-            Q(spring_year=spring_year) & Q(team=iu)
-    ):
+    if AnnualRoster.objects.filter(Q(spring_year=spring_year) & Q(team=iu)):
         return redirect("fall_roster", fall_year=fall_year)
     elif int(fall_year) == date.today().year and does_mlb_draft_date_exist_for_year(
         fall_year

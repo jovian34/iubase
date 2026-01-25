@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block header %}
+    <h1>{{ page_title }}</h1>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+
+        <h3><a href="{% url "conf_schedule" spring_year %}">{{ spring_year }} B1G Conference Schedule</a></h3>
+        <h3><a href="{% url "conf_year" "B1G" spring_year %}">{{ spring_year }} B1G Conference Members</a></h3>
+
+    </div>
+</div>
+
+{% endblock %}

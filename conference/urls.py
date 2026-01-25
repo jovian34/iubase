@@ -1,9 +1,10 @@
 from django import urls
 
-from conference.views import conf_year, add_series, conf_schedule, add_win, standings
+from conference.views import conf_year, add_series, conf_schedule, add_win, standings, conf_index
 
 
 urlpatterns = [
+    urls.path("index/", conf_index.view, name="conf_index"),
     urls.path("members/<conf>/<spring_year>/", conf_year.view, name="conf_year"),
     urls.path("members/<conf>/", conf_year.view, name="conf_year_default"),
     urls.path("add_series/<spring_year>/", add_series.view, name="add_series"),

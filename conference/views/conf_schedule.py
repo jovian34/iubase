@@ -13,10 +13,8 @@ def view(request, spring_year):
         & Q(start_date__lt=datetime.date(int(spring_year), 7, 1))
     ).order_by("away_team__team_name")
     start_dates = {series.start_date for series in all_series}
-    print(start_dates)
     start_dates = [date for date in start_dates]
     start_dates.sort()
-    print(type(start_dates))
     context = {
         "page_title": f"{spring_year} B1G Schedule",
         "series": all_series,

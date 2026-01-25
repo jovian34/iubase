@@ -13,6 +13,7 @@
             <img  class="fade-me-in-2s" src="https://live.staticflickr.com/65535/54525303448_4da1205b5d_o.jpg" id="player-photo">
             <li><h2><a href="{% url "games" %}">Live Game Blogs</a></h2></li>
             <li><h2><a href="{% url "pt_index" %}">Player Tracking</a></h2></li>
+            <li><h2><a href="{% url "conf_index" %}">Conference</a></h2></li>
 
             {% if perms.index.view_trafficcounter %}
             <li><h2><a href="{% url "current_months_traffic" %}">Current Month's Traffic</a></h2></li>

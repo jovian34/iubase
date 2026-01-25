@@ -372,6 +372,10 @@ h3.b1g-text a{
     line-height: 1;
 }
 
+.too-cold {
+	color: var(--red);
+}
+
 .b1g-gray {
 	background-color: var(--big-ten-gray);
 }

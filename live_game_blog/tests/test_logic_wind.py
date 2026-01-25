@@ -23,9 +23,27 @@ testdata = [
     (45, 351, "blowing out to left field"),
     (270, 290, "blowing out to right-centerfield"),
     (359, 26, "blowing out to right-centerfield"),
+    (45, 125, "blowing across the field from left to right"),
+    (315, 255, "blowing across the field from right to left"),
 ]
 
 
 @pytest.mark.parametrize("cf,blowing,expected", testdata)
 def test_get_wind_direction(cf, blowing, expected):
     assert wind.get_wind_description(cf, blowing) == expected
+
+
+testdata_angles = [
+    (0, 180),
+    (45, 225),
+    (120, 300),
+    (170, 350),
+    (190, 10),
+    (270, 90),
+    (300, 120),
+]
+
+
+@pytest.mark.parametrize("wind_dir,blowing", testdata_angles)
+def test_covert_wind_direction_to_opposite_angle(wind_dir, blowing):
+    assert wind.convert_wind_direction_to_opposite(wind_dir) == blowing

@@ -21,21 +21,21 @@ def get_wind_description(cf, blowing):
     elif -145 < cf_offset <= -125:
         return "blowing in from left field"
     elif 55 < cf_offset < 125:
-        return "cross wind from right to left"
+        return "blowing across the field from right to left"
     elif -55 > cf_offset > -125:
-        return "cross wind from left to right"
+        return "blowing across the field from left to right"
     else:
         raise ValueError
+    
+
+def convert_wind_direction_to_opposite(angle):
+    angle = angle % 360
+    return (angle + 180) % 360     
 
 
 def angle_difference(angle_cf, angle_wind):
-    # Calculate the initial difference
     difference = angle_cf - angle_wind
-
-    # Normalize the difference to be within the range of 0 to 360 degrees
     normalized_difference = (difference + 360) % 360
-
-    # Determine the direction, make negative for clock
     if normalized_difference > 180:
         angle_diff = -(360 - normalized_difference)
     else:

@@ -4,7 +4,7 @@ from datetime import timedelta
 from django.utils import timezone
 
 from live_game_blog import models as lgb_models
-from live_game_blog.logic import location, weather_daily
+from live_game_blog.logic import location, weather_daily, wind
 
 
 def get_and_set_weather_data_hourly():
@@ -25,7 +25,7 @@ def get_and_set_weather_data_hourly():
         game.first_pitch_temp = data_dict["hourly"][hours_out]["temp"]
         game.first_pitch_feels_like = data_dict["hourly"][hours_out]["feels_like"]
         game.first_pitch_wind_speed = data_dict["hourly"][hours_out]["wind_speed"]
-        game.first_pitch_wind_angle = data_dict["hourly"][hours_out]["wind_deg"]
+        game.first_pitch_wind_angle = wind.convert_wind_direction_to_opposite(data_dict["hourly"][hours_out]["wind_deg"])
         game.first_pitch_wind_gusts = data_dict["hourly"][hours_out]["wind_gust"]
         game.first_pitch_weather_describe = data_dict["hourly"][hours_out]["weather"][
             0

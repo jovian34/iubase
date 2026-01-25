@@ -5,7 +5,7 @@ from django.utils import timezone
 import requests
 
 from live_game_blog import models as lgb_models
-from live_game_blog.logic import location
+from live_game_blog.logic import location, wind
 
 
 def get_and_set_weather_data_daily():
@@ -29,7 +29,7 @@ def get_and_set_weather_data_daily():
         game.first_pitch_temp = data_dict["daily"][days_out]["temp"]["day"]
         game.first_pitch_feels_like = data_dict["daily"][days_out]["feels_like"]["day"]
         game.first_pitch_wind_speed = data_dict["daily"][days_out]["wind_speed"]
-        game.first_pitch_wind_angle = data_dict["daily"][days_out]["wind_deg"]
+        game.first_pitch_wind_angle = wind.convert_wind_direction_to_opposite(data_dict["daily"][days_out]["wind_deg"])
         game.first_pitch_wind_gusts = data_dict["daily"][days_out]["wind_gust"]
         game.first_pitch_weather_describe = data_dict["daily"][days_out]["summary"]
         game.gameday_sunset = datetime.fromtimestamp(
@@ -68,7 +68,7 @@ def save_weather_data_more_than_one_week_out(game, data_dict):
     edit_game = lgb_models.Game.objects.get(pk=game.pk)
     edit_game.first_pitch_temp = data_dict["temperature"]["afternoon"]
     edit_game.first_pitch_wind_speed = data_dict["wind"]["max"]["speed"]
-    edit_game.first_pitch_wind_angle = data_dict["wind"]["max"]["direction"]
+    edit_game.first_pitch_wind_angle = wind.convert_wind_direction_to_opposite(data_dict["wind"]["max"]["direction"])
     make_description_from_predicted_rain(data_dict, edit_game)
     print(edit_game)
     edit_game.save()

@@ -37,7 +37,7 @@ def test_get_weather_for_game_over_one_week_and_render(
     response = client.get(urls.reverse("live_game_blog", args=[games.iu_uk_far_future.pk]))
     assert "rain" in response.content.decode()
     temp = floatformat(fut_games.first_pitch_temp, 0)
-    expected = f"{temp}&deg; F"
+    expected = f"{temp}&deg;F"
     assert expected in response.content.decode()
 
 
@@ -69,7 +69,7 @@ def test_get_weather_for_game_between_two_days_and_one_week_and_render(
     assert sunset < 27
     response = client.get(urls.reverse("live_game_blog", args=[games.iu_mo.pk]))
     temp = floatformat(fut_games.first_pitch_temp, 0)
-    expected = f"{temp}&deg; F"
+    expected = f"{temp}&deg;F"
     assert expected in response.content.decode()
 
 
@@ -95,5 +95,5 @@ def test_get_weather_for_game_between_now_and_two_days_and_render(
     assert fut_games.first_pitch_feels_like
     response = client.get(urls.reverse("live_game_blog", args=[games.iu_coastal_tom.pk]))
     temp = floatformat(fut_games.first_pitch_temp, 0)
-    expected = f"{temp}&deg; F"
+    expected = f"{temp}&deg;F"
     assert expected in response.content.decode()

@@ -59,7 +59,9 @@
             <p>Welcome, {{ user.first_name }}!</p>
             {% block logout_footer %}<p><a href="{% url 'account_logout' %}">logout</a></p>{% endblock %}
             {% else %}
-            {% block google_footer %}<h2><a href="/accounts/google/login/">Google Login</a></h2>{% endblock google_footer %}
+            {% block google_footer %}
+              <h2><a href="/accounts/google/login/?next={{ request.get_full_path|urlencode }}">Google Login</a></h2>
+            {% endblock google_footer %}
             {% endif %}
           
       </footer>

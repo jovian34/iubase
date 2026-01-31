@@ -88,3 +88,26 @@ class Pick(models.Model):
     def __str__(self):
         formatted_date = self.series.start_date.strftime("%B %-d, %Y")
         return f"{self.user.first_name} {self.user.last_name}: {formatted_date} - {self.pick.team_name} - {self.result}"
+    
+
+class PickemRegisterAnnual(models.Model):
+    user = models.ForeignKey(
+        acct_models.CustomUser,
+        on_delete=models.CASCADE,
+    )
+    spring_year = models.IntegerField()
+    display_name = models.TextField()
+    is_staff = models.BooleanField(
+        default=False
+    )
+    agree_to_terms = models.BooleanField(
+        default=False
+    )
+    make_public = models.BooleanField(
+        default=False
+    )
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}: {self.spring_year}"
+
+

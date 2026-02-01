@@ -108,6 +108,22 @@ def staff_chris(client):
 
 
 @pytest.fixture
+def random_guy(client):
+    houston = CustomUser.objects.create_user(
+        username="bruce",
+        first_name="Bruce",
+        last_name="Random",
+        password="dbwrwbrj7499677693skjhkasH72!",
+        is_superuser=False,
+    )
+    client.login(
+        username="bruce",
+        password="dbwrwbrj7499677693skjhkasH72!",
+    )
+    return random_guy
+
+
+@pytest.fixture
 def user_forms(client):
     new_user = {
         "email": "newuser@email.com",

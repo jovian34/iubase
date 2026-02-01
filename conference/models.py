@@ -80,6 +80,8 @@ class Pick(models.Model):
     pick = models.ForeignKey(
         lgb_models.Team,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     result = models.CharField(
         default="Incomplete",

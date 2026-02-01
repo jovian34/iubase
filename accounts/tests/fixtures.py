@@ -61,7 +61,7 @@ def superuser_houston(client):
 
 @pytest.fixture
 def staff_josh(client):
-    houston = CustomUser.objects.create_user(
+    josh = CustomUser.objects.create_user(
         username="jbennett",
         first_name="Josh",
         last_name="Bennett",
@@ -72,12 +72,12 @@ def staff_josh(client):
         username="jbennett",
         password="dbwrwbrj7499677693skjhkasH72!",
     )
-    return staff_josh
+    return josh
 
 
 @pytest.fixture
 def staff_cass(client):
-    houston = CustomUser.objects.create_user(
+    cass = CustomUser.objects.create_user(
         username="crpalmer",
         first_name="Cassady",
         last_name="Palmer",
@@ -88,12 +88,12 @@ def staff_cass(client):
         username="crpalmer",
         password="dbwrwbrj7499677693skjhkasH72!",
     )
-    return staff_cass
+    return cass
 
 
 @pytest.fixture
 def staff_chris(client):
-    houston = CustomUser.objects.create_user(
+    chris = CustomUser.objects.create_user(
         username="cfeeny",
         first_name="Chris",
         last_name="Feeny",
@@ -104,12 +104,12 @@ def staff_chris(client):
         username="cfeeny",
         password="dbwrwbrj7499677693skjhkasH72!",
     )
-    return staff_chris
+    return chris
 
 
 @pytest.fixture
 def random_guy(client):
-    houston = CustomUser.objects.create_user(
+    random = CustomUser.objects.create_user(
         username="bruce",
         first_name="Bruce",
         last_name="Random",
@@ -120,7 +120,7 @@ def random_guy(client):
         username="bruce",
         password="dbwrwbrj7499677693skjhkasH72!",
     )
-    return random_guy
+    return random
 
 
 @pytest.fixture

@@ -16,7 +16,7 @@ urlpatterns = [
         name="conf_schedule_week",
     ),
     urls.path("pickem_index/<spring_year>/", pickem_index.view, name="pickem_index"),
-    urls.path("pickem_register/", pickem_register.view, name="pickem_register"),
+    urls.path("pickem_register/<spring_year>/", pickem_register.view, name="pickem_register"),
     urls.path("my_pickem/<spring_year>/", my_pickem.view, name="my_pickem"),
     urls.path("add_away_win/<conf_series>/", add_win.away, name="add_away_win"),
     urls.path("add_home_win/<conf_series>/", add_win.home, name="add_home_win"),

@@ -7,7 +7,7 @@ from accounts.tests.fixtures import staff_josh, staff_chris, staff_cass, superus
 
 
 @pytest.fixture
-def pick_reg_annual(staff_josh, staff_chris):
+def pick_reg_annual(staff_josh, staff_chris, staff_cass, superuser_houston, logged_user_schwarbs):
     josh = conf_models.PickemRegisterAnnual.objects.create(
         user = staff_josh,
         spring_year = year.get_this_year(),

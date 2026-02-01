@@ -6,3 +6,7 @@ def get_spring_year():
     if datetime.date.today().month > 8:
         return spring_year + 1
     return spring_year
+
+
+def get_this_year():
+    return datetime.date.today().year

@@ -39,7 +39,7 @@ def test_add_accolade_partial_asks_for_password_not_logged_in(
         reverse("add_accolade", args=[str(players.devin_taylor.pk)]),
         follow=True,
     )
-    assert "Password:" in response.content.decode()
+    assert "Sign In Via Google" in response.content.decode()
 
 
 @pytest.mark.django_db

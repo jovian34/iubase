@@ -109,7 +109,7 @@ def test_edit_player_post_redirects_and_makes_no_change_not_logged_in(
         forms.devin_taylor_edited,
         follow=True,
     )
-    assert "Password" in response.content.decode()
+    assert "Sign In Via Google" in response.content.decode()
     devin = Player.objects.get(pk=players.devin_taylor.pk)
     assert devin.last == "Taylor"
     assert devin.home_state != "OH"

@@ -114,4 +114,4 @@ def test_current_months_traffic_asks_for_password_not_logged_in(client, agents):
     assert response.status_code == 200
     assert "Traffic Count" not in response.content.decode()
     assert "2024 Transfer Portal" not in response.content.decode()
-    assert "Password:" in response.content.decode()
+    assert "Sign In Via Google" in response.content.decode()

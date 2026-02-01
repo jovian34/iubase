@@ -132,4 +132,4 @@ def test_add_game_post_asks_for_login_when_not_logged_in(client, forms, teams):
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password:" in response.content.decode()
+    assert "Sign In Via Google" in response.content.decode()

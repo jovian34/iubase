@@ -114,7 +114,7 @@ def test_edit_blog_entry_post_redirects_and_asks_for_password_when_not_logged_in
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password:" in response.content.decode()
+    assert "Sign In Via Google" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -130,4 +130,4 @@ def test_edit_blog_entry_get_redirects_asks_for_password_when_not_logged_in(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password:" in response.content.decode()
+    assert "Sign In Via Google" in response.content.decode()

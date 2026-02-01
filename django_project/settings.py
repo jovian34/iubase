@@ -142,6 +142,8 @@ SITE_ID = 1
 
 LOGIN_REDIRECT_URL = "index"
 
+LOGIN_URL = "/accounts/google/login/"
+
 ACCOUNT_LOGOUT_REDIRECT = "index"
 
 ACCOUNT_SESSION_REMEMBER = True

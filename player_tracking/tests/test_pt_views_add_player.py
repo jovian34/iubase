@@ -47,7 +47,7 @@ def test_add_player_get_forbidden_without_perms(client, logged_user_schwarbs):
 def test_add_player_get_ask_for_password_not_logged_in(client):
     response = client.get(reverse("add_player"), follow=True)
     assert response.status_code == 200
-    assert "Password:" in response.content.decode()
+    assert "Sign In Via Google" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -107,6 +107,6 @@ def test_add_player_form_asks_for_password_not_logged_in(client, players, forms)
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password" in response.content.decode()
+    assert "Sign In Via Google" in response.content.decode()
     phillip = Player.objects.filter(first="Phillip")
     assert not phillip

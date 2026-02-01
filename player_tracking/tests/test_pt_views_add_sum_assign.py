@@ -24,7 +24,7 @@ def test_add_summer_assignment_get_redirects_not_logged_in(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password" in response.content.decode()
+    assert "Sign In Via Google" in response.content.decode()
 
 
 @pytest.mark.django_db

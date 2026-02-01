@@ -108,4 +108,4 @@ def test_add_roster_year_partial_post_asks_for_password_not_logged_in(
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password" in response.content.decode()
+    assert "Sign In Via Google" in response.content.decode()

@@ -60,6 +60,54 @@ def superuser_houston(client):
 
 
 @pytest.fixture
+def staff_josh(client):
+    houston = CustomUser.objects.create_user(
+        username="jbennett",
+        first_name="Josh",
+        last_name="Bennett",
+        password="dbwrwbrj7499677693skjhkasH72!",
+        is_superuser=True,
+    )
+    client.login(
+        username="jbennett",
+        password="dbwrwbrj7499677693skjhkasH72!",
+    )
+    return staff_josh
+
+
+@pytest.fixture
+def staff_cass(client):
+    houston = CustomUser.objects.create_user(
+        username="crpalmer",
+        first_name="Cassady",
+        last_name="Palmer",
+        password="dbwrwbrj7499677693skjhkasH72!",
+        is_superuser=True,
+    )
+    client.login(
+        username="crpalmer",
+        password="dbwrwbrj7499677693skjhkasH72!",
+    )
+    return staff_cass
+
+
+@pytest.fixture
+def staff_chris(client):
+    houston = CustomUser.objects.create_user(
+        username="cfeeny",
+        first_name="Chris",
+        last_name="Feeny",
+        password="dbwrwbrj7499677693skjhkasH72!",
+        is_superuser=True,
+    )
+    client.login(
+        username="cfeeny",
+        password="dbwrwbrj7499677693skjhkasH72!",
+    )
+    return staff_chris
+
+
+@pytest.fixture
 def user_forms(client):
     new_user = {
         "email": "newuser@email.com",

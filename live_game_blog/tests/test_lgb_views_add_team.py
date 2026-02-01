@@ -78,7 +78,7 @@ def test_add_team_post_redirects_and_asks_for_login_when_not_logged_in(client, f
         follow=True,
     )
     assert response.status_code == 200
-    assert "Password:" in response.content.decode()
+    assert "Sign In Via Google" in response.content.decode()
 
 
 @pytest.mark.django_db

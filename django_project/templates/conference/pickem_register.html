@@ -13,6 +13,130 @@
     <div class="column-3"></div>
     <div class="column-6">
 
+        <h2>You have no registration on file for {{ spring_year }} B1G Pick'em</h2>
+        <p>If you wish to participate in this year's contest, you must
+            agree to the terms and condition (detailed below).</p>
+
+        <form action="{% url "pickem_register" spring_year %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" value="Submit">Register for {{ spring_year }} Pick'em</button>
+        </form>
+
+        <section id="terms-and-privacy" class="registration-terms">
+        <h2>B1G Pick’em — Terms &amp; Conditions and Privacy Notice</h2>
+        <p><small>Last updated: February 1, 2026</small></p>
+
+        <p>
+            By registering for and participating in the B1G Pick’em game (“the Game”),
+            you agree to the following Terms &amp; Conditions and Privacy Notice.
+            If you do not agree, please do not register or participate.
+        </p>
+
+        <h3>1. About the Game</h3>
+        <p>
+            The B1G Pick’em game is a free, online pick’em game provided by
+            <strong>iubase.com</strong>, a hobbyist-run website based in Bloomington,
+            Indiana, USA. Participation is voluntary and free of charge.
+            No purchase is required to register or play.
+        </p>
+
+        <h3>2. Eligibility</h3>
+        <ul>
+            <li>You must be at least <strong>13 years old</strong> to register and participate.</li>
+            <li>The Game is intended for personal, non-commercial use.</li>
+            <li>Registration requires signing in using Google Login.</li>
+        </ul>
+
+        <h3>3. Registration and Accounts</h3>
+        <ul>
+            <li>Users register for <strong>one season (year) at a time</strong>.</li>
+            <li>Authentication is handled through Google Login.</li>
+            <li>You are responsible for all activity that occurs under your account.</li>
+            <li>We reserve the right to suspend or terminate accounts that violate these terms or interfere with the Game.</li>
+        </ul>
+
+        <h3>4. Public and Private Picks</h3>
+        <p>
+            During registration, you may choose whether your picks and results are
+            <strong>public</strong> (visible to other users and visitors)
+            or <strong>private</strong> (visible only to you).
+        </p>
+
+        <h3>5. Data We Collect</h3>
+        <p>We collect only the minimum data necessary to operate the Game:</p>
+        <ul>
+            <li>Your Google-provided account identifier</li>
+            <li>Your display name</li>
+            <li>Your picks and game results</li>
+            <li>Your public/private visibility preference</li>
+        </ul>
+        <p>
+            We do <strong>not</strong> collect payment information, phone numbers,
+            physical addresses, or advertising or tracking data beyond standard server logs.
+        </p>
+
+        <h3>6. Google Login and Third-Party Services</h3>
+        <p>
+            Google Login is used to authenticate users. We do not control what data Google
+            collects or how Google uses it. Google’s data practices are governed by
+            <a href="https://policies.google.com/privacy?hl=en-US">Google’s own Privacy Policy and Terms of Service</a>.
+        </p>
+
+        <h3>7. Data Retention and Deletion</h3>
+        <p>
+            You may request deletion of your account, picks, and results at any time.
+            Upon verified request, we will delete your user information and associated
+            data within a reasonable timeframe.
+        </p>
+
+        <h3>8. No Gambling; No Monetary Wagering</h3>
+        <p>
+            <strong>This game does not involve gambling.</strong>
+            There is no wagering, monetary consideration, or prizes of any kind.
+            The Game is free to play and is not a gambling activity.
+        </p>
+
+        <h3>9. No Warranties</h3>
+        <p>
+            The Game is provided “as is” and “as available.”
+            We make no guarantees regarding accuracy, availability, uptime,
+            or outcomes.
+        </p>
+
+        <h3>10. Limitation of Liability</h3>
+        <p>
+            To the fullest extent permitted by law, iubase.com and its operators
+            shall not be liable for any damages arising from your participation
+            in the Game.
+        </p>
+
+        <h3>11. No Affiliation or Endorsement</h3>
+        <p>
+            This Game is not affiliated with, endorsed by, or sponsored by the
+            Big Ten Conference, Indiana University, or any athletic organization.
+        </p>
+
+        <h3>12. Changes to These Terms</h3>
+        <p>
+            These Terms &amp; Conditions may be updated from time to time.
+            Continued participation after changes are posted constitutes acceptance
+            of the revised terms.
+        </p>
+
+        <h3>13. Governing Law</h3>
+        <p>
+            These Terms are governed by the laws of the State of Indiana
+            and applicable United States federal law.
+        </p>
+
+        <h3>14. Contact</h3>
+        <p>
+            For questions or data deletion requests, please contact iubase.com
+            using the contact information provided on the website.
+        </p>
+        </section>
+
     </div>
 </div>
 

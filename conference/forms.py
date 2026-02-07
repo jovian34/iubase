@@ -31,3 +31,15 @@ class AddConferenceSeriesForm(forms.Form):
         self.fields["away_team"].queryset = lgb_models.Team.objects.filter(
             pk__in=pks
         ).order_by("team_name")
+
+
+class PickemRegistrationForm(forms.Form):
+    display_name = forms.CharField(
+        label="Type a name or handle for your account",
+    )
+    agree_to_terms = forms.BooleanField(
+        label="Do you agree to the terms and conditions listed below?",
+    )
+    make_public= forms.BooleanField(
+        label="Do you want to be listed publicly this season?",
+    )

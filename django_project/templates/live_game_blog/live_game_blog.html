@@ -85,13 +85,17 @@
 <div class="sidebar clear-both">
     <img src="{{ game.stadium_config.photo }}" alt="{{ game.stadium_config.stadium_name }}" class="img-weath-stad">
     <h3><em>{{ game.stadium_config.stadium_name }} in {{ game.stadium_config.stadium.city }}, {{ game.stadium_config.stadium.state }}</em></h3>
-    <p>The weather {% if last_score.game_status == "pre-game" %}forecast{% endif %}
-        is for {{ game.first_pitch_weather_describe }} at
-                    {{ game.first_pitch_temp|floatformat:0 }}&deg;F
-                    {% if game.first_pitch_feels_like %}
-                        (feels like {{ game.first_pitch_feels_like|floatformat:0 }}&deg;F)
-                    {% endif %}
-        with a {{ game.first_pitch_wind_speed|floatformat:0 }} mph wind {{ wind_dir }}.
+    <p>Weather{% if last_score.game_status == "pre-game" %} forecast{% endif %}:</p>
+        <p>{% if game.first_pitch_feels_like %}
+            {{ game.first_pitch_temp|floatformat:0 }}&deg;F
+                (feels like {{ game.first_pitch_feels_like|floatformat:0 }}&deg;F).
+                {{ game.first_pitch_weather_describe }}.
+        {% else %}
+                Expecting {{ game.first_pitch_weather_describe }} at
+                    {{ game.first_pitch_temp|floatformat:0 }}&deg;F.
+        {% endif %}</p>
+        
+        <p>Wind of {{ game.first_pitch_wind_speed|floatformat:0 }} mph {{ wind_dir }}.</p>
     <p>
     {% if game.first_pitch_feels_like and game.first_pitch_feels_like < 27 %}
         <h3 class="too-cold">Forecasted feels like of {{ game.first_pitch_feels_like|floatformat:0 }}&deg;F is too cold to play per league rules</h3>

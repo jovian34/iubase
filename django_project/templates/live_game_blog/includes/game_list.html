@@ -40,10 +40,12 @@
                 <p>Weather Forecast:
                     {{ game.first_pitch_temp|floatformat:0 }}&deg;F
                     {% if game.first_pitch_feels_like %}
-                        (feels like {{ game.first_pitch_feels_like|floatformat:0 }}&deg;F)
+                        (feels like {{ game.first_pitch_feels_like|floatformat:0 }}&deg;F).
+                        {{ game.first_pitch_weather_describe }}.
+                    {% else %}
+                        with {{ game.first_pitch_weather_describe }}.
                     {% endif %}
-                    with {{ game.first_pitch_weather_describe }}
-                .</p>
+                </p>
                 {% if game.first_pitch_feels_like and game.first_pitch_feels_like < 27 %}
                     <h3 class="too-cold">Forecasted feels like of {{ game.first_pitch_feels_like|floatformat:0 }}&deg;F is too cold to play per league rules</h3>
                 {% endif %}

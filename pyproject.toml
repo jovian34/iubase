@@ -1,15 +1,15 @@
 [project]
 name = "iubase"
-version = "2026.2.1.1210"
+version = "2026.2.6.1537"
 requires-python = "==3.14.2"
 dependencies = [
-    "asgiref==3.11.0",
+    "asgiref==3.11.1",
     "bs4>=0.0.2",
-    "coverage==7.13.2",
-    "django==6.0.1",
+    "coverage==7.13.3",
+    "django==6.0.2",
     "django-allauth[socialaccount]==65.14.0",
     "execnet==2.1.2",
-    "gunicorn==25.0.0",
+    "gunicorn==25.0.3",
     "iniconfig==2.3.0",
     "markdown==3.10.1",
     "packaging==26.0",
@@ -40,5 +40,5 @@ python_files = "test_*.py"
 
 [dependency-groups]
 dev = [
-    "ruff>=0.14.14",
+    "ruff>=0.15.0",
 ]

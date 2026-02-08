@@ -1,4 +1,5 @@
 import os
+import math
 from datetime import timedelta, datetime
 
 from django.utils import timezone
@@ -25,7 +26,7 @@ def get_and_set_weather_data_daily():
         api_url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={long}&exclude=current,minutely,alerts&appid={api_key}&units=imperial"
         data_dict = get_weather_data_dict(api_url)
         delta = game.first_pitch - timezone.now()
-        days_out = int(round(delta.total_seconds() / 86400))
+        days_out = int(math.floor(delta.total_seconds() / 86400))
         game.first_pitch_temp = data_dict["daily"][days_out]["temp"]["day"]
         game.first_pitch_feels_like = data_dict["daily"][days_out]["feels_like"]["day"]
         game.first_pitch_wind_speed = data_dict["daily"][days_out]["wind_speed"]

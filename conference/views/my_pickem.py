@@ -1,5 +1,8 @@
+import datetime
+
 from django import shortcuts, urls
 from django.contrib.auth import decorators as auth
+from django.db.models import Q
 
 from conference import models as conf_models
 
@@ -12,11 +15,32 @@ def view(request, spring_year):
     )
     if not registration.exists():
         return shortcuts.redirect(urls.reverse("pickem_register", args=[spring_year]))
-    series = conf_models.ConfSeries.objects.filter(
-        start_date__year=spring_year,
-    )
+    
+    prior_series = conf_models.ConfSeries.objects.filter(
+        Q(start_date__lte=datetime.date.today()) &
+        Q(start_date__gt=datetime.date(year=int(spring_year), month=2, day=1))
+    ).order_by("-start_date")
+    if prior_series.exists():
+        last_week_series = conf_models.ConfSeries.objects.filter(
+            start_date=prior_series[0].start_date,
+        )
+    else:
+        last_week_series = None
+    
+    next_series = conf_models.ConfSeries.objects.filter(
+        Q(start_date__gt=datetime.date.today()) &
+        Q(start_date__lt=datetime.date(year=int(spring_year), month=8, day=1))
+    ).order_by("start_date")
+    if next_series.exists():
+        next_week_series = conf_models.ConfSeries.objects.filter(
+            start_date=next_series[0].start_date,
+        )
+    else:
+        next_week_series = None
+        
     content = {
-        "series": series,
+        "last_week_series": last_week_series,
+        "next_week_series": next_week_series,
         "page_title": f"My {spring_year} Pick'em"
     }
     template_path = "conference/my_pickem.html"

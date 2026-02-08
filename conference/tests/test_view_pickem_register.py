@@ -56,7 +56,7 @@ def test_pickem_register_post_saves_data(client, random_guy):
 
 
 @pytest.mark.django_db
-def test_pickem_register_post_redirects_to_my_pickem(client, random_guy):
+def test_pickem_register_post_redirects_to_my_pickem(client, random_guy, conf_series_current_year, teams):
     response = client.post(
         urls.reverse("pickem_register", args=[year.get_this_year()]),
         {

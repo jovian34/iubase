@@ -3,6 +3,10 @@ import pytest
 from django import urls
 
 from accounts.tests.fixtures import logged_user_schwarbs, user_not_logged_in, random_guy
+from live_game_blog.tests.fixtures.teams import teams
+from conference.tests.fixtures.conf_series_current_year import conf_series_current_year
+from conference.tests.fixtures.conferences import conferences
+from conference.tests.fixtures.conf_teams import conf_teams
 from conference.logic import year
 from conference import models as conf_models
 
@@ -65,3 +69,18 @@ def test_pickem_register_post_redirects_to_my_pickem(client, random_guy):
     assert response.status_code == 200
     assert "Welcome, Bruce!" in response.content.decode()
     assert f"My {year.get_this_year()} Pick&#x27;em" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_pickem_register_post_redirects_to_my_pickem_and_shows_iowa_logo(client, random_guy, teams, conf_series_current_year):
+    response = client.post(
+        urls.reverse("pickem_register", args=[year.get_this_year()]),
+        {
+            "display_name": "B1GBruce",
+            "agree_to_terms": "on",
+            "make_public": "on",
+        },
+        follow=True,
+    )
+    assert response.status_code == 200
+    assert "https://web2.ncaa.org/ncaa_style/img/All_Logos/sm/312.gif" in response.content.decode()

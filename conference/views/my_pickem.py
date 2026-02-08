@@ -12,8 +12,11 @@ def view(request, spring_year):
     )
     if not registration.exists():
         return shortcuts.redirect(urls.reverse("pickem_register", args=[spring_year]))
-
+    series = conf_models.ConfSeries.objects.filter(
+        start_date__year=spring_year,
+    )
     content = {
+        "series": series,
         "page_title": f"My {spring_year} Pick'em"
     }
     template_path = "conference/my_pickem.html"

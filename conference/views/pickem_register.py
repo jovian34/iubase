@@ -1,4 +1,4 @@
-from django import shortcuts
+from django import shortcuts, urls
 from django.contrib.auth import decorators as auth
 
 from conference import forms as conf_forms
@@ -18,6 +18,7 @@ def view(request, spring_year):
                 make_public=form.cleaned_data["make_public"]
             )
             register.save()
+            return shortcuts.redirect(urls.reverse("my_pickem", args=[spring_year]))
         
     form = conf_forms.PickemRegistrationForm()
     template_path = "conference/pickem_register.html"

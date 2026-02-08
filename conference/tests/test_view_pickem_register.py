@@ -45,7 +45,7 @@ def test_pickem_register_post_saves_data(client, random_guy):
         user=random_guy,
         spring_year=year.get_this_year(),
     )
-    assert registration.display_name == "B1gBruce"
+    assert registration.display_name == "B1GBruce"
     assert registration.agree_to_terms
     assert registration.make_public
     assert registration.spring_year == year.get_this_year()

@@ -66,30 +66,6 @@ class TeamRpi(models.Model):
 
     def __str__(self):
         return f"{self.spring_year} {self.team.team_name}: {self.rpi_rank}"
-
-
-class Pick(models.Model):
-    user = models.ForeignKey(
-        acct_models.CustomUser,
-        on_delete=models.CASCADE,
-    )
-    series = models.ForeignKey(
-        ConfSeries,
-        on_delete=models.CASCADE,
-    )
-    pick = models.ForeignKey(
-        lgb_models.Team,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
-    result = models.CharField(
-        default="Incomplete",
-    )
-
-    def __str__(self):
-        formatted_date = self.series.start_date.strftime("%B %-d, %Y")
-        return f"{self.user.first_name} {self.user.last_name}: {formatted_date} - {self.pick.team_name} - {self.result}"
     
 
 class PickemRegisterAnnual(models.Model):
@@ -112,4 +88,29 @@ class PickemRegisterAnnual(models.Model):
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}: {self.spring_year}"
 
+
+class Pick(models.Model):
+    user = models.ForeignKey(
+        PickemRegisterAnnual,
+        on_delete=models.CASCADE,
+    )
+    series = models.ForeignKey(
+        ConfSeries,
+        on_delete=models.CASCADE,
+    )
+    pick = models.ForeignKey(
+        lgb_models.Team,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    result = models.CharField(
+        default="Incomplete",
+    )
+
+    def __str__(self):
+        formatted_date = self.series.start_date.strftime("%B %-d, %Y")
+        display_name = getattr(self.user, "display_name", str(self.user))
+        pick_team_name = self.pick.team_name if self.pick else "No Pick"
+        return f"{display_name}: {formatted_date} - {pick_team_name} - {self.result}"
 

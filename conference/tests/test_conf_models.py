@@ -6,9 +6,14 @@ from conference.tests.fixtures.conf_teams import conf_teams
 from conference.tests.fixtures.conf_series_current import conf_series_current
 from conference.tests.fixtures.conf_series_three_way_rpi import conf_series_three_way_rpi
 from conference.tests.fixtures.picks import picks
+from conference.tests.fixtures.pick_reg_annual import pick_reg_annual
 from live_game_blog.tests.fixtures.teams import teams
 from accounts.tests.fixtures import logged_user_schwarbs
 from accounts.tests.fixtures import user_not_logged_in
+from accounts.tests.fixtures import staff_josh
+from accounts.tests.fixtures import staff_chris
+from accounts.tests.fixtures import staff_cass
+from accounts.tests.fixtures import superuser_houston
 
 from conference.logic import year
 
@@ -58,5 +63,7 @@ def test_pick_model_correct_str_def(
     picks, 
     user_not_logged_in, 
     conf_series_three_way_rpi,
+    pick_reg_annual
     ):
-    assert str(picks.ty_iu_iowa_schwarb_iu) == f"Kyle Schwarber: March 7, {year.get_spring_year()} - Indiana - Incomplete"
+    assert str(picks.ty_iu_iowa_schwarb_iu) == f"Schwarbomb: March 7, {year.get_spring_year()} - Indiana - Incomplete"
+    

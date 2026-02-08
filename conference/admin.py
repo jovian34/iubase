@@ -40,3 +40,23 @@ class TeamRpiAdmin(admin.ModelAdmin):
         "rpi_rank",
         "spring_year",
     )
+
+
+@admin.register(conf_models.PickemRegisterAnnual)
+class PickemRegisterAnnualAdmin(admin.ModelAdmin):
+    model = conf_models.PickemRegisterAnnual
+    list_display = (
+        "spring_year",
+        "display_name",
+        "is_staff",
+        "make_public",
+    )
+    
+
+@admin.register(conf_models.Pick)
+class PickAdmin(admin.ModelAdmin):
+    list_display = (
+        "user",
+        "pick",
+        "series",
+    )

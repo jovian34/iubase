@@ -16,6 +16,7 @@
             <h1>Current Week Picks</h1>
             {% for matchup in current_week_series %}
 
+                        {% partialdef series %}
                         <div class="column-12 clear-both" id="series-{{ matchup.pk }}">
                             <h1 class="matchup">
                             <span class="at-symbol">{{ matchup.away_wins|floatformat:"-1" }}</span>
@@ -24,7 +25,9 @@
                             <img class="team-logo-sched" src="{{ matchup.home_team.logo }}" alt="{{ matchup.home_team.team_name }}">
                             <span class="at-symbol">{{ matchup.home_wins|floatformat:"-1" }}</span>
                             </h1>
-                        </div>    
+                        </div>
+                        {% endpartialdef %}   
+                        {% partial series %}
         
             {% endfor %}
 

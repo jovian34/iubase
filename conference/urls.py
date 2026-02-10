@@ -1,6 +1,6 @@
 from django import urls
 
-from conference.views import conf_year, add_series, conf_schedule, add_win, standings, conf_index, pickem_index, pickem_register, my_pickem
+from conference.views import conf_year, add_series, conf_schedule, add_win, standings, conf_index, pickem_index, pickem_register, my_pickem, choose_pick
 
 
 urlpatterns = [
@@ -18,6 +18,7 @@ urlpatterns = [
     urls.path("pickem_index/<spring_year>/", pickem_index.view, name="pickem_index"),
     urls.path("pickem_register/<spring_year>/", pickem_register.view, name="pickem_register"),
     urls.path("my_pickem/<spring_year>/", my_pickem.view, name="my_pickem"),
+    urls.path("choose_pick/<series>/<pick>/", choose_pick.view, name="choose_pick"),
     urls.path("add_away_win/<conf_series>/", add_win.away, name="add_away_win"),
     urls.path("add_home_win/<conf_series>/", add_win.home, name="add_home_win"),
     urls.path("add_tie/<conf_series>/", add_win.tie, name="add_tie"),

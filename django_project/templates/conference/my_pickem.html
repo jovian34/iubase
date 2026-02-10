@@ -16,37 +16,34 @@
             <h1>Current Week Picks</h1>
             {% for matchup in current_week_series %}
 
-                        {% partialdef series %}
+                        
                         <div class="column-12 clear-both" id="series-{{ matchup.pk }}">
                             <h1 class="matchup">
                             <span class="at-symbol">{{ matchup.away_wins|floatformat:"-1" }}</span>
                             <img class="team-logo-sched" src="{{ matchup.away_team.logo }}" alt="{{ matchup.away_team.team_name }}">
                             <span class="at-symbol">@</span>
-                            <img class="team-logo-sched" src="{{ matchup.home_team.logo }}" alt="{{ matchup.home_team.team_name }}">
+                            <img class="team-logo-sched"  src="{{ matchup.home_team.logo }}" alt="{{ matchup.home_team.team_name }}">
                             <span class="at-symbol">{{ matchup.home_wins|floatformat:"-1" }}</span>
                             </h1>
                         </div>
-                        {% endpartialdef %}   
-                        {% partial series %}
         
             {% endfor %}
 
             <h1>Next Week Picks</h1>
             {% for matchup in next_week_series %}
-
                         <div class="column-12 clear-both" id="series-{{ matchup.pk }}">
                             <h1 class="matchup">
                                 {% for pick in next_week_picks %}
                                     {% if pick.series == matchup %}
-                                        {% if pick.pick == matchup.away_team %}
+                                        {% if not pick.pick_home %}
                                             <span class="at-symbol">&#x2713;</span>
                                         {% endif %}
                                     {% endif %}
                                 {% endfor %}
                             <span class="at-symbol">{{ matchup.away_wins|floatformat:"-1" }}</span>
-                            <img class="team-logo-sched" src="{{ matchup.away_team.logo }}" alt="{{ matchup.away_team.team_name }}">
+                            <img class="team-logo-sched" hx-get="{% url "choose_pick_away" matchup.pk  %}" hx-target="#series-{{ matchup.pk }}" src="{{ matchup.away_team.logo }}" alt="{{ matchup.away_team.team_name }}">
                             <span class="at-symbol">@</span>
-                            <img class="team-logo-sched" src="{{ matchup.home_team.logo }}" alt="{{ matchup.home_team.team_name }}">
+                            <img class="team-logo-sched" hx-get="{% url "choose_pick_home" matchup.pk  %}" hx-target="#series-{{ matchup.pk }}" src="{{ matchup.home_team.logo }}" alt="{{ matchup.home_team.team_name }}">
                                 {% for pick in next_week_picks %}
                                     {% if pick.series == matchup %}
                                         {% if pick.pick == matchup.home_team %}
@@ -55,8 +52,15 @@
                                     {% endif %}
                                 {% endfor %}
                             <span class="at-symbol">{{ matchup.home_wins|floatformat:"-1" }}</span>
+                                {% for pick in next_week_picks %}
+                                    {% if pick.series == matchup %}
+                                        {% if pick.pick_home %}
+                                            <span class="at-symbol">&#x2713;</span>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
                             </h1>
-                        </div>    
+                        </div>   
         
             {% endfor %}
 

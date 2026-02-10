@@ -17,10 +17,11 @@ from live_game_blog.tests.fixtures.teams import teams
 
 @pytest.mark.django_db
 def test_choose_pick_updates_pick(client, staff_josh, pick_reg_annual, picks, conf_series_current, conf_teams, conferences, teams):
-    response = client.get(urls.reverse("choose_pick", args=[conf_series_current.rut_iu, teams.indiana]))
+    client.force_login(staff_josh)
+    response = client.get(urls.reverse("choose_pick_home", args=[conf_series_current.rut_iu.pk]))
     assert response.status_code == 200
     pick = conf_models.Pick.objects.get(
         series=conf_series_current.rut_iu,
         user=pick_reg_annual.josh
     )
-    assert pick.pick == teams.indiana
+    assert pick.pick_home

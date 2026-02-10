@@ -57,6 +57,7 @@ class PickemRegisterAnnualAdmin(admin.ModelAdmin):
 class PickAdmin(admin.ModelAdmin):
     list_display = (
         "user",
-        "pick",
+        "pick_home",
         "series",
+        "result",
     )

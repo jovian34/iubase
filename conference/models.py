@@ -3,6 +3,7 @@ from datetime import date
 
 from live_game_blog import models as lgb_models
 from accounts import models as acct_models
+from conference import choices
 
 
 class Conference(models.Model):
@@ -98,19 +99,15 @@ class Pick(models.Model):
         ConfSeries,
         on_delete=models.CASCADE,
     )
-    pick = models.ForeignKey(
-        lgb_models.Team,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
+    pick_home = models.BooleanField()
     result = models.CharField(
         default="Incomplete",
+        choices=choices.RESULT_CHOICES,
     )
 
     def __str__(self):
         formatted_date = self.series.start_date.strftime("%B %-d, %Y")
         display_name = getattr(self.user, "display_name", str(self.user))
-        pick_team_name = self.pick.team_name if self.pick else "No Pick"
+        pick_team_name = self.series.home_team.team_name if self.pick_home else self.series.away_team.team_name
         return f"{display_name}: {formatted_date} - {pick_team_name} - {self.result}"
 

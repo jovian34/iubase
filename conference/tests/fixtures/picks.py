@@ -15,12 +15,12 @@ def picks(logged_user_schwarbs, user_not_logged_in, teams, conf_series_current, 
     ty_iu_iowa_schwarb_iu = conf_models.Pick.objects.create(
         user=pick_reg_annual.schwarbs,
         series=conf_series_current.iu_iowa,
-        pick = teams.indiana,
+        pick_home=True,
     )
     ly_iu_minny_schwarb_iu = conf_models.Pick.objects.create(
         user=pick_reg_annual.schwarbs,
         series=conf_series_three_way_rpi.indiana_minny,
-        pick = teams.indiana,
+        pick_home=True,
         result = "Correct",
     )
     pick_list = [

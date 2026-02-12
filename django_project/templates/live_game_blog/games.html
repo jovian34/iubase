@@ -15,6 +15,7 @@
 <div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6" id="past-games">
+        <a href="{% url "schedule" %}"><button>Show full schedule</button></a>
         <button hx-trigger="click" hx-get="{% url "past_games" %}" hx-target="#past-games">Show Completed Games</button>
     </div>
 </div>

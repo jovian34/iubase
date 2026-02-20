@@ -67,7 +67,7 @@ class Game(models.Model):
     away_record = models.CharField(null=True, blank=True)
     away_conf_record = models.CharField(null=True, blank=True)
 
-    neutral_site = models.BooleanField(db_default=False)
+    neutral_site = models.BooleanField(default=False)
     event = models.CharField(null=True, blank=True)
     featured_image = models.URLField(null=True, blank=True)
     live_stats = models.URLField(null=True, blank=True)
@@ -107,7 +107,7 @@ class Game(models.Model):
 class Scoreboard(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     scorekeeper = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    update_time = models.DateTimeField(db_default=Now())
+    update_time = models.DateTimeField(default=Now())
     game_status = models.CharField(choices=GAME_STATUS, max_length=16)
     inning_num = models.IntegerField(null=True, blank=True)
     inning_part = models.CharField(
@@ -130,7 +130,7 @@ class Scoreboard(models.Model):
 class BlogEntry(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    blog_time = models.DateTimeField(db_default=Now())
+    blog_time = models.DateTimeField(default=Now())
     blog_entry = models.TextField()
     is_raw_html = models.BooleanField(null=True, blank=True)
     is_photo_only = models.BooleanField(null=True, blank=True)

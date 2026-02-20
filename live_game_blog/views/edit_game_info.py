@@ -34,9 +34,13 @@ def get_form_with_current_game_info(edit_game):
             "home_rank": edit_game.home_rank,
             "home_seed": edit_game.home_seed,
             "home_nat_seed": edit_game.home_nat_seed,
+            "home_record": edit_game.home_record,
+            "home_conf_record": edit_game.home_conf_record,
             "away_rank": edit_game.away_rank,
             "away_seed": edit_game.away_seed,
             "away_nat_seed": edit_game.away_nat_seed,
+            "away_record": edit_game.away_record,
+            "away_conf_record": edit_game.away_conf_record,
             "featured_image": edit_game.featured_image,
             "live_stats": edit_game.live_stats,
             "video": edit_game.video,
@@ -52,10 +56,14 @@ def save_edited_game(edit_game, form):
     edit_game.home_rank = form.cleaned_data["home_rank"]
     edit_game.home_seed = form.cleaned_data["home_seed"]
     edit_game.home_nat_seed = form.cleaned_data["home_nat_seed"]
+    edit_game.home_record = form.cleaned_data["home_record"]
+    edit_game.home_conf_record = form.cleaned_data["home_conf_record"]
     edit_game.away_team = form.cleaned_data["away_team"]
     edit_game.away_rank = form.cleaned_data["away_rank"]
     edit_game.away_seed = form.cleaned_data["away_seed"]
     edit_game.away_nat_seed = form.cleaned_data["away_nat_seed"]
+    edit_game.away_record = form.cleaned_data["away_record"]
+    edit_game.away_conf_record = form.cleaned_data["away_conf_record"]
     edit_game.event = form.cleaned_data["event"]
     edit_game.featured_image = form.cleaned_data["featured_image"]
     edit_game.live_stats = form.cleaned_data["live_stats"]

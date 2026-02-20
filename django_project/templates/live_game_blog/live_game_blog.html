@@ -24,6 +24,7 @@
         {{ game.away_team }} {% if game.away_seed %}({{ game.away_seed }}-seed){% endif %}
         {% if game.away_nat_seed %}(#{{ game.away_nat_seed }} National Seed){% endif %}
         
+        
         {% if game.neutral_site %}vs.{% else %}at{% endif %}
         {% if game.home_rank %}no. {{ game.home_rank }}{% endif %}
         {{ game.home_team }} {% if game.home_seed %}({{ game.home_seed }}-seed){% endif %}
@@ -41,17 +42,25 @@
         {% endif %}
         </p>
         <div class="team-box">
-        <p>{{ game.away_team }} {{ game.away_team.mascot }}: 
+        <p>{{ game.away_team }} {{ game.away_team.mascot }}
+        {% if game.away_record %}
+            ({{ game.away_record }})
+        {% endif %}: 
             <a href="{{ game.away_team.stats}}">stats</a> | 
             <a href="{{ game.away_team.roster}}">roster</a> |
             <img class="conf-logo-lgb" src="{{ away_conference.conference.logo_url}}" alt={{ away_conference.conference.long_name }}>
+            {% if game.away_conf_record %}({{ game.away_conf_record }}){% endif %}
         <p>
         </div>
         <div class="team-box">
-        <p>{{ game.home_team }} {{ game.home_team.mascot }}: 
+        <p>{{ game.home_team }} {{ game.home_team.mascot }}
+        {% if game.home_record %}
+            ({{ game.home_record }})
+        {% endif %}:  
             <a href="{{ game.home_team.stats}}">stats</a> | 
             <a href="{{ game.home_team.roster}}">roster</a> |
             <img class="conf-logo-lgb" src="{{ home_conference.conference.logo_url}}" alt={{ home_conference.conference.long_name }}>
+            {% if game.home_conf_record %}({{ game.home_conf_record }}){% endif %}
         </p>
         </div>
     </div>

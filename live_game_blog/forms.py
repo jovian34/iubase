@@ -88,6 +88,8 @@ class AddGameForm(forms.Form):
         label="Home team national tournament seed",
         required=False,
     )
+    home_record = forms.CharField(label="season to-date W-L-T", required=False)
+    home_conf_record = forms.CharField(label="conference season to-date W-L-T", required=False)
 
     away_rank = forms.IntegerField(
         label="Away team D1Baseball.com national ranking",
@@ -101,6 +103,8 @@ class AddGameForm(forms.Form):
         label="Away team national tournament seed",
         required=False,
     )
+    away_record = forms.CharField(label="season to-date W-L-T", required=False)
+    away_conf_record = forms.CharField(label="conference season to-date W-L-T", required=False)
 
     featured_image = forms.URLField(
         label="Featured Image",

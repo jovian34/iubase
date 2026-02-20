@@ -55,12 +55,17 @@ class Game(models.Model):
     home_rank = models.IntegerField(null=True, blank=True)
     home_seed = models.IntegerField(null=True, blank=True)
     home_nat_seed = models.IntegerField(null=True, blank=True)
+    home_record = models.CharField(null=True, blank=True)
+    home_conf_record = models.CharField(null=True, blank=True)
+
     away_team = models.ForeignKey(
         Team, on_delete=models.CASCADE, related_name="away_team_set"
     )
     away_rank = models.IntegerField(null=True, blank=True)
     away_seed = models.IntegerField(null=True, blank=True)
     away_nat_seed = models.IntegerField(null=True, blank=True)
+    away_record = models.CharField(null=True, blank=True)
+    away_conf_record = models.CharField(null=True, blank=True)
 
     neutral_site = models.BooleanField(db_default=False)
     event = models.CharField(null=True, blank=True)

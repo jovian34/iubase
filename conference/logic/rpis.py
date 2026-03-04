@@ -52,6 +52,6 @@ def parse_table(spring_year):
 def request_table_into_parser(spring_year):
     nolan_url = f"https://www.warrennolan.com/baseball/{spring_year}/conference/Big-Ten"
     HEADERS = {"User-Agent": "Mozilla/5.0_apps.iubase.com"}
-    resp = requests.get(nolan_url, headers=HEADERS, timeout=10)
+    resp = requests.get(nolan_url, headers=HEADERS, timeout=30)
     resp.raise_for_status()
     return BeautifulSoup(resp.text, "html.parser")

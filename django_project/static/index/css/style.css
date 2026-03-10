@@ -316,6 +316,9 @@ table {
    border: 3px solid var(--black);
    width: 96%;
    margin: 2%;
+   display: block;
+   overflow-x: auto;
+    white-space: nowrap;
 }
 
 tr {

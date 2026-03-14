@@ -69,13 +69,21 @@ def have_two_teams_played(team_a_pk: int, team_b_pk: int, spring_year: int) -> b
 
 
 def get_all_opponents_for_team(team_pk: int, spring_year: int) -> Set[int]:
+    """
+    Return opponents for team_pk in spring_year where at least one game has been recorded
+    in the ConfSeries. Filters out scheduled-but-not-played series.
+    """
     home_opps = conf_models.ConfSeries.objects.filter(
-        home_team_id=team_pk, start_date__year=spring_year
-    ).values_list("away_team_id", flat=True)
+        home_team_id=team_pk,
+        start_date__year=spring_year,
+    ).filter(Q(home_wins__gt=0) | Q(away_wins__gt=0)).values_list('away_team_id', flat=True)
+
     away_opps = conf_models.ConfSeries.objects.filter(
-        away_team_id=team_pk, start_date__year=spring_year
-    ).values_list("home_team_id", flat=True)
-    return set(list(home_opps) + list(away_opps))
+        away_team_id=team_pk,
+        start_date__year=spring_year,
+    ).filter(Q(home_wins__gt=0) | Q(away_wins__gt=0)).values_list('home_team_id', flat=True)
+
+    return set(home_opps) | set(away_opps)
 
 
 def get_and_sum_wins_losses_vs_opponents(

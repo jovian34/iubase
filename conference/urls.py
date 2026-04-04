@@ -1,6 +1,6 @@
 from django import urls
 
-from conference.views import conf_year, add_series, conf_schedule, add_win, standings, conf_index, pickem_index, pickem_register, my_pickem
+from conference.views import conf_year, add_series, conf_schedule, add_win, standings, conf_index, pickem_index, pickem_register, my_pickem, crpi
 
 
 urlpatterns = [
@@ -26,4 +26,6 @@ urlpatterns = [
         standings.view,
         name="standings",
     ),
+    urls.path("crpi/<spring_year>/", crpi.view, name="crpi"),
+    urls.path("crpi/", crpi.view, name="crpi_default"),
 ]

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block header %}
+  <h1>{{ page_title }}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="column-12 clear-both">
+  <div class="column-3"></div>
+  <div class="column-6">
+    {% for row in crpi_rows %}
+      <h2>{{ forloop.counter }}. {{ row.team_name }}</h2>
+      <ul>
+        <li><p>cRPI: {{ row.crpi|floatformat:3 }}</p></li>
+        <li><p>Conference W%: {{ row.conference_win_pct|floatformat:3 }}</p></li>
+        <li><p>Adjusted W%: {{ row.adjusted_win_pct|floatformat:3 }}</p></li>
+        <li><p>Opp W%: {{ row.opponent_win_pct|floatformat:3 }}</p></li>
+        <li><p>Opp Opp W%: {{ row.opponents_opponents_win_pct|floatformat:3 }}</p></li>
+      </ul>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

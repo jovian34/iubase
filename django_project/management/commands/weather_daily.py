@@ -11,4 +11,4 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         weather_daily.get_and_set_weather_data_daily()
-        rpis.store_b1g_rpi_data_in_database(year.get_this_year())
+        # rpis.store_b1g_rpi_data_in_database(year.get_this_year()) UNCOMMENT in 2027

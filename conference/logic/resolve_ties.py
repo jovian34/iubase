@@ -76,12 +76,16 @@ def get_all_opponents_for_team(team_pk: int, spring_year: int) -> Set[int]:
     home_opps = conf_models.ConfSeries.objects.filter(
         home_team_id=team_pk,
         start_date__year=spring_year,
-    ).filter(Q(home_wins__gt=0) | Q(away_wins__gt=0)).values_list('away_team_id', flat=True)
+    ).filter(Q(home_wins__gt=0) | Q(away_wins__gt=0)).values_list(
+        "away_team_id", flat=True
+    )
 
     away_opps = conf_models.ConfSeries.objects.filter(
         away_team_id=team_pk,
         start_date__year=spring_year,
-    ).filter(Q(home_wins__gt=0) | Q(away_wins__gt=0)).values_list('home_team_id', flat=True)
+    ).filter(Q(home_wins__gt=0) | Q(away_wins__gt=0)).values_list(
+        "home_team_id", flat=True
+    )
 
     return set(home_opps) | set(away_opps)
 
@@ -103,6 +107,27 @@ def calculate_win_percentage(wins: Decimal, losses: Decimal) -> float:
     if total == 0:
         return 0.0
     return float(wins / total)
+
+
+def get_top_eight_reference_team_ids(
+    team_list: List[dict], excluded_team_ids: Set[int]
+) -> Tuple[int, ...]:
+    """
+    Return the first eight teams in the current ordered standings, excluding the tied block
+    being resolved.
+
+    This keeps the rule non-circular while still using the standings order that already exists
+    at the time the block is being resolved.
+    """
+    reference_team_ids = []
+    for team in team_list:
+        pk = team["pk"]
+        if pk in excluded_team_ids:
+            continue
+        reference_team_ids.append(pk)
+        if len(reference_team_ids) == 8:
+            break
+    return tuple(reference_team_ids)
 
 
 def resolve_ties(team_list: List[dict], spring_year: int) -> List[dict]:
@@ -137,20 +162,28 @@ def resolve_ties(team_list: List[dict], spring_year: int) -> List[dict]:
             continue
 
         # resolve this tied block recursively using tie-breakers
-        resolved_block = resolve_block(block, spring_year, depth=0)
+        resolved_block = resolve_block(block, spring_year, team_list, depth=0)
         result.extend(resolved_block)
         i = j
 
     return result
 
 
-def resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[dict]:
+def resolve_block(
+    block: List[dict], spring_year: int, team_list: List[dict], depth: int = 0
+) -> List[dict]:
     """
     Resolve ordering for a block of tied teams (same primary win_pct).
     Returns ordered list of team dicts (fully resolved). Annotates placed teams'
     'tiebreaker' where appropriate.
 
     depth: recursion guard to prevent infinite loops; if exceeded, we fall back to rpi.
+
+    Tie-break order:
+    1. Head-to-head if all teams in the block have played each other.
+    2. Best/worst record vs the tied group if a team has played all others in the block.
+    3. Record vs teams ending in positions 1-8.
+    4. RPI fallback.
     """
     # Base: if only one
     if len(block) <= 1:
@@ -210,7 +243,7 @@ def resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[d
                 out.append(grp[0])
             else:
                 # recursively resolve subgroup (go back to rule 1)
-                out.extend(resolve_block(grp, spring_year, depth=depth + 1))
+                out.extend(resolve_block(grp, spring_year, team_list, depth=depth + 1))
         return out
 
     # ---- Rule 2: any team played *all* other tied teams and strictly better/worse vs all of them ----
@@ -256,7 +289,7 @@ def resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[d
             top_team.get("tiebreaker") or "better record vs all in tied group"
         )
         remaining = [t for t in block if t["pk"] != top_candidate]
-        return [top_team] + resolve_block(remaining, spring_year, depth=depth + 1)
+        return [top_team] + resolve_block(remaining, spring_year, team_list, depth=depth + 1)
 
     # check for strict worst (played all and strictly worse than all others)
     worst_candidate = None
@@ -282,51 +315,45 @@ def resolve_block(block: List[dict], spring_year: int, depth: int = 0) -> List[d
         )
         remaining = [t for t in block if t["pk"] != worst_candidate]
         # put remaining resolved first, then worst at end
-        return resolve_block(remaining, spring_year, depth=depth + 1) + [worst_team]
+        return resolve_block(remaining, spring_year, team_list, depth=depth + 1) + [
+            worst_team
+        ]
 
-    # ---- Rule 3: rank by pct vs common opponents not in the tied group ----
-    # compute each team's opponent set (excluding ties)
-    opp_sets = {}
-    for t in block:
-        opp_sets[t["pk"]] = get_all_opponents_for_team(t["pk"], spring_year) - pks_set
+    # ---- Rule 3: rank by record vs teams in positions 1-8 ----
+    reference_team_ids = get_top_eight_reference_team_ids(
+        team_list=team_list, excluded_team_ids=pks_set
+    )
 
-    # common opponents across all tied teams
-    common_opps = None
-    for s in opp_sets.values():
-        if common_opps is None:
-            common_opps = set(s)
-        else:
-            common_opps &= s
-    common_opps = common_opps or set()
+    if reference_team_ids:
+        reference_team_ids_set = frozenset(reference_team_ids)
 
-    if common_opps:
-        # compute pct vs common opponents
-        common_pct_map = {}
+        top8_pct_map = {}
         for t in block:
             wins, losses = get_and_sum_wins_losses_vs_opponents(
-                t["pk"], common_opps, spring_year
+                t["pk"], reference_team_ids_set, spring_year
             )
             pct = calculate_win_percentage(wins, losses)
-            common_pct_map[t["pk"]] = (pct, wins, losses)
+            top8_pct_map[t["pk"]] = (pct, wins, losses)
 
         # Group by pct (rounded) and recursively resolve ties inside each group
         groups: Dict[float, List[dict]] = defaultdict(list)
         for t in block:
-            pct = round(common_pct_map[t["pk"]][0], 8)
+            pct = round(top8_pct_map[t["pk"]][0], 8)
             groups[pct].append(t)
+
         sorted_pcts = sorted(groups.keys(), reverse=True)
         out = []
         for pct in sorted_pcts:
             grp = groups[pct]
             if len(grp) == 1:
-                # uniquely placed by common-opponents
+                # uniquely placed by top-eight record
                 grp[0]["tiebreaker"] = (
                     grp[0].get("tiebreaker")
-                    or "tie broke by record vs. common opponents"
+                    or "tie broke by record vs. teams in positions 1-8"
                 )
                 out.append(grp[0])
             else:
-                out.extend(resolve_block(grp, spring_year, depth=depth + 1))
+                out.extend(resolve_block(grp, spring_year, team_list, depth=depth + 1))
         return out
 
     # ---- Rule 4: rpi_rank ascending (lower rank number is better). Use big sentinel for missing rpi. ----

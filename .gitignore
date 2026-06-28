@@ -9,3 +9,4 @@
 *.pyc
 .coverage
 /logs/
+uv.lock

@@ -64,10 +64,86 @@ def conf_teams(client, teams, conferences):
         conference = conferences.b1g,
         fall_year_joined = date.today().year - 30,
     )
-    ConfTeamObj = namedtuple(
-        "ConfTeamObj",
-        "iu_b1g iowa_b1g ucla_p10 ucla_p12 ucla_b1g uk_sec rut_b1g chi_b1g chi_non nw_b1g neb_b1g",
+    wash_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.wash,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 1,
     )
+    usc_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.usc,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 1,
+    )
+    ore_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.ore,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 1,
+    )
+    terps_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.terps,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 13,
+    )
+    psu_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.psu,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 30,
+    )
+    osu_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.osu,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 108,
+    )
+    minny_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.minny,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 108,
+    )
+    pur_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.boilers,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 108,
+    )
+    sparty_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.sparty,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 108,
+    )
+    ill_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.ill,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 108,
+    )
+    mich_b1g = conf_models.ConfTeam.objects.create(
+        team = teams.mich,
+        conference = conferences.b1g,
+        fall_year_joined = date.today().year - 108,
+    )
+    conf_team_list = [
+        "iu_b1g",
+        "iowa_b1g",
+        "ucla_p10",
+        "ucla_p12",
+        "ucla_b1g",
+        "uk_sec",
+        "rut_b1g",
+        "chi_b1g",
+        "chi_non",
+        "nw_b1g",
+        "neb_b1g",
+        "wash_b1g",
+        "usc_b1g",
+        "ore_b1g",
+        "terps_b1g",
+        "psu_b1g",
+        "osu_b1g",
+        "minny_b1g",
+        "pur_b1g",
+        "sparty_b1g",
+        "ill_b1g",
+        "mich_b1g",
+    ]
+    ConfTeamObj = namedtuple("ConfTeamObj", conf_team_list)
     return ConfTeamObj(
         iu_b1g=iu_b1g,
         iowa_b1g=iowa_b1g,
@@ -80,4 +156,15 @@ def conf_teams(client, teams, conferences):
         chi_non=chi_non,
         nw_b1g=nw_b1g,
         neb_b1g=neb_b1g,
+        wash_b1g=wash_b1g,
+        usc_b1g=usc_b1g,
+        ore_b1g=ore_b1g,
+        terps_b1g=terps_b1g,
+        psu_b1g=psu_b1g,
+        osu_b1g=osu_b1g,
+        minny_b1g=minny_b1g,
+        pur_b1g=pur_b1g,
+        sparty_b1g=sparty_b1g,
+        ill_b1g=ill_b1g,
+        mich_b1g=mich_b1g,
     )

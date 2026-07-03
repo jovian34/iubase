@@ -109,22 +109,8 @@ def test_add_blog_entry_only_post_not_logged_in_shows_forbidden(
             "is_x_embed": False,
         },
     )
-    assert response.status_code == 200
-    assert "Forbidden Error Recorded" in response.content.decode()
-
-
-@pytest.mark.django_db
-def test_add_blog_entry_only_post_not_logged_in_shows_forbidden(
-    client, user_not_logged_in, games, scoreboards
-):
-    response = client.post(
-        reverse("add_blog_entry_only", args=[games.iu_duke.pk]),
-        {
-            "blog_entry": "Adding to the Duke Blog",
-            "is_x_embed": False,
-        },
-    )
     assert response.status_code == 403
+    assert "Forbidden Error Recorded" in response.content.decode()
 
 
 @pytest.mark.django_db

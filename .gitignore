@@ -10,3 +10,4 @@
 .coverage
 /logs/
 uv.lock
+repo.pdf

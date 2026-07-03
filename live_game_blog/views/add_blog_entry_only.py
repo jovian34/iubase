@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django import http, shortcuts, urls
 from accounts import models as acc_models
 from live_game_blog import forms as lgb_forms
@@ -6,7 +7,7 @@ from live_game_blog import models as lgb_models
 
 def view(request, game_pk):
     if not request.user.has_perm("live_game_blog.add_blogentry"):
-        return http.HttpResponseForbidden()
+        raise PermissionDenied
     elif request.method == "POST":
         return process_form_validate_and_save_new_blog(request, game_pk)
     else:

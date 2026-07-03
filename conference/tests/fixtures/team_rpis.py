@@ -13,130 +13,130 @@ if datetime.date.today().month > 8:
 
 @pytest.fixture
 def team_rpis(teams):
-    osu_ly = conf_models.TeamRpi.objects.create(
+    osu = conf_models.TeamRpi.objects.create(
         team=teams.osu,
-        rpi_rank=232,
-        spring_year=spring_year-1
+        rpi_rank=79,
+        spring_year=spring_year,
     )
-    minny_ly = conf_models.TeamRpi.objects.create(
+    minny = conf_models.TeamRpi.objects.create(
         team=teams.minny,
-        rpi_rank=109,
-        spring_year=spring_year-1
+        rpi_rank=94,
+        spring_year=spring_year,
     )
-    pur_ly = conf_models.TeamRpi.objects.create(
+    pur = conf_models.TeamRpi.objects.create(
         team=teams.boilers,
-        rpi_rank=120,
-        spring_year=spring_year-1
+        rpi_rank=54,
+        spring_year=spring_year,
     )
-    terps_ly = conf_models.TeamRpi.objects.create(
+    terps = conf_models.TeamRpi.objects.create(
         team=teams.terps,
-        rpi_rank=232,
-        spring_year=spring_year-1
+        rpi_rank=81,
+        spring_year=spring_year,
     )
-    nw_ly = conf_models.TeamRpi.objects.create(
+    nw = conf_models.TeamRpi.objects.create(
         team=teams.nw,
-        rpi_rank=131,
-        spring_year=spring_year-1
+        rpi_rank=152,
+        spring_year=spring_year,
     )
-    sparty_ly = conf_models.TeamRpi.objects.create(
+    sparty = conf_models.TeamRpi.objects.create(
         team=teams.sparty,
-        rpi_rank=143,
-        spring_year=spring_year-1
-    )
-    ill_ly = conf_models.TeamRpi.objects.create(
-        team=teams.ill,
         rpi_rank=115,
-        spring_year=spring_year-1
+        spring_year=spring_year,
     )
-    rut_ly = conf_models.TeamRpi.objects.create(
-        team=teams.rut,
+    ill = conf_models.TeamRpi.objects.create(
+        team=teams.ill,
         rpi_rank=86,
-        spring_year=spring_year-1
+        spring_year=spring_year,
     )
-    neb_ly = conf_models.TeamRpi.objects.create(
+    rut = conf_models.TeamRpi.objects.create(
+        team=teams.rut,
+        rpi_rank=110,
+        spring_year=spring_year,
+    )
+    neb = conf_models.TeamRpi.objects.create(
         team=teams.neb,
-        rpi_rank=53,
-        spring_year=spring_year-1
-    )
-    psu_ly = conf_models.TeamRpi.objects.create(
-        team=teams.psu,
-        rpi_rank=85,
-        spring_year=spring_year-1
-    )
-    iu_ly = conf_models.TeamRpi.objects.create(
-        team=teams.indiana,
-        rpi_rank=68,
-        spring_year=spring_year-1
-    )
-    mich_ly = conf_models.TeamRpi.objects.create(
-        team=teams.mich,
-        rpi_rank=65,
-        spring_year=spring_year-1
-    )
-    wash_ly = conf_models.TeamRpi.objects.create(
-        team=teams.wash,
-        rpi_rank=78,
-        spring_year=spring_year-1
-    )
-    usc_ly = conf_models.TeamRpi.objects.create(
-        team=teams.usc,
-        rpi_rank=39,
-        spring_year=spring_year-1
-    )
-    iowa_ly = conf_models.TeamRpi.objects.create(
-        team=teams.iowa,
-        rpi_rank=80,
-        spring_year=spring_year-1
-    )
-    ore_ly = conf_models.TeamRpi.objects.create(
-        team=teams.ore,
-        rpi_rank=20,
-        spring_year=spring_year-1
-    )
-    ucla_ly = conf_models.TeamRpi.objects.create(
-        team=teams.ucla,
         rpi_rank=10,
-        spring_year=spring_year-1
+        spring_year=spring_year,
+    )
+    psu = conf_models.TeamRpi.objects.create(
+        team=teams.psu,
+        rpi_rank=192,
+        spring_year=spring_year,
+    )
+    iu = conf_models.TeamRpi.objects.create(
+        team=teams.indiana,
+        rpi_rank=119,
+        spring_year=spring_year,
+    )
+    mich = conf_models.TeamRpi.objects.create(
+        team=teams.mich,
+        rpi_rank=52,
+        spring_year=spring_year,
+    )
+    wash = conf_models.TeamRpi.objects.create(
+        team=teams.wash,
+        rpi_rank=168,
+        spring_year=spring_year,
+    )
+    usc = conf_models.TeamRpi.objects.create(
+        team=teams.usc,
+        rpi_rank=8,
+        spring_year=spring_year,
+    )
+    iowa = conf_models.TeamRpi.objects.create(
+        team=teams.iowa,
+        rpi_rank=62,
+        spring_year=spring_year,
+    )
+    ore = conf_models.TeamRpi.objects.create(
+        team=teams.ore,
+        rpi_rank=16,
+        spring_year=spring_year,
+    )
+    ucla = conf_models.TeamRpi.objects.create(
+        team=teams.ucla,
+        rpi_rank=1,
+        spring_year=spring_year,
     )
 
     team_rpi_list = [
-        "osu_ly",
-        "minny_ly",
-        "pur_ly",
-        "terps_ly",
-        "nw_ly",
-        "sparty_ly",
-        "ill_ly",
-        "rut_ly",
-        "neb_ly",
-        "psu_ly",
-        "iu_ly",
-        "mich_ly",
-        "wash_ly",
-        "usc_ly",
-        "iowa_ly",
-        "ore_ly",
-        "ucla_ly",
+        "osu",
+        "minny",
+        "pur",
+        "terps",
+        "nw",
+        "sparty",
+        "ill",
+        "rut",
+        "neb",
+        "psu",
+        "iu",
+        "mich",
+        "wash",
+        "usc",
+        "iowa",
+        "ore",
+        "ucla",
     ]    
 
     TeamRpiObj = namedtuple("TeamRpiObj", team_rpi_list)
 
     return TeamRpiObj(
-        osu_ly=osu_ly,
-        minny_ly=minny_ly,
-        pur_ly=pur_ly,
-        terps_ly=terps_ly,
-        nw_ly=nw_ly,
-        sparty_ly=sparty_ly,
-        ill_ly=ill_ly,
-        rut_ly=rut_ly,
-        neb_ly=neb_ly,
-        psu_ly=psu_ly,
-        iu_ly=iu_ly,
-        mich_ly=mich_ly,
-        wash_ly=wash_ly,
-        usc_ly=usc_ly,
-        iowa_ly=iowa_ly,
-        ore_ly=ore_ly,
-        ucla_ly=ucla_ly,
+        osu=osu,
+        minny=minny,
+        pur=pur,
+        terps=terps,
+        nw=nw,
+        sparty=sparty,
+        ill=ill,
+        rut=rut,
+        neb=neb,
+        psu=psu,
+        iu=iu,
+        mich=mich,
+        wash=wash,
+        usc=usc,
+        iowa=iowa,
+        ore=ore,
+        ucla=ucla,
     )

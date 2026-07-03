@@ -4,58 +4,45 @@ from django import urls
 from conference.logic import year
 
 from live_game_blog.tests.fixtures.teams import teams
-from conference.tests.fixtures.conf_series_three_way_common import conf_series_three_way_common
 from conference.tests.fixtures.conf_series_three_way_h2h import conf_series_three_way_h2h
-from conference.tests.fixtures.conf_series_two_way_h2h import conf_series_two_way_h2h
-from conference.tests.fixtures.conf_series_three_way_h2h_partial_top import conf_series_three_way_h2h_partial_top
-from conference.tests.fixtures.conf_series_three_way_h2h_partial_bottom import conf_series_three_way_h2h_partial_bottom
+from conference.tests.fixtures.conf_series_2026_actual import conf_series_2026_actual
+from conference.tests.fixtures.conf_series_2026_adjusted import conf_series_2026_adjusted
 from conference.tests.fixtures.conf_series_three_way_rpi import conf_series_three_way_rpi
 from conference.tests.fixtures.conf_teams import conf_teams
 from conference.tests.fixtures.conferences import conferences
+from conference.tests.fixtures.team_rpis_ly import team_rpis_ly
 from conference.tests.fixtures.team_rpis import team_rpis
 
 
 @pytest.mark.django_db
-def test_standings_page_renders(client, teams, team_rpis, conf_series_three_way_common, conf_teams, conferences):
-    response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
+def test_standings_page_renders(client, teams, team_rpis, conf_series_2026_actual, conf_teams, conferences):
+    response = client.get(urls.reverse("standings", args=[year.get_spring_year()]))
     assert response.status_code == 200
     output = response.content.decode()
-    assert f"{year.get_spring_year()-1} B1G Standings" in output
+    assert f"{year.get_spring_year()} B1G Standings" in output
     assert "Indiana" in output
 
 
 @pytest.mark.django_db
-def test_standings_shows_high_pct_first(client, teams, team_rpis, conf_series_three_way_common, conf_teams, conferences):
-    response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
+def test_standings_shows_high_pct_first(client, teams, team_rpis, conf_series_2026_actual, conf_teams, conferences):
+    response = client.get(urls.reverse("standings", args=[year.get_spring_year()]))
     assert response.status_code == 200
     output = response.content.decode()
-    boilers = output.find("Purdue")
-    ill = output.find("Illinois")
-    indiana = output.find("Indiana")
-    mich = output.find("Michigan")
     neb = output.find("Nebraska")
-    minny = output.find("Minnesota")
-    assert boilers < ill
-    assert ill < indiana
-    assert mich < neb
-    assert neb < minny
-
-
-@pytest.mark.django_db
-def test_standings_shows_three_way_tie_broke_by_common(client, teams, team_rpis, conf_series_three_way_common, conf_teams, conferences):
-    response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
-    assert response.status_code == 200
-    output = response.content.decode()
-    indiana = output.find("Indiana")
-    iowa = output.find("Iowa")
+    boilers = output.find("Purdue")
     mich = output.find("Michigan")
-    assert indiana < iowa
-    assert iowa < mich
-    assert "tie broke by record vs. common opponents" in output
+    ill = output.find("Illinois")
+    minny = output.find("Minnesota")
+    indiana = output.find("Indiana")
+    assert neb < boilers
+    assert boilers < mich
+    assert mich < ill
+    assert ill < minny
+    assert minny < indiana
 
 
 @pytest.mark.django_db
-def test_standings_shows_three_way_tie_broke_by_h2h(client, teams, team_rpis, conf_series_three_way_h2h, conf_teams, conferences):
+def test_standings_shows_three_way_tie_broke_by_h2h(client, teams, team_rpis_ly, conf_series_three_way_h2h, conf_teams, conferences):
     response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
     assert response.status_code == 200
     output = response.content.decode()
@@ -68,41 +55,50 @@ def test_standings_shows_three_way_tie_broke_by_h2h(client, teams, team_rpis, co
 
 
 @pytest.mark.django_db
-def test_standings_shows_three_way_tie_broke_by_h2h_partial_best(client, teams, team_rpis, conf_series_three_way_h2h_partial_top, conf_teams, conferences):
-    response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
+def test_standings_shows_three_way_tie_broke_by_h2h_partial_better(client, teams, team_rpis, conf_series_2026_actual, conf_teams, conferences):
+    response = client.get(urls.reverse("standings", args=[year.get_spring_year()]))
     assert response.status_code == 200
     output = response.content.decode()
     indiana = output.find("Indiana")
-    iowa = output.find("Iowa")
-    mich = output.find("Michigan")
-    assert indiana < iowa
-    assert mich < iowa # tie broke by RPI
+    psu = output.find("Penn State")
+    terps = output.find("Maryland")
+    assert terps < psu
+    assert terps < indiana
     assert "better record vs all in tied group" in output
-    assert "tie broke by RPI" in output
-    best = output.find("better record vs all in tied group")
-    rpi = output.find("tie broke by RPI")
-    assert best < rpi
+    assert "worse record vs all in tied group" not in output
+    best = output.find("better record vs all in tied group") # Maryland is only one this applies to
+    assert terps < best # template renders team before reason note
+    assert best < psu
 
 
 @pytest.mark.django_db
-def test_standings_shows_three_way_tie_broke_by_h2h_partial_worse(client, teams, team_rpis, conf_series_three_way_h2h_partial_bottom, conf_teams, conferences):
-    response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
+def test_standings_shows_three_way_tie_broke_by_h2h_partial_worse(client, teams, team_rpis, conf_series_2026_adjusted, conf_teams, conferences):
+    response = client.get(urls.reverse("standings", args=[year.get_spring_year()]))
     assert response.status_code == 200
     output = response.content.decode()
     indiana = output.find("Indiana")
-    iowa = output.find("Iowa")
-    mich = output.find("Michigan")
-    assert indiana > iowa
-    assert mich < iowa # tie broke by RPI
+    psu = output.find("Penn State")
+    terps = output.find("Maryland")
+    assert terps > indiana
+    assert terps > psu
+    assert "better record vs all in tied group" not in output
     assert "worse record vs all in tied group" in output
-    assert "tie broke by RPI" in output
-    worse = output.find("worse record vs all in tied group")
-    rpi = output.find("tie broke by RPI")
-    assert worse > rpi
 
 
 @pytest.mark.django_db
-def test_standings_shows_three_way_tie_broke_by_rpi(client, teams, team_rpis, conf_series_three_way_rpi, conf_teams, conferences):
+def test_standings_shows_two_way_tie_broke_by_record_v_team_one_through_eight(client, teams, team_rpis, conf_series_2026_actual, conf_teams, conferences):
+    response = client.get(urls.reverse("standings", args=[year.get_spring_year()]))
+    assert response.status_code == 200
+    output = response.content.decode()
+    sparty = output.find("Michian State")
+    minny = output.find("Minnesota")
+    reason = output.find("tie broke by record vs. teams in positions 1-8")
+    assert sparty < reason
+    assert reason < minny
+
+
+@pytest.mark.django_db
+def test_standings_shows_three_way_tie_broke_by_rpi(client, teams, team_rpis_ly, conf_series_three_way_rpi, conf_teams, conferences):
     response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
     assert response.status_code == 200
     output = response.content.decode()
@@ -114,13 +110,16 @@ def test_standings_shows_three_way_tie_broke_by_rpi(client, teams, team_rpis, co
 
 
 @pytest.mark.django_db
-def test_standings_shows_two_way_tie_broke_by_h2h(client, teams, team_rpis, conf_series_two_way_h2h, conf_teams, conferences):
-    response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
+def test_standings_shows_two_way_tie_broke_by_h2h(client, teams, team_rpis, conf_series_2026_actual, conf_teams, conferences):
+    response = client.get(urls.reverse("standings", args=[year.get_spring_year()]))
     assert response.status_code == 200
     output = response.content.decode()
-    indiana = output.find("Indiana")
-    mich = output.find("Michigan")
-    assert indiana < mich
+    oregon = output.find("Oregon")
+    usc = output.find("USC")
+    assert oregon < usc
+    boilers = output.find("Purdue")
+    bucks = output.find("Ohio State")
+    assert boilers < bucks
 
 
     

@@ -2,7 +2,6 @@ from django.contrib import auth
 from django import shortcuts, urls
 import pytest
 
-from accounts.tests.fixtures import user_forms
 from accounts import models as acct_models
 
 

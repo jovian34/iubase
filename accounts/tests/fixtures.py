@@ -121,16 +121,3 @@ def random_guy(client):
         password="dbwrwbrj7499677693skjhkasH72!",
     )
     return random
-
-
-@pytest.fixture
-def user_forms(client):
-    new_user = {
-        "email": "newuser@email.com",
-        "password": "Hdbwrwbrj72yu39293skjhkasH72"
-    }
-    FormObj = namedtuple(
-        "FormObj",
-        "new_user"
-    )
-    return FormObj(new_user=new_user)

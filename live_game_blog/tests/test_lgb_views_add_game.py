@@ -39,6 +39,12 @@ def test_add_game_page_renders_template(admin_client,):
 
 
 @pytest.mark.django_db
+def test_add_home_site_game_page_renders_template_without_stadium(admin_client,):
+    response = admin_client.get(reverse("add_game"))
+    assert "Stadium Configuration:" not in response.content.decode()
+
+
+@pytest.mark.django_db
 def test_add_game_get_shows_forbidden_without_perms(client, logged_user_schwarbs):
     response = client.get(reverse("add_game"))
     assert response.status_code == 403
@@ -54,6 +60,23 @@ def test_add_neutral_game(admin_client, teams, stadiums, stadium_configs, games,
     assert response.status_code == 200
     assert f"Feb. 14, {year.get_spring_year()}, 6:30 p.m. first pitch" in response.content.decode()
     assert "Scoreboard: George Mason-0, Indiana-0 | Top Inning: 1" in str(response.context)
+
+
+@pytest.mark.django_db
+def test_add_neutral_game_get_renders_form(admin_client, teams, stadiums, stadium_configs, games, scoreboards, forms):
+    response = admin_client.get(reverse("add_neutral_game"))
+    assert response.status_code == 200
+    assert "Stadium Configuration:" in response.content.decode()
+    assert "Game at Home Site" in response.content.decode()
+    assert "Away team D1Baseball.com national ranking" in response.content.decode()
+    assert "Away team national tournament seed" in response.content.decode()
+    assert "Home team tournament seed" in response.content.decode()
+    assert "Live Stats Link" in response.content.decode()
+    assert "Video Stream or TV provider" in response.content.decode()
+    assert "Student Audio Link" in response.content.decode()
+    assert "Date and Time of First Pitch YYYY-MM-DD-HHMM in ET military time" in str(
+        response.content
+    )
 
 
 @pytest.mark.django_db

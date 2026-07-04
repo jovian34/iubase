@@ -50,10 +50,10 @@ def test_edit_blog_entry_get_renders_with_team_names_in_scoreboard_labels(
 def test_edit_blog_entry_get_renders_without_scoreboard(
     admin_client, games, entries, scoreboards
 ):
-    response = admin_client.get(reverse("edit_blog_entry", args=[entries.blog_uk_mon_z.pk]))
+    response = admin_client.get(reverse("edit_blog_entry", args=[entries.blog_uk_mon_y.pk]))
     assert response.status_code == 200
     assert "Content of Blog" in response.content.decode()
-    assert "Kentucky moves on to Super Regionals" in response.content.decode()
+    assert "Bothwell walks the first batter" in response.content.decode()
 
 
 @pytest.mark.django_db

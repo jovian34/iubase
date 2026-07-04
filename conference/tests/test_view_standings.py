@@ -102,10 +102,12 @@ def test_standings_shows_three_way_tie_broke_by_rpi(client, teams, team_rpis_ly,
     response = client.get(urls.reverse("standings", args=[year.get_spring_year()-1]))
     assert response.status_code == 200
     output = response.content.decode()
+    rpi = output.find("tie broken by RPI")
     indiana = output.find("Indiana")
     iowa = output.find("Iowa")
     mich = output.find("Michigan")
-    assert mich < indiana
+    assert mich < rpi
+    assert rpi < indiana
     assert indiana < iowa
 
 

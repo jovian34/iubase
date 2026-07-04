@@ -8,13 +8,19 @@ accounts/migrations/0001_initial.py                                             
 accounts/migrations/__init__.py                                                                     0      0   100%
 accounts/models.py                                                                                  4      0   100%
 accounts/tests/__init__.py                                                                          0      0   100%
-accounts/tests/fixtures.py                                                                         29      3    90%   64-72
-accounts/tests/test_allauth.py                                                                     10      0   100%
+accounts/tests/fixtures.py                                                                         44      0   100%
+accounts/tests/test_allauth.py                                                                      9      0   100%
 accounts/tests/test_custom_user.py                                                                 18      0   100%
 conference/__init__.py                                                                              0      0   100%
 conference/admin.py                                                                                18      0   100%
 conference/apps.py                                                                                  4      0   100%
 conference/forms.py                                                                                17      0   100%
+conference/logic/__init__.py                                                                        0      0   100%
+conference/logic/crpi.py                                                                          112      3    97%   24, 61, 67
+conference/logic/get_standings_data.py                                                             18      0   100%
+conference/logic/resolve_ties.py                                                                  193      9    95%   168, 224, 339-347
+conference/logic/rpis.py                                                                           42      3    93%   26-27, 48
+conference/logic/year.py                                                                            8      1    88%   7
 conference/migrations/0001_initial.py                                                               5      0   100%
 conference/migrations/0002_confteam.py                                                              5      0   100%
 conference/migrations/0003_rename_conference_confteam_conference.py                                 4      0   100%
@@ -24,40 +30,52 @@ conference/migrations/0006_alter_confseries_away_wins_and_more.py               
 conference/migrations/0007_alter_confteam_fall_year_joined.py                                       4      0   100%
 conference/migrations/0008_teamrpi.py                                                               5      0   100%
 conference/migrations/0009_rename_rpi_teamrpi_rpi_rank_and_more.py                                  4      0   100%
+conference/migrations/0010_pick.py                                                                  6      0   100%
+conference/migrations/0011_pick_result.py                                                           4      0   100%
+conference/migrations/0012_pickemregisterannual.py                                                  6      0   100%
+conference/migrations/0013_alter_pick_pick.py                                                       5      0   100%
 conference/migrations/__init__.py                                                                   0      0   100%
-conference/models.py                                                                               29      1    97%   67
-conference/rpis.py                                                                                 42      3    93%   26-27, 51
+conference/models.py                                                                               47      2    96%   68, 113
+conference/tests/fixtures/conf_series_2026_actual.py                                              100      1    99%   12
+conference/tests/fixtures/conf_series_2026_adjusted.py                                            100      1    99%   12
 conference/tests/fixtures/conf_series_current.py                                                   19      1    95%   12
-conference/tests/fixtures/conf_series_three_way_common.py                                          22      1    95%   12
 conference/tests/fixtures/conf_series_three_way_h2h.py                                             20      1    95%   12
-conference/tests/fixtures/conf_series_three_way_h2h_partial_bottom.py                              20      1    95%   12
-conference/tests/fixtures/conf_series_three_way_h2h_partial_top.py                                 20      1    95%   12
 conference/tests/fixtures/conf_series_three_way_rpi.py                                             18      1    94%   12
-conference/tests/fixtures/conf_series_two_way_h2h.py                                               18      1    94%   12
-conference/tests/fixtures/conf_teams.py                                                            21      0   100%
+conference/tests/fixtures/conf_teams.py                                                            33      0   100%
 conference/tests/fixtures/conferences.py                                                           13      0   100%
 conference/tests/fixtures/form_data.py                                                             18      1    94%   14
+conference/tests/fixtures/pick_reg_annual.py                                                       15      0   100%
+conference/tests/fixtures/picks.py                                                                 16      0   100%
 conference/tests/fixtures/team_rpis.py                                                             32      1    97%   12
-conference/tests/test_conf_models.py                                                               34      1    97%   11
+conference/tests/fixtures/team_rpis_ly.py                                                          32      1    97%   12
+conference/tests/test_conf_models.py                                                               39      0   100%
 conference/tests/test_rpis.py                                                                      16      0   100%
-conference/tests/test_view_add_wins.py                                                             38      0   100%
+conference/tests/test_view_add_wins.py                                                             44      0   100%
 conference/tests/test_view_conf_add_series.py                                                      45      1    98%   16
+conference/tests/test_view_conf_index.py                                                           12      0   100%
+conference/tests/test_view_conf_sched.py                                                           32      0   100%
 conference/tests/test_view_conf_year.py                                                            39      1    97%   12
-conference/tests/test_view_standings.py                                                           105      0   100%
-conference/tests/test_views_conf_sched.py                                                          32      0   100%
+conference/tests/test_view_crpi.py                                                                 45      0   100%
+conference/tests/test_view_pickem_index.py                                                          7      0   100%
+conference/tests/test_view_pickem_my_picks.py                                                      22      0   100%
+conference/tests/test_view_pickem_register.py                                                      12      0   100%
+conference/tests/test_view_standings.py                                                           106      0   100%
 conference/urls.py                                                                                  3      0   100%
 conference/views/__init__.py                                                                        0      0   100%
 conference/views/add_series.py                                                                     19      1    95%   10
-conference/views/add_win.py                                                                        21      0   100%
-conference/views/conf_schedule.py                                                                  20      0   100%
+conference/views/add_win.py                                                                        30      1    97%   48
+conference/views/conf_index.py                                                                      7      0   100%
+conference/views/conf_schedule.py                                                                  18      0   100%
 conference/views/conf_year.py                                                                      27      1    96%   11
-conference/views/resolve_ties_logic.py                                                            205      4    98%   222, 271, 328-329
-conference/views/standings.py                                                                      33      0   100%
-conference/year.py                                                                                  6      1    83%   7
+conference/views/crpi.py                                                                           13      0   100%
+conference/views/my_pickem.py                                                                      11      0   100%
+conference/views/pickem_index.py                                                                    5      0   100%
+conference/views/pickem_register.py                                                                 7      0   100%
+conference/views/standings.py                                                                      31      0   100%
 django_project/__init__.py                                                                          0      0   100%
 django_project/apps.py                                                                              3      0   100%
 django_project/management/__init__.py                                                               0      0   100%
-django_project/settings.py                                                                         71      5    93%   230-234
+django_project/settings.py                                                                         72      5    93%   232-236
 django_project/templatetags/__init__.py                                                             0      0   100%
 django_project/templatetags/cache_bust.py                                                          10      0   100%
 django_project/templatetags/markitup.py                                                             8      0   100%
@@ -81,12 +99,17 @@ index/tests/fixtures.py                                                         
 index/tests/test_models.py                                                                         10      0   100%
 index/tests/test_views.py                                                                          90      0   100%
 index/urls.py                                                                                       3      0   100%
-index/views.py                                                                                     72      0   100%
+index/views.py                                                                                     71      0   100%
 live_game_blog/__init__.py                                                                          0      0   100%
-live_game_blog/admin.py                                                                            37      0   100%
+live_game_blog/admin.py                                                                            65     10    85%   36-38, 62-63, 76-77, 96-97, 110-111
 live_game_blog/apps.py                                                                              4      0   100%
 live_game_blog/choices.py                                                                           6      0   100%
-live_game_blog/forms.py                                                                            83      0   100%
+live_game_blog/forms.py                                                                            87      0   100%
+live_game_blog/logic/__init__.py                                                                    0      0   100%
+live_game_blog/logic/location.py                                                                   13      1    92%   18
+live_game_blog/logic/weather_daily.py                                                              59      3    95%   81, 83, 87
+live_game_blog/logic/weather_hourly.py                                                             22      0   100%
+live_game_blog/logic/wind.py                                                                       37      5    86%   14, 16, 20, 22, 28
 live_game_blog/migrations/0001_initial.py                                                           7      0   100%
 live_game_blog/migrations/0002_alter_game_live_stats.py                                             4      0   100%
 live_game_blog/migrations/0003_remove_gameblogentry_away_errors_and_more.py                         5      0   100%
@@ -128,18 +151,20 @@ live_game_blog/migrations/0038_game_first_pitch_feels_like_and_more.py          
 live_game_blog/migrations/0039_alter_game_first_pitch_feels_like_and_more.py                        4      0   100%
 live_game_blog/migrations/0040_remove_game_stadium_game_stadium_config.py                           5      0   100%
 live_game_blog/migrations/0041_remove_stadiumconfig_lights.py                                       4      0   100%
+live_game_blog/migrations/0042_game_away_conf_record_game_away_record_and_more.py                   4      0   100%
+live_game_blog/migrations/0043_alter_blogentry_blog_time_alter_game_neutral_site_and_more.py        5      0   100%
 live_game_blog/migrations/__init__.py                                                               0      0   100%
-live_game_blog/models.py                                                                          104      0   100%
+live_game_blog/models.py                                                                          108      0   100%
 live_game_blog/tests/fixtures/blog.py                                                              16      0   100%
 live_game_blog/tests/fixtures/form_data.py                                                         26      0   100%
-live_game_blog/tests/fixtures/games.py                                                             29      0   100%
+live_game_blog/tests/fixtures/games.py                                                             30      0   100%
 live_game_blog/tests/fixtures/games_annual.py                                                      25      1    96%   22
 live_game_blog/tests/fixtures/home_stadium.py                                                      16      0   100%
-live_game_blog/tests/fixtures/scoreboards.py                                                       24      0   100%
+live_game_blog/tests/fixtures/scoreboards.py                                                       27      0   100%
 live_game_blog/tests/fixtures/stadium_configs.py                                                   17      0   100%
 live_game_blog/tests/fixtures/stadiums.py                                                          13      0   100%
 live_game_blog/tests/fixtures/teams.py                                                             32      0   100%
-live_game_blog/tests/test_lgb_views_add_blog_entry_only.py                                         60      3    95%   105-113
+live_game_blog/tests/test_lgb_views_add_blog_entry_only.py                                         56      0   100%
 live_game_blog/tests/test_lgb_views_add_blog_plus_scoreboard.py                                    53      0   100%
 live_game_blog/tests/test_lgb_views_add_game.py                                                    71      0   100%
 live_game_blog/tests/test_lgb_views_add_home_stadium_data.py                                       41      0   100%
@@ -149,27 +174,27 @@ live_game_blog/tests/test_lgb_views_edit_blog_entry.py                          
 live_game_blog/tests/test_lgb_views_edit_games.py                                                  26      0   100%
 live_game_blog/tests/test_lgb_views_games.py                                                       81      0   100%
 live_game_blog/tests/test_lgb_views_live_game_blog.py                                             163      0   100%
+live_game_blog/tests/test_logic_weather.py                                                         64      1    98%   67
+live_game_blog/tests/test_logic_wind.py                                                            10      0   100%
 live_game_blog/tests/test_models.py                                                                92      0   100%
 live_game_blog/tests/test_test_lgb_views_stadiums.py                                               27      0   100%
-live_game_blog/tests/test_weather.py                                                               31      0   100%
 live_game_blog/urls.py                                                                              3      0   100%
-live_game_blog/views/add_blog_entry_only.py                                                        31      0   100%
+live_game_blog/views/add_blog_entry_only.py                                                        30      0   100%
 live_game_blog/views/add_blog_plus_scoreboard.py                                                   36      0   100%
-live_game_blog/views/add_game.py                                                                   68      4    94%   26, 129-134
+live_game_blog/views/add_game.py                                                                   68      4    94%   26, 131-136
 live_game_blog/views/add_home_stadium_data.py                                                      28      0   100%
 live_game_blog/views/add_team.py                                                                   28      1    96%   33
 live_game_blog/views/edit_blog_entry.py                                                            55      4    93%   90-95, 107
-live_game_blog/views/edit_game_info.py                                                             37      1    97%   11
+live_game_blog/views/edit_game_info.py                                                             41      1    98%   11
 live_game_blog/views/games.py                                                                      20      0   100%
 live_game_blog/views/live_game_blog.py                                                             59      1    98%   46
 live_game_blog/views/schedule.py                                                                   14      1    93%   13
-live_game_blog/views/stadiums.py                                                                   17      0   100%
-live_game_blog/weather.py                                                                          75     14    81%   20-21, 30, 49, 51, 53, 71, 73, 75, 77, 79, 82-85
+live_game_blog/views/stadiums.py                                                                   16      0   100%
 player_tracking/__init__.py                                                                         0      0   100%
 player_tracking/admin.py                                                                           38      0   100%
 player_tracking/apps.py                                                                             4      0   100%
 player_tracking/choices.py                                                                         23      0   100%
-player_tracking/forms.py                                                                           60      0   100%
+player_tracking/forms.py                                                                           61      0   100%
 player_tracking/migrations/0001_initial.py                                                          7      0   100%
 player_tracking/migrations/0002_rename_jersey_number_annualroster_jersey_and_more.py                4      0   100%
 player_tracking/migrations/0003_transaction_citation.py                                             4      0   100%
@@ -232,7 +257,7 @@ player_tracking/tests/fixtures/transactions.py                                  
 player_tracking/tests/test_pt_accolades.py                                                         20      0   100%
 player_tracking/tests/test_pt_model.py                                                             27      0   100%
 player_tracking/tests/test_pt_views_add_accolade.py                                                87      0   100%
-player_tracking/tests/test_pt_views_add_player.py                                                  67      0   100%
+player_tracking/tests/test_pt_views_add_player.py                                                  64      0   100%
 player_tracking/tests/test_pt_views_add_roster_year.py                                             51      0   100%
 player_tracking/tests/test_pt_views_add_sum_assign.py                                              32      0   100%
 player_tracking/tests/test_pt_views_add_trans.py                                                   43      0   100%
@@ -276,4 +301,4 @@ player_tracking/views/single_player_page.py                                     
 player_tracking/views/summer_assignments.py                                                        10      0   100%
 player_tracking/views/transfer_portal.py                                                           14      0   100%
 -----------------------------------------------------------------------------------------------------------------------------
-TOTAL                                                                                            5881     68    99%
+TOTAL                                                                                            6551     76    99%

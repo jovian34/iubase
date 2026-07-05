@@ -14,7 +14,6 @@
             <div class="column-12 clear-both">
                     <img src="{{ player.headshot }}" class="thumbnail">
                     <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
-                    {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
                 <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }}</p>
             </div>
             {% endif %}
@@ -26,6 +25,8 @@
     <div class="column-3"></div>
     <div class="column-6"> 
         <h3>Remaining Projected Players:</h3>
+        <p>While not <em>expected</em>, other players may still be drafted.
+            MLB Draft eligible players are noted.</p>
     </div>
 </div>
 {% endif %}

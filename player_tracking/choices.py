@@ -8,7 +8,6 @@ JOINED_TUPLES = [
     ("Verbal Commitment from High School", "Verbal Commitment from High School"),
     ("Verbal Commitment from College", "Verbal Commitment from College"),
     ("National Letter of Intent Signed", "National Letter of Intent Signed"),
-    ("Not Drafted", "Not Drafted"),
     ("Not Signing Professional Contract", "Not Signing Professional Contract"),
 ]
 

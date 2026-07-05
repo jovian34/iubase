@@ -89,7 +89,7 @@ def test_projected_players_includes_transfer_commit(
 
 
 @pytest.mark.django_db
-def test_projected_players_excludes_expected_draftee(
+def test_projected_players_shows_potential_draftee_at_top(
     client, players, transactions, typical_mlb_draft_date, annual_rosters
 ):
     set_player_properties.set_player_props_get_errors()
@@ -97,37 +97,28 @@ def test_projected_players_excludes_expected_draftee(
         reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
-    assert "Devin Taylor" not in str(response.content)
+    output = response.content.decode()
+    title = output.find(f"Projected Players For Fall {this_year}")
+    ranked = output.find("Excluded Draft Prospect For Next Draft:")
+    dt = output.find("Devin Taylor")
+    remain = output.find("Remaining Projected Players:")
+    jm = output.find("Jack Moffitt")
+    assert title < ranked
+    assert ranked < dt
+    assert dt < remain
+    assert remain < jm
 
 
 @pytest.mark.django_db
-def test_projected_players_draft_pending_explains_draft_exceptions(
-    client, players, transactions, very_soon_mlb_draft_date, annual_rosters
+def test_projected_players_shows_correct_count(
+    client, players, transactions, typical_mlb_draft_date, annual_rosters
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
         reverse("projected_players_fall_depth", args=[f"{this_year}"]),
         HTTP_HX_REQUEST="true",
     )
-    assert (
-        "This projection excludes players expected to go professional in the MLB Draft."
-        in str(response.content)
-    )
-
-
-@pytest.mark.django_db
-def test_projected_players_alpha_draft_pending_explains_draft_exceptions(
-    client, players, transactions, very_soon_mlb_draft_date, annual_rosters
-):
-    set_player_properties.set_player_props_get_errors()
-    response = client.get(
-        reverse("projected_players_fall_alpha", args=[f"{this_year}"]),
-        HTTP_HX_REQUEST="true",
-    )
-    assert (
-        "This projection excludes players expected to go professional in the MLB Draft."
-        in str(response.content)
-    )
+    assert "Total Players: 5" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -193,9 +184,9 @@ def test_projected_players_depth_lists_pitcher_before_infielder(
     )
     assert response.status_code == 200
     output = str(response.content)
+    pitcher = output.find("Jack Moffitt")
     shortstop = output.find("Holton Compton")
-    pitcher = output.find("Grant Hollister")
-    assert shortstop > pitcher
+    assert pitcher < shortstop
 
 
 @pytest.mark.django_db
@@ -210,8 +201,8 @@ def test_projected_players_alpha_lists_alphabetical_order_by_last_name(
     assert response.status_code == 200
     output = str(response.content)
     compton = output.find("Holton Compton")
-    hollister = output.find("Grant Hollister")
-    assert hollister > compton
+    moffitt = output.find("Jack Moffitt")
+    assert compton < moffitt
 
 
 @pytest.mark.django_db

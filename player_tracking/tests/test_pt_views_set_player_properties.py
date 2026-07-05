@@ -34,7 +34,7 @@ def test_set_player_properties_produces_correct_html_output(
     assert "Committed, but did not come to campus as a player" in response.content.decode()
     response = admin_client.get(reverse("set_player_properties"), follow=True)
     assert response.status_code == 200
-    assert f"{this_year - 1}-{this_year}" in response.content.decode()
+    assert f"{this_year - 1}-{this_year + 2}" in response.content.decode()
     assert "Devin Taylor" in response.content.decode()
 
 
@@ -260,7 +260,11 @@ def test_set_player_properties_produces_correct_end_date_typical_case(
 def test_set_player_properties_produces_correct_end_date_draft_ranked(
     players, annual_rosters, transactions
 ):
+    """
+    This app used to show an end date based on projected draft ranking, but
+    we are not doing that anymore
+    """
     set_player_properties.set_player_props_get_errors()
     devin = Player.objects.get(pk=players.devin_taylor.pk)
     assert devin.first_spring == this_year - 1
-    assert devin.last_spring == this_year
+    assert devin.last_spring == this_year + 2

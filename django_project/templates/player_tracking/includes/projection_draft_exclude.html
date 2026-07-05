@@ -1,0 +1,31 @@
+{% if not draft_complete %}
+<div class="column-12 clear-both"> 
+    <div class="column-3"></div>
+    <div class="column-6">    
+        <h3>Excluded Draft Prospect For Next Draft:</h3>
+        <p>This projection excludes players expected to go professional in the MLB Draft.
+            A player is expected to go pro if D1Baseball.com or the MLB have ranked the player
+            as an MLB Draft prospect for the next draft or they were invited 
+            to the MLB Draft Combine for the current draft year. 
+        </p>
+        </p>
+        {% for player in players %}
+            {% if player.group == "Prospect" %}
+            <div class="column-12 clear-both">
+                    <img src="{{ player.headshot }}" class="thumbnail">
+                    <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
+                    {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
+                <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }}</p>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6"> 
+        <h3>Remaining Projected Players:</h3>
+    </div>
+</div>
+{% endif %}

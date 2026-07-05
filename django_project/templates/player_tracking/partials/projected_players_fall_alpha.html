@@ -12,13 +12,15 @@
 </div>
 
 {% for player in players %}
-<div class="column-12 clear-both">
-    <div class="column-3"></div>
-    <div class="column-6">
-        <img src="{{ player.headshot }}" class="thumbnail">
-        <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
-        {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
-    <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p> 
+    {% if player.group != "Prospect" %}
+    <div class="column-12 clear-both">
+        <div class="column-3"></div>
+        <div class="column-6">
+            <img src="{{ player.headshot }}" class="thumbnail">
+            <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
+            {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
+        <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p> 
+        </div>
     </div>
-</div>
+    {% endif %}
 {% endfor %}

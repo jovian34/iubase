@@ -4,6 +4,7 @@ from django.db.models.functions import Lower
 from datetime import date
 
 from player_tracking.models import AnnualRoster, MLBDraftDate, Player, Transaction
+from player_tracking.choices import DRAFT_POTENTIAL
 
 
 def projected_depth(request, fall_year):
@@ -31,16 +32,15 @@ def projected_alpha(request, fall_year):
 
 
 def set_projected_players(fall_year):
+    draft_complete = set_draft_status(fall_year)
     players = set_fall_player_projection_info(fall_year)
-    count = len(players)
+    prospect_count = 0
+    for player in players:
+        if player.group == "Prospect":
+            prospect_count += 1
+    count = len(players) - prospect_count
     positions = sort_by_positions(players)
     years = [int(fall_year) - 2 + i for i in range(5)]
-    try:
-        draft_complete = MLBDraftDate.objects.get(
-            fall_year=int(fall_year)
-        ).draft_complete
-    except MLBDraftDate.DoesNotExist:
-        draft_complete = False
     return {
         "fall_year": fall_year,
         "players": players,
@@ -50,6 +50,15 @@ def set_projected_players(fall_year):
         "positions": positions,
         "draft_complete": draft_complete,
     }
+
+def set_draft_status(fall_year):
+    try:
+        draft_complete = MLBDraftDate.objects.get(
+            fall_year=int(fall_year)
+        ).draft_complete
+    except MLBDraftDate.DoesNotExist:
+        draft_complete = False
+    return draft_complete
 
 
 def set_fall_player_projection_info(fall_year):
@@ -86,6 +95,8 @@ def set_player_info(fall_year, draft_date, draft_pending, players):
             set_roster_player(fall_year, draft_date, draft_pending, player, roster)
         else:
             set_freshman(fall_year, draft_pending, player)
+        if draft_pending:
+            set_draft_prospect(fall_year, player)
 
 
 def set_roster_player(fall_year, draft_date, draft_pending, player, roster):
@@ -112,6 +123,16 @@ def set_freshman(fall_year, draft_pending, player):
             break
         else:
             player.position = None
+
+
+def set_draft_prospect(fall_year, player):
+    transactions = Transaction.objects.filter(
+            player=player,
+            trans_date__gte=date(int(fall_year) - 1, 9, 1),
+        )
+    for transaction in transactions:
+        if transaction.trans_event in DRAFT_POTENTIAL:
+            player.group = "Prospect"
 
 
 def sort_by_positions(players):

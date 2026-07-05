@@ -19,6 +19,7 @@
             <h3>{{ position.position }}s: {{ position.count }}</h3>                
             
                 {% for player in position.players %}
+                    {% if player.group != "Prospect" %}
                     <div class="clear-both">
                     <hr>
                         <img src="{{ player.headshot }}" class="thumbnail"> 
@@ -26,6 +27,7 @@
                         {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
                         <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p>
                     </div>
+                    {% endif %}
                 {% endfor %}
                 </div>
     </div>

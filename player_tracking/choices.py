@@ -12,14 +12,18 @@ JOINED_TUPLES = [
     ("Not Signing Professional Contract", "Not Signing Professional Contract"),
 ]
 
-LEFT_TUPLES = [
-    ("Decommit", "Decommit"),
-    ("Entered Transfer Portal", "Entered Transfer Portal"),
+DRAFT_POTENTIAL_TUPLES = [
     ("Attending MLB Draft Combine", "Attending MLB Draft Combine"),
     (
         "Ranked MLB Draft Prospect for Next Draft",
         "Ranked MLB Draft Prospect for Next Draft",
     ),
+
+]
+
+LEFT_TUPLES = [
+    ("Decommit", "Decommit"),
+    ("Entered Transfer Portal", "Entered Transfer Portal"),
     ("Drafted", "Drafted"),
     (
         "Signed Professional Contract - Undrafted",
@@ -48,6 +52,7 @@ JOINED = [joined_tuple[0] for joined_tuple in JOINED_TUPLES]
 AFTER = [after_tuple[0] for after_tuple in AFTER_TUPLES]
 COLLEGE = [JOINED_TUPLES[1][0]]
 HS = [JOINED_TUPLES[0][0], JOINED_TUPLES[2], [0]]
+DRAFT_POTENTIAL = tuple([draft_pot_tuple[0] for draft_pot_tuple in DRAFT_POTENTIAL_TUPLES])
 
 POSITIONS = [
     ("Pitcher", "Pitcher"),

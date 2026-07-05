@@ -44,7 +44,7 @@ AFTER_TUPLES = [
     ("Entered Transfer Portal - former IU", "Entered Transfer Portal - former IU"),
 ]
 
-initial_transactions = JOINED_TUPLES + LEFT_TUPLES + AFTER_TUPLES
+initial_transactions = JOINED_TUPLES + LEFT_TUPLES + AFTER_TUPLES + DRAFT_POTENTIAL_TUPLES
 initial_transactions.sort(key=lambda x: x[0])
 TRANSACTIONS = tuple(initial_transactions)
 LEFT = tuple([left_tuple[0] for left_tuple in LEFT_TUPLES])

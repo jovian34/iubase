@@ -167,6 +167,8 @@ def sort_by_positions(players):
         "Shortstop",
     ]
     for player in players:
+        if player.group == "Prospect":
+            continue
         if player.throws == "Left" and player.position == "Pitcher":
             lhp["players"].append(player)
         elif player.throws == "Right" and player.position == "Pitcher":

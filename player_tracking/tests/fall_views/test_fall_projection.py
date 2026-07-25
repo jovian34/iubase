@@ -90,7 +90,7 @@ def test_projected_players_includes_transfer_commit(
 
 @pytest.mark.django_db
 def test_projected_players_shows_potential_draftee_at_top(
-    client, players, transactions, typical_mlb_draft_date, annual_rosters
+    client, players, transactions, very_soon_mlb_draft_date, annual_rosters
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
@@ -111,7 +111,7 @@ def test_projected_players_shows_potential_draftee_at_top(
 
 @pytest.mark.django_db
 def test_projected_players_shows_correct_count(
-    client, players, transactions, typical_mlb_draft_date, annual_rosters
+    client, players, transactions, very_soon_mlb_draft_date, annual_rosters
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(
@@ -123,7 +123,7 @@ def test_projected_players_shows_correct_count(
 
 @pytest.mark.django_db
 def test_projected_players_shows_no_outfielder_count_since_taylor_draft_prospect(
-    client, players, transactions, typical_mlb_draft_date, annual_rosters
+    client, players, transactions, very_soon_mlb_draft_date, annual_rosters
 ):
     set_player_properties.set_player_props_get_errors()
     response = client.get(

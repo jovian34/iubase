@@ -9,6 +9,6 @@ def view(request):
         raise PermissionDenied
 
     context = {
-        "page_title": "Red Belts",
+        "page_title": "Red Belt Entry",
     }
-    return shortcuts.render(request, "player_tracking/red_belts.html", context)
+    return shortcuts.render(request, "player_tracking/red_belt_entry.html", context)

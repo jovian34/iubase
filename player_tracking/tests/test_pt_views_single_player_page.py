@@ -1,4 +1,5 @@
 import pytest
+from django.contrib.auth.models import Permission
 from django.urls import reverse
 from datetime import date
 
@@ -18,6 +19,22 @@ from accounts.tests.fixtures import logged_user_schwarbs
 
 
 this_year = date.today().year
+
+PLAYER_CHANGE_BUTTON_PERMISSIONS = (
+    ("change_player", "edit player info"),
+    ("add_annualroster", "add roster year"),
+    ("add_transaction", "add transaction"),
+    ("add_summerassign", "add summer assignment"),
+    ("add_accolade", "add accolade"),
+)
+
+
+def grant_player_tracking_permission(user, permission_codename):
+    permission = Permission.objects.get(
+        content_type__app_label="player_tracking",
+        codename=permission_codename,
+    )
+    user.user_permissions.add(permission)
 
 
 @pytest.mark.django_db
@@ -171,22 +188,33 @@ def test_single_player_page_omits_add_and_edit_buttons_without_perms(
 
 
 @pytest.mark.django_db
-def test_single_player_page_renders_add_and_edit_buttons_with_perms(
-    admin_client, players, annual_rosters,
+@pytest.mark.parametrize(
+    ("permission_codename", "permitted_button"),
+    PLAYER_CHANGE_BUTTON_PERMISSIONS,
+)
+def test_single_player_page_renders_only_button_allowed_by_permission(
+    client,
+    players,
+    annual_rosters,
+    logged_user_schwarbs,
+    permission_codename,
+    permitted_button,
 ):
-    response = admin_client.get(
+    grant_player_tracking_permission(logged_user_schwarbs, permission_codename)
+
+    response = client.get(
         reverse(
             "single_player_page",
             args=[players.devin_taylor.pk],
         )
     )
+
     assert response.status_code == 200
-    assert "Devin Taylor" in response.content.decode()
-    assert "add accolade</button>" in response.content.decode()
-    assert "add summer assignment</button>" in response.content.decode()
-    assert "add transaction</button>" in response.content.decode()
-    assert "add roster year</button>" in response.content.decode()
-    assert "edit player info</button>" in response.content.decode()
+    output = response.content.decode()
+    assert f"{permitted_button}</button>" in output
+    for _, other_button in PLAYER_CHANGE_BUTTON_PERMISSIONS:
+        if other_button != permitted_button:
+            assert f"{other_button}</button>" not in output
 
 
 @pytest.mark.django_db

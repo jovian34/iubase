@@ -17,8 +17,10 @@
 <div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6">
-        {% if perms.player_tracking.edit_player %}
+        {% if perms.player_tracking.change_player %}
         <button hx-get="{% url "edit_player" player.pk %}" hx-target="#add_roster_or_transaction">edit player info</button>
+        {% endif %}
+        {% if perms.player_tracking.add_annualroster %}
         <button hx-get="{% url "add_roster_year" player.pk %}" hx-target="#add_roster_or_transaction">add roster year</button>
         {% endif %}
     

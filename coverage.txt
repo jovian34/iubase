@@ -275,7 +275,7 @@ player_tracking/tests/test_pt_views_depth_charts.py                             
 player_tracking/tests/test_pt_views_draft_combine.py                                               29      0   100%
 player_tracking/tests/test_pt_views_draft_transactions.py                                          38      0   100%
 player_tracking/tests/test_pt_views_drafted_players.py                                             47      0   100%
-player_tracking/tests/test_pt_views_edit_accolade.py                                              127      0   100%
+player_tracking/tests/test_pt_views_edit_accolade.py                                              141      0   100%
 player_tracking/tests/test_pt_views_edit_player.py                                                 56      0   100%
 player_tracking/tests/test_pt_views_edit_roster_year.py                                           100      0   100%
 player_tracking/tests/test_pt_views_edit_summer_assignment.py                                     101      0   100%
@@ -302,7 +302,7 @@ player_tracking/views/delete_player_data.py                                     
 player_tracking/views/depth_charts.py                                                              15      0   100%
 player_tracking/views/draft_combine.py                                                             25      0   100%
 player_tracking/views/drafted_players.py                                                           48      0   100%
-player_tracking/views/edit_accolade.py                                                             41      1    98%   81
+player_tracking/views/edit_accolade.py                                                             41      0   100%
 player_tracking/views/edit_player.py                                                               43      0   100%
 player_tracking/views/edit_roster_year.py                                                          33      0   100%
 player_tracking/views/edit_summer_assignment.py                                                    31      0   100%
@@ -322,4 +322,4 @@ player_tracking/views/single_player_page.py                                     
 player_tracking/views/summer_assignments.py                                                        10      0   100%
 player_tracking/views/transfer_portal.py                                                           14      0   100%
 -----------------------------------------------------------------------------------------------------------------------------
-TOTAL                                                                                            8021     41    99%
+TOTAL                                                                                            8035     40    99%

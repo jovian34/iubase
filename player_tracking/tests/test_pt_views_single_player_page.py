@@ -139,6 +139,104 @@ def test_single_player_page_renders_action_shot_for_that_player(
 
 
 @pytest.mark.django_db
+def test_single_player_page_renders_player_handedness_height_and_weight(
+    client,
+    players,
+    annual_rosters,
+):
+    player = players.devin_taylor
+    player.bats = "Left"
+    player.throws = "Right"
+    player.height = 74
+    player.weight = 215
+    player.save(update_fields=["bats", "throws", "height", "weight"])
+
+    response = client.get(reverse("single_player_page", args=[player.pk]))
+    player_details = parse_response(response).find(id="player-details")
+    assert player_details is not None
+    details_text = player_details.get_text(" ", strip=True)
+
+    assert "Bats: Left" in details_text
+    assert "Throws: Right" in details_text
+    assert "Height: 6 ft. 2 inches" in details_text
+    assert "Weight: 215 lbs." in details_text
+
+
+@pytest.mark.django_db
+def test_single_player_page_renders_hometown_and_high_school_without_usa(
+    client,
+    players,
+    annual_rosters,
+):
+    player = players.devin_taylor
+    player.home_city = "Cincinnati"
+    player.home_state = "OH"
+    player.home_country = "USA"
+    player.high_school = "La Salle High School"
+    player.save(
+        update_fields=["home_city", "home_state", "home_country", "high_school"]
+    )
+
+    response = client.get(reverse("single_player_page", args=[player.pk]))
+    player_details = parse_response(response).find(id="player-details")
+    assert player_details is not None
+    details_text = player_details.get_text(" ", strip=True)
+
+    assert "Hometown: Cincinnati, OH" in details_text
+    assert "USA" not in details_text
+    assert "High School: La Salle High School" in details_text
+
+
+@pytest.mark.django_db
+def test_single_player_page_includes_country_for_international_hometown(
+    client,
+    players,
+    annual_rosters,
+):
+    player = players.devin_taylor
+    player.home_city = "Toronto"
+    player.home_state = "ON"
+    player.home_country = "Canada"
+    player.save(update_fields=["home_city", "home_state", "home_country"])
+
+    response = client.get(reverse("single_player_page", args=[player.pk]))
+    player_details = parse_response(response).find(id="player-details")
+    assert player_details is not None
+    details_text = player_details.get_text(" ", strip=True)
+
+    assert "Hometown: Toronto, ON, Canada" in details_text
+
+
+@pytest.mark.django_db
+def test_single_player_page_renders_player_details_below_photos(
+    client,
+    players,
+    annual_rosters,
+):
+    player = players.devin_taylor
+    player.height = 74
+    player.weight = 215
+    player.save(update_fields=["height", "weight"])
+
+    response = client.get(reverse("single_player_page", args=[player.pk]))
+    player_info = parse_response(response).find(id="player-info")
+    player_info_elements = list(player_info.descendants)
+    headshot = player_info.find("img", class_="headshot")
+    player_details = player_info.find(id="player-details")
+    edit_control = player_info.find(id="edit-player-info-control")
+
+    assert headshot is not None
+    assert player_details is not None
+    assert edit_control is not None
+    assert player_info_elements.index(headshot) < player_info_elements.index(
+        player_details
+    )
+    assert player_info_elements.index(player_details) < player_info_elements.index(
+        edit_control
+    )
+
+
+@pytest.mark.django_db
 def test_single_player_page_renders_generic_action_shot_if_one_does_not_exist(
     client, players, annual_rosters
 ):

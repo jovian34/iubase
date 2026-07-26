@@ -35,6 +35,21 @@ class Player(models.Model):
     def __str__(self) -> str:
         return f"{self.first} {self.last} {self.hsgrad_year}"
 
+    @property
+    def formatted_height(self):
+        if self.height is None:
+            return None
+        feet, inches = divmod(self.height, 12)
+        inch_label = "inch" if inches == 1 else "inches"
+        return f"{feet} ft. {inches} {inch_label}"
+
+    @property
+    def formatted_hometown(self):
+        hometown_parts = [self.home_city, self.home_state]
+        if self.home_country and self.home_country != "USA":
+            hometown_parts.append(self.home_country)
+        return ", ".join(part for part in hometown_parts if part)
+
 
 class ProfOrg(models.Model):
     city = models.CharField(null=True, blank=True)

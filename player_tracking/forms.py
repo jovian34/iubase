@@ -1,7 +1,9 @@
 from django import forms
-from player_tracking import models as pt_models
+from django.db.models import Q
+
 from live_game_blog import models as lgb_models
 from player_tracking import choices
+from player_tracking import models as pt_models
 
 
 class PlayerForm(forms.Form):
@@ -159,3 +161,53 @@ class AccoladeForm(forms.Form):
         label="Applicable summer assignment",
         required=False,
     )
+
+
+class RosterPlayerChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, roster):
+        return f"{roster.player.first} {roster.player.last}"
+
+
+class RedBeltEntryForm(forms.Form):
+    award_date = forms.DateField(
+        label="Award Date",
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+    pitcher = RosterPlayerChoiceField(
+        queryset=pt_models.AnnualRoster.objects.none(),
+        label="Joey DeNato Weekly Red Belt for pitching",
+    )
+    hitter = RosterPlayerChoiceField(
+        queryset=pt_models.AnnualRoster.objects.none(),
+        label="Alex Dickerson Weekly Red Belt for hitting",
+    )
+    defender = RosterPlayerChoiceField(
+        queryset=pt_models.AnnualRoster.objects.none(),
+        label="Tony Butler Weekly Red Belt for defense",
+    )
+
+    def __init__(self, *args, spring_year, **kwargs):
+        self.spring_year = int(spring_year)
+        super().__init__(*args, **kwargs)
+        roster = (
+            pt_models.AnnualRoster.objects.filter(
+                spring_year=self.spring_year,
+                team__team_name="Indiana",
+                status__in=choices.ALL_ROSTER,
+            )
+            .select_related("player")
+            .order_by("player__last", "player__first")
+        )
+        self.fields["pitcher"].queryset = roster.filter(
+            Q(primary_position="Pitcher") | Q(secondary_position="Pitcher")
+        )
+        self.fields["hitter"].queryset = roster
+        self.fields["defender"].queryset = roster
+
+    def clean_award_date(self):
+        award_date = self.cleaned_data["award_date"]
+        if award_date.year != self.spring_year:
+            raise forms.ValidationError(
+                f"The award date must be in {self.spring_year}."
+            )
+        return award_date

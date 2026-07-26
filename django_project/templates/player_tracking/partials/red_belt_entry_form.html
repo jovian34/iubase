@@ -1,0 +1,15 @@
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        <h2>Weekly Red Belt Entry for {{ spring_year }}</h2>
+        <form
+            method="post"
+            action="{% url 'red_belt_entry' spring_year %}"
+            hx-post="{% url 'red_belt_entry' spring_year %}"
+            hx-target="#red-belt-entry-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Weekly Red Belts</button>
+        </form>
+    </div>
+</div>

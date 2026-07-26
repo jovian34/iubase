@@ -8,7 +8,16 @@
 <div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6">
-        <p>Red Belt Entry</p>
+        {% for year in years %}
+            <button
+                hx-get="{% url 'red_belt_entry' year %}"
+                hx-target="#red-belt-entry-form"
+                hx-push-url="true">{{ year }}</button>
+        {% endfor %}
     </div>
+</div>
+
+<div id="red-belt-entry-form">
+    {% include "player_tracking/partials/red_belt_entry_form.html" %}
 </div>
 {% endblock %}

@@ -16,6 +16,15 @@
 </div>
 {% endif %}
 
+{% if perms.player_tracking.add_accolade %}
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        <a href="{% url "red_belt_entry" this_year %}"><button>Enter Weekly Red Belts</button></a>
+    </div>
+</div>
+{% endif %}
+
 <div class="column-12 clear-both">
     <div class="column-3"></div>
     <div class="column-6">

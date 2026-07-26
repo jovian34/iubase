@@ -1,4 +1,5 @@
 from django.urls import path
+
 from player_tracking.views import (
     accolades,
     add_accolade,
@@ -11,6 +12,7 @@ from player_tracking.views import (
     draft_combine,
     drafted_players,
     edit_player,
+    exhausted_players,
     incoming_players,
     iu_rosters,
     pt_index,
@@ -19,7 +21,6 @@ from player_tracking.views import (
     single_player_page,
     summer_assignments,
     transfer_portal,
-    exhausted_players,
 )
 from player_tracking.views.fall import (
     fall_all_eligible,
@@ -91,6 +92,11 @@ urlpatterns = [
     ),
     path(
         "red_belt_entry/",
+        red_belt_entry.redirect_to_current_year,
+        name="red_belt_entry_current",
+    ),
+    path(
+        "red_belt_entry/<int:spring_year>/",
         red_belt_entry.view,
         name="red_belt_entry",
     ),

@@ -80,8 +80,19 @@ def test_action_buttons_use_semantic_css_class(action, expected_class):
     )
 
 
-def test_delete_button_is_unshaded_with_thin_red_border():
-    declarations = get_css_declarations(".delete-button")
+@pytest.mark.parametrize("selector", (".edit-button", ".delete-button"))
+def test_edit_and_delete_buttons_are_unshaded_with_thin_red_border(selector):
+    declarations = get_css_declarations(selector)
 
     assert declarations["border"] == "1px solid var(--red)"
     assert declarations["background-color"] == "transparent"
+
+
+def test_roster_heading_places_actions_beside_title():
+    declarations = get_css_declarations(".roster-heading")
+    action_declarations = get_css_declarations(".record-actions")
+
+    assert declarations["align-items"] == "center"
+    assert declarations["display"] == "flex"
+    assert declarations["flex-wrap"] == "wrap"
+    assert action_declarations["gap"] == "0.75rem"

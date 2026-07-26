@@ -22,7 +22,7 @@ from accounts.tests.fixtures import logged_user_schwarbs
 this_year = date.today().year
 
 PLAYER_CHANGE_BUTTON_PERMISSIONS = (
-    ("change_player", "edit player info"),
+    ("change_player", "✏️"),
     ("add_annualroster", "add roster year"),
     ("add_transaction", "add transaction"),
     ("add_summerassign", "add summer assignment"),
@@ -30,11 +30,36 @@ PLAYER_CHANGE_BUTTON_PERMISSIONS = (
 )
 
 PLAYER_PAGE_SECTION_CONTROLS = (
-    ("player-info", "edit player info", "edit-player-info-control"),
-    ("annual-rosters", "add roster year", "add-roster-year-control"),
-    ("transactions", "add transaction", "add-transaction-control"),
-    ("summer-ball", "add summer assignment", "add-summer-assignment-control"),
-    ("other-accolades", "add accolade", "add-accolade-control"),
+    (
+        "player-info",
+        "✏️",
+        "edit-player-info-control",
+        "player-info-content",
+    ),
+    (
+        "annual-rosters",
+        "add roster year",
+        "add-roster-year-control",
+        "add-roster-year-control",
+    ),
+    (
+        "transactions",
+        "add transaction",
+        "add-transaction-control",
+        "add-transaction-control",
+    ),
+    (
+        "summer-ball",
+        "add summer assignment",
+        "add-summer-assignment-control",
+        "add-summer-assignment-control",
+    ),
+    (
+        "other-accolades",
+        "add accolade",
+        "add-accolade-control",
+        "add-accolade-control",
+    ),
 )
 
 PLAYER_CHANGE_FORM_TARGETS = (
@@ -208,11 +233,13 @@ def test_single_player_page_includes_country_for_international_hometown(
 
 
 @pytest.mark.django_db
-def test_single_player_page_renders_player_details_below_photos(
+def test_single_player_page_renders_edit_control_beside_name_and_content_below(
     client,
     players,
     annual_rosters,
+    logged_user_schwarbs,
 ):
+    grant_player_tracking_permission(logged_user_schwarbs, "change_player")
     player = players.devin_taylor
     player.height = 74
     player.weight = 215
@@ -221,19 +248,33 @@ def test_single_player_page_renders_player_details_below_photos(
     response = client.get(reverse("single_player_page", args=[player.pk]))
     player_info = parse_response(response).find(id="player-info")
     player_info_elements = list(player_info.descendants)
-    headshot = player_info.find("img", class_="headshot")
-    player_details = player_info.find(id="player-details")
-    edit_control = player_info.find(id="edit-player-info-control")
+    player_heading = player_info.find(class_="player-heading")
+    player_content = player_info.find(id="player-info-content")
 
+    assert player_heading is not None
+    assert player_content is not None
+    assert "roster-heading" in player_heading["class"]
+
+    player_name = player_heading.find("h1")
+    edit_control = player_heading.find(id="edit-player-info-control")
+    edit_button = edit_control.find("button", string="✏️")
+    headshot = player_content.find("img", class_="headshot")
+    player_details = player_content.find(id="player-details")
+
+    assert player_name.get_text(strip=True) == "Devin Taylor"
+    assert edit_button is not None
+    assert edit_button["aria-label"] == "Edit player info"
+    assert edit_button["title"] == "Edit player info"
+    assert edit_button["hx-target"] == "#player-info-content"
     assert headshot is not None
     assert player_details is not None
-    assert edit_control is not None
-    assert player_info_elements.index(headshot) < player_info_elements.index(
-        player_details
+    heading_elements = list(player_heading.descendants)
+    assert heading_elements.index(player_name) < heading_elements.index(edit_control)
+    assert player_info_elements.index(player_heading) < player_info_elements.index(
+        player_content
     )
-    assert player_info_elements.index(player_details) < player_info_elements.index(
-        edit_control
-    )
+    content_elements = list(player_content.descendants)
+    assert content_elements.index(headshot) < content_elements.index(player_details)
 
 
 @pytest.mark.django_db
@@ -282,7 +323,7 @@ def test_single_player_page_omits_add_and_edit_buttons_not_logged_in(
     assert "add summer assignment</button>" not in response.content.decode()
     assert "add transaction</button>" not in response.content.decode()
     assert "add roster year</button>"not  in response.content.decode()
-    assert "edit player info</button>" not in response.content.decode()
+    assert 'aria-label="Edit player info"' not in response.content.decode()
     assert "B1G First Team All-Conference Outfielder" not in response.content.decode()
 
 
@@ -302,7 +343,7 @@ def test_single_player_page_omits_add_and_edit_buttons_without_perms(
     assert "add summer assignment</button>" not in response.content.decode()
     assert "add transaction</button>" not in response.content.decode()
     assert "add roster year</button>"not  in response.content.decode()
-    assert "edit player info</button>" not in response.content.decode()
+    assert 'aria-label="Edit player info"' not in response.content.decode()
     assert "B1G First Team All-Conference Outfielder" not in response.content.decode()
 
 
@@ -347,14 +388,14 @@ def test_player_change_controls_render_in_separate_page_sections(
     )
     page = parse_response(response)
 
-    for section_id, button_text, control_id in PLAYER_PAGE_SECTION_CONTROLS:
+    for section_id, button_text, control_id, target_id in PLAYER_PAGE_SECTION_CONTROLS:
         section = page.find(id=section_id)
         assert section is not None
         control = section.find(id=control_id)
         assert control is not None
         button = control.find("button", string=button_text)
         assert button is not None
-        assert button["hx-target"] == f"#{control_id}"
+        assert button["hx-target"] == f"#{target_id}"
 
 
 @pytest.mark.django_db
@@ -372,7 +413,7 @@ def test_edit_player_control_renders_before_annual_rosters(
     annual_rosters_section = page.find(id="annual-rosters")
     assert player_info is not None
     assert annual_rosters_section is not None
-    assert player_info.find("button", string="edit player info")
+    assert player_info.find("button", string="✏️")
     assert list(page.descendants).index(player_info) < list(page.descendants).index(
         annual_rosters_section
     )

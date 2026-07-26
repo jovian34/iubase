@@ -39,8 +39,12 @@ def test_player_page_omits_roster_edit_buttons_without_permission(
     response = client.get(
         reverse("single_player_page", args=[players.devin_taylor.pk])
     )
+    page = BeautifulSoup(response.content, "html.parser")
 
-    assert "edit roster year</button>" not in response.content.decode()
+    for roster in (annual_rosters.dt_soph, annual_rosters.dt_fresh):
+        heading = page.find(id=f"roster-{roster.pk}-heading")
+        assert heading is not None
+        assert heading.find(class_="record-actions") is None
 
 
 @pytest.mark.django_db
@@ -61,11 +65,15 @@ def test_player_page_renders_edit_button_for_each_roster_with_permission(
     ).find(id="annual-rosters")
 
     for roster in (annual_rosters.dt_soph, annual_rosters.dt_fresh):
+        heading = annual_rosters_section.find(id=f"roster-{roster.pk}-heading")
+        assert heading is not None
         control_id = f"edit-roster-{roster.pk}-control"
-        edit_control = annual_rosters_section.find(id=control_id)
+        edit_control = heading.find(id=control_id)
         assert edit_control is not None
-        edit_button = edit_control.find("button", string="edit roster year")
+        edit_button = edit_control.find("button", string="✏️")
         assert edit_button is not None
+        assert edit_button["aria-label"] == "Edit"
+        assert edit_button["title"] == "Edit roster year"
         assert edit_button["hx-get"] == reverse("edit_roster_year", args=[roster.pk])
         assert edit_button["hx-target"] == f"#{control_id}"
 
@@ -156,4 +164,5 @@ def test_authorized_edit_roster_submission_updates_and_renders_roster_section(
     assert updated_roster.secondary_position == "Corner Outfield"
     assert 'id="annual-rosters"' in output
     assert f"{updated_roster.spring_year} Duke" in output
-    assert "edit roster year</button>" in output
+    assert 'aria-label="Edit"' in output
+    assert "✏️</button>" in output

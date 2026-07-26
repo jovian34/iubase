@@ -2,7 +2,6 @@
 
 :root {
     --olive: #D7D8A8;
-    --yellow: #f0e0c0;
     --cream: #fcfbf4;
     --brown: #8E5B36;
     --green: #3c652b;
@@ -17,7 +16,6 @@
     --blue: blue;
     --purple: #800080;
     --lime-green: #ccff99;
-    --orange: #cc5500;
 	--big-ten-blue: #0088CE;
 	--big-ten-gray: #939598;
     --font-head: "Fjalla One", sans-serif;
@@ -108,10 +106,8 @@ button {
 }
 
 .edit-button {
-    background-color: var(--yellow);
-    border-color: var(--orange);
-    border-style: dashed;
-    color: var(--orange);
+    background-color: transparent;
+    border: 1px solid var(--red);
 }
 
 .delete-button {
@@ -122,6 +118,14 @@ button {
 .record-actions {
     align-items: center;
     display: flex;
+    gap: 0.75rem;
+}
+
+.roster-heading {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 h1 {

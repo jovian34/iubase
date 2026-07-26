@@ -25,7 +25,9 @@
                         {% if perms.player_tracking.change_transaction %}
                             <button class="edit-button"
                                 hx-get="{% url "edit_transaction" transaction.pk %}"
-                                hx-target="#edit-transaction-{{ transaction.pk }}-control">edit transaction</button>
+                                hx-target="#edit-transaction-{{ transaction.pk }}-control"
+                                aria-label="Edit transaction"
+                                title="Edit transaction">✏️</button>
                         {% endif %}
                     </div>
                     <div id="delete-transaction-{{ transaction.pk }}-control">

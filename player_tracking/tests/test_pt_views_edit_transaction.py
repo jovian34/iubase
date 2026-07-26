@@ -50,8 +50,9 @@ def test_player_page_omits_transaction_edit_buttons_without_permission(
     response = client.get(
         reverse("single_player_page", args=[players.devin_taylor.pk])
     )
+    page = BeautifulSoup(response.content, "html.parser")
 
-    assert "edit transaction</button>" not in response.content.decode()
+    assert page.find("button", attrs={"aria-label": "Edit transaction"}) is None
 
 
 @pytest.mark.django_db
@@ -80,8 +81,11 @@ def test_player_page_renders_edit_button_after_each_transaction_with_permission(
         control_id = f"edit-transaction-{transaction.pk}-control"
         edit_control = transaction_section.find(id=control_id)
         assert edit_control is not None
-        edit_button = edit_control.find("button", string="edit transaction")
+        edit_button = edit_control.find("button", string="✏️")
         assert edit_button is not None
+        assert "edit-button" in edit_button["class"]
+        assert edit_button["aria-label"] == "Edit transaction"
+        assert edit_button["title"] == "Edit transaction"
         assert edit_button["hx-get"] == reverse(
             "edit_transaction",
             args=[transaction.pk],
@@ -192,4 +196,4 @@ def test_authorized_edit_transaction_updates_and_renders_transaction_section(
     assert updated_transaction.comment == "Updated transaction details."
     assert 'id="transactions"' in output
     assert "National Letter of Intent Signed" in output
-    assert "edit transaction</button>" in output
+    assert 'aria-label="Edit transaction"' in output

@@ -46,8 +46,11 @@ def test_player_page_omits_summer_assignment_edit_buttons_without_permission(
     response = client.get(
         reverse("single_player_page", args=[players.devin_taylor.pk])
     )
+    page = BeautifulSoup(response.content, "html.parser")
 
-    assert "edit summer assignment</button>" not in response.content.decode()
+    assert (
+        page.find("button", attrs={"aria-label": "Edit summer assignment"}) is None
+    )
 
 
 @pytest.mark.django_db
@@ -70,8 +73,11 @@ def test_player_page_renders_edit_button_after_each_summer_assignment(
         control_id = f"edit-summer-assignment-{assignment.pk}-control"
         edit_control = summer_ball_section.find(id=control_id)
         assert edit_control is not None
-        edit_button = edit_control.find("button", string="edit summer assignment")
+        edit_button = edit_control.find("button", string="✏️")
         assert edit_button is not None
+        assert "edit-button" in edit_button["class"]
+        assert edit_button["aria-label"] == "Edit summer assignment"
+        assert edit_button["title"] == "Edit summer assignment"
         assert edit_button["hx-get"] == reverse(
             "edit_summer_assignment",
             args=[assignment.pk],
@@ -179,4 +185,4 @@ def test_authorized_edit_summer_assignment_updates_and_renders_summer_section(
     )
     assert 'id="summer-ball"' in output
     assert "Green Bay" in output
-    assert "edit summer assignment</button>" in output
+    assert 'aria-label="Edit summer assignment"' in output

@@ -1,0 +1,28 @@
+<div id="player-info-content">
+    {% if player.action_shot %}
+        <img id="player-photo" src="{{ player.action_shot }}">
+    {% else %}
+        <img id="player-photo" src="https://iubase.com/wp-content/uploads/2024/11/53704071552_13227a46a0_k.jpg">
+    {% endif %}
+    <img class="headshot" src="{{ player.headshot }}">
+    <div id="player-details">
+        {% if player.bats %}
+            <p>Bats: {{ player.bats }}</p>
+        {% endif %}
+        {% if player.throws %}
+            <p>Throws: {{ player.throws }}</p>
+        {% endif %}
+        {% if player.formatted_height %}
+            <p>Height: {{ player.formatted_height }}</p>
+        {% endif %}
+        {% if player.weight %}
+            <p>Weight: {{ player.weight }} lbs.</p>
+        {% endif %}
+        {% if player.formatted_hometown %}
+            <p>Hometown: {{ player.formatted_hometown }}</p>
+        {% endif %}
+        {% if player.high_school %}
+            <p>High School: {{ player.high_school }}</p>
+        {% endif %}
+    </div>
+</div>

@@ -118,8 +118,9 @@ def test_edit_player_htmx_post_renders_updated_player_info_section(
 
     assert response.status_code == 200
     assert 'id="player-info"' in output
+    assert 'id="player-info-content"' in output
     assert "54132418776_e7cc1bcd11_k.jpg" in output
-    assert "edit player info</button>" in output
+    assert 'aria-label="Edit player info"' in output
 
 
 @pytest.mark.django_db

@@ -2,9 +2,10 @@
     action="{% url "add_accolade" player_id %}"
     method="post"
     hx-post="{% url "add_accolade" player_id %}"
-    hx-target="#other-accolades"
+    hx-target="#{{ target_section }}"
     hx-swap="outerHTML">
     {% csrf_token %}
+    <input type="hidden" name="target_section" value="{{ target_section }}">
     {{ form }}
     <button type="submit" value="Submit">Add Accolade</button>
 </form>

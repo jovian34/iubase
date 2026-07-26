@@ -281,6 +281,35 @@ def test_edit_player_control_renders_before_annual_rosters(
 
 
 @pytest.mark.django_db
+def test_add_accolade_control_renders_above_most_recent_roster(
+    admin_client,
+    players,
+    annual_rosters,
+):
+    response = admin_client.get(
+        reverse("single_player_page", args=[players.devin_taylor.pk])
+    )
+    page = parse_response(response)
+    annual_rosters_section = page.find(id="annual-rosters")
+
+    accolade_control = annual_rosters_section.find(id="add-roster-accolade-control")
+    assert accolade_control is not None
+    add_accolade_button = accolade_control.find("button", string="add accolade")
+    assert add_accolade_button is not None
+    assert add_accolade_button["hx-get"] == reverse(
+        "add_accolade",
+        args=[players.devin_taylor.pk],
+    )
+    assert add_accolade_button["hx-target"] == "#add-roster-accolade-control"
+
+    most_recent_roster = annual_rosters_section.find("h2")
+    section_elements = list(annual_rosters_section.descendants)
+    assert section_elements.index(accolade_control) < section_elements.index(
+        most_recent_roster
+    )
+
+
+@pytest.mark.django_db
 @pytest.mark.parametrize(
     ("view_name", "section_id"),
     PLAYER_CHANGE_FORM_TARGETS,
@@ -320,7 +349,7 @@ def test_single_player_page_renders_accolades_in_reverse_date_order(
 
 
 @pytest.mark.django_db
-def test_single_player_page_renders_summer_accolades_after_summer_header(
+def test_single_player_page_renders_summer_accolades_in_summer_ball_section(
     client,
     players,
     annual_rosters,
@@ -337,9 +366,5 @@ def test_single_player_page_renders_summer_accolades_after_summer_header(
     )
     assert response.status_code == 200
     assert "Ryan Kraft" in response.content.decode()
-    assert "Northwoods League Pitcher of the Year" in response.content.decode()
-    other = response.content.decode().find("Other Accolades:")
-    head = response.content.decode().find("Summer Ball:")
-    award = response.content.decode().find("Northwoods League Pitcher of the Year")
-    assert head < award
-    assert award < other
+    summer_ball_section = parse_response(response).find(id="summer-ball")
+    assert "Northwoods League Pitcher of the Year" in summer_ball_section.get_text()

@@ -6,6 +6,14 @@
                 hx-target="#add-roster-year-control">add roster year</button>
         {% endif %}
     </div>
+    <div id="add-roster-accolade-control">
+        {% if perms.player_tracking.add_accolade %}
+            <button
+                hx-get="{% url "add_accolade" player.pk %}"
+                hx-target="#add-roster-accolade-control"
+                hx-headers='{"X-Player-Section": "annual-rosters"}'>add accolade</button>
+        {% endif %}
+    </div>
 
     <ul>
         {% for roster in rosters %}

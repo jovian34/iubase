@@ -25,6 +25,9 @@ testdata = [
     (359, 26, "blowing out to right-centerfield"),
     (45, 125, "blowing across the field from left to right"),
     (315, 255, "blowing across the field from right to left"),
+    (0, 180, "blowing in from centerfield"),
+    (0, 150, "blowing in from left-centerfield"),
+    (0, 230, "blowing in from right field"),
 ]
 
 

@@ -1,3 +1,5 @@
+from types import SimpleNamespace
+
 import pytest
 
 from django import urls
@@ -14,6 +16,33 @@ from accounts.tests.fixtures import user_not_logged_in
 
 from live_game_blog import models as lgb_models
 from live_game_blog.logic import weather_daily, weather_hourly
+
+
+@pytest.mark.parametrize(
+    ("rain_total", "expected_description"),
+    (
+        ("51", "heavy rain"),
+        ("50", "moderate rain"),
+        ("26", "moderate rain"),
+        ("25", "light rain"),
+        ("1", "light rain"),
+        ("0", "no rain"),
+    ),
+)
+def test_predicted_rain_description_uses_precipitation_thresholds(
+    rain_total,
+    expected_description,
+):
+    game = SimpleNamespace(first_pitch_weather_describe=None)
+    weather_data = {
+        "precipitation": {
+            "total": rain_total,
+        },
+    }
+
+    weather_daily.make_description_from_predicted_rain(weather_data, game)
+
+    assert game.first_pitch_weather_describe == expected_description
 
 
 @pytest.mark.django_db

@@ -171,6 +171,21 @@ def test_roster_url_renders_special_case_roster_academic_year(
 
 
 @pytest.mark.django_db
+def test_away_roster_url_renders_special_case_academic_year(games, teams):
+    game = games.iu_duke
+    game.away_team = teams.iowa
+    spring_year = live_game_blog.set_spring_year(game)
+
+    live_game_blog.set_roster_url_to_game_year(game, spring_year)
+
+    expected_url = (
+        "https://hawkeyesports.com/sports/baseball/roster/season/"
+        f"{spring_year - 1}-{spring_year - 2000}"
+    )
+    assert game.away_team.roster == expected_url
+
+
+@pytest.mark.django_db
 def test_roster_url_renders_with_year_specified_and_keeps_slash_before_year(
     client, games, scoreboards, entries
 ):

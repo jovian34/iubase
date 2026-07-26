@@ -8,6 +8,7 @@ from live_game_blog.tests.fixtures.stadiums import stadiums
 from live_game_blog.tests.fixtures.stadium_configs import stadium_configs
 from conference.tests.fixtures.conferences import conferences
 from conference import models as conf_models
+from live_game_blog import models as lgb_models
 
 
 @pytest.mark.django_db
@@ -88,6 +89,29 @@ def test_add_team_post_forbidden_without_perms(client, forms, logged_user_schwar
         forms.pfw,
     )
     assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_invalid_add_team_post_redirects_without_creating_team(
+    admin_client,
+    forms,
+    conferences,
+):
+    invalid_team = {
+        **forms.pfw,
+        "joined": "1700",
+    }
+
+    response = admin_client.post(reverse("add_team"), invalid_team)
+
+    assert response.status_code == 302
+    assert response.url == reverse("games")
+    assert not lgb_models.Team.objects.filter(
+        team_name="Purdue Ft. Wayne"
+    ).exists()
+    assert not conf_models.ConfTeam.objects.filter(
+        team__team_name="Purdue Ft. Wayne"
+    ).exists()
 
 
 @pytest.mark.django_db

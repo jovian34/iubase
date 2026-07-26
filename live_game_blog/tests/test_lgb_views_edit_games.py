@@ -42,3 +42,25 @@ def test_edit_lgb_game_changes_event_name(admin_client, games, scoreboards, entr
     )
     assert response.status_code == 200
     assert "Baseball at the Beach" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_edit_game_get_and_post_are_forbidden_without_permission(
+    client,
+    games,
+    scoreboards,
+    entries,
+    forms,
+    logged_user_schwarbs,
+):
+    game = games.iu_coastal_ip
+    original_event = game.event
+    edit_url = reverse("edit_game_info", args=[game.pk])
+
+    get_response = client.get(edit_url)
+    post_response = client.post(edit_url, forms.edit_iu_coastal_ip)
+    game.refresh_from_db()
+
+    assert get_response.status_code == 403
+    assert post_response.status_code == 403
+    assert game.event == original_event

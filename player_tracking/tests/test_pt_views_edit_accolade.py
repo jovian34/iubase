@@ -272,3 +272,42 @@ def test_authorized_edit_summer_accolade_renders_summer_section(
     assert updated_accolade.summer_assign == summer_assign.rk_kg_ty
     assert 'id="summer-ball"' in output
     assert "Updated Pitcher of the Year" in output
+
+
+@pytest.mark.django_db
+def test_authorized_edit_standalone_accolade_renders_other_accolades_section(
+    client,
+    players,
+    logged_user_schwarbs,
+):
+    grant_accolade_permissions(logged_user_schwarbs, "change_accolade")
+    accolade = Accolade.objects.create(
+        player=players.devin_taylor,
+        award_date=date(this_year, 1, 15),
+        name="National Player of the Week",
+        award_org="National Organization",
+    )
+    updated_data = {
+        "name": "Updated National Player of the Week",
+        "award_date": date(this_year, 1, 16),
+        "award_org": "Updated National Organization",
+        "description": "Updated national award details.",
+        "citation": "https://example.com/updated-national-award",
+        "annual_roster": [],
+        "summer_assign": [],
+    }
+
+    response = client.post(
+        reverse("edit_accolade", args=[accolade.pk]),
+        updated_data,
+        HTTP_HX_REQUEST="true",
+    )
+    updated_accolade = Accolade.objects.get(pk=accolade.pk)
+    output = response.content.decode()
+
+    assert response.status_code == 200
+    assert updated_accolade.name == "Updated National Player of the Week"
+    assert updated_accolade.annual_roster is None
+    assert updated_accolade.summer_assign is None
+    assert 'id="other-accolades"' in output
+    assert "Updated National Player of the Week" in output

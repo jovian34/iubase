@@ -27,7 +27,8 @@
                         <div class="column-12 clear-both" id="series-{{ matchup.pk }}">
                             <h1 class="matchup">
                             {% if perms.conference.change_confseries %}
-                                <button hx-get="{% url 'add_away_win' matchup.pk %}"
+                                <button class="add-button"
+                                        hx-get="{% url 'add_away_win' matchup.pk %}"
                                         hx-target="#series-{{ matchup.pk }}"
                                         type="button">
                                     +1
@@ -41,12 +42,14 @@
                             <span class="at-symbol">{{ matchup.home_wins|floatformat:"-1" }}</span>
 
                             {% if perms.conference.change_confseries %}
-                                <button hx-get="{% url 'add_home_win' matchup.pk %}"
+                                <button class="add-button"
+                                        hx-get="{% url 'add_home_win' matchup.pk %}"
                                         hx-target="#series-{{ matchup.pk }}"
                                         type="button">
                                     +1
                                 </button>
-                                <button hx-get="{% url 'add_tie' matchup.pk %}"
+                                <button class="add-button"
+                                        hx-get="{% url 'add_tie' matchup.pk %}"
                                         hx-target="#series-{{ matchup.pk }}"
                                         type="button">
                                     tie
@@ -62,7 +65,7 @@
             {% endfor %}
         
         {% if perms.conference.add_confseries %}
-        <a href="{% url "add_series" spring_year %}"><button>Add a series</button></a>
+        <a href="{% url "add_series" spring_year %}"><button class="add-button">Add a series</button></a>
         {% endif %}
     </div>
 </div>

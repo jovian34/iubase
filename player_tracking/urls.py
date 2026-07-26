@@ -13,6 +13,8 @@ from player_tracking.views import (
     drafted_players,
     edit_player,
     edit_roster_year,
+    edit_summer_assignment,
+    edit_transaction,
     exhausted_players,
     incoming_players,
     iu_rosters,
@@ -144,6 +146,16 @@ urlpatterns = [
         "edit_roster_year/<roster_id>/",
         edit_roster_year.view,
         name="edit_roster_year",
+    ),
+    path(
+        "edit_transaction/<transaction_id>/",
+        edit_transaction.view,
+        name="edit_transaction",
+    ),
+    path(
+        "edit_summer_assignment/<assignment_id>/",
+        edit_summer_assignment.view,
+        name="edit_summer_assignment",
     ),
     path(
         "add_accolade/<player_id>/",

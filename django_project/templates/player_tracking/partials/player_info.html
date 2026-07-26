@@ -28,7 +28,7 @@
     </div>
     <div id="edit-player-info-control">
         {% if perms.player_tracking.change_player %}
-            <button
+            <button class="edit-button"
                 hx-get="{% url "edit_player" player.pk %}"
                 hx-target="#edit-player-info-control">edit player info</button>
         {% endif %}

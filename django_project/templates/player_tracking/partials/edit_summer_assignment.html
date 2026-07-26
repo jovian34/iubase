@@ -1,0 +1,10 @@
+<form
+    action="{% url "edit_summer_assignment" assignment.pk %}"
+    method="post"
+    hx-post="{% url "edit_summer_assignment" assignment.pk %}"
+    hx-target="#summer-ball"
+    hx-swap="outerHTML">
+    {% csrf_token %}
+    {{ form }}
+    <button class="edit-button" type="submit" value="Submit">Submit Updated Summer Assignment</button>
+</form>

@@ -75,7 +75,8 @@
         <div class="column-12 clear-both" id="edit-game-info">
             <div class="column-3"></div>
             <div class="column-6">
-                <button hx-get="{% url "edit_game_info" game.pk %}"
+                <button class="edit-button"
+                        hx-get="{% url "edit_game_info" game.pk %}"
                         hx-target="#edit-game-info">
                         Edit Game Info
                 </button>
@@ -127,11 +128,13 @@
     <div class="column-12 clear-both" id="add_blog_entry">
         <div class="column-3"></div>
         <div class="column-6">
-            <button hx-get="{% url "add_blog_entry_only" game.pk %}"
+            <button class="add-button"
+                    hx-get="{% url "add_blog_entry_only" game.pk %}"
                     hx-target="#add_blog_entry">
                     Add Blog Entry Only
             </button>
-            <button hx-get="{% url "add_blog_plus_scoreboard" game.pk %}"
+            <button class="add-button"
+                    hx-get="{% url "add_blog_plus_scoreboard" game.pk %}"
                     hx-target="#add_blog_entry">
                     Add Blog Entry plus Scoreboard
             </button>
@@ -205,7 +208,8 @@
 
                 {% if perms.live_game_blog.edit_blogentry %}
 
-                <button hx-get="{% url "edit_blog_entry" entry.pk %}"
+                <button class="edit-button"
+                        hx-get="{% url "edit_blog_entry" entry.pk %}"
                 hx-target="#entry-{{ entry.pk }}">Edit Entry</button>
 
                 {% endif %}

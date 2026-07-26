@@ -3,7 +3,7 @@
     <h3>Other Accolades:</h3>
     <div id="add-accolade-control">
         {% if perms.player_tracking.add_accolade %}
-            <button
+            <button class="add-button"
                 hx-get="{% url "add_accolade" player.pk %}"
                 hx-target="#add-accolade-control">add accolade</button>
         {% endif %}

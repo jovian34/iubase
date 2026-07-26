@@ -1,14 +1,14 @@
 <div id="annual-rosters">
     <div id="add-roster-year-control">
         {% if perms.player_tracking.add_annualroster %}
-            <button
+            <button class="add-button"
                 hx-get="{% url "add_roster_year" player.pk %}"
                 hx-target="#add-roster-year-control">add roster year</button>
         {% endif %}
     </div>
     <div id="add-roster-accolade-control">
         {% if perms.player_tracking.add_accolade %}
-            <button
+            <button class="add-button"
                 hx-get="{% url "add_accolade" player.pk %}"
                 hx-target="#add-roster-accolade-control"
                 hx-headers='{"X-Player-Section": "annual-rosters"}'>add accolade</button>
@@ -20,7 +20,7 @@
             <li>
                 <div id="edit-roster-{{ roster.pk }}-control">
                     {% if perms.player_tracking.change_annualroster %}
-                        <button
+                        <button class="edit-button"
                             hx-get="{% url "edit_roster_year" roster.pk %}"
                             hx-target="#edit-roster-{{ roster.pk }}-control">edit roster year</button>
                     {% endif %}

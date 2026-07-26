@@ -33,7 +33,10 @@ def test_add_series_get_renders(admin_client, conferences, conf_teams, teams):
     rut = response.content.decode().find("Rutgers")
     ucla = response.content.decode().find("UCLA")
     assert rut < ucla
-    expected_button = f'<button type="submit" value="Submit">Add {spring_year} Conference Series<'
+    expected_button = (
+        f'<button class="add-button" type="submit" value="Submit">'
+        f"Add {spring_year} Conference Series<"
+    )
     assert expected_button in response.content.decode()
 
 

@@ -15,6 +15,9 @@
     --black-subtle: #222;
     --white: white;
     --blue: blue;
+    --purple: #800080;
+    --lime-green: #ccff99;
+    --orange: #cc5500;
 	--big-ten-blue: #0088CE;
 	--big-ten-gray: #939598;
     --font-head: "Fjalla One", sans-serif;
@@ -91,10 +94,24 @@ button {
 	border: 5pt;
 	border-color: var(--crimson);
 	border-style: solid;
-	border-radius: 5%;
+	border-radius: 5px;
 	background-color: var(--cream);
 	color: var(--crimson);
 	margin: 5px;
+}
+
+.add-button {
+    background-color: var(--lime-green);
+    border-color: var(--purple);
+    border-style: dashed;
+    color: var(--purple);
+}
+
+.edit-button {
+    background-color: var(--yellow);
+    border-color: var(--orange);
+    border-style: dashed;
+    color: var(--orange);
 }
 
 h1 {
@@ -614,4 +631,3 @@ select {
     
         
 }  /*end of 4K media query*/
-

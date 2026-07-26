@@ -15,7 +15,7 @@
             <form action="{% url "add_home_stadium_data" team.pk %}" method="post">
                 {% csrf_token %}
                 {{ form }}
-                <button type="submit" value="Submit">{{ page_title }}</button>
+                <button class="add-button" type="submit" value="Submit">{{ page_title }}</button>
             </form>
         </div>
 

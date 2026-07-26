@@ -3,7 +3,7 @@
     <h3>Transactions:</h3>
     <div id="add-transaction-control">
         {% if perms.player_tracking.add_transaction %}
-            <button
+            <button class="add-button"
                 hx-get="{% url "add_transaction" player.pk %}"
                 hx-target="#add-transaction-control">add transaction</button>
         {% endif %}
@@ -20,6 +20,13 @@
                         {{ transaction.trans_event }}
                     {% endif %}
                 </p>
+                <div id="edit-transaction-{{ transaction.pk }}-control">
+                    {% if perms.player_tracking.change_transaction %}
+                        <button class="edit-button"
+                            hx-get="{% url "edit_transaction" transaction.pk %}"
+                            hx-target="#edit-transaction-{{ transaction.pk }}-control">edit transaction</button>
+                    {% endif %}
+                </div>
             </li>
             <hr>
         {% endfor %}

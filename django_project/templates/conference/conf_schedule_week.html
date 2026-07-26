@@ -20,7 +20,7 @@
             {% endfor %}
         
         {% if perms.conference.add_confseries %}
-        <a href="{% url "add_series" spring_year %}"><button>Add a series</button></a>
+        <a href="{% url "add_series" spring_year %}"><button class="add-button">Add a series</button></a>
         {% endif %}
         <h2><a href="{% url "conf_schedule" spring_year %}">All {{ spring_year }} Weeks</a></h2>
     </div>

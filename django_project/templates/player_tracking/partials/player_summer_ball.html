@@ -2,7 +2,7 @@
     <h3>Summer Ball:</h3>
     <div id="add-summer-assignment-control">
         {% if perms.player_tracking.add_summerassign %}
-            <button
+            <button class="add-button"
                 hx-get="{% url "add_summer_assignment" player.pk %}"
                 hx-target="#add-summer-assignment-control">add summer assignment</button>
         {% endif %}
@@ -12,6 +12,13 @@
         {% for summer in summers %}
             <li>
                 <p>{{ summer.summer_year }}: {{ summer.summer_team.name }} {{ summer.summer_team.mascot }} of the {{ summer.summer_league.league }} League</p>
+                <div id="edit-summer-assignment-{{ summer.pk }}-control">
+                    {% if perms.player_tracking.change_summerassign %}
+                        <button class="edit-button"
+                            hx-get="{% url "edit_summer_assignment" summer.pk %}"
+                            hx-target="#edit-summer-assignment-{{ summer.pk }}-control">edit summer assignment</button>
+                    {% endif %}
+                </div>
                 <ul>
                     {% for accolade in accolades %}
                         {% if accolade.summer_assign == summer %}

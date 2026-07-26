@@ -22,6 +22,21 @@ def test_incoming_players_renders(client, players, transactions):
 
 
 @pytest.mark.django_db
+def test_incoming_players_shows_percentage_from_outside_indiana(
+    client, players, transactions
+):
+    players.xavier_carrera.home_state = "IN"
+    players.xavier_carrera.save()
+    players.owen_ten_oever.home_state = "OH"
+    players.owen_ten_oever.save()
+    set_player_properties.set_player_props_get_errors()
+
+    response = client.get(reverse("incoming_players", args=[f"{this_year + 1}"]))
+
+    assert "50% are from outside of Indiana" in response.content.decode()
+
+
+@pytest.mark.django_db
 def test_incoming_players_places_hs_under_correct_nli_headers_player(
     client, players, transactions
 ):

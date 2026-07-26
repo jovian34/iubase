@@ -14,6 +14,7 @@ from player_tracking.views import (
     incoming_players,
     iu_rosters,
     pt_index,
+    red_belts,
     set_player_properties,
     single_player_page,
     summer_assignments,
@@ -87,6 +88,11 @@ urlpatterns = [
         "accolades/",
         accolades.view,
         name="accolades",
+    ),
+    path(
+        "red_belts/",
+        red_belts.view,
+        name="red_belts",
     ),
     path(
         "exhausted_players/<spring_year>/",

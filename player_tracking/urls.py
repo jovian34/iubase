@@ -12,6 +12,7 @@ from player_tracking.views import (
     draft_combine,
     drafted_players,
     edit_player,
+    edit_roster_year,
     exhausted_players,
     incoming_players,
     iu_rosters,
@@ -138,6 +139,11 @@ urlpatterns = [
         "edit_player/<player_id>/",
         edit_player.view,
         name="edit_player",
+    ),
+    path(
+        "edit_roster_year/<roster_id>/",
+        edit_roster_year.view,
+        name="edit_roster_year",
     ),
     path(
         "add_accolade/<player_id>/",

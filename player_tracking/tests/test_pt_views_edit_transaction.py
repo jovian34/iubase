@@ -165,6 +165,34 @@ def test_edit_transaction_submission_forbidden_without_permission(
 
 
 @pytest.mark.django_db
+def test_non_htmx_transaction_edit_is_rejected_without_update(
+    client,
+    transactions,
+    teams,
+    prof_orgs,
+    annual_rosters,
+    logged_user_schwarbs,
+):
+    grant_change_transaction_permission(logged_user_schwarbs)
+    transaction = transactions.dt_verbal
+    original_event = transaction.trans_event
+    original_comment = transaction.comment
+    edit_url = reverse("edit_transaction", args=[transaction.pk])
+
+    get_response = client.get(edit_url)
+    post_response = client.post(
+        edit_url,
+        edited_transaction_data(teams.duke, prof_orgs.phillies),
+    )
+    transaction.refresh_from_db()
+
+    assert get_response.status_code == 400
+    assert post_response.status_code == 400
+    assert transaction.trans_event == original_event
+    assert transaction.comment == original_comment
+
+
+@pytest.mark.django_db
 def test_authorized_edit_transaction_updates_and_renders_transaction_section(
     client,
     transactions,

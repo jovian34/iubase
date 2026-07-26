@@ -10,6 +10,8 @@ from player_tracking.views import single_player_page
 def view(request, accolade_id):
     if not request.user.has_perm("player_tracking.change_accolade"):
         return http.HttpResponseForbidden()
+    if not single_player_page.is_htmx_request(request):
+        return http.HttpResponseBadRequest()
 
     accolade = shortcuts.get_object_or_404(Accolade, pk=accolade_id)
     if request.method == "POST":
@@ -19,7 +21,7 @@ def view(request, accolade_id):
         )
         if form.is_valid():
             update_accolade_from_form(accolade, form)
-            return render_updated_accolades_or_redirect(request, accolade)
+            return render_updated_accolades(request, accolade)
     else:
         form = initialize_accolade_form(accolade)
 
@@ -62,15 +64,13 @@ def update_accolade_from_form(accolade, form):
     accolade.save()
 
 
-def render_updated_accolades_or_redirect(request, accolade):
-    if single_player_page.is_htmx_request(request):
-        _, template_name = get_accolade_section(accolade)
-        return single_player_page.render_player_section(
-            request,
-            accolade.player_id,
-            template_name,
-        )
-    return shortcuts.redirect("single_player_page", player_id=accolade.player_id)
+def render_updated_accolades(request, accolade):
+    _, template_name = get_accolade_section(accolade)
+    return single_player_page.render_player_section(
+        request,
+        accolade.player_id,
+        template_name,
+    )
 
 
 def get_accolade_section(accolade):

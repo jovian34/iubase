@@ -46,6 +46,18 @@ def edited_accolade_data(roster):
     }
 
 
+def edited_summer_accolade_data(assignment):
+    return {
+        "name": "Updated Pitcher of the Year",
+        "award_date": date(this_year, 7, 15),
+        "award_org": "Updated Summer League",
+        "description": "Updated summer award details.",
+        "citation": "https://example.com/updated-summer-accolade",
+        "annual_roster": [],
+        "summer_assign": assignment.pk,
+    }
+
+
 def assert_edit_accolade_button(page, accolade):
     control_id = f"edit-accolade-{accolade.pk}-control"
     edit_control = page.find(id=control_id)
@@ -182,6 +194,30 @@ def test_edit_accolade_submission_forbidden_without_permission(
 
 
 @pytest.mark.django_db
+def test_non_htmx_accolade_edit_is_rejected_without_update(
+    client,
+    annual_rosters,
+    accolades,
+    logged_user_schwarbs,
+):
+    grant_accolade_permissions(logged_user_schwarbs, "change_accolade")
+    accolade = accolades.dt_ly_b1g_first_team
+    original_name = accolade.name
+    edit_url = reverse("edit_accolade", args=[accolade.pk])
+
+    get_response = client.get(edit_url)
+    post_response = client.post(
+        edit_url,
+        edited_accolade_data(annual_rosters.dt_soph),
+    )
+    accolade.refresh_from_db()
+
+    assert get_response.status_code == 400
+    assert post_response.status_code == 400
+    assert accolade.name == original_name
+
+
+@pytest.mark.django_db
 def test_authorized_edit_accolade_updates_and_renders_owning_section(
     client,
     annual_rosters,
@@ -210,3 +246,29 @@ def test_authorized_edit_accolade_updates_and_renders_owning_section(
     assert 'id="annual-rosters"' in output
     assert "Updated All-Conference Award" in output
     assert 'title="Edit accolade"' in output
+
+
+@pytest.mark.django_db
+def test_authorized_edit_summer_accolade_renders_summer_section(
+    client,
+    summer_assign,
+    accolades,
+    logged_user_schwarbs,
+):
+    grant_accolade_permissions(logged_user_schwarbs, "change_accolade")
+    accolade = accolades.rk_northwoods_pitch_of_year
+
+    response = client.post(
+        reverse("edit_accolade", args=[accolade.pk]),
+        edited_summer_accolade_data(summer_assign.rk_kg_ty),
+        HTTP_HX_REQUEST="true",
+    )
+    updated_accolade = Accolade.objects.get(pk=accolade.pk)
+    output = response.content.decode()
+
+    assert response.status_code == 200
+    assert updated_accolade.name == "Updated Pitcher of the Year"
+    assert updated_accolade.annual_roster is None
+    assert updated_accolade.summer_assign == summer_assign.rk_kg_ty
+    assert 'id="summer-ball"' in output
+    assert "Updated Pitcher of the Year" in output

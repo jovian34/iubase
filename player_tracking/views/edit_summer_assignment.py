@@ -10,13 +10,15 @@ from player_tracking.views import single_player_page
 def view(request, assignment_id):
     if not request.user.has_perm("player_tracking.change_summerassign"):
         return http.HttpResponseForbidden()
+    if not single_player_page.is_htmx_request(request):
+        return http.HttpResponseBadRequest()
 
     assignment = shortcuts.get_object_or_404(SummerAssign, pk=assignment_id)
     if request.method == "POST":
         form = SummerAssignForm(request.POST)
         if form.is_valid():
             update_summer_assignment_from_form(assignment, form)
-            return render_updated_summer_ball_or_redirect(request, assignment)
+            return render_updated_summer_ball(request, assignment)
     else:
         form = initialize_summer_assignment_form(assignment)
 
@@ -52,11 +54,9 @@ def update_summer_assignment_from_form(assignment, form):
     assignment.save()
 
 
-def render_updated_summer_ball_or_redirect(request, assignment):
-    if single_player_page.is_htmx_request(request):
-        return single_player_page.render_player_section(
-            request,
-            assignment.player_id,
-            "player_tracking/partials/player_summer_ball.html",
-        )
-    return shortcuts.redirect("single_player_page", player_id=assignment.player_id)
+def render_updated_summer_ball(request, assignment):
+    return single_player_page.render_player_section(
+        request,
+        assignment.player_id,
+        "player_tracking/partials/player_summer_ball.html",
+    )

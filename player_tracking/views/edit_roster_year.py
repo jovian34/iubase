@@ -10,13 +10,15 @@ from player_tracking.views import set_player_properties, single_player_page
 def view(request, roster_id):
     if not request.user.has_perm("player_tracking.change_annualroster"):
         return http.HttpResponseForbidden()
+    if not single_player_page.is_htmx_request(request):
+        return http.HttpResponseBadRequest()
 
     roster = shortcuts.get_object_or_404(AnnualRoster, pk=roster_id)
     if request.method == "POST":
         form = forms.AnnualRosterForm(request.POST)
         if form.is_valid():
             update_roster_from_form(roster, form)
-            return render_updated_rosters_or_redirect(request, roster)
+            return render_updated_rosters(request, roster)
     else:
         form = initialize_roster_form(roster)
 
@@ -55,11 +57,9 @@ def update_roster_from_form(roster, form):
     set_player_properties.set_player_props_get_errors()
 
 
-def render_updated_rosters_or_redirect(request, roster):
-    if single_player_page.is_htmx_request(request):
-        return single_player_page.render_player_section(
-            request,
-            roster.player_id,
-            "player_tracking/partials/annual_rosters.html",
-        )
-    return shortcuts.redirect("single_player_page", player_id=roster.player_id)
+def render_updated_rosters(request, roster):
+    return single_player_page.render_player_section(
+        request,
+        roster.player_id,
+        "player_tracking/partials/annual_rosters.html",
+    )

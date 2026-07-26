@@ -9,7 +9,7 @@ from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
 from player_tracking.views import set_player_properties
-from player_tracking.models import Player
+from player_tracking.models import AnnualRoster, Player, Transaction
 from live_game_blog.tests.fixtures.teams import teams
 from accounts.models import CustomUser
 from accounts.tests.fixtures import logged_user_schwarbs
@@ -115,6 +115,39 @@ def test_set_player_properties_properly_limits_redshirt_years(
     jack = Player.objects.get(pk=players.jack_moffitt.pk)
     assert jack.first_spring == this_year
     assert jack.last_spring == this_year + 1
+
+
+@pytest.mark.django_db
+def test_first_year_greyshirt_adds_one_year_of_eligibility(teams):
+    player = Player.objects.create(
+        first="Grey",
+        last="Shirt",
+        hsgrad_year=this_year - 1,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(this_year - 1, 6, 1),
+    )
+    roster_statuses = (
+        "Not on Spring roster",
+        "Spring Roster",
+        "Spring Roster",
+        "Spring Roster",
+    )
+    for year_offset, status in enumerate(roster_statuses):
+        AnnualRoster.objects.create(
+            spring_year=this_year + year_offset,
+            team=teams.indiana,
+            player=player,
+            status=status,
+            primary_position="Pitcher",
+        )
+
+    set_player_properties.calc_last_spring()
+    player.refresh_from_db()
+
+    assert player.last_spring == player.hsgrad_year + 5
 
 
 @pytest.mark.django_db

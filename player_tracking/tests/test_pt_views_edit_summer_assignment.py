@@ -156,6 +156,33 @@ def test_edit_summer_assignment_submission_forbidden_without_permission(
 
 
 @pytest.mark.django_db
+def test_non_htmx_summer_assignment_edit_is_rejected_without_update(
+    client,
+    summer_assign,
+    summer_leagues,
+    summer_teams,
+    logged_user_schwarbs,
+):
+    grant_change_summer_assignment_permission(logged_user_schwarbs)
+    assignment = summer_assign.dt_usa_ty
+    original_team = assignment.summer_team
+    original_source = assignment.source
+    edit_url = reverse("edit_summer_assignment", args=[assignment.pk])
+
+    get_response = client.get(edit_url)
+    post_response = client.post(
+        edit_url,
+        edited_summer_assignment_data(summer_leagues.nw, summer_teams.gb),
+    )
+    assignment.refresh_from_db()
+
+    assert get_response.status_code == 400
+    assert post_response.status_code == 400
+    assert assignment.summer_team == original_team
+    assert assignment.source == original_source
+
+
+@pytest.mark.django_db
 def test_authorized_edit_summer_assignment_updates_and_renders_summer_section(
     client,
     summer_assign,

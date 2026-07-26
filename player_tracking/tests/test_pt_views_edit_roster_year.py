@@ -139,6 +139,32 @@ def test_edit_roster_submission_forbidden_without_permission(
 
 
 @pytest.mark.django_db
+def test_non_htmx_roster_edit_is_rejected_without_update(
+    client,
+    annual_rosters,
+    teams,
+    logged_user_schwarbs,
+):
+    grant_change_annual_roster_permission(logged_user_schwarbs)
+    roster = annual_rosters.dt_soph
+    original_team = roster.team
+    original_jersey = roster.jersey
+    edit_url = reverse("edit_roster_year", args=[roster.pk])
+
+    get_response = client.get(edit_url)
+    post_response = client.post(
+        edit_url,
+        edited_roster_data(roster, teams.duke),
+    )
+    roster.refresh_from_db()
+
+    assert get_response.status_code == 400
+    assert post_response.status_code == 400
+    assert roster.team == original_team
+    assert roster.jersey == original_jersey
+
+
+@pytest.mark.django_db
 def test_authorized_edit_roster_submission_updates_and_renders_roster_section(
     client,
     annual_rosters,

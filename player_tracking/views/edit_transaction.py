@@ -10,13 +10,15 @@ from player_tracking.views import set_player_properties, single_player_page
 def view(request, transaction_id):
     if not request.user.has_perm("player_tracking.change_transaction"):
         return http.HttpResponseForbidden()
+    if not single_player_page.is_htmx_request(request):
+        return http.HttpResponseBadRequest()
 
     transaction = shortcuts.get_object_or_404(Transaction, pk=transaction_id)
     if request.method == "POST":
         form = TransactionForm(request.POST)
         if form.is_valid():
             update_transaction_from_form(transaction, form)
-            return render_updated_transactions_or_redirect(request, transaction)
+            return render_updated_transactions(request, transaction)
     else:
         form = initialize_transaction_form(transaction)
 
@@ -61,11 +63,9 @@ def update_transaction_from_form(transaction, form):
     set_player_properties.set_player_props_get_errors()
 
 
-def render_updated_transactions_or_redirect(request, transaction):
-    if single_player_page.is_htmx_request(request):
-        return single_player_page.render_player_section(
-            request,
-            transaction.player_id,
-            "player_tracking/partials/player_transactions.html",
-        )
-    return shortcuts.redirect("single_player_page", player_id=transaction.player_id)
+def render_updated_transactions(request, transaction):
+    return single_player_page.render_player_section(
+        request,
+        transaction.player_id,
+        "player_tracking/partials/player_transactions.html",
+    )

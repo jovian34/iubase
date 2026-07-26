@@ -245,3 +245,32 @@ def test_add_accolade_htmx_post_renders_updated_other_accolades_section(
     assert 'id="other-accolades"' in output
     assert "National Player of the Week" in output
     assert "add accolade</button>" in output
+
+
+@pytest.mark.django_db
+def test_add_accolade_invalid_target_renders_safe_default_section(
+    admin_client,
+    players,
+    summer_leagues,
+    summer_teams,
+    summer_assign,
+    forms,
+    prof_orgs,
+):
+    other_accolade = {
+        **forms.dt_foy,
+        "name": ["National Player of the Week"],
+        "annual_roster": [],
+        "target_section": "unknown-section",
+    }
+
+    response = admin_client.post(
+        reverse("add_accolade", args=[players.devin_taylor.pk]),
+        other_accolade,
+        HTTP_HX_REQUEST="true",
+    )
+    output = response.content.decode()
+
+    assert response.status_code == 200
+    assert 'id="other-accolades"' in output
+    assert "National Player of the Week" in output

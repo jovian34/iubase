@@ -268,3 +268,37 @@ def test_authorized_delete_actions_remove_data_and_render_updated_sections(
         assert response.status_code == 200
         assert not model.objects.filter(pk=record.pk).exists()
         assert f'id="{section_id}"' in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_deleting_accolades_renders_their_owning_sections(
+    client,
+    players,
+    annual_rosters,
+    summer_assign,
+    accolades,
+    logged_user_schwarbs,
+):
+    grant_player_tracking_permissions(
+        logged_user_schwarbs,
+        "delete_accolade",
+    )
+    standalone_accolade = Accolade.objects.create(
+        player=players.devin_taylor,
+        name="National Player of the Week",
+        award_org="National Organization",
+    )
+    delete_requests = (
+        (accolades.rk_northwoods_pitch_of_year, "summer-ball"),
+        (standalone_accolade, "other-accolades"),
+    )
+
+    for accolade, section_id in delete_requests:
+        response = client.delete(
+            reverse("delete_accolade", args=[accolade.pk]),
+            HTTP_HX_REQUEST="true",
+        )
+
+        assert response.status_code == 200
+        assert not Accolade.objects.filter(pk=accolade.pk).exists()
+        assert f'id="{section_id}"' in response.content.decode()

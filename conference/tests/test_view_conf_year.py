@@ -24,7 +24,10 @@ def test_current_year_b1g_shows_correct_members(client, teams, conferences, conf
     assert "UCLA" in response.content.decode()
     assert "Indiana" in response.content.decode()
     assert "Iowa" in response.content.decode()
-    assert f"Big Ten Conference members for {str(datetime.date.today().year)}"
+    assert (
+        f"Big Ten Conference members for {str(datetime.date.today().year)}"
+        in response.content.decode()
+    )
     
 
 @pytest.mark.django_db
@@ -34,7 +37,10 @@ def test_default_year_b1g_shows_correct_members(client, teams, conferences, conf
     assert "UCLA" in response.content.decode()
     assert "Indiana" in response.content.decode()
     assert "Iowa" in response.content.decode()
-    assert f"Big Ten Conference members for {spring_year}"
+    assert (
+        f"Big Ten Conference members for {spring_year}"
+        in response.content.decode()
+    )
 
 
 @pytest.mark.django_db

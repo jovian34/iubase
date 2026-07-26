@@ -14,7 +14,7 @@ def away(request, conf_series):
         series.away_wins = series.away_wins + 1
         series.save()
     else:
-        redirect_to_week(series)
+        return redirect_to_week(series)
     context = {
         "matchup": series,
     }
@@ -29,7 +29,7 @@ def home(request, conf_series):
         series.home_wins = series.home_wins + 1
         series.save()
     else:
-        redirect_to_week(series)
+        return redirect_to_week(series)
     context = {
         "matchup": series,
     }
@@ -45,7 +45,7 @@ def tie(request, conf_series):
         series.away_wins = float(series.away_wins) + 0.5
         series.save()
     else:
-        redirect_to_week(series)
+        return redirect_to_week(series)
     context = {
         "matchup": series,
     }

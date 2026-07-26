@@ -34,12 +34,37 @@ def test_add_away_win_does_not_make_changes_without_perms(client, conferences, c
 
 
 @pytest.mark.django_db
-def test_add_away_win_does_not_make_changes_without_htmx_request(admin_client, conferences, conf_teams, conf_series_current):
+@pytest.mark.parametrize(
+    "view_name",
+    (
+        "add_away_win",
+        "add_home_win",
+        "add_tie",
+    ),
+)
+def test_score_change_without_htmx_redirects_without_changing_score(
+    admin_client,
+    conferences,
+    conf_teams,
+    conf_series_current,
+    view_name,
+):
+    original_series = conf_series_current.iu_iowa
     response = admin_client.get(
-        urls.reverse("add_away_win", args=[conf_series_current.iu_iowa.pk]),
-        follow=True,
+        urls.reverse(view_name, args=[original_series.pk]),
     )
-    series = conf_models.ConfSeries.objects.get(pk=conf_series_current.iu_iowa.pk)
+    series = conf_models.ConfSeries.objects.get(pk=original_series.pk)
+
+    expected_url = urls.reverse(
+        "conf_schedule_week",
+        kwargs={
+            "spring_year": original_series.start_date.year,
+            "month": original_series.start_date.month,
+            "day": original_series.start_date.day,
+        },
+    )
+    assert response.status_code == 302
+    assert response.url == expected_url
     assert series.away_wins == 0
     assert series.home_wins == 0
     

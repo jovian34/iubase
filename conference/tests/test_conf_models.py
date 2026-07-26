@@ -6,10 +6,12 @@ from conference.tests.fixtures.conf_teams import conf_teams
 from conference.tests.fixtures.conf_series_current import conf_series_current
 from conference.tests.fixtures.conf_series_three_way_rpi import conf_series_three_way_rpi
 from conference.tests.fixtures.picks import picks
+from conference.tests.fixtures.team_rpis import team_rpis
 from live_game_blog.tests.fixtures.teams import teams
 from accounts.tests.fixtures import logged_user_schwarbs
 from accounts.tests.fixtures import user_not_logged_in
 
+from conference import models as conf_models
 from conference.logic import year
 
 
@@ -60,3 +62,19 @@ def test_pick_model_correct_str_def(
     conf_series_three_way_rpi,
     ):
     assert str(picks.ty_iu_iowa_schwarb_iu) == f"Kyle Schwarber: March 7, {year.get_spring_year()} - Indiana - Incomplete"
+
+
+@pytest.mark.django_db
+def test_team_rpi_model_correct_str_def(teams, team_rpis):
+    assert str(team_rpis.iu) == f"{year.get_spring_year()} Indiana: 119"
+
+
+@pytest.mark.django_db
+def test_pickem_registration_model_correct_str_def(logged_user_schwarbs):
+    registration = conf_models.PickemRegisterAnnual.objects.create(
+        user=logged_user_schwarbs,
+        spring_year=year.get_this_year(),
+        display_name="Schwarbomb",
+    )
+
+    assert str(registration) == f"Kyle Schwarber: {year.get_this_year()}"

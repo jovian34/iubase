@@ -88,8 +88,9 @@ def test_player_page_renders_edit_button_after_each_transaction_with_permission(
         )
         assert edit_button["hx-target"] == f"#{control_id}"
 
-        transaction_elements = list(edit_control.parent.descendants)
-        transaction_details = edit_control.parent.find("p")
+        transaction_record = edit_control.find_parent("li")
+        transaction_elements = list(transaction_record.descendants)
+        transaction_details = transaction_record.find("p")
         details_position = transaction_elements.index(transaction_details)
         control_position = transaction_elements.index(edit_control)
         assert details_position < control_position

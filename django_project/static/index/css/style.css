@@ -114,6 +114,16 @@ button {
     color: var(--orange);
 }
 
+.delete-button {
+    background-color: transparent;
+    border: 1px solid var(--red);
+}
+
+.record-actions {
+    align-items: center;
+    display: flex;
+}
+
 h1 {
 	font-family: var(--font-head);
 	font-size: 32px;

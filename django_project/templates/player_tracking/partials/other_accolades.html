@@ -21,6 +21,18 @@
                             {{ accolade.award_org }} {{ accolade.name }}
                         {% endif %}
                     </p>
+                    <div id="delete-accolade-{{ accolade.pk }}-control">
+                        {% if perms.player_tracking.delete_accolade %}
+                            <button class="delete-button"
+                                hx-delete="{% url "delete_accolade" accolade.pk %}"
+                                hx-target="#other-accolades"
+                                hx-swap="outerHTML"
+                                hx-confirm="Delete this accolade? This cannot be undone."
+                                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                                aria-label="Delete"
+                                title="Delete accolade">🗑️</button>
+                        {% endif %}
+                    </div>
                 </li>
             {% endif %}
         {% endfor %}

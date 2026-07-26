@@ -9,6 +9,7 @@ from player_tracking.views import (
     add_transaction,
     all_players,
     depth_charts,
+    delete_player_data,
     draft_combine,
     drafted_players,
     edit_player,
@@ -156,6 +157,26 @@ urlpatterns = [
         "edit_summer_assignment/<assignment_id>/",
         edit_summer_assignment.view,
         name="edit_summer_assignment",
+    ),
+    path(
+        "delete_roster_year/<roster_id>/",
+        delete_player_data.delete_roster_year,
+        name="delete_roster_year",
+    ),
+    path(
+        "delete_transaction/<transaction_id>/",
+        delete_player_data.delete_transaction,
+        name="delete_transaction",
+    ),
+    path(
+        "delete_summer_assignment/<assignment_id>/",
+        delete_player_data.delete_summer_assignment,
+        name="delete_summer_assignment",
+    ),
+    path(
+        "delete_accolade/<accolade_id>/",
+        delete_player_data.delete_accolade,
+        name="delete_accolade",
     ),
     path(
         "add_accolade/<player_id>/",

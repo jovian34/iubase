@@ -78,8 +78,9 @@ def test_player_page_renders_edit_button_after_each_summer_assignment(
         )
         assert edit_button["hx-target"] == f"#{control_id}"
 
-        assignment_elements = list(edit_control.parent.descendants)
-        assignment_details = edit_control.parent.find("p")
+        assignment_record = edit_control.find_parent("li")
+        assignment_elements = list(assignment_record.descendants)
+        assignment_details = assignment_record.find("p")
         details_position = assignment_elements.index(assignment_details)
         control_position = assignment_elements.index(edit_control)
         assert details_position < control_position

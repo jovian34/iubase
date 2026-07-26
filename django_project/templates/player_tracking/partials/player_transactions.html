@@ -20,12 +20,26 @@
                         {{ transaction.trans_event }}
                     {% endif %}
                 </p>
-                <div id="edit-transaction-{{ transaction.pk }}-control">
-                    {% if perms.player_tracking.change_transaction %}
-                        <button class="edit-button"
-                            hx-get="{% url "edit_transaction" transaction.pk %}"
-                            hx-target="#edit-transaction-{{ transaction.pk }}-control">edit transaction</button>
-                    {% endif %}
+                <div class="record-actions">
+                    <div id="edit-transaction-{{ transaction.pk }}-control">
+                        {% if perms.player_tracking.change_transaction %}
+                            <button class="edit-button"
+                                hx-get="{% url "edit_transaction" transaction.pk %}"
+                                hx-target="#edit-transaction-{{ transaction.pk }}-control">edit transaction</button>
+                        {% endif %}
+                    </div>
+                    <div id="delete-transaction-{{ transaction.pk }}-control">
+                        {% if perms.player_tracking.delete_transaction %}
+                            <button class="delete-button"
+                                hx-delete="{% url "delete_transaction" transaction.pk %}"
+                                hx-target="#transactions"
+                                hx-swap="outerHTML"
+                                hx-confirm="Delete this transaction? This cannot be undone."
+                                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                                aria-label="Delete"
+                                title="Delete transaction">🗑️</button>
+                        {% endif %}
+                    </div>
                 </div>
             </li>
             <hr>

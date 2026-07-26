@@ -6,9 +6,18 @@ from bs4 import BeautifulSoup
 
 
 TEMPLATES_ROOT = Path(__file__).parents[2] / "django_project" / "templates"
+STYLESHEET_PATH = (
+    Path(__file__).parents[2]
+    / "django_project"
+    / "static"
+    / "index"
+    / "css"
+    / "style.css"
+)
 BUTTON_CLASSES = (
     ("add", "add-button"),
     ("edit", "edit-button"),
+    ("delete", "delete-button"),
 )
 
 
@@ -22,6 +31,8 @@ def get_button_context(button):
 
 def button_action(button):
     context = get_button_context(button)
+    if re.search(r"\bdelete\b|delete_", context, re.IGNORECASE):
+        return "delete"
     if re.search(r"\bedit(?:ed)?\b|edit_", context, re.IGNORECASE):
         return "edit"
     if re.search(r"\badd\b|add_", context, re.IGNORECASE):
@@ -39,8 +50,20 @@ def find_buttons_for_action(action):
     return matching_buttons
 
 
+def get_css_declarations(selector):
+    stylesheet = STYLESHEET_PATH.read_text()
+    rule = re.search(rf"{re.escape(selector)}\s*{{([^}}]+)}}", stylesheet)
+    assert rule is not None
+    return {
+        property_name.strip(): value.strip()
+        for declaration in rule.group(1).split(";")
+        if ":" in declaration
+        for property_name, value in [declaration.split(":", 1)]
+    }
+
+
 @pytest.mark.parametrize(("action", "expected_class"), BUTTON_CLASSES)
-def test_add_and_edit_buttons_use_semantic_css_class(action, expected_class):
+def test_action_buttons_use_semantic_css_class(action, expected_class):
     incorrectly_styled_buttons = []
     action_buttons = find_buttons_for_action(action)
 
@@ -55,3 +78,10 @@ def test_add_and_edit_buttons_use_semantic_css_class(action, expected_class):
         f"{action.title()} buttons missing {expected_class}: "
         + ", ".join(incorrectly_styled_buttons)
     )
+
+
+def test_delete_button_is_unshaded_with_thin_red_border():
+    declarations = get_css_declarations(".delete-button")
+
+    assert declarations["border"] == "1px solid var(--red)"
+    assert declarations["background-color"] == "transparent"

@@ -18,12 +18,26 @@
     <ul>
         {% for roster in rosters %}
             <li>
-                <div id="edit-roster-{{ roster.pk }}-control">
-                    {% if perms.player_tracking.change_annualroster %}
-                        <button class="edit-button"
-                            hx-get="{% url "edit_roster_year" roster.pk %}"
-                            hx-target="#edit-roster-{{ roster.pk }}-control">edit roster year</button>
-                    {% endif %}
+                <div class="record-actions">
+                    <div id="edit-roster-{{ roster.pk }}-control">
+                        {% if perms.player_tracking.change_annualroster %}
+                            <button class="edit-button"
+                                hx-get="{% url "edit_roster_year" roster.pk %}"
+                                hx-target="#edit-roster-{{ roster.pk }}-control">edit roster year</button>
+                        {% endif %}
+                    </div>
+                    <div id="delete-roster-{{ roster.pk }}-control">
+                        {% if perms.player_tracking.delete_annualroster %}
+                            <button class="delete-button"
+                                hx-delete="{% url "delete_roster_year" roster.pk %}"
+                                hx-target="#annual-rosters"
+                                hx-swap="outerHTML"
+                                hx-confirm="Delete this roster year? This cannot be undone."
+                                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                                aria-label="Delete"
+                                title="Delete roster year">🗑️</button>
+                        {% endif %}
+                    </div>
                 </div>
                 <h2>{{ roster.spring_year }} {{ roster.team.team_name }}</h2>
                 <p>{{ roster.status }} - {{ roster.primary_position }}</p>
@@ -39,6 +53,18 @@
                                         {{ accolade.award_org }} {{ accolade.name }}
                                     {% endif %}
                                 </p>
+                                <div id="delete-accolade-{{ accolade.pk }}-control">
+                                    {% if perms.player_tracking.delete_accolade %}
+                                        <button class="delete-button"
+                                            hx-delete="{% url "delete_accolade" accolade.pk %}"
+                                            hx-target="#annual-rosters"
+                                            hx-swap="outerHTML"
+                                            hx-confirm="Delete this accolade? This cannot be undone."
+                                            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                                            aria-label="Delete"
+                                            title="Delete accolade">🗑️</button>
+                                    {% endif %}
+                                </div>
                             </li>
                         {% endif %}
                     {% endfor %}

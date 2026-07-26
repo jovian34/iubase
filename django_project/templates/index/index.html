@@ -24,12 +24,13 @@
             {% if perms.index.delete_trafficcounter %}
             <br>
             <hr>
-            <button hx-delete="{% url "last_months_traffic" %}" 
+            <button class="delete-button"
+                hx-delete="{% url "last_months_traffic" %}"
                 hx-confirm="Are you sure you want to DELETE last months traffic data? This is not reversible"
                 hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-                hx-swap="none">
-                DELETE Last Month's Traffic
-            </button>
+                hx-swap="none"
+                aria-label="Delete"
+                title="Delete last month's traffic data">🗑️</button>
             <hr>
             {% endif %}
 

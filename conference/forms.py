@@ -6,7 +6,10 @@ from conference.views import conf_year
 
 
 class AddConferenceSeriesForm(forms.Form):
-    start_date = forms.DateField(label="Series start date")
+    start_date = forms.DateField(
+        label="Series start date",
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
     home_team = forms.ModelChoiceField(
         queryset=lgb_models.Team.objects.all(),
         label="Home Team",

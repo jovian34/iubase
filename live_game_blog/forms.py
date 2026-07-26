@@ -177,10 +177,12 @@ class AddHomeStadiumDataForm(forms.Form):
     long = forms.DecimalField(label="Longitude")
     stadium_name = forms.CharField(label="Full name of the stadium")
     config_date = forms.DateField(
-        label="Date stadium was set to this configuration (including name)"
+        label="Date stadium was set to this configuration (including name)",
+        widget=forms.DateInput(attrs={"type": "date"}),
     )
     designate_date = forms.DateField(
-        label="Date this configuration became exclusive home field"
+        label="Date this configuration became exclusive home field",
+        widget=forms.DateInput(attrs={"type": "date"}),
     )
     surface_inf = forms.ChoiceField(
         choices=SURFACE_CHOICES,

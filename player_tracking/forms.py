@@ -22,7 +22,11 @@ class PlayerForm(forms.Form):
         label="Landscape action shot URL",
         required=False,
     )
-    birthdate = forms.DateField(label="Date of Birth", required=False)
+    birthdate = forms.DateField(
+        label="Date of Birth",
+        required=False,
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
     bats = forms.ChoiceField(
         label="Batting hand",
         choices=choices.HAND,
@@ -53,7 +57,10 @@ class NewPlayerForm(PlayerForm):
         choices=choices.TRANSACTIONS,
         required=True,
     )
-    trans_date = forms.DateField(label="Transaction Date")
+    trans_date = forms.DateField(
+        label="Transaction Date",
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
     citation = forms.CharField(label="Citation", required=False)
 
 
@@ -80,7 +87,10 @@ class TransactionForm(forms.Form):
         label="Transaction Event",
         choices=choices.TRANSACTIONS,
     )
-    trans_date = forms.DateField(label="Transaction Date")
+    trans_date = forms.DateField(
+        label="Transaction Date",
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
     citation = forms.CharField(label="Citation", required=False)
     primary_position = forms.ChoiceField(
         label="Primary Position",
@@ -140,7 +150,10 @@ class AccoladeForm(forms.Form):
         )
 
     name = forms.CharField(label="Name of accolade")
-    award_date = forms.DateField(label="Date issued")
+    award_date = forms.DateField(
+        label="Date issued",
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
     award_org = forms.CharField(
         label="Sponsor Organization",
     )

@@ -2,16 +2,10 @@ from django.shortcuts import render
 from django.db.models.functions import Lower
 
 from player_tracking.models import Player, Transaction
+from player_tracking.views.player_locations import (
+    calculate_outside_indiana_percentage,
+)
 from index.views import save_traffic_data
-
-
-def calculate_outside_indiana_percentage(players):
-    players_with_state = players.filter(home_state__isnull=False).exclude(home_state="")
-    player_count = players_with_state.count()
-    if player_count == 0:
-        return 0
-    outside_indiana_count = players_with_state.exclude(home_state="IN").count()
-    return round(outside_indiana_count / player_count * 100)
 
 
 def view(request, fall_year):

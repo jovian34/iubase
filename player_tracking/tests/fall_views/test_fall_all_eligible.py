@@ -71,6 +71,22 @@ def test_all_eligible_players_fall_renders(
 
 
 @pytest.mark.django_db
+def test_all_eligible_players_show_percentage_from_outside_indiana(
+    client, players, transactions, typical_mlb_draft_date
+):
+    players.grant_hollister.home_state = "OH"
+    players.grant_hollister.save()
+    set_player_properties.set_player_props_get_errors()
+
+    response = client.get(
+        reverse("all_eligible_players_fall", args=[f"{this_year + 1}"]),
+        HTTP_HX_REQUEST="true",
+    )
+
+    assert "100% are from outside of Indiana" in response.content.decode()
+
+
+@pytest.mark.django_db
 def test_all_eligible_players_not_from_HTMX_redirects_to_fall_players(
     client, players, transactions, typical_mlb_draft_date
 ):

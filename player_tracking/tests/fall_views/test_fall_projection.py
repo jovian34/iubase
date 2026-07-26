@@ -36,6 +36,32 @@ def test_projected_players_renders_current_players(
 
 
 @pytest.mark.django_db
+@pytest.mark.parametrize(
+    "projection_name",
+    ["projected_players_fall_depth", "projected_players_fall_alpha"],
+)
+def test_projected_players_show_percentage_from_outside_indiana(
+    client,
+    players,
+    transactions,
+    very_soon_mlb_draft_date,
+    annual_rosters,
+    projection_name,
+):
+    Player.objects.update(home_state="IN")
+    players.holton_compton.home_state = "OH"
+    players.holton_compton.save()
+    set_player_properties.set_player_props_get_errors()
+
+    response = client.get(
+        reverse(projection_name, args=[f"{this_year}"]),
+        HTTP_HX_REQUEST="true",
+    )
+
+    assert "20% are from outside of Indiana" in response.content.decode()
+
+
+@pytest.mark.django_db
 def test_projected_players_excludes_transfer_portal_entrants(
     client, players, transactions, typical_mlb_draft_date, annual_rosters
 ):

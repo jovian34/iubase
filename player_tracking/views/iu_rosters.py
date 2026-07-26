@@ -3,6 +3,9 @@ from django import shortcuts, urls
 from index import views as index_views
 from player_tracking import choices
 from player_tracking import models as pt_models
+from player_tracking.views.player_locations import (
+    calculate_outside_indiana_percentage,
+)
 
 
 def fall(request, fall_year):
@@ -24,6 +27,9 @@ def render_fall_roster_partial_template(request, fall_year):
         "players": players,
         "page_title": f"Fall {fall_year} Roster",
         "total": len(players),
+        "outside_indiana_percentage": calculate_outside_indiana_percentage(
+            roster.player for roster in players
+        ),
     }
     template_path = "player_tracking/partials/roster.html"
     return shortcuts.render(request, template_path, context)
@@ -40,6 +46,9 @@ def spring(request, spring_year):
         "players": players_for_year,
         "page_title": set_page_title_by_roster_status(spring_year, players_for_year),
         "total": len(players_for_year),
+        "outside_indiana_percentage": calculate_outside_indiana_percentage(
+            roster.player for roster in players_for_year
+        ),
         "accolades": pt_models.Accolade.objects.filter(
             annual_roster__in=players_for_year
         ),

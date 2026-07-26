@@ -4,6 +4,9 @@ from django.db.models.functions import Lower
 from index.views import save_traffic_data
 from player_tracking.models import AnnualRoster
 from player_tracking import choices
+from player_tracking.views.player_locations import (
+    calculate_outside_indiana_percentage,
+)
 
 
 def spring_depth_chart(request, spring_year):
@@ -22,6 +25,9 @@ def spring_depth_chart(request, spring_year):
         "players": players,
         "page_title": page_title,
         "positions": positions,
+        "outside_indiana_percentage": calculate_outside_indiana_percentage(
+            roster.player for roster in players
+        ),
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/depth_chart.html", context)

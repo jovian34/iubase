@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.db.models.functions import Lower
 from player_tracking.models import Player, MLBDraftDate
+from player_tracking.views.player_locations import (
+    calculate_outside_indiana_percentage,
+)
 
 
 def view(request, fall_year):
@@ -26,6 +29,9 @@ def view(request, fall_year):
             "count": len(players),
             "draft_year": draft_year,
             "draft_complete": draft_complete,
+            "outside_indiana_percentage": calculate_outside_indiana_percentage(
+                players
+            ),
         }
         return render(
             request, "player_tracking/partials/all_eligible_players_fall.html", context

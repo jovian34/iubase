@@ -23,6 +23,20 @@ def test_spring_depth_chart_renders_indiana_players(
 
 
 @pytest.mark.django_db
+def test_spring_depth_chart_shows_percentage_from_outside_indiana(
+    client, players, teams, annual_rosters
+):
+    players.ryan_kraft.home_state = "IN"
+    players.ryan_kraft.save()
+    players.devin_taylor.home_state = "OH"
+    players.devin_taylor.save()
+
+    response = client.get(reverse("spring_depth_chart", args=[f"{this_year - 1}"]))
+
+    assert "50% are from outside of Indiana" in response.content.decode()
+
+
+@pytest.mark.django_db
 def test_spring_depth_chart_shows_no_roster_without_rosters(
     client,
     players,

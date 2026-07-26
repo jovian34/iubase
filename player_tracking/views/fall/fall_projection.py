@@ -5,6 +5,9 @@ from datetime import date
 
 from player_tracking.models import AnnualRoster, MLBDraftDate, Player, Transaction
 from player_tracking.choices import DRAFT_POTENTIAL
+from player_tracking.views.player_locations import (
+    calculate_outside_indiana_percentage,
+)
 
 
 def projected_depth(request, fall_year):
@@ -34,11 +37,7 @@ def projected_alpha(request, fall_year):
 def set_projected_players(fall_year):
     draft_complete = set_draft_status(fall_year)
     players = set_fall_player_projection_info(fall_year)
-    prospect_count = 0
-    for player in players:
-        if player.group == "Prospect":
-            prospect_count += 1
-    count = len(players) - prospect_count
+    projected_players = [player for player in players if player.group != "Prospect"]
     positions = sort_by_positions(players)
     years = [int(fall_year) - 2 + i for i in range(5)]
     return {
@@ -46,9 +45,12 @@ def set_projected_players(fall_year):
         "players": players,
         "years": years,
         "page_title": f"Projected Players For Fall {fall_year}",
-        "count": count,
+        "count": len(projected_players),
         "positions": positions,
         "draft_complete": draft_complete,
+        "outside_indiana_percentage": calculate_outside_indiana_percentage(
+            projected_players
+        ),
     }
 
 def set_draft_status(fall_year):

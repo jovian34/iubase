@@ -32,6 +32,23 @@ def test_fall_roster_renders(client, players, teams, annual_rosters):
 
 
 @pytest.mark.django_db
+def test_fall_roster_shows_percentage_from_outside_indiana(
+    client, players, teams, annual_rosters
+):
+    players.jake_stadler.home_state = "IN"
+    players.jake_stadler.save()
+    players.ryan_kraft.home_state = "OH"
+    players.ryan_kraft.save()
+
+    response = client.get(
+        reverse("fall_roster", args=[f"{this_year - 1}"]),
+        HTTP_HX_REQUEST="true",
+    )
+
+    assert "50% are from outside of Indiana" in response.content.decode()
+
+
+@pytest.mark.django_db
 def test_fall_roster_renders_full_page_without_HTMX_call(
     client, players, teams, annual_rosters
 ):
@@ -59,6 +76,20 @@ def test_spring_roster_renders(client, players, teams, annual_rosters):
     assert f"Spring {this_year - 1} Roster" in response.content.decode()
     assert "Nick Mitchell" not in response.content.decode()
     assert "Devin Taylor" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_spring_roster_shows_percentage_from_outside_indiana(
+    client, players, teams, annual_rosters
+):
+    players.ryan_kraft.home_state = "IN"
+    players.ryan_kraft.save()
+    players.devin_taylor.home_state = "OH"
+    players.devin_taylor.save()
+
+    response = client.get(reverse("spring_roster", args=[f"{this_year - 1}"]))
+
+    assert "50% are from outside of Indiana" in response.content.decode()
 
 
 @pytest.mark.django_db

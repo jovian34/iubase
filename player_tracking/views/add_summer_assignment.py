@@ -5,6 +5,7 @@ from datetime import date
 
 from player_tracking.forms import SummerAssignForm
 from player_tracking.models import Player, SummerAssign
+from player_tracking.views import single_player_page
 
 
 @auth.login_required
@@ -15,6 +16,12 @@ def view(request, player_id):
         form = SummerAssignForm(request.POST)
         if form.is_valid():
             save_summer_assign(player_id, form)
+            if single_player_page.is_htmx_request(request):
+                return single_player_page.render_player_section(
+                    request,
+                    player_id,
+                    "player_tracking/partials/player_summer_ball.html",
+                )
         return shortcuts.redirect(urls.reverse("single_player_page", args=[player_id]))
     else:
         form = SummerAssignForm(

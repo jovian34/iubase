@@ -1,5 +1,10 @@
 
-<form action="{% url "add_roster_year" player_id  %}" method="post">
+<form
+    action="{% url "add_roster_year" player_id %}"
+    method="post"
+    hx-post="{% url "add_roster_year" player_id %}"
+    hx-target="#annual-rosters"
+    hx-swap="outerHTML">
     {% csrf_token %}
     {{ form }}
     <button type="submit" value="Submit">Add Roster Year</button>

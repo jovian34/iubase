@@ -1,0 +1,35 @@
+<div id="annual-rosters">
+    <div id="add-roster-year-control">
+        {% if perms.player_tracking.add_annualroster %}
+            <button
+                hx-get="{% url "add_roster_year" player.pk %}"
+                hx-target="#add-roster-year-control">add roster year</button>
+        {% endif %}
+    </div>
+
+    <ul>
+        {% for roster in rosters %}
+            <li>
+                <h2>{{ roster.spring_year }} {{ roster.team.team_name }}</h2>
+                <p>{{ roster.status }} - {{ roster.primary_position }}</p>
+                <ul>
+                    {% for accolade in accolades %}
+                        {% if accolade.annual_roster == roster %}
+                            <li>
+                                <p>
+                                    {{ accolade.award_date }}:
+                                    {% if accolade.citation %}
+                                        <a target="_blank" href="{{ accolade.citation }}">{{ accolade.award_org }} {{ accolade.name }}</a>
+                                    {% else %}
+                                        {{ accolade.award_org }} {{ accolade.name }}
+                                    {% endif %}
+                                </p>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+</div>

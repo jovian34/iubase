@@ -99,6 +99,27 @@ def test_add_roster_year_partial_post_adds_roster_year(
 
 
 @pytest.mark.django_db
+def test_add_roster_year_htmx_post_renders_updated_roster_section(
+    admin_client,
+    players,
+    teams,
+    annual_rosters,
+    forms,
+):
+    response = admin_client.post(
+        reverse("add_roster_year", args=[players.nick_mitchell.pk]),
+        forms.nick_mitchell_two_years_past,
+        HTTP_HX_REQUEST="true",
+    )
+    output = response.content.decode()
+
+    assert response.status_code == 200
+    assert 'id="annual-rosters"' in output
+    assert f"{this_year - 2} Duke" in output
+    assert "add roster year</button>" in output
+
+
+@pytest.mark.django_db
 def test_add_roster_year_partial_post_asks_for_password_not_logged_in(
     client, players, teams, annual_rosters, forms
 ):

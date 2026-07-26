@@ -101,6 +101,28 @@ def test_edit_player_good_post_adds_action_shot(
 
 
 @pytest.mark.django_db
+def test_edit_player_htmx_post_renders_updated_player_info_section(
+    admin_client,
+    players,
+    transactions,
+    prof_orgs,
+    forms,
+    annual_rosters,
+):
+    response = admin_client.post(
+        reverse("edit_player", args=[players.devin_taylor.pk]),
+        forms.devin_taylor_edited,
+        HTTP_HX_REQUEST="true",
+    )
+    output = response.content.decode()
+
+    assert response.status_code == 200
+    assert 'id="player-info"' in output
+    assert "54132418776_e7cc1bcd11_k.jpg" in output
+    assert "edit player info</button>" in output
+
+
+@pytest.mark.django_db
 def test_edit_player_post_redirects_and_makes_no_change_not_logged_in(
     client, players, transactions, prof_orgs, forms, annual_rosters
 ):

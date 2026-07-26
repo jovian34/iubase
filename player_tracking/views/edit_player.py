@@ -3,6 +3,7 @@ from django.contrib.auth import decorators as auth
 
 from player_tracking.models import Player
 from player_tracking import forms
+from player_tracking.views import single_player_page
 
 
 @auth.login_required
@@ -11,15 +12,28 @@ def view(request, player_id):
         return http.HttpResponseForbidden()
     edit_info = Player.objects.get(pk=player_id)
     if request.method == "POST":
-        validate_form_and_save_data(request, edit_info)
-        return shortcuts.redirect(urls.reverse("single_player_page", args=[player_id]))
+        form = forms.PlayerForm(request.POST)
+        if form.is_valid():
+            save_player_form(form, edit_info)
+            return render_updated_player_info_or_redirect(request, player_id)
     else:
-        context = {
-            "form": initialize_form_with_existing_data(edit_info),
-            "player_id": player_id,
-        }
-        template_path = "player_tracking/partials/edit_player.html"
-        return shortcuts.render(request, template_path, context)
+        form = initialize_form_with_existing_data(edit_info)
+    context = {
+        "form": form,
+        "player_id": player_id,
+    }
+    template_path = "player_tracking/partials/edit_player.html"
+    return shortcuts.render(request, template_path, context)
+
+
+def render_updated_player_info_or_redirect(request, player_id):
+    if single_player_page.is_htmx_request(request):
+        return single_player_page.render_player_section(
+            request,
+            player_id,
+            "player_tracking/partials/player_info.html",
+        )
+    return shortcuts.redirect(urls.reverse("single_player_page", args=[player_id]))
 
 
 def initialize_form_with_existing_data(edit_info):
@@ -45,22 +59,20 @@ def initialize_form_with_existing_data(edit_info):
     return form
 
 
-def validate_form_and_save_data(request, edit_info):
-    form = forms.PlayerForm(request.POST)
-    if form.is_valid():
-        edit_info.first = form.cleaned_data["first"]
-        edit_info.last = form.cleaned_data["last"]
-        edit_info.hsgrad_year = form.cleaned_data["hsgrad_year"]
-        edit_info.high_school = form.cleaned_data["high_school"]
-        edit_info.home_city = form.cleaned_data["home_city"]
-        edit_info.home_state = form.cleaned_data["home_state"]
-        edit_info.home_country = form.cleaned_data["home_country"]
-        edit_info.headshot = form.cleaned_data["headshot"]
-        edit_info.action_shot = form.cleaned_data["action_shot"]
-        edit_info.birthdate = form.cleaned_data["birthdate"]
-        edit_info.bats = form.cleaned_data["bats"]
-        edit_info.throws = form.cleaned_data["throws"]
-        edit_info.height = form.cleaned_data["height"]
-        edit_info.weight = form.cleaned_data["weight"]
-        edit_info.primary_position = form.cleaned_data["primary_position"]
-        edit_info.save()
+def save_player_form(form, edit_info):
+    edit_info.first = form.cleaned_data["first"]
+    edit_info.last = form.cleaned_data["last"]
+    edit_info.hsgrad_year = form.cleaned_data["hsgrad_year"]
+    edit_info.high_school = form.cleaned_data["high_school"]
+    edit_info.home_city = form.cleaned_data["home_city"]
+    edit_info.home_state = form.cleaned_data["home_state"]
+    edit_info.home_country = form.cleaned_data["home_country"]
+    edit_info.headshot = form.cleaned_data["headshot"]
+    edit_info.action_shot = form.cleaned_data["action_shot"]
+    edit_info.birthdate = form.cleaned_data["birthdate"]
+    edit_info.bats = form.cleaned_data["bats"]
+    edit_info.throws = form.cleaned_data["throws"]
+    edit_info.height = form.cleaned_data["height"]
+    edit_info.weight = form.cleaned_data["weight"]
+    edit_info.primary_position = form.cleaned_data["primary_position"]
+    edit_info.save()

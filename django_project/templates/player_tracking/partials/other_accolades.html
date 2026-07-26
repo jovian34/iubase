@@ -1,0 +1,28 @@
+<div id="other-accolades">
+    <hr>
+    <h3>Other Accolades:</h3>
+    <div id="add-accolade-control">
+        {% if perms.player_tracking.add_accolade %}
+            <button
+                hx-get="{% url "add_accolade" player.pk %}"
+                hx-target="#add-accolade-control">add accolade</button>
+        {% endif %}
+    </div>
+
+    <ul>
+        {% for accolade in accolades %}
+            {% if not accolade.annual_roster and not accolade.summer_assign %}
+                <li>
+                    <p>
+                        {{ accolade.award_date }}:
+                        {% if accolade.citation %}
+                            <a target="_blank" href="{{ accolade.citation }}">{{ accolade.award_org }} {{ accolade.name }}</a>
+                        {% else %}
+                            {{ accolade.award_org }} {{ accolade.name }}
+                        {% endif %}
+                    </p>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

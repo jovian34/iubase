@@ -3,6 +3,7 @@ from django import http, shortcuts, urls
 
 from player_tracking.forms import TransactionForm
 from player_tracking.views.set_player_properties import set_player_props_get_errors
+from player_tracking.views import single_player_page
 from player_tracking.models import Player, Transaction
 
 from datetime import date
@@ -17,6 +18,12 @@ def view(request, player_id):
         if form.is_valid():
             save_transaction_form(player_id, form)
             set_player_props_get_errors()
+            if single_player_page.is_htmx_request(request):
+                return single_player_page.render_player_section(
+                    request,
+                    player_id,
+                    "player_tracking/partials/player_transactions.html",
+                )
         return shortcuts.redirect(urls.reverse("single_player_page", args=[player_id]))
     else:
         form = TransactionForm(

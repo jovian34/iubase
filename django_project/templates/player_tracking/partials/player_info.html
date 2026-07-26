@@ -1,0 +1,16 @@
+<div id="player-info">
+    <h1>{{ page_title }}</h1>
+    {% if player.action_shot %}
+        <img id="player-photo" src="{{ player.action_shot }}">
+    {% else %}
+        <img id="player-photo" src="https://iubase.com/wp-content/uploads/2024/11/53704071552_13227a46a0_k.jpg">
+    {% endif %}
+    <img class="headshot" src="{{ player.headshot }}">
+    <div id="edit-player-info-control">
+        {% if perms.player_tracking.change_player %}
+            <button
+                hx-get="{% url "edit_player" player.pk %}"
+                hx-target="#edit-player-info-control">edit player info</button>
+        {% endif %}
+    </div>
+</div>

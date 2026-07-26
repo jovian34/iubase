@@ -217,3 +217,31 @@ def test_add_summer_accolade_partial_post_adds_correct_data(
         str(roy.citation)
         == "https://www.idsnews.com/article/2023/08/indiana-baseball-devin-taylor-necbl-rookie-of-the-year-tyler-cerny-appalachian-league"
     )
+
+
+@pytest.mark.django_db
+def test_add_accolade_htmx_post_renders_updated_other_accolades_section(
+    admin_client,
+    players,
+    summer_leagues,
+    summer_teams,
+    summer_assign,
+    forms,
+    prof_orgs,
+):
+    other_accolade = {
+        **forms.dt_foy,
+        "name": ["National Player of the Week"],
+        "annual_roster": [],
+    }
+    response = admin_client.post(
+        reverse("add_accolade", args=[players.devin_taylor.pk]),
+        other_accolade,
+        HTTP_HX_REQUEST="true",
+    )
+    output = response.content.decode()
+
+    assert response.status_code == 200
+    assert 'id="other-accolades"' in output
+    assert "National Player of the Week" in output
+    assert "add accolade</button>" in output

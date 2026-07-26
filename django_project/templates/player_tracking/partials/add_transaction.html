@@ -1,5 +1,10 @@
 
-<form action="{% url "add_transaction" player_id  %}" method="post">
+<form
+    action="{% url "add_transaction" player_id %}"
+    method="post"
+    hx-post="{% url "add_transaction" player_id %}"
+    hx-target="#transactions"
+    hx-swap="outerHTML">
     {% csrf_token %}
     {{ form }}
     <button type="submit" value="Submit">Add Transaction</button>

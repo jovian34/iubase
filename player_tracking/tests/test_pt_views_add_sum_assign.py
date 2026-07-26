@@ -82,3 +82,25 @@ def test_add_summer_assignment_post_adds_assignment(
     )
     assert response.status_code == 200
     assert "Green Bay" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_add_summer_assignment_htmx_post_renders_updated_summer_ball_section(
+    admin_client,
+    players,
+    summer_leagues,
+    summer_teams,
+    forms,
+    annual_rosters,
+):
+    response = admin_client.post(
+        reverse("add_summer_assignment", args=[str(players.brayden_risedorph.pk)]),
+        forms.summer_assignment_new,
+        HTTP_HX_REQUEST="true",
+    )
+    output = response.content.decode()
+
+    assert response.status_code == 200
+    assert 'id="summer-ball"' in output
+    assert "Green Bay" in output
+    assert "add summer assignment</button>" in output

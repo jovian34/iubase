@@ -1,0 +1,27 @@
+<div id="transactions">
+    <hr>
+    <h3>Transactions:</h3>
+    <div id="add-transaction-control">
+        {% if perms.player_tracking.add_transaction %}
+            <button
+                hx-get="{% url "add_transaction" player.pk %}"
+                hx-target="#add-transaction-control">add transaction</button>
+        {% endif %}
+    </div>
+
+    <ul>
+        {% for transaction in transactions %}
+            <li>
+                <p>
+                    {{ transaction.trans_date }}:
+                    {% if transaction.citation %}
+                        <a target="_blank" href="{{ transaction.citation }}">{{ transaction.trans_event }}</a>
+                    {% else %}
+                        {{ transaction.trans_event }}
+                    {% endif %}
+                </p>
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+</div>

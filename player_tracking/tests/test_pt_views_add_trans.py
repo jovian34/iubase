@@ -52,6 +52,28 @@ def test_add_transaction_partial_post_adds_transaction(
 
 
 @pytest.mark.django_db
+def test_add_transaction_htmx_post_renders_updated_transaction_section(
+    admin_client,
+    players,
+    teams,
+    annual_rosters,
+    prof_orgs,
+    forms,
+):
+    response = admin_client.post(
+        reverse("add_transaction", args=[players.brayden_risedorph.pk]),
+        forms.risedorph_drafted,
+        HTTP_HX_REQUEST="true",
+    )
+    output = response.content.decode()
+
+    assert response.status_code == 200
+    assert 'id="transactions"' in output
+    assert "Drafted" in output
+    assert "add transaction</button>" in output
+
+
+@pytest.mark.django_db
 def test_add_transaction_partial_get_forbidden_without_perms(
     client, players, teams, logged_user_schwarbs
 ):

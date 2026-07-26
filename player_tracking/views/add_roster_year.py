@@ -6,6 +6,7 @@ import datetime
 
 from player_tracking import forms as pt_forms
 from player_tracking.views import set_player_properties
+from player_tracking.views import single_player_page
 from player_tracking import models as pt_models
 from live_game_blog import models as lgb_models
 
@@ -39,6 +40,12 @@ def validate_post_annual_roster_form_save_then_redirect(request, player_id):
     if form.is_valid():
         save_roster_year(player_id, form)
         set_player_properties.set_player_props_get_errors()
+        if single_player_page.is_htmx_request(request):
+            return single_player_page.render_player_section(
+                request,
+                player_id,
+                "player_tracking/partials/annual_rosters.html",
+            )
     return shortcuts.redirect(urls.reverse("single_player_page", args=[player_id]))
 
 

@@ -1,4 +1,5 @@
 import pytest
+from bs4 import BeautifulSoup
 from django.contrib.auth.models import Permission
 from django.urls import reverse
 from datetime import date
@@ -28,6 +29,22 @@ PLAYER_CHANGE_BUTTON_PERMISSIONS = (
     ("add_accolade", "add accolade"),
 )
 
+PLAYER_PAGE_SECTION_CONTROLS = (
+    ("player-info", "edit player info", "edit-player-info-control"),
+    ("annual-rosters", "add roster year", "add-roster-year-control"),
+    ("transactions", "add transaction", "add-transaction-control"),
+    ("summer-ball", "add summer assignment", "add-summer-assignment-control"),
+    ("other-accolades", "add accolade", "add-accolade-control"),
+)
+
+PLAYER_CHANGE_FORM_TARGETS = (
+    ("edit_player", "player-info"),
+    ("add_roster_year", "annual-rosters"),
+    ("add_transaction", "transactions"),
+    ("add_summer_assignment", "summer-ball"),
+    ("add_accolade", "other-accolades"),
+)
+
 
 def grant_player_tracking_permission(user, permission_codename):
     permission = Permission.objects.get(
@@ -35,6 +52,10 @@ def grant_player_tracking_permission(user, permission_codename):
         codename=permission_codename,
     )
     user.user_permissions.add(permission)
+
+
+def parse_response(response):
+    return BeautifulSoup(response.content, "html.parser")
 
 
 @pytest.mark.django_db
@@ -215,6 +236,69 @@ def test_single_player_page_renders_only_button_allowed_by_permission(
     for _, other_button in PLAYER_CHANGE_BUTTON_PERMISSIONS:
         if other_button != permitted_button:
             assert f"{other_button}</button>" not in output
+
+
+@pytest.mark.django_db
+def test_player_change_controls_render_in_separate_page_sections(
+    admin_client,
+    players,
+    annual_rosters,
+):
+    response = admin_client.get(
+        reverse("single_player_page", args=[players.devin_taylor.pk])
+    )
+    page = parse_response(response)
+
+    for section_id, button_text, control_id in PLAYER_PAGE_SECTION_CONTROLS:
+        section = page.find(id=section_id)
+        assert section is not None
+        control = section.find(id=control_id)
+        assert control is not None
+        button = control.find("button", string=button_text)
+        assert button is not None
+        assert button["hx-target"] == f"#{control_id}"
+
+
+@pytest.mark.django_db
+def test_edit_player_control_renders_before_annual_rosters(
+    admin_client,
+    players,
+    annual_rosters,
+):
+    response = admin_client.get(
+        reverse("single_player_page", args=[players.devin_taylor.pk])
+    )
+    page = parse_response(response)
+
+    player_info = page.find(id="player-info")
+    annual_rosters_section = page.find(id="annual-rosters")
+    assert player_info is not None
+    assert annual_rosters_section is not None
+    assert player_info.find("button", string="edit player info")
+    assert list(page.descendants).index(player_info) < list(page.descendants).index(
+        annual_rosters_section
+    )
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    ("view_name", "section_id"),
+    PLAYER_CHANGE_FORM_TARGETS,
+)
+def test_player_change_forms_submit_with_htmx_to_their_page_section(
+    admin_client,
+    players,
+    annual_rosters,
+    summer_assign,
+    view_name,
+    section_id,
+):
+    form_url = reverse(view_name, args=[players.devin_taylor.pk])
+    response = admin_client.get(form_url, HTTP_HX_REQUEST="true")
+    form = parse_response(response).find("form")
+
+    assert form["hx-post"] == form_url
+    assert form["hx-target"] == f"#{section_id}"
 
 
 @pytest.mark.django_db

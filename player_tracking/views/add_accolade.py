@@ -3,6 +3,7 @@ from django.contrib.auth import decorators as auth
 
 from player_tracking import forms
 from player_tracking import models as pt_models
+from player_tracking.views import single_player_page
 
 
 @auth.login_required
@@ -24,6 +25,12 @@ def validate_accolade_form_post_save_then_redirect(request, player_id):
     form = forms.AccoladeForm(player_id=player_id, data=request.POST)
     if form.is_valid():
         create_accolade_and_save(player_id, form)
+        if single_player_page.is_htmx_request(request):
+            return single_player_page.render_player_section(
+                request,
+                player_id,
+                "player_tracking/partials/other_accolades.html",
+            )
     return shortcuts.redirect(urls.reverse("single_player_page", args=[player_id]))
 
 

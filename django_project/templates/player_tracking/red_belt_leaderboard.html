@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+
+
+{% block content %}
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        <h2>Joey DeNato Pitching Red Belts</h2>
+            <table>
+            {% for row in denato_leaders %}
+            <tr>
+                <td>{{ row.player__first }} {{ row.player__last }}</td>
+                <td>{{ row.award_count }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="2">No awards yet for {{ spring_year }}.</td></tr>
+            {% endfor %}
+            </table>
+
+        <h2>Alex Dickerson Hitting Red Belts</h2>
+            <table>
+            {% for row in dickerson_leaders %}
+            <tr>
+                <td>{{ row.player__first }} {{ row.player__last }}</td>
+                <td>{{ row.award_count }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="2">No awards yet for {{ spring_year }}.</td></tr>
+            {% endfor %}
+            </table>
+
+
+        <h2>Tony Butler Defense Red Belts</h2>
+            <table>
+            {% for row in butler_leaders %}
+            <tr>
+                <td>{{ row.player__first }} {{ row.player__last }}</td>
+                <td>{{ row.award_count }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="2">No awards yet for {{ spring_year }}.</td></tr>
+            {% endfor %}
+            </table>
+
+    </div>
+</div>
+{% endblock %}

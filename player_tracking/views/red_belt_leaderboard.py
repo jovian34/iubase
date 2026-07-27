@@ -38,17 +38,21 @@ def group_leaders_by_award_count(leaders):
     return award_groups
 
 
-def red_belt_award(title, leaders):
+def red_belt_award(title, leaders, description):
     return {
         "title": title,
         "groups": group_leaders_by_award_count(leaders),
+        "description": description,
     }
 
 
 def view(request, spring_year):
     denato_leaders = list(weekly_award_leaderboard("Joey DeNato", spring_year))
+    denato_describe = "Named for the all-time Hoosier pitching wins leader (37 from 2011-2014)"
     dickerson_leaders = list(weekly_award_leaderboard("Alex Dickerson", spring_year))
+    dickerson_describe = "Named for the prolific Hoosier slugger (2009-2011)"
     butler_leaders = list(weekly_award_leaderboard("Tony Butler", spring_year))
+    butler_describe = "Named for the only Hoosier member of a Rawlings Gold Glove Team (2016 - 2B - 0 errors)"
     context = {
         "page_title": f"Red Belt Leaderboard for {spring_year}",
         "spring_year": spring_year,
@@ -56,9 +60,9 @@ def view(request, spring_year):
         "dickerson_leaders": dickerson_leaders,
         "butler_leaders": butler_leaders,
         "red_belt_awards": [
-            red_belt_award("Joey DeNato Pitching Red Belts", denato_leaders),
-            red_belt_award("Alex Dickerson Hitting Red Belts", dickerson_leaders),
-            red_belt_award("Tony Butler Defense Red Belts", butler_leaders),
+            red_belt_award("Joey DeNato Pitching Red Belts", denato_leaders, denato_describe),
+            red_belt_award("Alex Dickerson Hitting Red Belts", dickerson_leaders, dickerson_describe),
+            red_belt_award("Tony Butler Defense Red Belts", butler_leaders, butler_describe),
         ],
     }
     save_traffic_data(request=request, page=context["page_title"])

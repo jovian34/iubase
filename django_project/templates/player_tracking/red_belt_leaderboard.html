@@ -2,7 +2,17 @@
 
 {% block title %}{{ page_title }}{% endblock %}
 
-{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+{% block header %}<h1>{{ page_title }}</h1>
+
+<p>Awards announced weekly during the season on the 
+    <a href="https://iubase.com/category/talking-hoosierbaseball/">Talking Hoosier Baseball podcast</a>
+    by Chris Feeny.</p>
+<p><b>Fun Fact:</b> <em>The name <b>Red Belt</b> was adopted by the podcast in 2019
+    from a common occurence of the 2018 team when a hustle play would often result
+    in an Indiana Baseball player breaking their red uniform belt
+    and needing to stop the game to get a replacement ran out to them.</em></p>
+
+{% endblock %}
 
 
 {% block content %}
@@ -12,6 +22,7 @@
         {% for award in red_belt_awards %}
         <div class="red-belt-award">
             <h2>{{ award.title }}</h2>
+            <p>{{ award.description }}</p>
             {% for group in award.groups %}
             <div class="red-belt-count-group" data-award-count="{{ group.award_count }}">
                 <h3>{{ group.award_count }} Red Belt{{ group.award_count|pluralize }}</h3>

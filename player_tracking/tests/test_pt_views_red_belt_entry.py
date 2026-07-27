@@ -119,7 +119,14 @@ def test_red_belt_entry_form_has_date_and_three_fixed_award_fields(
 ):
     response = admin_client.get(reverse("red_belt_entry", args=[this_year - 1]))
     form = response.context["form"]
-    assert set(form.fields) == {"award_date", "pitcher", "hitter", "defender"}
+    assert set(form.fields) == {
+        "award_date",
+        "citation",
+        "pitcher",
+        "hitter",
+        "defender",
+    }
+    assert form.fields["citation"].required
     assert "Joey DeNato Weekly Red Belt for pitching" in response.content.decode()
     assert "Alex Dickerson Weekly Red Belt for hitting" in response.content.decode()
     assert "Tony Butler Weekly Red Belt for defense" in response.content.decode()
@@ -175,6 +182,7 @@ def test_red_belt_entry_rejects_award_date_from_another_year(
         reverse("red_belt_entry", args=[this_year - 1]),
         {
             "award_date": date(this_year, 3, 1),
+            "citation": "https://example.com/talking-hoosier-baseball/episode-1",
             "pitcher": annual_rosters.rk_soph.pk,
             "hitter": annual_rosters.dt_fresh.pk,
             "defender": annual_rosters.br_fresh.pk,
@@ -193,6 +201,7 @@ def test_red_belt_entry_rejects_player_outside_field_choices(
         reverse("red_belt_entry", args=[this_year - 1]),
         {
             "award_date": date(this_year - 1, 3, 1),
+            "citation": "https://example.com/talking-hoosier-baseball/episode-1",
             "pitcher": annual_rosters.dt_fresh.pk,
             "hitter": annual_rosters.hc_fresh.pk,
             "defender": annual_rosters.rk_jr.pk,
@@ -210,10 +219,12 @@ def test_red_belt_entry_creates_three_fixed_accolades(
     admin_client, annual_rosters
 ):
     award_date = date(this_year - 1, 3, 1)
+    citation = "https://example.com/talking-hoosier-baseball/episode-1"
     admin_client.post(
         reverse("red_belt_entry", args=[this_year - 1]),
         {
             "award_date": award_date,
+            "citation": citation,
             "pitcher": annual_rosters.rk_soph.pk,
             "hitter": annual_rosters.dt_fresh.pk,
             "defender": annual_rosters.br_fresh.pk,
@@ -221,6 +232,7 @@ def test_red_belt_entry_creates_three_fixed_accolades(
     )
     red_belts = Accolade.objects.filter(award_date=award_date)
     assert red_belts.count() == 3
+    assert set(red_belts.values_list("citation", flat=True)) == {citation}
     assert red_belts.get(
         name="Joey DeNato Weekly Red Belt for pitching",
         player=annual_rosters.rk_soph.player,

@@ -186,6 +186,7 @@ class RedBeltEntryForm(forms.Form):
         label="Award Date",
         widget=forms.DateInput(attrs={"type": "date"}),
     )
+    citation = forms.URLField(label="Podcast Episode Citation")
     pitcher = RosterPlayerChoiceField(
         queryset=pt_models.AnnualRoster.objects.none(),
         label="Joey DeNato Weekly Red Belt for pitching",

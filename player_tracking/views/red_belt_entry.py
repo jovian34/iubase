@@ -64,6 +64,7 @@ def get_spring_roster_years():
 @transaction.atomic
 def save_weekly_red_belts(form):
     award_date = form.cleaned_data["award_date"]
+    citation = form.cleaned_data["citation"]
     awards = (
         (
             "Joey DeNato Weekly Red Belt for pitching",
@@ -83,6 +84,7 @@ def save_weekly_red_belts(form):
             player=roster.player,
             annual_roster=roster,
             award_date=award_date,
+            citation=citation,
             name=award_name,
             award_org="Talking Hoosier Baseball",
         )

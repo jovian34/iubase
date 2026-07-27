@@ -16,19 +16,50 @@ def weekly_award_leaderboard(award_phrase, spring_year):
             "player__id",
             "player__first",
             "player__last",
+            "player__headshot",
         )
         .annotate(award_count=Count("id"))
         .order_by("-award_count", "player__last", "player__first")
     )
 
 
+def group_leaders_by_award_count(leaders):
+    award_groups = []
+    for leader in leaders:
+        if not award_groups or award_groups[-1]["award_count"] != leader["award_count"]:
+            award_groups.append(
+                {
+                    "award_count": leader["award_count"],
+                    "leaders": [],
+                    "is_top_group": not award_groups,
+                }
+            )
+        award_groups[-1]["leaders"].append(leader)
+    return award_groups
+
+
+def red_belt_award(title, leaders):
+    return {
+        "title": title,
+        "groups": group_leaders_by_award_count(leaders),
+    }
+
+
 def view(request, spring_year):
+    denato_leaders = list(weekly_award_leaderboard("Joey DeNato", spring_year))
+    dickerson_leaders = list(weekly_award_leaderboard("Alex Dickerson", spring_year))
+    butler_leaders = list(weekly_award_leaderboard("Tony Butler", spring_year))
     context = {
         "page_title": f"Red Belt Leaderboard for {spring_year}",
         "spring_year": spring_year,
-        "denato_leaders": weekly_award_leaderboard("Joey DeNato", spring_year),
-        "dickerson_leaders": weekly_award_leaderboard("Alex Dickerson", spring_year),
-        "butler_leaders": weekly_award_leaderboard("Tony Butler", spring_year),
+        "denato_leaders": denato_leaders,
+        "dickerson_leaders": dickerson_leaders,
+        "butler_leaders": butler_leaders,
+        "red_belt_awards": [
+            red_belt_award("Joey DeNato Pitching Red Belts", denato_leaders),
+            red_belt_award("Alex Dickerson Hitting Red Belts", dickerson_leaders),
+            red_belt_award("Tony Butler Defense Red Belts", butler_leaders),
+        ],
     }
     save_traffic_data(request=request, page=context["page_title"])
     return render(request, "player_tracking/red_belt_leaderboard.html", context)

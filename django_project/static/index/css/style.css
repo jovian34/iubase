@@ -320,6 +320,11 @@ figcaption	{
 	padding: .3em 0;
 	font-weight: 700;
 }
+
+.photo-caption {
+	font-family: var(--font-text);
+}
+
 figure.col4 img, figure.col6 img, figure.col3full img, figure.col4full img, figure.col6full img {
 	width: 100%;
 }
@@ -450,6 +455,66 @@ h3.b1g-text a{
 	float: center;
 }
 
+.red-belt-leaderboard {
+	background-color: transparent;
+	display: flow-root;
+}
+
+.red-belt-award {
+	background-color: var(--body-background-color);
+	border: 4px solid var(--crimson);
+	border-radius: 6px;
+	display: flow-root;
+	margin-bottom: 2rem;
+	padding: 1rem 1.25rem;
+}
+
+.red-belt-award:last-child {
+	margin-bottom: 0;
+}
+
+.red-belt-award h2, .red-belt-count-group h3 {
+	text-align: center;
+}
+
+.red-belt-count-group {
+	border-top: 2px solid var(--grey);
+	margin-top: 1rem;
+	padding-top: 1rem;
+}
+
+.red-belt-count-group:first-of-type {
+	border-top: 0;
+}
+
+.red-belt-leaders {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: center;
+}
+
+.red-belt-leader {
+	margin: 0;
+	text-align: center;
+	width: min(12rem, 45%);
+}
+
+.red-belt-leader img {
+	aspect-ratio: 1 / 1;
+	border: 3px solid var(--black);
+	border-radius: 6px;
+	display: block;
+	object-fit: cover;
+	width: 100%;
+}
+
+.red-belt-player-list {
+	display: inline-block;
+	margin-left: 50%;
+	transform: translateX(-50%);
+}
+
 /*----- 12 COLUMN LAYOUT -----*/
 .column-3, .column-4, .column-6, .column-9, .column-12 {
 	width: 100%;
@@ -470,6 +535,10 @@ h3.b1g-text a{
 .column-6{
 	background-color: var(--body-background-color);
 	display: flow-root;
+}
+
+.column-6.red-belt-leaderboard {
+	background-color: transparent;
 }
 
 .column-2{width: 50%; float: left;}

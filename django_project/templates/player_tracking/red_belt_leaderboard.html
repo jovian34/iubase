@@ -8,44 +8,37 @@
 {% block content %}
 <div class="column-12 clear-both">
     <div class="column-3"></div>
-    <div class="column-6">
-        <h2>Joey DeNato Pitching Red Belts</h2>
-            <table>
-            {% for row in denato_leaders %}
-            <tr>
-                <td>{{ row.player__first }} {{ row.player__last }}</td>
-                <td>{{ row.award_count }}</td>
-            </tr>
+    <div class="column-6 red-belt-leaderboard">
+        {% for award in red_belt_awards %}
+        <div class="red-belt-award">
+            <h2>{{ award.title }}</h2>
+            {% for group in award.groups %}
+            <div class="red-belt-count-group" data-award-count="{{ group.award_count }}">
+                <h3>{{ group.award_count }} Red Belt{{ group.award_count|pluralize }}</h3>
+                {% if group.is_top_group %}
+                <div class="red-belt-leaders">
+                    {% for leader in group.leaders %}
+                    <figure class="red-belt-leader">
+                        <a href="{% url "single_player_page" leader.player__id %}">
+                            <img src="{{ leader.player__headshot }}" alt="{{ leader.player__first }} {{ leader.player__last }}">
+                            <figcaption class="photo-caption">{{ leader.player__first }} {{ leader.player__last }}</figcaption>
+                        </a>
+                    </figure>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <ul class="red-belt-player-list">
+                    {% for leader in group.leaders %}
+                    <li><a href="{% url "single_player_page" leader.player__id %}">{{ leader.player__first }} {{ leader.player__last }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
             {% empty %}
-            <tr><td colspan="2">No awards yet for {{ spring_year }}.</td></tr>
+            <p>No awards yet for {{ spring_year }}.</p>
             {% endfor %}
-            </table>
-
-        <h2>Alex Dickerson Hitting Red Belts</h2>
-            <table>
-            {% for row in dickerson_leaders %}
-            <tr>
-                <td>{{ row.player__first }} {{ row.player__last }}</td>
-                <td>{{ row.award_count }}</td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="2">No awards yet for {{ spring_year }}.</td></tr>
-            {% endfor %}
-            </table>
-
-
-        <h2>Tony Butler Defense Red Belts</h2>
-            <table>
-            {% for row in butler_leaders %}
-            <tr>
-                <td>{{ row.player__first }} {{ row.player__last }}</td>
-                <td>{{ row.award_count }}</td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="2">No awards yet for {{ spring_year }}.</td></tr>
-            {% endfor %}
-            </table>
-
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

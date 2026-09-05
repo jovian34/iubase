@@ -17,6 +17,7 @@ def test_schedule_renders_selected_season_games_only(client, games_annual, stadi
         spring_year = datetime.date.today().year
     response = client.get(urls.reverse("schedule", args=[spring_year]))
     assert response.status_code == 200
+    assert "Indiana <em>vs.</em>  George Mason" in response.content.decode()
     assert "Miami (Ohio) <em>@</em>  Indiana" in response.content.decode()
     assert "Indiana <em>@</em>  Iowa" in response.content.decode()
     assert "Indiana <em>vs.</em>  Duke" in response.content.decode()
@@ -62,5 +63,5 @@ def test_2026_schedule_omits_exceptions(client, games_annual, stadiums, stadium_
     response = client.get(urls.reverse("schedule", args=["2026"]))
     assert response.status_code == 200
     assert "*Schedules" not in response.content.decode()
-    
+
     

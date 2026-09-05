@@ -20,7 +20,7 @@ def view(request, spring_year=spring_year):
         "games": lgb_models.Game.objects.filter(
             Q(
                 first_pitch__gt=eastern.localize(
-                    datetime.datetime(int(spring_year), 2, 1)
+                    datetime.datetime(int(spring_year)-1, 9, 1)
                 )
             )
             & Q(

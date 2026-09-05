@@ -26,6 +26,13 @@ else:
 
 @pytest.fixture
 def games_annual(client, teams, stadiums, stadium_configs):
+    iu_fall = Game.objects.create(
+        home_team=teams.gm,
+        away_team=teams.indiana,
+        neutral_site=True,
+        first_pitch=eastern.localize(datetime.datetime(spring_year-1, 9, 15, 18, 0, 0, 0)),
+        stadium_config=stadium_configs.surprise,
+    )
     iu_ky_ly = Game.objects.create(
         home_team=teams.kentucky,
         away_team=teams.indiana,
@@ -69,6 +76,7 @@ def games_annual(client, teams, stadiums, stadium_configs):
         stadium_config=stadium_configs.surprise,
     )
     game_list = [
+        "iu_fall",
         "iu_ky_ly",
         "iu_duke",
         "ucla_unc",
@@ -78,6 +86,7 @@ def games_annual(client, teams, stadiums, stadium_configs):
     ]
     GameObj = namedtuple("GameObj", game_list)
     return GameObj(
+        iu_fall=iu_fall,
         iu_ky_ly=iu_ky_ly,
         iu_duke=iu_duke,
         ucla_unc=ucla_unc,

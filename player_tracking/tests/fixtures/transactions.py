@@ -167,7 +167,10 @@ def transactions(players, prof_orgs, teams):
     gs_decommit = Transaction.objects.create(
         player=players.gibson_sinke,
         trans_event="Decommit",
-        trans_date=date.today(),
+        # Keep this before the September season boundary.  Using date.today()
+        # changes the player's next eligible spring when the calendar rolls
+        # from August to September.
+        trans_date=date(year=this_year, month=8, day=31),
     )
     oo_verbal = Transaction.objects.create(
         player=players.owen_ten_oever,

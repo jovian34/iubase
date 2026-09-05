@@ -5,25 +5,25 @@ requires-python = "==3.14.7"
 dependencies = [
     "asgiref==3.12.1",
     "bs4>=0.0.2",
-    "coverage==7.15.4",
-    "django==6.1",
-    "django-allauth[socialaccount]==65.19.0",
+    "coverage==7.16.0",
+    "django==6.1.1",
+    "django-allauth[socialaccount]==65.19.2",
     "execnet==2.1.2",
-    "gunicorn==26.0.0",
+    "gunicorn==26.2.0",
     "iniconfig==2.3.0",
     "markdown==3.10.3",
     "packaging==26.3",
     "pluggy==1.6.0",
-    "psycopg==3.3.4",
-    "psycopg-binary==3.3.4",
+    "psycopg==3.3.5",
+    "psycopg-binary==3.3.5",
     "pytest==9.1.1",
     "pytest-cov==7.1.0",
-    "pytest-django==4.13.0",
+    "pytest-django==4.14.0",
     "pytest-xdist==3.8.0",
-    "python-dotenv==1.2.2",
+    "python-dotenv==1.2.3",
     "pytz==2026.3.post1",
     "requests>=2.34.2",
-    "sqlparse==0.5.5",
+    "sqlparse==0.6.0",
     "typing-extensions==4.16.0",
 ]
 
@@ -40,5 +40,5 @@ python_files = "test_*.py"
 
 [dependency-groups]
 dev = [
-    "ruff>=0.16.2",
+    "ruff>=0.16.6",
 ]

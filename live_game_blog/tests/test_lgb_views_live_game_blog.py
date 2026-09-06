@@ -39,10 +39,13 @@ def test_live_single_game_blog_page_renders(client, games, scoreboards, entries,
 
 
 @pytest.mark.django_db
-def test_live_single_game_blog_page_renders_uniform_field_description(client, games, scoreboards):
+def test_live_single_game_blog_page_renders_uniform_field_description(
+    client, games, scoreboards, conf_teams, conferences
+):
     response = client.get(reverse("live_game_blog", args=[games.iu_gm_fall.pk]))
     assert response.status_code == 200
     assert "The playing surface is all artificial." in response.content.decode()
+    assert "Outfield distances at Bart Kaufman Field are 400 feet to center and 330 feet down the foul lines." in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -52,6 +55,7 @@ def test_live_single_game_blog_page_renders_primarily_artificial_surface(
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_far_future.pk]))
     assert response.status_code == 200
     assert "The playing surface is primarily artificial with a natural pitching mound." in response.content.decode()
+    assert "Outfield distances at Kentucky Proud Park are 400 feet to center, 335 feet down the left field line, and 320 feet to right." in response.content.decode()
 
 
 @pytest.mark.django_db

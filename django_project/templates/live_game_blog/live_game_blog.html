@@ -115,15 +115,24 @@
                             {{ game.stadium_config.stadium.long }}&travelmode=driving"
                             target="_blank"
                         >Driving Directions</a></p>
+    <p>
     {% if game.stadium_config.surface_inf == game.stadium_config.surface_out and game.stadium_config.surface_inf == game.stadium_config.surface_mound %}
-        <p>The playing surface is all {{ game.stadium_config.surface_inf }}.</p>
+        The playing surface is all {{ game.stadium_config.surface_inf }}.
     {% elif game.stadium_config.surface_inf == game.stadium_config.surface_out %}
-        <p>The playing surface is primarily {{ game.stadium_config.surface_inf }} with a {{ game.stadium_config.surface_mound }} pitching mound.</p>
+        The playing surface is primarily {{ game.stadium_config.surface_inf }} with a {{ game.stadium_config.surface_mound }} pitching mound.
     {% elif game.stadium_config.surface_inf == game.stadium_config.surface_mound %}
-        <p>The playing surface is primarily {{ game.stadium_config.surface_inf }} with {% if game.stadium_config.surface_out == "artificial" %}an{% else %}a{% endif %} {{ game.stadium_config.surface_out }} outfield.</p>
+        The playing surface is primarily {{ game.stadium_config.surface_inf }} with {% if game.stadium_config.surface_out == "artificial" %}an{% else %}a{% endif %} {{ game.stadium_config.surface_out }} outfield.
     {% elif game.stadium_config.surface_out == game.stadium_config.surface_mound %}
-        <p>The playing surface is primarily {{ game.stadium_config.surface_out }} with {% if game.stadium_config.surface_inf == "artificial" %}an{% else %}a{% endif %} {{ game.stadium_config.surface_inf }} infield.</p>
+        The playing surface is primarily {{ game.stadium_config.surface_out }} with {% if game.stadium_config.surface_inf == "artificial" %}an{% else %}a{% endif %} {{ game.stadium_config.surface_inf }} infield.
     {% endif %}
+    {% if game.stadium_config.center and game.stadium_config.left and game.stadium_config.right %}
+        {% if game.stadium_config.left == game.stadium_config.right %}
+            Outfield distances at {{ game.stadium_config.stadium_name }} are {{ game.stadium_config.center }} feet to center and {{ game.stadium_config.left }} feet down the foul lines.
+        {% else %}
+            Outfield distances at {{ game.stadium_config.stadium_name }} are {{ game.stadium_config.center }} feet to center, {{ game.stadium_config.left }} feet down the left field line, and {{ game.stadium_config.right }} feet to right.
+        {% endif %}
+    {% endif %}
+    </p>
 </div>
 {% endif %}
 

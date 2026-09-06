@@ -133,6 +133,10 @@ def games(client, teams, stadiums, stadium_configs):
         neutral_site=False,
         event="Fall exhibition",
         first_pitch=(timezone.now() + datetime.timedelta(days=1)),
+        first_pitch_temp=70,
+        first_pitch_weather_describe="clear",
+        first_pitch_wind_speed=5,
+        first_pitch_wind_angle=180,
         stadium_config=stadium_configs.bart,
     )
     iu_uk_far_future = Game.objects.create(
@@ -140,7 +144,22 @@ def games(client, teams, stadiums, stadium_configs):
         away_team=teams.kentucky,
         neutral_site=False,
         first_pitch=(timezone.now() + datetime.timedelta(days=8)),
-        stadium_config=stadium_configs.bart,
+        first_pitch_temp=70,
+        first_pitch_weather_describe="clear",
+        first_pitch_wind_speed=5,
+        first_pitch_wind_angle=180,
+        stadium_config=stadium_configs.proud,
+    )
+    iu_mixed_surface = Game.objects.create(
+        home_team=teams.indiana,
+        away_team=teams.kentucky,
+        neutral_site=False,
+        first_pitch=(timezone.now() + datetime.timedelta(days=9)),
+        first_pitch_temp=70,
+        first_pitch_weather_describe="clear",
+        first_pitch_wind_speed=5,
+        first_pitch_wind_angle=180,
+        stadium_config=stadium_configs.mixed,
     )
     game_list = [
         "iu_duke",
@@ -159,6 +178,7 @@ def games(client, teams, stadiums, stadium_configs):
         "iu_uk_sat",
         "iu_gm_fall",
         "iu_uk_far_future",
+        "iu_mixed_surface",
     ]
     GameObj = namedtuple("GameObj", game_list)
     return GameObj(
@@ -178,4 +198,5 @@ def games(client, teams, stadiums, stadium_configs):
         iu_uk_sat=iu_uk_sat,
         iu_gm_fall=iu_gm_fall,
         iu_uk_far_future=iu_uk_far_future,
+        iu_mixed_surface=iu_mixed_surface,
     )

@@ -115,6 +115,15 @@
                             {{ game.stadium_config.stadium.long }}&travelmode=driving"
                             target="_blank"
                         >Driving Directions</a></p>
+    {% if game.stadium_config.surface_inf == game.stadium_config.surface_out and game.stadium_config.surface_inf == game.stadium_config.surface_mound %}
+        <p>The playing surface is all {{ game.stadium_config.surface_inf }}.</p>
+    {% elif game.stadium_config.surface_inf == game.stadium_config.surface_out %}
+        <p>The playing surface is primarily {{ game.stadium_config.surface_inf }} with a {{ game.stadium_config.surface_mound }} pitching mound.</p>
+    {% elif game.stadium_config.surface_inf == game.stadium_config.surface_mound %}
+        <p>The playing surface is primarily {{ game.stadium_config.surface_inf }} with {% if game.stadium_config.surface_out == "artificial" %}an{% else %}a{% endif %} {{ game.stadium_config.surface_out }} outfield.</p>
+    {% elif game.stadium_config.surface_out == game.stadium_config.surface_mound %}
+        <p>The playing surface is primarily {{ game.stadium_config.surface_out }} with {% if game.stadium_config.surface_inf == "artificial" %}an{% else %}a{% endif %} {{ game.stadium_config.surface_inf }} infield.</p>
+    {% endif %}
 </div>
 {% endif %}
 

@@ -88,6 +88,20 @@ def scoreboards(client, games, user_not_logged_in):
         home_errors=0,
         away_errors=0,
     )
+    score_mixed_surface = Scoreboard.objects.create(
+        game=games.iu_mixed_surface,
+        scorekeeper=user_not_logged_in,
+        game_status="pre-game",
+        inning_num=1,
+        inning_part="Top",
+        outs=0,
+        home_runs=0,
+        away_runs=0,
+        home_hits=0,
+        away_hits=0,
+        home_errors=0,
+        away_errors=0,
+    )
     score_gm_fall = Scoreboard.objects.create(
         game=games.iu_gm_fall,
         scorekeeper=user_not_logged_in,
@@ -210,6 +224,7 @@ def scoreboards(client, games, user_not_logged_in):
         "score_coast_tom",
         "score_gm_fall",
         "score_iu_uk_far",
+        "score_mixed_surface",
         "score_iowa_fut",
         "score_miami",
         "score_miami_rain",
@@ -235,4 +250,5 @@ def scoreboards(client, games, user_not_logged_in):
         score_uk_sat=score_uk_sat,
         score_duke=score_duke,
         score_iu_uk_far=score_iu_uk_far,
+        score_mixed_surface=score_mixed_surface,
     )

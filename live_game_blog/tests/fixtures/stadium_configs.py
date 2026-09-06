@@ -98,6 +98,21 @@ def stadium_configs(client, stadiums):
         orientation=100,
         home_dugout="third",
     )
+    mixed = lgb_models.StadiumConfig.objects.create(
+        stadium_name="Kentucky Mixed Surface Park",
+        stadium=stadiums.proud,
+        config_date=date(year.get_spring_year()+8,2,1),
+        surface_inf="artificial",
+        surface_out="natural",
+        surface_mound="natural",
+        photo="https://live.staticflickr.com/65535/52947179552_349321280b_c.jpg",
+        left=335,
+        center=400,
+        right=320,
+        capacity=7000,
+        orientation=100,
+        home_dugout="third",
+    )
     config_list = [
         "bart",
         "surprise",
@@ -105,6 +120,7 @@ def stadium_configs(client, stadiums):
         "banks",
         "proud",
         "proud_future",
+        "mixed",
     ]
     StadiumConfigObj = namedtuple("StadiumConfigObj", config_list)
     return StadiumConfigObj(
@@ -114,4 +130,5 @@ def stadium_configs(client, stadiums):
         banks=banks,
         proud=proud,
         proud_future=proud_future,
+        mixed=mixed,
     )

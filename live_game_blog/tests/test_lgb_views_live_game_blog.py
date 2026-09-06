@@ -39,6 +39,31 @@ def test_live_single_game_blog_page_renders(client, games, scoreboards, entries,
 
 
 @pytest.mark.django_db
+def test_live_single_game_blog_page_renders_uniform_field_description(client, games, scoreboards):
+    response = client.get(reverse("live_game_blog", args=[games.iu_gm_fall.pk]))
+    assert response.status_code == 200
+    assert "The playing surface is all artificial." in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_live_single_game_blog_page_renders_primarily_artificial_surface(
+    client, games, scoreboards, conf_teams, conferences
+):
+    response = client.get(reverse("live_game_blog", args=[games.iu_uk_far_future.pk]))
+    assert response.status_code == 200
+    assert "The playing surface is primarily artificial with a natural pitching mound." in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_live_single_game_blog_page_renders_primarily_natural_surface_with_artificial_infield(
+    client, games, scoreboards, conf_teams, conferences
+):
+    response = client.get(reverse("live_game_blog", args=[games.iu_mixed_surface.pk]))
+    assert response.status_code == 200
+    assert "The playing surface is primarily natural with an artificial infield." in response.content.decode()
+
+
+@pytest.mark.django_db
 def test_live_single_completed_game_blog_page_does_not_show_live_stats_link(client, games, scoreboards, entries):
     response = client.get(reverse("live_game_blog", args=[games.iu_uk_mon.pk]))
     assert response.status_code == 200

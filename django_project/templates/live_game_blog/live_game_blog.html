@@ -90,6 +90,28 @@
 {% endblock %}
 
 {% block sidebar %}
+{% if perms.live_game_blog.change_game %}
+    {% if game.stadium_config.home_dugout %}
+        {% if game.stadium_config.home_dugout != "first" and game.stadium_config.home_dugout != "third" %}
+            <script>alert("Invalid dugout data for {{ game.stadium_config.stadium_name }}");</script>
+        {% endif %}
+    {% endif %}
+    {% if game.stadium_config.surface_inf %}
+        {% if game.stadium_config.surface_inf != "natural" and game.stadium_config.surface_inf != "artificial" %}
+            <script>alert("Invalid playing surface data for {{ game.stadium_config.stadium_name }}");</script>
+        {% endif %}
+    {% endif %}
+    {% if game.stadium_config.surface_out %}
+        {% if game.stadium_config.surface_out != "natural" and game.stadium_config.surface_out != "artificial" %}
+            <script>alert("Invalid playing surface data for {{ game.stadium_config.stadium_name }}");</script>
+        {% endif %}
+    {% endif %}
+    {% if game.stadium_config.surface_mound %}
+        {% if game.stadium_config.surface_mound != "natural" and game.stadium_config.surface_mound != "artificial" %}
+            <script>alert("Invalid playing surface data for {{ game.stadium_config.stadium_name }}");</script>
+        {% endif %}
+    {% endif %}
+{% endif %}
 {% if game.first_pitch_temp %}
 <br>
 <div class="sidebar clear-both">

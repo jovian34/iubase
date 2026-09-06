@@ -77,6 +77,43 @@ def test_live_single_game_blog_page_omits_dugout_side_when_unknown(
 
 
 @pytest.mark.django_db
+def test_live_single_game_blog_page_pops_up_for_invalid_dugout_data(
+    admin_client, games, scoreboards, stadium_configs, conf_teams, conferences
+):
+    stadium_configs.bart.home_dugout = "invalid"
+    stadium_configs.bart.save()
+    response = admin_client.get(reverse("live_game_blog", args=[games.iu_gm_fall.pk]))
+    assert response.status_code == 200
+    assert "Invalid dugout data for Bart Kaufman Field" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_live_single_game_blog_page_pops_up_for_invalid_surface_data(
+    admin_client, games, scoreboards, stadium_configs, conf_teams, conferences
+):
+    stadium_configs.bart.surface_inf = "invalid"
+    stadium_configs.bart.save()
+    response = admin_client.get(reverse("live_game_blog", args=[games.iu_gm_fall.pk]))
+    assert response.status_code == 200
+    assert "Invalid playing surface data for Bart Kaufman Field" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_live_single_game_blog_page_does_not_pop_up_for_null_field_data(
+    admin_client, games, scoreboards, stadium_configs, conf_teams, conferences
+):
+    stadium_configs.bart.home_dugout = None
+    stadium_configs.bart.surface_inf = None
+    stadium_configs.bart.surface_out = None
+    stadium_configs.bart.surface_mound = None
+    stadium_configs.bart.save()
+    response = admin_client.get(reverse("live_game_blog", args=[games.iu_gm_fall.pk]))
+    assert response.status_code == 200
+    assert "Invalid dugout" not in response.content.decode()
+    assert "Invalid playing surface" not in response.content.decode()
+
+
+@pytest.mark.django_db
 def test_live_single_game_blog_page_renders_primarily_artificial_surface(
     client, games, scoreboards, conf_teams, conferences
 ):

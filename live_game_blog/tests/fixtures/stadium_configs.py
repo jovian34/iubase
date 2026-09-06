@@ -38,6 +38,7 @@ def stadium_configs(client, stadiums):
         right=350,
         capacity=10714,
         orientation=45,
+        home_dugout="third",
     )
     springs = lgb_models.StadiumConfig.objects.create(
         stadium_name="Springs Brooks Stadium - Vrooman Field",

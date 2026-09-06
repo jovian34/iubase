@@ -46,6 +46,20 @@ def scoreboards(client, games, user_not_logged_in):
         home_errors=0,
         away_errors=0,
     )
+    score_ucla_unc = Scoreboard.objects.create(
+        game=games.ucla_unc,
+        scorekeeper=user_not_logged_in,
+        game_status="pre-game",
+        inning_num=1,
+        inning_part="Top",
+        outs=0,
+        home_runs=0,
+        away_runs=0,
+        home_hits=0,
+        away_hits=0,
+        home_errors=0,
+        away_errors=0,
+    )
     score_coast_ip = Scoreboard.objects.create(
         game=games.iu_coastal_ip,
         scorekeeper=user_not_logged_in,
@@ -220,6 +234,7 @@ def scoreboards(client, games, user_not_logged_in):
     scoreboard_list = [
         "score_uk_mon",
         "score_coast_fut",
+        "score_ucla_unc",
         "score_coast_ip",
         "score_coast_tom",
         "score_gm_fall",
@@ -238,6 +253,7 @@ def scoreboards(client, games, user_not_logged_in):
     return ScoreboardObj(
         score_uk_mon=score_uk_mon,
         score_coast_fut=score_coast_fut,
+        score_ucla_unc=score_ucla_unc,
         score_coast_ip=score_coast_ip,
         score_coast_tom=score_coast_tom,
         score_gm_fall=score_gm_fall,

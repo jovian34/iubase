@@ -23,6 +23,10 @@ def games(client, teams, stadiums, stadium_configs):
         away_team=teams.indiana,
         neutral_site=True,
         first_pitch=(timezone.now() + datetime.timedelta(days=1)),
+        first_pitch_temp=70,
+        first_pitch_weather_describe="clear",
+        first_pitch_wind_speed=5,
+        first_pitch_wind_angle=180,
         stadium_config=stadium_configs.surprise,
     )
     iu_duke_ly = Game.objects.create(
@@ -55,7 +59,22 @@ def games(client, teams, stadiums, stadium_configs):
         away_team=teams.indiana,
         neutral_site=False,
         first_pitch=(timezone.now() + datetime.timedelta(days=2, hours=7)),
+        first_pitch_temp=70,
+        first_pitch_weather_describe="clear",
+        first_pitch_wind_speed=5,
+        first_pitch_wind_angle=180,
         stadium_config=stadium_configs.springs,
+    )
+    ucla_unc = Game.objects.create(
+        home_team=teams.ucla,
+        away_team=teams.unc,
+        neutral_site=True,
+        first_pitch=(timezone.now() + datetime.timedelta(days=4)),
+        first_pitch_temp=70,
+        first_pitch_weather_describe="clear",
+        first_pitch_wind_speed=5,
+        first_pitch_wind_angle=180,
+        stadium_config=stadium_configs.bart,
     )
     iu_coastal_ip = Game.objects.create(
         home_team=teams.coastal,
@@ -167,6 +186,7 @@ def games(client, teams, stadiums, stadium_configs):
         "iu_duke_23_fall",
         "iu_duke_69_spring",
         "iu_coastal",
+        "ucla_unc",
         "iu_coastal_ip",
         "iu_coastal_tom",
         "iu_gm",
@@ -187,6 +207,7 @@ def games(client, teams, stadiums, stadium_configs):
         iu_duke_23_fall=iu_duke_23_fall,
         iu_duke_69_spring=iu_duke_69_spring,
         iu_coastal=iu_coastal,
+        ucla_unc=ucla_unc,
         iu_coastal_ip=iu_coastal_ip,
         iu_coastal_tom=iu_coastal_tom,
         iu_gm=iu_gm,

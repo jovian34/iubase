@@ -46,6 +46,34 @@ def test_live_single_game_blog_page_renders_uniform_field_description(
     assert response.status_code == 200
     assert "The playing surface is all artificial." in response.content.decode()
     assert "Outfield distances at Bart Kaufman Field are 400 feet to center and 330 feet down the foul lines." in response.content.decode()
+    assert "Indiana's dugout will be on the third base side." in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_live_single_game_blog_page_renders_indiana_road_dugout_opposite_home_dugout(
+    client, games, scoreboards, conf_teams, conferences
+):
+    response = client.get(reverse("live_game_blog", args=[games.iu_duke.pk]))
+    assert response.status_code == 200
+    assert "We expect Indiana's dugout to be on the first base side." in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_live_single_game_blog_page_omits_dugout_side_when_indiana_is_not_playing(
+    client, games, scoreboards, conf_teams, conferences
+):
+    response = client.get(reverse("live_game_blog", args=[games.ucla_unc.pk]))
+    assert response.status_code == 200
+    assert "dugout" not in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_live_single_game_blog_page_omits_dugout_side_when_unknown(
+    client, games, scoreboards, conf_teams, conferences
+):
+    response = client.get(reverse("live_game_blog", args=[games.iu_coastal.pk]))
+    assert response.status_code == 200
+    assert "dugout" not in response.content.decode()
 
 
 @pytest.mark.django_db

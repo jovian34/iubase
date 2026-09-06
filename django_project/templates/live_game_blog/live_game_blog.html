@@ -132,6 +132,15 @@
             Outfield distances at {{ game.stadium_config.stadium_name }} are {{ game.stadium_config.center }} feet to center, {{ game.stadium_config.left }} feet down the left field line, and {{ game.stadium_config.right }} feet to right.
         {% endif %}
     {% endif %}
+    {% if game.stadium_config.home_dugout and game.home_team.team_name == "Indiana" or game.stadium_config.home_dugout and game.away_team.team_name == "Indiana" %}
+        {% if game.neutral_site %}
+            We expect Indiana's dugout to be on the {% if game.home_team.team_name == "Indiana" %}{{ game.stadium_config.home_dugout }}{% elif game.stadium_config.home_dugout == "first" %}third{% else %}first{% endif %} base side.
+        {% elif game.home_team.team_name == "Indiana" %}
+            Indiana's dugout will be on the {{ game.stadium_config.home_dugout }} base side.
+        {% else %}
+            Indiana's dugout will be on the {% if game.stadium_config.home_dugout == "first" %}third{% else %}first{% endif %} base side.
+        {% endif %}
+    {% endif %}
     </p>
 </div>
 {% endif %}

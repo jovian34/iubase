@@ -82,6 +82,14 @@ class AnnualRosterForm(forms.Form):
     )
 
 
+class FallRosterEntryForm(forms.Form):
+    player = forms.IntegerField(widget=forms.HiddenInput)
+    jersey = forms.IntegerField(label="Jersey Number", required=False)
+    primary_position = forms.ChoiceField(
+        label="Primary Fielding Position", choices=choices.POSITIONS
+    )
+
+
 class TransactionForm(forms.Form):
     trans_event = forms.ChoiceField(
         label="Transaction Event",

@@ -3,6 +3,13 @@
     <div class="column-6">    
         <h3>{{ page_title }}</h3>
         <h3>{{ outside_indiana_percentage }}% are from outside of Indiana</h3>
+        {% if perms.player_tracking.add_annualroster %}
+            <button
+                class="add-button"
+                hx-get="{% url 'enter_fall_roster' fall_year %}"
+                hx-target="#fall-content"
+                hx-push-url="true">Enter Fall Roster</button>
+        {% endif %}
         </p>
     </div>
 </div>

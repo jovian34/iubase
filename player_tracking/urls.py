@@ -7,6 +7,7 @@ from player_tracking.views import (
     add_roster_year,
     add_summer_assignment,
     add_transaction,
+    enter_fall_roster,
     all_players,
     depth_charts,
     delete_player_data,
@@ -118,6 +119,11 @@ urlpatterns = [
     ),
     # partials
     path("add_roster_year/<player_id>/", add_roster_year.view, name="add_roster_year"),
+    path(
+        "enter_fall_roster/<fall_year>/",
+        enter_fall_roster.view,
+        name="enter_fall_roster",
+    ),
     path("add_transaction/<player_id>/", add_transaction.view, name="add_transaction"),
     path(
         "add_summer_assignment/<player_id>/",

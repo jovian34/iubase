@@ -32,6 +32,24 @@ def test_fall_roster_renders(client, players, teams, annual_rosters):
 
 
 @pytest.mark.django_db
+def test_fall_roster_renders_player_height_and_weight(
+    client, players, teams, annual_rosters
+):
+    players.ryan_kraft.height = 75
+    players.ryan_kraft.weight = 200
+    players.ryan_kraft.save()
+
+    response = client.get(
+        reverse("fall_roster", args=[f"{this_year - 1}"]),
+        HTTP_HX_REQUEST="true",
+    )
+
+    output = response.content.decode()
+    assert "Height: 6 ft. 3 inches" in output
+    assert "Weight: 200 lbs." in output
+
+
+@pytest.mark.django_db
 def test_fall_roster_shows_percentage_from_outside_indiana(
     client, players, teams, annual_rosters
 ):
@@ -76,6 +94,21 @@ def test_spring_roster_renders(client, players, teams, annual_rosters):
     assert f"Spring {this_year - 1} Roster" in response.content.decode()
     assert "Nick Mitchell" not in response.content.decode()
     assert "Devin Taylor" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_spring_roster_renders_player_height_and_weight(
+    client, players, teams, annual_rosters
+):
+    players.ryan_kraft.height = 75
+    players.ryan_kraft.weight = 200
+    players.ryan_kraft.save()
+
+    response = client.get(reverse("spring_roster", args=[f"{this_year - 1}"]))
+
+    output = response.content.decode()
+    assert "Height: 6 ft. 3 inches" in output
+    assert "Weight: 200 lbs." in output
 
 
 @pytest.mark.django_db

@@ -22,6 +22,12 @@
                         <em>- {{ player.status }}</em>
                     {% endif %}
                 </p>
+                {% if player.player.formatted_height %}
+                    <p>Height: {{ player.player.formatted_height }}</p>
+                {% endif %}
+                {% if player.player.weight %}
+                    <p>Weight: {{ player.player.weight }} lbs.</p>
+                {% endif %}
                 <ul>
                 {% for accolade in accolades %}
                     {% if accolade.annual_roster.pk == player.pk %}

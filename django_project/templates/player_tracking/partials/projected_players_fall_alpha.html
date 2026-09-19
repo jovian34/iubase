@@ -17,9 +17,11 @@
         <div class="column-3"></div>
         <div class="column-6">
             <img src="{{ player.headshot }}" class="thumbnail">
-            <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
-            {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
+        <h2><a href="{% url "single_player_page" player.pk %}">{{player.first}} {{player.last}}</a></h2>
+        {% if player.draft %}<p><em>{{ player.draft }}</em></p>{% endif %}
         <p>Bats {{ player.bats }}/Throws {{ player.throws }} | {{ player.position }} | {{ player.group }}</p> 
+        {% if player.formatted_height %}<p>Height: {{ player.formatted_height }}</p>{% endif %}
+        {% if player.weight %}<p>Weight: {{ player.weight }} lbs.</p>{% endif %}
         </div>
     </div>
     {% endif %}

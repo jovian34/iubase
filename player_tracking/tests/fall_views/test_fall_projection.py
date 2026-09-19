@@ -40,6 +40,34 @@ def test_projected_players_renders_current_players(
     "projection_name",
     ["projected_players_fall_depth", "projected_players_fall_alpha"],
 )
+def test_projected_players_render_player_height_and_weight(
+    client,
+    players,
+    transactions,
+    typical_mlb_draft_date,
+    annual_rosters,
+    projection_name,
+):
+    players.ryan_kraft.height = 75
+    players.ryan_kraft.weight = 200
+    players.ryan_kraft.save()
+    set_player_properties.set_player_props_get_errors()
+
+    response = client.get(
+        reverse(projection_name, args=[f"{this_year}"]),
+        HTTP_HX_REQUEST="true",
+    )
+
+    output = response.content.decode()
+    assert "Height: 6 ft. 3 inches" in output
+    assert "Weight: 200 lbs." in output
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "projection_name",
+    ["projected_players_fall_depth", "projected_players_fall_alpha"],
+)
 def test_projected_players_show_percentage_from_outside_indiana(
     client,
     players,

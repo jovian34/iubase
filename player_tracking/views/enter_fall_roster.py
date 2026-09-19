@@ -14,11 +14,11 @@ def view(request, fall_year):
     if not request.user.has_perm("player_tracking.add_annualroster"):
         return http.HttpResponseForbidden()
 
-    players = set_fall_player_projection_info(fall_year)
+    projected_players = list(set_fall_player_projection_info(fall_year))
     spring_year = int(fall_year) + 1
     players = [
         player
-        for player in players
+        for player in projected_players
         if not pt_models.AnnualRoster.objects.filter(
             player=player, spring_year=spring_year
         ).exists()
@@ -31,7 +31,7 @@ def view(request, fall_year):
     formset = formset_class(request.POST or None, initial=initial)
 
     if request.method == "POST" and formset.is_valid():
-        save_roster_entries(formset, players, spring_year)
+        save_roster_entries(formset, projected_players, spring_year)
         set_player_properties.set_player_props_get_errors()
 
     context = {
@@ -56,6 +56,10 @@ def save_roster_entries(formset, players, spring_year):
         if not form.cleaned_data or form.cleaned_data.get("jersey") is None:
             continue
         player = projected_players[form.cleaned_data["player"]]
+        if pt_models.AnnualRoster.objects.filter(
+            player=player, spring_year=spring_year
+        ).exists():
+            continue
         pt_models.AnnualRoster.objects.create(
             spring_year=spring_year,
             team=team,

@@ -114,6 +114,47 @@ def test_enter_fall_roster_skips_player_without_jersey_number(
 
 
 @pytest.mark.django_db
+def test_enter_fall_roster_ignores_stale_submission_for_existing_roster(
+    admin_client,
+    players,
+    transactions,
+    typical_mlb_draft_date,
+    annual_rosters,
+    teams,
+):
+    AnnualRoster.objects.create(
+        player=players.jake_stadler,
+        spring_year=this_year + 1,
+        team=teams.indiana,
+        jersey=9,
+        status="Fall Roster",
+        primary_position="Catcher",
+    )
+    set_player_properties.set_player_props_get_errors()
+    data = {
+        "form-TOTAL_FORMS": "1",
+        "form-INITIAL_FORMS": "0",
+        "form-MIN_NUM_FORMS": "0",
+        "form-MAX_NUM_FORMS": "1000",
+        "form-0-player": str(players.jake_stadler.pk),
+        "form-0-jersey": "9",
+        "form-0-primary_position": "Catcher",
+    }
+
+    response = admin_client.post(
+        reverse("enter_fall_roster", args=[this_year]),
+        data,
+        HTTP_HX_REQUEST="true",
+    )
+
+    assert response.status_code == 200
+    assert AnnualRoster.objects.filter(
+        player=players.jake_stadler,
+        spring_year=this_year + 1,
+    ).count() == 1
+
+
+@pytest.mark.django_db
 def test_enter_fall_roster_post_forbidden_without_add_permission(
     client,
     logged_user_schwarbs,

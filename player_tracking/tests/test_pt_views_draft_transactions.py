@@ -1,5 +1,7 @@
 import pytest
 from django import urls
+from datetime import date
+from unittest.mock import Mock
 
 from player_tracking.tests.fixtures.annual_rosters import annual_rosters
 from player_tracking.tests.fixtures.transactions import transactions
@@ -24,7 +26,13 @@ def test_group_draft_transactions_render(client):
 
 
 @pytest.mark.django_db
-def test_group_draft_transactions_shows_link_in_index(client, transactions, players):
+def test_group_draft_transactions_shows_link_in_index(
+    client, transactions, players, monkeypatch
+):
+    monkeypatch.setattr(
+        "player_tracking.views.pt_index.date",
+        Mock(today=Mock(return_value=date(date.today().year, 11, 15))),
+    )
     response = client.get(urls.reverse("pt_index"))
     assert "All MLB Draft and Pro Signing Transactions</a>" in response.content.decode()
     assert "draft_transactions/" in response.content.decode()

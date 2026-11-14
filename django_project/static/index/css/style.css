@@ -671,6 +671,15 @@ select {
     .column-6 {
         width: 50%;
     }
+
+    .season-team-column:first-child {
+        width: calc(50% - .5rem);
+        margin-right: 1rem;
+    }
+
+    .season-team-column + .season-team-column {
+        width: calc(50% - .5rem);
+    }
     
     .column-4 {
         width: 33.3333%;

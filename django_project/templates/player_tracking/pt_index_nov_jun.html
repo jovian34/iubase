@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block header %}<h1>{{ page_title }}</h1>{% endblock %}
+
+
+{% block content %}
+
+{% if perms.player_tracking.add_player %}
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">    
+            <a href="{% url "add_player" %}"><button class="add-button">Add Player</button></a>
+    </div>
+</div>
+{% endif %}
+
+{% if perms.player_tracking.add_accolade %}
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        <a href="{% url "red_belt_entry" this_year %}"><button>Enter Weekly Red Belts</button></a>
+    </div>
+</div>
+{% endif %}
+
+<div class="column-12 clear-both">
+    <div class="column-6 season-team-column">
+        <h2>Spring {{ season_year }} Team</h2>
+        {% if spring_roster_exists %}
+        <h3><a href="{% url "spring_roster" season_year %}">Spring {{ season_year }} Roster</a></h3>
+        {% else %}
+        <h3><a href="{% url "fall_roster" previous_fall_year %}">Fall {{ previous_fall_year }} Roster</a></h3>
+        {% endif %}
+        {% if spring_roster_exists %}
+        <h3><a href="{% url "spring_depth_chart" season_year %}">Spring {{ season_year }} Depth Chart</a></h3>
+        {% endif %}
+        <h3><a href="{% url "red_belt_leaderboard" season_year %}">Spring {{ season_year }} Red Belt Leaderboard</a></h3>
+        <h3><a href="{% url "portal" previous_fall_year %}">Transfer Portal {{ previous_fall_year }}</a></h3>
+    </div>
+    <div class="column-6 season-team-column">
+        <h2>Fall {{ season_year }} Team</h2>
+        <h3><a href="{% url "fall_players" season_year %}">Players For Fall {{ season_year }}</a></h3>
+        <h3><a href="{% url "fall_roster" season_year %}">Fall {{ season_year }} Roster</a></h3>
+        <h3><a href="{% url "incoming_players" season_year %}">Incoming Players For Fall {{ season_year }}</a></h3>
+        <h3><a href="{% url "portal" season_year %}">Transfer Portal {{ season_year }}</a></h3>
+    </div>
+</div>
+
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        <h2>MLB Draft</h2>
+        <h3><a href="{% url "drafted_players" this_year %}">Players Selected in the {{ this_year }} MLB Draft</a></h3>
+        <h3><a href="{% url "draft_transactions" %}">All MLB Draft and Pro Signing Transactions</a></h3>
+    </div>
+</div>
+
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        <h3><a href="{% url "players" %}">All Players in the database</a></h3>
+        <p>Includes publicly available data for players and commits who were on campus from Fall 2023 forward.
+            There is some data for before 2023, but it is incomplete. Rosters counts and other data will not be accurate.</p>
+        <p>---<a href="https://x.com/jovian34">Carl James</a>, <a href="https://iubase.com">iubase.com</a>.</p>
+    </div>
+</div>
+
+{% endblock %}

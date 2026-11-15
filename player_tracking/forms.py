@@ -90,6 +90,24 @@ class FallRosterEntryForm(forms.Form):
     )
 
 
+class SpringRosterEntryForm(forms.Form):
+    fall_roster = forms.IntegerField(widget=forms.HiddenInput)
+    include = forms.BooleanField(
+        label="Include on Spring Roster",
+        required=False,
+        initial=True,
+    )
+    jersey = forms.IntegerField(label="Jersey Number", required=False)
+    primary_position = forms.ChoiceField(
+        label="Primary Fielding Position", choices=choices.POSITIONS
+    )
+    secondary_position = forms.ChoiceField(
+        label="Secondary Fielding Position",
+        choices=choices.POSITIONS,
+        required=False,
+    )
+
+
 class TransactionForm(forms.Form):
     trans_event = forms.ChoiceField(
         label="Transaction Event",

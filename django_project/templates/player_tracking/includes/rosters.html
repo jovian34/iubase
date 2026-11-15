@@ -5,6 +5,9 @@
         <h3>{{ page_title }}</h3>
         <h3>{{ outside_indiana_percentage }}% are from outside of Indiana</h3>
         <h3>Total Roster Length: {{ total }}</h3>
+        {% if is_current_fall_year and perms.player_tracking.change_annualroster %}
+            <a href="{% url 'create_spring_roster' fall_year %}"><button class="add-button">Create Spring {{ fall_year|add:"1" }} Roster</button></a>
+        {% endif %}
         
         {% for player in players %}
             <div class="column-12 clear-both">

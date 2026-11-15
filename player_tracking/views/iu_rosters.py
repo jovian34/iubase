@@ -23,6 +23,7 @@ def render_fall_roster_partial_template(request, fall_year):
     )
     context = {
         "fall_year": fall_year,
+        "is_current_fall_year": int(fall_year) == date.today().year,
         "years": [int(fall_year) - 2 + i for i in range(5)],
         "players": players,
         "page_title": f"Fall {fall_year} Roster",

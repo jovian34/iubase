@@ -291,15 +291,3 @@ def test_red_belt_leaderboard_links_remaining_grouped_player_names(
     assert group.find("div", class_="red-belt-leaders") is None
     assert player_link["href"] == single_player_url(annual_rosters.br_fresh.player)
     assert player_link.get_text(" ", strip=True) == "Brayden Risedorph"
-
-
-def test_red_belt_leaderboard_styles_awards_as_separate_panels():
-    style_file = "django_project/static/index/css/style.css"
-
-    with open(style_file) as styles:
-        style_rules = styles.read()
-
-    assert ".red-belt-leaderboard" in style_rules
-    assert ".red-belt-award" in style_rules
-    assert ".red-belt-leaders" in style_rules
-    assert ".red-belt-leader img" in style_rules

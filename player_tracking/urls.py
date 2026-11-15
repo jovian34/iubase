@@ -11,6 +11,7 @@ from player_tracking.views import (
     all_players,
     depth_charts,
     delete_player_data,
+    create_spring_roster,
     draft_combine,
     drafted_players,
     edit_accolade,
@@ -136,6 +137,11 @@ urlpatterns = [
         name="fall_players_redirect",
     ),
     path("fall_roster/<fall_year>/", iu_rosters.fall, name="fall_roster"),
+    path(
+        "create_spring_roster/<fall_year>/",
+        create_spring_roster.view,
+        name="create_spring_roster",
+    ),
     path(
         "projected_players_fall_depth/<fall_year>/",
         fall_projection.projected_depth,

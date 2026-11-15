@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Create Spring {{ spring_year }} Roster{% endblock %}
+
+{% block header %}<h1>Create Spring {{ spring_year }} Roster</h1>{% endblock %}
+
+{% block content %}
+<div class="column-12 clear-both">
+    <div class="column-3"></div>
+    <div class="column-6">
+        <h2>Fall {{ fall_year }} Roster Players</h2>
+        <form method="post" action="{% url 'create_spring_roster' fall_year %}">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            {{ formset.non_form_errors }}
+            {% for roster, form in player_forms %}
+                <div class="column-12 clear-both">
+                    <h3><a href="{% url 'single_player_page' roster.player.pk %}" target="_blank" rel="noopener">{{ roster.player.first }} {{ roster.player.last }}</a></h3>
+                    {{ form.errors }}
+                    {{ form.fall_roster }}
+                    <p>{{ form.include.label_tag }} {{ form.include }}</p>
+                    <p>{{ form.jersey.label_tag }} {{ form.jersey }}</p>
+                    <p>{{ form.primary_position.label_tag }} {{ form.primary_position }}</p>
+                    <p>{{ form.secondary_position.label_tag }} {{ form.secondary_position }}</p>
+                </div>
+            {% empty %}
+                <p>No Fall roster players found.</p>
+            {% endfor %}
+            <button class="add-button" type="submit">Save Spring {{ spring_year }} Roster</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

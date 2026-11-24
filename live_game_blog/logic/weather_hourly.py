@@ -21,7 +21,7 @@ def get_and_set_weather_data_hourly():
         api_url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={long}&exclude=current,minutely,alerts&appid={api_key}&units=imperial"
         data_dict = weather_daily.get_weather_data_dict(api_url)
         delta = game.first_pitch - timezone.now()
-        hours_out = int(round(delta.total_seconds() / 3600))
+        hours_out = round(delta.total_seconds() / 3600)
         game.first_pitch_temp = data_dict["hourly"][hours_out]["temp"]
         game.first_pitch_feels_like = data_dict["hourly"][hours_out]["feels_like"]
         game.first_pitch_wind_speed = data_dict["hourly"][hours_out]["wind_speed"]

@@ -53,7 +53,7 @@ def aggregate_vs_group(
     for opp in group_pks:
         if opp == team_pk:
             continue
-        a_wins, a_losses, games = pair_series_between(team_pk, opp, spring_year)
+        a_wins, a_losses, _games = pair_series_between(team_pk, opp, spring_year)
         wins += a_wins
         losses += a_losses
     return wins, losses
@@ -73,7 +73,7 @@ def get_and_sum_wins_losses_vs_opponents(
     wins = Decimal(0)
     losses = Decimal(0)
     for opp in opponent_pks:
-        a_wins, a_losses, games = pair_series_between(team_pk, opp, spring_year)
+        a_wins, a_losses, _games = pair_series_between(team_pk, opp, spring_year)
         wins += a_wins
         losses += a_losses
     return wins, losses

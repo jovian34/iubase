@@ -76,9 +76,7 @@ def is_game_over(game_pk):
     latest_scoreboard = lgb_models.Scoreboard.objects.filter(game=game_pk).order_by(
         "-update_time"
     )[0]
-    if latest_scoreboard.game_status in ["final", "cancelled", "post-game"]:
-        return True
-    return False
+    return latest_scoreboard.game_status in ["final", "cancelled", "post-game"]
 
 
 def get_wind_dir(game):

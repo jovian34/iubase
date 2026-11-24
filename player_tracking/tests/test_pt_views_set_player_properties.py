@@ -8,7 +8,7 @@ from player_tracking.tests.fixtures.mlb_draft_date import typical_mlb_draft_date
 from player_tracking.tests.fixtures.players import players
 from player_tracking.tests.fixtures.prof_org import prof_orgs
 from player_tracking.tests.fixtures.transactions import transactions
-from player_tracking.views import set_player_properties
+from player_tracking.logic import player_props
 from player_tracking.models import AnnualRoster, Player, Transaction
 from live_game_blog.tests.fixtures.teams import teams
 from accounts.models import CustomUser
@@ -143,10 +143,8 @@ def test_first_year_greyshirt_adds_one_year_of_eligibility(teams):
             status=status,
             primary_position="Pitcher",
         )
-
-    set_player_properties.calc_last_spring()
+    player_props.set_player_props_get_errors()
     player.refresh_from_db()
-
     assert player.last_spring == player.hsgrad_year + 5
 
 
@@ -230,7 +228,7 @@ def test_set_player_properties_properly_sets_start_for_early_juco_commit(
 ):
     holton = Player.objects.get(pk=players.holton_compton.pk)
     assert not holton.first_spring or holton.last_spring
-    set_player_properties.set_player_props_get_errors()
+    player_props.set_player_props_get_errors()
     holton = Player.objects.get(pk=players.holton_compton.pk)
     assert holton.first_spring == this_year + 1
     assert holton.last_spring == this_year + 2
@@ -245,7 +243,7 @@ def test_set_player_properties_properly_sets_no_starts_for_decommit(
 ):
     sinke = Player.objects.get(pk=players.gibson_sinke.pk)
     assert not sinke.first_spring or sinke.last_spring
-    set_player_properties.set_player_props_get_errors()
+    player_props.set_player_props_get_errors()
     sinke = Player.objects.get(pk=players.gibson_sinke.pk)
     assert not sinke.first_spring or sinke.last_spring
 
@@ -261,7 +259,7 @@ def test_set_player_properties_properly_sets_no_starts_for_future_year_decommit(
     assert not amalbert.first_spring
     assert not amalbert.last_spring
     assert amalbert.first == "Jason"
-    set_player_properties.set_player_props_get_errors()
+    player_props.set_player_props_get_errors()
     amalbert = Player.objects.get(pk=players.jason_amalbert.pk)
     assert amalbert.first == "Jason"
     assert amalbert.first_spring == None
@@ -283,7 +281,7 @@ def test_set_player_properties_produces_correct_end_date_typical_case(
 ):
     krafty = Player.objects.get(pk=players.ryan_kraft.pk)
     assert not krafty.first_spring or krafty.last_spring
-    set_player_properties.set_player_props_get_errors()
+    player_props.set_player_props_get_errors()
     krafty = Player.objects.get(pk=players.ryan_kraft.pk)
     assert krafty.first_spring == this_year - 2
     assert krafty.last_spring == this_year + 2
@@ -297,7 +295,7 @@ def test_set_player_properties_produces_correct_end_date_draft_ranked(
     This app used to show an end date based on projected draft ranking, but
     we are not doing that anymore
     """
-    set_player_properties.set_player_props_get_errors()
+    player_props.set_player_props_get_errors()
     devin = Player.objects.get(pk=players.devin_taylor.pk)
     assert devin.first_spring == this_year - 1
     assert devin.last_spring == this_year + 2

@@ -8,8 +8,13 @@ from index.views import save_traffic_data
 
 
 def view(request, portal_year):
-    start = date(year=int(portal_year) - 1, month=9, day=1)
-    end = date(year=int(portal_year), month=8, day=31)
+    if not 1900 <= portal_year <= date.today().year + 1:
+        from django.http import Http404
+
+        raise Http404("Transfer portal year is outside the supported range")
+
+    start = date(year=portal_year - 1, month=9, day=1)
+    end = date(year=portal_year, month=8, day=31)
     outgoing = Transaction.objects.filter(
         trans_event="Entered Transfer Portal",
         trans_date__gte=start,

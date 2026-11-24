@@ -19,6 +19,18 @@ def test_manual_url_portal_is_correct():
 
 
 @pytest.mark.django_db
+def test_portal_page_rejects_nonnumeric_year(client):
+    response = client.get("/player_tracking/portal/not-a-year/")
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_portal_page_rejects_year_outside_supported_range(client):
+    response = client.get("/player_tracking/portal/9999/")
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
 def test_portal_page_renders(client, players, teams, annual_rosters, transactions):
     response = client.get(reverse("portal", args=[str(this_year)]))
     assert response.status_code == 200

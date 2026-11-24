@@ -52,7 +52,7 @@ urlpatterns = [
     ),
     path("spring_roster/<spring_year>/", iu_rosters.spring, name="spring_roster"),
     path("add_player/", add_player.view, name="add_player"),
-    path("portal/<portal_year>/", transfer_portal.view, name="portal"),
+    path("portal/<int:portal_year>/", transfer_portal.view, name="portal"),
     path(
         "set_player_properties/",
         set_player_properties.view,

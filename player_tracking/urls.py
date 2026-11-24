@@ -20,6 +20,8 @@ from player_tracking.views import (
     edit_transaction,
     enter_fall_roster,
     exhausted_players,
+    fall_all_eligible,
+    fall_landing,
     incoming_players,
     iu_rosters,
     pt_index,
@@ -30,9 +32,7 @@ from player_tracking.views import (
     summer_assignments,
     transfer_portal,
 )
-from player_tracking.views.fall import (
-    fall_all_eligible,
-    fall_landing,
+from player_tracking.views import (
     fall_projection,
 )
 

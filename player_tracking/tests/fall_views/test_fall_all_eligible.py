@@ -10,7 +10,7 @@ from player_tracking.tests.fixtures.transactions import transactions
 from player_tracking.models import Player, MLBDraftDate
 from player_tracking.views import set_player_properties
 from live_game_blog.tests.fixtures.teams import teams
-from player_tracking.views.fall import fall_landing
+from player_tracking.views import fall_landing
 
 this_year = date.today().year
 

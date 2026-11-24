@@ -1,10 +1,9 @@
-from django import shortcuts
-from django import http
+from django import http, shortcuts
 
+from conference import models as conf_models
 from index.views import save_traffic_data
 from live_game_blog import models as lgb_models
 from live_game_blog.logic import wind
-from conference import models as conf_models
 
 
 def view(request, game_pk):

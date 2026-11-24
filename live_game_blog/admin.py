@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.urls import reverse
-from django.utils.html import format_html
 
 from live_game_blog import models as lgb_models
 

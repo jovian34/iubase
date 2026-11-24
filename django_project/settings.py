@@ -1,8 +1,8 @@
-from dotenv import load_dotenv
+import os
 import pathlib
 from datetime import date
-import os
 
+from dotenv import load_dotenv
 
 load_dotenv()
 today = date.today()

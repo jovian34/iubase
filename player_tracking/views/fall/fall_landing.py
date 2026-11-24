@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
-from django.db.models import Q
-
 from datetime import date
 
-from player_tracking.models import AnnualRoster, MLBDraftDate
-from live_game_blog.models import Team
+from django.db.models import Q
+from django.shortcuts import redirect, render
+
 from index.views import save_traffic_data
+from live_game_blog.models import Team
+from player_tracking.models import AnnualRoster, MLBDraftDate
 
 
 def view(request, fall_year=date.today().year):

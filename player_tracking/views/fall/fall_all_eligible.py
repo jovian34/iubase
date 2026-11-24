@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
 from django.db.models.functions import Lower
-from player_tracking.models import Player, MLBDraftDate
+from django.shortcuts import redirect, render
+
+from player_tracking.models import MLBDraftDate, Player
 from player_tracking.views.player_locations import (
     calculate_outside_indiana_percentage,
 )

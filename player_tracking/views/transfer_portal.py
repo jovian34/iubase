@@ -1,10 +1,10 @@
 from datetime import date
 
-from django.shortcuts import render
 from django.db.models.functions import Lower
+from django.shortcuts import render
 
-from player_tracking.models import Transaction
 from index.views import save_traffic_data
+from player_tracking.models import Transaction
 
 
 def view(request, portal_year):

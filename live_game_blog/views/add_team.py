@@ -1,9 +1,9 @@
 from django import http, shortcuts, urls
 from django.contrib.auth import decorators as auth
 
+from conference import models as conf_models
 from live_game_blog import forms as lgb_forms
 from live_game_blog import models as lgb_models
-from conference import models as conf_models
 
 
 @auth.login_required

@@ -3,9 +3,9 @@ from django.contrib.auth import decorators as auth
 
 from player_tracking import forms as pt_forms
 from player_tracking import models as pt_models
-from player_tracking.views.fall.fall_projection import set_fall_player_projection_info
-from player_tracking.views import set_player_properties
 from player_tracking.logic import rosters
+from player_tracking.views import set_player_properties
+from player_tracking.views.fall.fall_projection import set_fall_player_projection_info
 
 
 @auth.login_required

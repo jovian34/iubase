@@ -1,13 +1,13 @@
-from player_tracking.models import AnnualRoster, Player, Transaction
 from player_tracking.choices import (
     AFTER,
+    COLLEGE,
     GREY_SHIRT,
+    HS,
+    LEFT,
     RED_SHIRT,
     RED_SHIRT_PLUS_WAIVER,
-    HS,
-    COLLEGE,
-    LEFT,
 )
+from player_tracking.models import AnnualRoster, Player, Transaction
 
 
 def set_player_props_get_errors():
@@ -103,10 +103,7 @@ def calc_total_years_eligible(errors, player, rosters):
             )
         if not clock_started and roster.status in GREY_SHIRT:
             total_years += 1
-        elif redshirt_clock and not red_shirt_used:
-            total_years += 1
-            red_shirt_used = True
-        elif roster.status in RED_SHIRT_PLUS_WAIVER:
+        elif redshirt_clock and not red_shirt_used or roster.status in RED_SHIRT_PLUS_WAIVER:
             total_years += 1
             red_shirt_used = True
         roster_year += 1

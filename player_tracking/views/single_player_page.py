@@ -1,15 +1,14 @@
-from django.shortcuts import render
 from django import http
+from django.shortcuts import render
 
-
-from player_tracking.models import (
-    Player,
-    Transaction,
-    AnnualRoster,
-    SummerAssign,
-    Accolade,
-)
 from index.views import save_traffic_data
+from player_tracking.models import (
+    Accolade,
+    AnnualRoster,
+    Player,
+    SummerAssign,
+    Transaction,
+)
 
 
 def view(request, player_id):

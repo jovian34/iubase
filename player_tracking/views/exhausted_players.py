@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from django.db.models import Q
+from django.shortcuts import render
 
-from player_tracking import models as pt_models
 from index.views import save_traffic_data
+from player_tracking import models as pt_models
 
 
 def view(request, spring_year):

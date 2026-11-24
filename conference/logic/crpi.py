@@ -4,13 +4,12 @@ Carl James performed basic refactoring after the fact
 '''
 
 
-from decimal import Decimal
 from collections import defaultdict
-from typing import List
+from decimal import Decimal
 
 from conference import models as conf_models
 
-ZERO = Decimal("0")
+ZERO = Decimal(0)
 
 HOME_WIN_WEIGHT = Decimal("0.7")
 HOME_LOSS_WEIGHT = Decimal("1.3")
@@ -25,7 +24,7 @@ def calculate_win_percentage(wins: Decimal, losses: Decimal) -> Decimal:
     return wins / total
 
 
-def build_crpi_rows(teams, spring_year: int) -> List[dict]:
+def build_crpi_rows(teams, spring_year: int) -> list[dict]:
     all_series, team_ids = load_all_series(teams, spring_year)
     pair_data, pair_split = build_lookups(all_series, team_ids)
     opponents_map = build_opponent_map(team_ids, pair_data)

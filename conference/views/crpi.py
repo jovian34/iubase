@@ -1,9 +1,8 @@
 from django import shortcuts
 
 from conference import models as conf_models
-from conference.logic import year
+from conference.logic import crpi, year
 from conference.views import conf_year
-from conference.logic import crpi
 
 spring_year = year.get_spring_year()
 

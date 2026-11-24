@@ -5,7 +5,6 @@ from player_tracking import forms
 from player_tracking import models as pt_models
 from player_tracking.views import single_player_page
 
-
 SECTION_TEMPLATES = {
     "annual-rosters": "player_tracking/partials/annual_rosters.html",
     "other-accolades": "player_tracking/partials/other_accolades.html",

@@ -1,5 +1,6 @@
-from django import shortcuts
 import datetime
+
+from django import shortcuts
 
 from conference.logic import year
 

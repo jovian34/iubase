@@ -1,8 +1,9 @@
-from django.db import models
 from datetime import date
 
-from live_game_blog import models as lgb_models
+from django.db import models
+
 from accounts import models as acct_models
+from live_game_blog import models as lgb_models
 
 
 class Conference(models.Model):

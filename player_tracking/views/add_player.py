@@ -1,10 +1,10 @@
+from datetime import date
+
 from django import http, shortcuts, urls
 from django.contrib.auth import decorators as auth
 
-from datetime import date
-
-from player_tracking.models import Player, Transaction
 from player_tracking.forms import NewPlayerForm
+from player_tracking.models import Player, Transaction
 from player_tracking.views.set_player_properties import set_player_props_get_errors
 
 

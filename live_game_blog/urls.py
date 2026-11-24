@@ -1,18 +1,18 @@
 from django.urls import path
+
 from live_game_blog.views import (
-    games,
     add_blog_entry_only,
     add_blog_plus_scoreboard,
+    add_game,
     add_home_stadium_data,
     add_team,
-    add_game,
     edit_blog_entry,
     edit_game_info,
+    games,
     live_game_blog,
     schedule,
     stadiums,
 )
-
 
 urlpatterns = [
     path("", games.upcoming, name="games"),

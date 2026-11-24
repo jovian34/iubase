@@ -1,9 +1,9 @@
 import datetime
-from django import shortcuts, http, urls
+
+from django import http, shortcuts, urls
 
 from conference import forms as conf_forms
 from conference import models as conf_models
-
 
 spring_year = datetime.date.today().year
 if datetime.date.today().month > 8:

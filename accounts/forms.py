@@ -1,6 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.db import models
+
+from .models import CustomUser
 
 
 def urlfields_assume_https(db_field, **kwargs):

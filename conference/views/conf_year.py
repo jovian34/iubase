@@ -5,7 +5,6 @@ from django.db.models import Q
 
 from conference import models as conf_models
 
-
 spring_year = datetime.date.today().year
 if datetime.date.today().month > 8:
     spring_year = spring_year + 1

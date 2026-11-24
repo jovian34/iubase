@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
-from django.db.models.functions import Lower
-
 from datetime import date
 
-from player_tracking.models import AnnualRoster, MLBDraftDate, Player, Transaction
+from django.db.models.functions import Lower
+from django.shortcuts import redirect, render
+
 from player_tracking.choices import DRAFT_POTENTIAL
+from player_tracking.models import AnnualRoster, MLBDraftDate, Player, Transaction
 from player_tracking.views.player_locations import (
     calculate_outside_indiana_percentage,
 )

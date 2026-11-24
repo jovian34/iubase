@@ -1,9 +1,9 @@
-import os
 import math
-from datetime import timedelta, datetime
+import os
+from datetime import datetime, timedelta
 
-from django.utils import timezone
 import requests
+from django.utils import timezone
 
 from live_game_blog import models as lgb_models
 from live_game_blog.logic import location, wind

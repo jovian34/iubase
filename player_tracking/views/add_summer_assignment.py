@@ -1,7 +1,7 @@
-from django.contrib.auth import decorators as auth
-from django import http, shortcuts, urls
-
 from datetime import date
+
+from django import http, shortcuts, urls
+from django.contrib.auth import decorators as auth
 
 from player_tracking.forms import SummerAssignForm
 from player_tracking.models import Player, SummerAssign

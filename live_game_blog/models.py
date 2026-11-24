@@ -1,8 +1,8 @@
 from django.db import models
 from django.db.models.functions import Now
 
-from live_game_blog.choices import INNING_PART_CHOICES, OUTS_CHOICES, GAME_STATUS
 from accounts.models import CustomUser
+from live_game_blog.choices import GAME_STATUS, INNING_PART_CHOICES, OUTS_CHOICES
 
 
 class Team(models.Model):

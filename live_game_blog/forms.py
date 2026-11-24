@@ -1,15 +1,15 @@
 from django import forms
 
+from conference import models as conf_models
 from live_game_blog import models as lgb_models
 from live_game_blog.choices import (
+    DUGOUT_CHOICES,
     GAME_STATUS,
     INNING_PART_CHOICES,
     OUTS_CHOICES,
-    TIMEZONE_CHOICES,
     SURFACE_CHOICES,
-    DUGOUT_CHOICES,
+    TIMEZONE_CHOICES,
 )
-from conference import models as conf_models
 
 
 class BlogAndScoreboardForm(forms.Form):

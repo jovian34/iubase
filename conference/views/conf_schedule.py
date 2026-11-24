@@ -2,9 +2,9 @@ import datetime
 
 from django import shortcuts
 from django.db.models import Q
-from conference.logic import year
 
 from conference import models as conf_models
+from conference.logic import year
 
 
 def view(request, spring_year):

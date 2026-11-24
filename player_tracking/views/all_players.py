@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from django.db.models.functions import Lower
+from django.shortcuts import render
 
-from player_tracking.models import Player
 from index.views import save_traffic_data
+from player_tracking.models import Player
 
 
 def view(request):

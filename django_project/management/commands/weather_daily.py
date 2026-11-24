@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
+
 from live_game_blog.logic import weather_daily
-from conference.logic import rpis, year
 
 
 class Command(BaseCommand):

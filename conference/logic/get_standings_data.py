@@ -1,19 +1,19 @@
 from decimal import Decimal
 
 from django.db.models import (
-    Sum,
-    OuterRef,
-    Subquery,
-    Value,
-    DecimalField,
-    FloatField,
     Case,
-    When,
-    Q,
-    F,
+    DecimalField,
     ExpressionWrapper,
+    F,
+    FloatField,
+    OuterRef,
+    Q,
+    Subquery,
+    Sum,
+    Value,
+    When,
 )
-from django.db.models.functions import Coalesce, Cast
+from django.db.models.functions import Cast, Coalesce
 
 from conference import models as conf_models
 from live_game_blog import models as lgb_models
@@ -60,7 +60,7 @@ def annotated_teams_queryset(spring_year):
         .values("total")[:1]
     )
 
-    zero_decimal = Value(Decimal("0"), output_field=DecimalField())
+    zero_decimal = Value(Decimal(0), output_field=DecimalField())
 
     teams_qs = lgb_models.Team.objects.all()
 

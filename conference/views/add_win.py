@@ -2,7 +2,6 @@ from django import shortcuts, urls
 
 from conference import models as conf_model
 
-
 template_path = "conference/conf_schedule.html#series"
 
 

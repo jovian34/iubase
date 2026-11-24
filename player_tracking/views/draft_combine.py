@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
-from player_tracking.models import Player, Transaction
 from index.views import save_traffic_data
+from player_tracking.models import Player, Transaction
 
 
 def view(request, draft_year):

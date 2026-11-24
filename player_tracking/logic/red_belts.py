@@ -1,9 +1,9 @@
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.utils import timezone
-from django.core.exceptions import PermissionDenied
 
-from player_tracking import models as pt_models
 from player_tracking import choices
+from player_tracking import models as pt_models
 
 
 @transaction.atomic

@@ -98,7 +98,7 @@ def transition_last_spring(player, old_last_spring):
     return old_last_spring
 
 
-def get_eligibility_start_spring(player):
+def get_eligibility_start_spring(player) -> int:
     first_roster_year = (
         AnnualRoster.objects.filter(player=player)
         .order_by("spring_year")
@@ -107,9 +107,7 @@ def get_eligibility_start_spring(player):
     )
     if first_roster_year is not None:
         return first_roster_year
-    if player.hsgrad_year is not None:
-        return player.hsgrad_year + 1
-    return None
+    return player.hsgrad_year + 1
 
 
 def determine_last_effective_transaction(players_transactions):

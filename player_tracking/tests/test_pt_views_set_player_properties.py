@@ -361,21 +361,31 @@ def test_transition_entrant_with_final_old_season_gets_no_extra_eligibility():
 
 
 @pytest.mark.django_db
-def test_set_player_properties_properly_ends_eligible_player_who_is_now_staff(
-    admin_client, players, annual_rosters, transactions
-):
-    """
-    Nathan Ball is a freshman player in this test who fails to make
-    the spring roster, and becomes a manager instead.
-    """
-    response = admin_client.get(reverse("players"), follow=True)
-    nate = Player.objects.get(pk=players.nate_ball.pk)
-    assert not nate.first_spring or nate.last_spring
-    response = admin_client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
-    nate = Player.objects.get(pk=players.nate_ball.pk)
-    assert nate.first_spring == this_year
-    assert nate.last_spring == this_year
+def test_player_who_becomes_staff_ends_eligibility_that_spring():
+    player = Player.objects.create(first="Former", last="Player", hsgrad_year=2025)
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2024, 3, 17),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Not playing but with the program in another role",
+        trans_date=date(2026, 2, 15),
+    )
+    AnnualRoster.objects.create(
+        spring_year=2026,
+        player=player,
+        status="Not on Spring roster",
+        primary_position="Pitcher",
+    )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2026
+    assert player.last_spring == 2026
+    assert not player.via_exhaust
 
 
 @pytest.mark.django_db

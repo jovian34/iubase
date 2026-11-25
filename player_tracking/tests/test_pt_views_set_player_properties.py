@@ -89,17 +89,28 @@ def test_set_player_properties_correctly_marks_via_exhaust(
 
 
 @pytest.mark.django_db
-def test_set_player_properties_produces_correct_end_date_future_commit(
-    admin_client, players, annual_rosters, transactions
-):
-    response = admin_client.get(reverse("players"), follow=True)
-    xavier = Player.objects.get(pk=players.xavier_carrera.pk)
-    assert not xavier.first_spring or xavier.last_spring
-    response = admin_client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
-    xavier = Player.objects.get(pk=players.xavier_carrera.pk)
-    assert xavier.first_spring == this_year + 2
-    assert xavier.last_spring == this_year + 6
+def test_future_commit_gets_five_years_under_new_rules():
+    player = Player.objects.create(
+        first="Future",
+        last="Commit",
+        hsgrad_year=2027,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2026, 8, 6),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="National Letter of Intent Signed",
+        trans_date=date(2027, 11, 25),
+    )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2028
+    assert player.last_spring == 2032
 
 
 @pytest.mark.django_db

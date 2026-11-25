@@ -159,19 +159,6 @@ def transactions(players, prof_orgs, teams):
         trans_event="National Letter of Intent Signed",
         trans_date=date(year=this_year, month=11, day=25),
     )
-    gs_verbal = Transaction.objects.create(
-        player=players.gibson_sinke,
-        trans_event="Verbal Commitment from High School",
-        trans_date=date(year=this_year - 2, month=8, day=11),
-    )
-    gs_decommit = Transaction.objects.create(
-        player=players.gibson_sinke,
-        trans_event="Decommit",
-        # Keep this before the September season boundary.  Using date.today()
-        # changes the player's next eligible spring when the calendar rolls
-        # from August to September.
-        trans_date=date(year=this_year, month=8, day=31),
-    )
     oo_verbal = Transaction.objects.create(
         player=players.owen_ten_oever,
         trans_event="Verbal Commitment from High School",
@@ -228,8 +215,6 @@ def transactions(players, prof_orgs, teams):
         "nb_diff_role",
         "hc_verbal",
         "xc_verbal",
-        "gs_verbal",
-        "gs_decommit",
         "xc_nli",
         "oo_verbal",
         "em_verbal",
@@ -266,8 +251,6 @@ def transactions(players, prof_orgs, teams):
         hc_verbal=hc_verbal,
         xc_verbal=xc_verbal,
         xc_nli=xc_nli,
-        gs_verbal=gs_verbal,
-        gs_decommit=gs_decommit,
         oo_verbal=oo_verbal,
         em_verbal=em_verbal,
         em_portal=em_portal,

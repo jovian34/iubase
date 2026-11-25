@@ -529,17 +529,28 @@ def test_transition_juco_eligibility_start_uses_roster_not_team_start():
 
 
 @pytest.mark.django_db
-def test_set_player_properties_properly_sets_no_starts_for_decommit(
-    client,
-    players,
-    annual_rosters,
-    transactions,
-):
-    sinke = Player.objects.get(pk=players.gibson_sinke.pk)
-    assert not sinke.first_spring or sinke.last_spring
+def test_high_school_decommit_before_enrollment_has_no_eligibility_dates():
+    player = Player.objects.create(
+        first="HighSchool",
+        last="Decommit",
+        hsgrad_year=2026,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2024, 8, 11),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Decommit",
+        trans_date=date(2026, 8, 31),
+    )
+
     player_props.set_player_props_get_errors()
-    sinke = Player.objects.get(pk=players.gibson_sinke.pk)
-    assert not sinke.first_spring or sinke.last_spring
+
+    player.refresh_from_db()
+    assert player.first_spring is None
+    assert player.last_spring is None
 
 
 @pytest.mark.django_db

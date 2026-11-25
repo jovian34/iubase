@@ -59,17 +59,25 @@ def test_set_player_properties_html_uses_transition_dates(admin_client):
 
 
 @pytest.mark.django_db
-def test_set_player_properties_correctly_sets_mid_year_transfer(
-    admin_client, players, annual_rosters, transactions
-):
-    response = admin_client.get(reverse("players"), follow=True)
-    evan_mac = Player.objects.get(pk=players.evan_mac.pk)
-    assert not evan_mac.first_spring or evan_mac.last_spring
-    response = admin_client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
-    evan_mac = Player.objects.get(pk=players.evan_mac.pk)
-    assert evan_mac.first_spring == 2023
-    assert evan_mac.last_spring == 2023
+def test_mid_year_transfer_ends_eligibility_in_next_spring():
+    player = Player.objects.create(first="Midyear", last="Transfer", hsgrad_year=2022)
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2020, 9, 26),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Entered Transfer Portal",
+        trans_date=date(2022, 12, 11),
+    )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2023
+    assert player.last_spring == 2023
+    assert not player.via_exhaust
 
 
 @pytest.mark.django_db
@@ -114,17 +122,40 @@ def test_future_commit_gets_five_years_under_new_rules():
 
 
 @pytest.mark.django_db
-def test_set_player_properties_produces_correct_end_date_drafted(
-    admin_client, players, annual_rosters, transactions
-):
-    response = admin_client.get(reverse("players"), follow=True)
-    nick = Player.objects.get(pk=players.nick_mitchell.pk)
-    assert not nick.first_spring or nick.last_spring
-    response = admin_client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
-    nick = Player.objects.get(pk=players.nick_mitchell.pk)
-    assert nick.first_spring == this_year
-    assert nick.last_spring == this_year
+def test_drafted_player_ends_eligibility_in_draft_year():
+    player = Player.objects.create(
+        first="Drafted",
+        last="Player",
+        hsgrad_year=2023,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2022, 6, 7),
+    )
+    for spring_year in (2024, 2025, 2026):
+        AnnualRoster.objects.create(
+            spring_year=spring_year,
+            player=player,
+            status="Spring Roster",
+            primary_position="Pitcher",
+        )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Drafted",
+        trans_date=date(2026, 7, 15),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Signed Professional Contract",
+        trans_date=date(2026, 7, 21),
+    )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2024
+    assert player.last_spring == 2026
 
 
 @pytest.mark.django_db
@@ -362,17 +393,30 @@ def test_set_player_properties_produces_correct_end_date_redshirt_transfer(
 
 
 @pytest.mark.django_db
-def test_set_player_properties_ends_portal_entrant_immediately(
-    admin_client, players, annual_rosters, transactions
-):
-    response = admin_client.get(reverse("players"), follow=True)
-    brooks = Player.objects.get(pk=players.brooks_ey.pk)
-    assert not brooks.first_spring or brooks.last_spring
-    response = admin_client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
-    brooks = Player.objects.get(pk=players.brooks_ey.pk)
-    assert brooks.first_spring == this_year
-    assert brooks.last_spring == this_year
+def test_portal_entry_ends_eligibility_immediately():
+    player = Player.objects.create(first="Portal", last="Player", hsgrad_year=2023)
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from College",
+        trans_date=date(2025, 7, 15),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Entered Transfer Portal",
+        trans_date=date(2026, 6, 15),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment to Transfer College",
+        trans_date=date(2026, 7, 8),
+    )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2026
+    assert player.last_spring == 2026
+    assert not player.via_exhaust
 
 
 @pytest.mark.django_db

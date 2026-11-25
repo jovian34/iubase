@@ -197,16 +197,16 @@ def test_old_rules_limit_redshirt_years():
 
 
 @pytest.mark.django_db
-def test_first_year_greyshirt_adds_one_year_of_eligibility(teams):
+def test_old_rules_first_year_greyshirt_adds_one_year_of_eligibility():
     player = Player.objects.create(
         first="Grey",
         last="Shirt",
-        hsgrad_year=this_year - 1,
+        hsgrad_year=2020,
     )
     Transaction.objects.create(
         player=player,
         trans_event="Verbal Commitment from High School",
-        trans_date=date(this_year - 1, 6, 1),
+        trans_date=date(2019, 6, 1),
     )
     roster_statuses = (
         "Not on Spring roster",
@@ -216,15 +216,15 @@ def test_first_year_greyshirt_adds_one_year_of_eligibility(teams):
     )
     for year_offset, status in enumerate(roster_statuses):
         AnnualRoster.objects.create(
-            spring_year=this_year + year_offset,
-            team=teams.indiana,
+            spring_year=2021 + year_offset,
             player=player,
             status=status,
             primary_position="Pitcher",
         )
     player_props.set_player_props_get_errors()
     player.refresh_from_db()
-    assert player.last_spring == player.hsgrad_year + 5
+    assert player.first_spring == 2021
+    assert player.last_spring == 2025
 
 
 @pytest.mark.django_db

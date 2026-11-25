@@ -379,14 +379,29 @@ def test_set_player_properties_properly_resets_drafted_not_signed(
 
 
 @pytest.mark.django_db
-def test_set_player_properties_properly_shows_error_for_missing_annual_roster(
-    admin_client, players, annual_rosters, transactions
-):
-    response = admin_client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
-    assert f"missing roster year {this_year - 2} for Jake Stadler" in str(
-        response.content
+def test_missing_annual_roster_error_uses_local_player_data(admin_client):
+    player = Player.objects.create(
+        first="Missing",
+        last="Roster",
+        hsgrad_year=2022,
     )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2021, 6, 1),
+    )
+    for spring_year in (2023, 2025):
+        AnnualRoster.objects.create(
+            spring_year=spring_year,
+            player=player,
+            status="Spring Roster",
+            primary_position="Pitcher",
+        )
+
+    response = admin_client.get(reverse("set_player_properties"), follow=True)
+
+    assert response.status_code == 200
+    assert "missing roster year 2024 for Missing Roster" in str(response.content)
 
 
 @pytest.mark.django_db

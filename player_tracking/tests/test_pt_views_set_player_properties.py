@@ -27,15 +27,35 @@ def test_set_player_properties_forbidden_without_perms(
 
 
 @pytest.mark.django_db
-def test_set_player_properties_produces_correct_html_output(
-    admin_client, players, annual_rosters, transactions
-):
-    response = admin_client.get(reverse("players"), follow=True)
-    assert "Committed, but did not come to campus as a player" in response.content.decode()
+def test_set_player_properties_html_uses_old_rule_dates(admin_client):
+    player = Player.objects.create(first="Old", last="Rules", hsgrad_year=2020)
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2019, 6, 1),
+    )
+
     response = admin_client.get(reverse("set_player_properties"), follow=True)
+
     assert response.status_code == 200
-    assert f"{this_year - 1}-{this_year + 2}" in response.content.decode()
-    assert "Devin Taylor" in response.content.decode()
+    assert "2021-2024" in response.content.decode()
+    assert "Old Rules" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_set_player_properties_html_uses_transition_dates(admin_client):
+    player = Player.objects.create(first="Transition", last="Rules", hsgrad_year=2024)
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2023, 6, 1),
+    )
+
+    response = admin_client.get(reverse("set_player_properties"), follow=True)
+
+    assert response.status_code == 200
+    assert "2025-2029" in response.content.decode()
+    assert "Transition Rules" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -79,7 +99,7 @@ def test_set_player_properties_produces_correct_end_date_future_commit(
     assert response.status_code == 200
     xavier = Player.objects.get(pk=players.xavier_carrera.pk)
     assert xavier.first_spring == this_year + 2
-    assert xavier.last_spring == this_year + 5
+    assert xavier.last_spring == this_year + 6
 
 
 @pytest.mark.django_db
@@ -97,24 +117,41 @@ def test_set_player_properties_produces_correct_end_date_drafted(
 
 
 @pytest.mark.django_db
-def test_set_player_properties_properly_limits_redshirt_years(
-    admin_client, players, annual_rosters, transactions
-):
+def test_old_rules_limit_redshirt_years():
     """
-    Jack was rostered at "Duke" for four years, but was injured for the
-    first three of those. In the fixture he is given a clock waiver in year two
-    This is often assigned retroactively by the NCAA
-    Without this he would end this year. If the logic allowed more than one
-    redshirt normally he would end in two years.
+    The player uses one redshirt and receives one clock waiver. A second
+    ordinary redshirt does not add another year under the old rules.
     """
-    response = admin_client.get(reverse("players"), follow=True)
-    jack = Player.objects.get(pk=players.jack_moffitt.pk)
-    assert not jack.first_spring or jack.last_spring
-    response = admin_client.get(reverse("set_player_properties"), follow=True)
-    assert response.status_code == 200
-    jack = Player.objects.get(pk=players.jack_moffitt.pk)
-    assert jack.first_spring == this_year
-    assert jack.last_spring == this_year + 1
+    player = Player.objects.create(
+        first="Jack",
+        last="Moffitt",
+        hsgrad_year=2021,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2020, 6, 1),
+    )
+    roster_statuses = (
+        "On Spring Roster but did not play",
+        "Redshirt with clock extension - Medical",
+        "On Spring Roster but did not play",
+        "Spring Roster",
+        "Spring Roster",
+    )
+    for offset, status in enumerate(roster_statuses):
+        AnnualRoster.objects.create(
+            spring_year=2022 + offset,
+            player=player,
+            status=status,
+            primary_position="Pitcher",
+        )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2022
+    assert player.last_spring == 2027
 
 
 @pytest.mark.django_db
@@ -146,6 +183,139 @@ def test_first_year_greyshirt_adds_one_year_of_eligibility(teams):
     player_props.set_player_props_get_errors()
     player.refresh_from_db()
     assert player.last_spring == player.hsgrad_year + 5
+
+
+@pytest.mark.django_db
+def test_new_rules_give_first_time_entrant_five_years_to_play():
+    player = Player.objects.create(
+        first="Five",
+        last="ForFive",
+        hsgrad_year=2026,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2026, 6, 1),
+    )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2027
+    assert player.last_spring == 2031
+
+
+@pytest.mark.django_db
+def test_new_rules_allow_playing_in_all_five_eligible_years():
+    player = Player.objects.create(
+        first="Five",
+        last="Seasons",
+        hsgrad_year=2026,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2026, 6, 1),
+    )
+    for spring_year in range(2027, 2032):
+        AnnualRoster.objects.create(
+            spring_year=spring_year,
+            player=player,
+            status="Spring Roster",
+            primary_position="Pitcher",
+        )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2027
+    assert player.last_spring == 2031
+
+
+@pytest.mark.django_db
+def test_transition_entrant_uses_better_result_when_old_eligibility_remains():
+    player = Player.objects.create(
+        first="Transition",
+        last="Entrant",
+        hsgrad_year=2025,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2025, 6, 1),
+    )
+    AnnualRoster.objects.create(
+        spring_year=2026,
+        player=player,
+        status="Spring Roster",
+        primary_position="Pitcher",
+    )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2026
+    assert player.last_spring == 2030
+
+
+@pytest.mark.django_db
+def test_transition_entrant_keeps_longer_old_rule_eligibility():
+    player = Player.objects.create(
+        first="OldRule",
+        last="Waivers",
+        hsgrad_year=2025,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2025, 6, 1),
+    )
+    roster_statuses = (
+        "Redshirt with clock extension - Medical",
+        "Spring Roster",
+        "Redshirt with clock extension - Other",
+        "Spring Roster",
+    )
+    for offset, status in enumerate(roster_statuses):
+        AnnualRoster.objects.create(
+            spring_year=2026 + offset,
+            player=player,
+            status=status,
+            primary_position="Pitcher",
+        )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2026
+    assert player.last_spring == 2031
+
+
+@pytest.mark.django_db
+def test_transition_entrant_with_final_old_season_gets_no_extra_eligibility():
+    player = Player.objects.create(
+        first="Final",
+        last="Season",
+        hsgrad_year=2022,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2021, 6, 1),
+    )
+    for spring_year in range(2023, 2027):
+        AnnualRoster.objects.create(
+            spring_year=spring_year,
+            player=player,
+            status="Spring Roster",
+            primary_position="Pitcher",
+        )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2023
+    assert player.last_spring == 2026
 
 
 @pytest.mark.django_db
@@ -205,7 +375,7 @@ def test_set_player_properties_properly_resets_drafted_not_signed(
     assert response.status_code == 200
     grant = Player.objects.get(pk=players.grant_hollister.pk)
     assert grant.first_spring == this_year + 1
-    assert grant.last_spring == this_year + 4
+    assert grant.last_spring == this_year + 5
 
 
 @pytest.mark.django_db
@@ -220,18 +390,62 @@ def test_set_player_properties_properly_shows_error_for_missing_annual_roster(
 
 
 @pytest.mark.django_db
-def test_set_player_properties_properly_sets_start_for_early_juco_commit(
-    client,
-    players,
-    annual_rosters,
-    transactions,
-):
-    holton = Player.objects.get(pk=players.holton_compton.pk)
-    assert not holton.first_spring or holton.last_spring
+def test_early_juco_commit_uses_old_rule_dates():
+    player = Player.objects.create(first="Old", last="Juco", hsgrad_year=2020)
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from College",
+        trans_date=date(2020, 8, 23),
+    )
+
     player_props.set_player_props_get_errors()
-    holton = Player.objects.get(pk=players.holton_compton.pk)
-    assert holton.first_spring == this_year + 1
-    assert holton.last_spring == this_year + 2
+
+    player.refresh_from_db()
+    assert player.first_spring == 2021
+    assert player.last_spring == 2024
+
+
+@pytest.mark.django_db
+def test_early_juco_commit_uses_transition_dates():
+    player = Player.objects.create(first="Transition", last="Juco", hsgrad_year=2024)
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from College",
+        trans_date=date(2024, 8, 23),
+    )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2025
+    assert player.last_spring == 2029
+
+
+@pytest.mark.django_db
+def test_transition_juco_eligibility_start_uses_roster_not_team_start():
+    player = Player.objects.create(
+        first="Juco",
+        last="Transfer",
+        hsgrad_year=2024,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from College",
+        trans_date=date(2025, 10, 23),
+    )
+    for spring_year in (2025, 2026):
+        AnnualRoster.objects.create(
+            spring_year=spring_year,
+            player=player,
+            status="Spring Roster",
+            primary_position="Pitcher",
+        )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2027
+    assert player.last_spring == 2029
 
 
 @pytest.mark.django_db
@@ -288,14 +502,48 @@ def test_set_player_properties_produces_correct_end_date_typical_case(
 
 
 @pytest.mark.django_db
-def test_set_player_properties_produces_correct_end_date_draft_ranked(
-    players, annual_rosters, transactions
-):
+def test_draft_ranked_player_keeps_old_rule_end_date():
     """
     This app used to show an end date based on projected draft ranking, but
     we are not doing that anymore
     """
+    player = Player.objects.create(first="Old", last="Drafted", hsgrad_year=2020)
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2019, 6, 1),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Ranked MLB Draft Prospect for Next Draft",
+        trans_date=date(2023, 12, 10),
+    )
+
     player_props.set_player_props_get_errors()
-    devin = Player.objects.get(pk=players.devin_taylor.pk)
-    assert devin.first_spring == this_year - 1
-    assert devin.last_spring == this_year + 2
+
+    player.refresh_from_db()
+    assert player.first_spring == 2021
+    assert player.last_spring == 2024
+
+
+@pytest.mark.django_db
+def test_draft_ranked_player_keeps_transition_end_date():
+    player = Player.objects.create(
+        first="Transition", last="Drafted", hsgrad_year=2024
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2023, 6, 1),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Ranked MLB Draft Prospect for Next Draft",
+        trans_date=date(2025, 12, 10),
+    )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2025
+    assert player.last_spring == 2029

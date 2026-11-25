@@ -9,6 +9,11 @@ from player_tracking.choices import (
 )
 from player_tracking.models import AnnualRoster, Player, Transaction
 
+FIRST_NEW_RULES_HS_GRAD_YEAR = 2026
+FIRST_TRANSITION_HS_GRAD_YEAR = 2022
+LAST_TRANSITION_HS_GRAD_YEAR = 2025
+LAST_OLD_RULES_SPRING = 2026
+
 
 def set_player_props_get_errors():
     calc_first_spring()
@@ -54,15 +59,57 @@ def calc_last_spring():
         if last_effective_transaction.trans_event in LEFT:
             set_leaving_player(this_player, last_effective_transaction)
             continue
+        if this_player.hsgrad_year >= FIRST_NEW_RULES_HS_GRAD_YEAR:
+            eligibility_start_spring = get_eligibility_start_spring(player)
+            if eligibility_start_spring is not None:
+                this_player.last_spring = eligibility_start_spring + 4
+                this_player.save()
+                continue
         rosters = AnnualRoster.objects.filter(player=player).order_by("spring_year")
         if not rosters:
-            this_player.last_spring = player.hsgrad_year + 4
+            old_last_spring = player.hsgrad_year + 4
+            this_player.last_spring = transition_last_spring(
+                player, old_last_spring
+            )
             this_player.save()
             continue
         total_years = calc_total_years_eligible(errors, player, rosters)
-        this_player.last_spring = player.hsgrad_year + total_years
+        old_last_spring = player.hsgrad_year + total_years
+        this_player.last_spring = transition_last_spring(player, old_last_spring)
         this_player.save()
     return errors
+
+
+def transition_last_spring(player, old_last_spring):
+    in_transition_cohort = (
+        FIRST_TRANSITION_HS_GRAD_YEAR
+        <= player.hsgrad_year
+        <= LAST_TRANSITION_HS_GRAD_YEAR
+    )
+    old_eligibility_remains = old_last_spring > LAST_OLD_RULES_SPRING
+    eligibility_start_spring = get_eligibility_start_spring(player)
+    if (
+        in_transition_cohort
+        and old_eligibility_remains
+        and eligibility_start_spring is not None
+    ):
+        new_last_spring = eligibility_start_spring + 4
+        return max(old_last_spring, new_last_spring)
+    return old_last_spring
+
+
+def get_eligibility_start_spring(player):
+    first_roster_year = (
+        AnnualRoster.objects.filter(player=player)
+        .order_by("spring_year")
+        .values_list("spring_year", flat=True)
+        .first()
+    )
+    if first_roster_year is not None:
+        return first_roster_year
+    if player.hsgrad_year is not None:
+        return player.hsgrad_year + 1
+    return None
 
 
 def determine_last_effective_transaction(players_transactions):

@@ -16,9 +16,9 @@ conference/admin.py                                                             
 conference/apps.py                                                                                  4      0   100%
 conference/forms.py                                                                                17      0   100%
 conference/logic/__init__.py                                                                        0      0   100%
-conference/logic/crpi.py                                                                          112      0   100%
+conference/logic/crpi.py                                                                          111      0   100%
 conference/logic/get_standings_data.py                                                             18      0   100%
-conference/logic/resolve_ties.py                                                                  193      1    99%   168
+conference/logic/resolve_ties.py                                                                  192      1    99%   167
 conference/logic/rpis.py                                                                           42      0   100%
 conference/logic/year.py                                                                            8      0   100%
 conference/migrations/0001_initial.py                                                               5      0   100%
@@ -36,27 +36,27 @@ conference/migrations/0012_pickemregisterannual.py                              
 conference/migrations/0013_alter_pick_pick.py                                                       5      0   100%
 conference/migrations/__init__.py                                                                   0      0   100%
 conference/models.py                                                                               47      0   100%
-conference/tests/fixtures/conf_series_2026_actual.py                                              100      1    99%   12
-conference/tests/fixtures/conf_series_2026_adjusted.py                                            100      1    99%   12
-conference/tests/fixtures/conf_series_current.py                                                   19      1    95%   12
-conference/tests/fixtures/conf_series_three_way_h2h.py                                             20      1    95%   12
-conference/tests/fixtures/conf_series_three_way_rpi.py                                             18      1    94%   12
+conference/tests/fixtures/conf_series_2026_actual.py                                              100      0   100%
+conference/tests/fixtures/conf_series_2026_adjusted.py                                            100      0   100%
+conference/tests/fixtures/conf_series_current.py                                                   19      0   100%
+conference/tests/fixtures/conf_series_three_way_h2h.py                                             20      0   100%
+conference/tests/fixtures/conf_series_three_way_rpi.py                                             18      0   100%
 conference/tests/fixtures/conf_teams.py                                                            33      0   100%
 conference/tests/fixtures/conferences.py                                                           13      0   100%
-conference/tests/fixtures/form_data.py                                                             18      1    94%   14
+conference/tests/fixtures/form_data.py                                                             18      0   100%
 conference/tests/fixtures/pick_reg_annual.py                                                       15      0   100%
 conference/tests/fixtures/picks.py                                                                 16      0   100%
-conference/tests/fixtures/team_rpis.py                                                             32      1    97%   12
-conference/tests/fixtures/team_rpis_ly.py                                                          32      1    97%   12
+conference/tests/fixtures/team_rpis.py                                                             32      0   100%
+conference/tests/fixtures/team_rpis_ly.py                                                          32      0   100%
 conference/tests/test_conf_models.py                                                               48      0   100%
 conference/tests/test_crpi.py                                                                      26      0   100%
 conference/tests/test_resolve_ties.py                                                              28      0   100%
 conference/tests/test_rpis.py                                                                      31      0   100%
 conference/tests/test_view_add_wins.py                                                             49      0   100%
-conference/tests/test_view_conf_add_series.py                                                      45      1    98%   16
+conference/tests/test_view_conf_add_series.py                                                      45      0   100%
 conference/tests/test_view_conf_index.py                                                           12      0   100%
 conference/tests/test_view_conf_sched.py                                                           32      0   100%
-conference/tests/test_view_conf_year.py                                                            39      1    97%   12
+conference/tests/test_view_conf_year.py                                                            39      0   100%
 conference/tests/test_view_crpi.py                                                                 45      0   100%
 conference/tests/test_view_pickem_index.py                                                          7      0   100%
 conference/tests/test_view_pickem_my_picks.py                                                      22      0   100%
@@ -65,12 +65,12 @@ conference/tests/test_view_standings.py                                         
 conference/tests/test_year.py                                                                      11      0   100%
 conference/urls.py                                                                                  3      0   100%
 conference/views/__init__.py                                                                        0      0   100%
-conference/views/add_series.py                                                                     19      1    95%   10
+conference/views/add_series.py                                                                     19      0   100%
 conference/views/add_win.py                                                                        30      0   100%
 conference/views/conf_index.py                                                                      7      0   100%
 conference/views/conf_schedule.py                                                                  18      0   100%
-conference/views/conf_year.py                                                                      27      1    96%   11
-conference/views/crpi.py                                                                           13      0   100%
+conference/views/conf_year.py                                                                      27      0   100%
+conference/views/crpi.py                                                                           12      0   100%
 conference/views/my_pickem.py                                                                      11      0   100%
 conference/views/pickem_index.py                                                                    5      0   100%
 conference/views/pickem_register.py                                                                 7      0   100%
@@ -78,7 +78,7 @@ conference/views/standings.py                                                   
 django_project/__init__.py                                                                          0      0   100%
 django_project/apps.py                                                                              3      0   100%
 django_project/management/__init__.py                                                               0      0   100%
-django_project/settings.py                                                                         72      5    93%   232-236
+django_project/settings.py                                                                         66      5    92%   237-241
 django_project/templatetags/__init__.py                                                             0      0   100%
 django_project/templatetags/cache_bust.py                                                          10      0   100%
 django_project/templatetags/markitup.py                                                             8      0   100%
@@ -105,7 +105,7 @@ index/tests/test_views.py                                                       
 index/urls.py                                                                                       3      0   100%
 index/views.py                                                                                     71      0   100%
 live_game_blog/__init__.py                                                                          0      0   100%
-live_game_blog/admin.py                                                                            65     10    85%   36-38, 62-63, 76-77, 96-97, 110-111
+live_game_blog/admin.py                                                                            63     10    84%   34-36, 60-61, 74-75, 94-95, 108-109
 live_game_blog/apps.py                                                                              4      0   100%
 live_game_blog/choices.py                                                                           6      0   100%
 live_game_blog/forms.py                                                                            87      0   100%
@@ -113,7 +113,7 @@ live_game_blog/logic/__init__.py                                                
 live_game_blog/logic/location.py                                                                   13      0   100%
 live_game_blog/logic/weather_daily.py                                                              59      0   100%
 live_game_blog/logic/weather_hourly.py                                                             22      0   100%
-live_game_blog/logic/wind.py                                                                       37      1    97%   28
+live_game_blog/logic/wind.py                                                                       37      2    95%   16, 28
 live_game_blog/migrations/0001_initial.py                                                           7      0   100%
 live_game_blog/migrations/0002_alter_game_live_stats.py                                             4      0   100%
 live_game_blog/migrations/0003_remove_gameblogentry_away_errors_and_more.py                         5      0   100%
@@ -161,11 +161,11 @@ live_game_blog/migrations/__init__.py                                           
 live_game_blog/models.py                                                                          108      0   100%
 live_game_blog/tests/fixtures/blog.py                                                              16      0   100%
 live_game_blog/tests/fixtures/form_data.py                                                         26      0   100%
-live_game_blog/tests/fixtures/games.py                                                             30      0   100%
-live_game_blog/tests/fixtures/games_annual.py                                                      25      1    96%   22
-live_game_blog/tests/fixtures/home_stadium.py                                                      16      0   100%
-live_game_blog/tests/fixtures/scoreboards.py                                                       27      0   100%
-live_game_blog/tests/fixtures/stadium_configs.py                                                   17      0   100%
+live_game_blog/tests/fixtures/games.py                                                             32      0   100%
+live_game_blog/tests/fixtures/games_annual.py                                                      26      1    96%   24
+live_game_blog/tests/fixtures/home_stadium.py                                                      17      0   100%
+live_game_blog/tests/fixtures/scoreboards.py                                                       29      0   100%
+live_game_blog/tests/fixtures/stadium_configs.py                                                   18      0   100%
 live_game_blog/tests/fixtures/stadiums.py                                                          13      0   100%
 live_game_blog/tests/fixtures/teams.py                                                             32      0   100%
 live_game_blog/tests/test_lgb_views_add_blog_entry_only.py                                         56      0   100%
@@ -173,13 +173,13 @@ live_game_blog/tests/test_lgb_views_add_blog_plus_scoreboard.py                 
 live_game_blog/tests/test_lgb_views_add_game.py                                                    88      0   100%
 live_game_blog/tests/test_lgb_views_add_home_stadium_data.py                                       41      0   100%
 live_game_blog/tests/test_lgb_views_add_team.py                                                    63      0   100%
-live_game_blog/tests/test_lgb_views_annual_schedule.py                                             49      3    94%   15, 30, 44
+live_game_blog/tests/test_lgb_views_annual_schedule.py                                             50      3    94%   17, 33, 47
 live_game_blog/tests/test_lgb_views_edit_blog_entry.py                                             64      0   100%
 live_game_blog/tests/test_lgb_views_edit_games.py                                                  37      0   100%
 live_game_blog/tests/test_lgb_views_games.py                                                       81      0   100%
-live_game_blog/tests/test_lgb_views_live_game_blog.py                                             171      0   100%
+live_game_blog/tests/test_lgb_views_live_game_blog.py                                             229      0   100%
 live_game_blog/tests/test_logic_location.py                                                        12      0   100%
-live_game_blog/tests/test_logic_weather.py                                                         71      1    99%   96
+live_game_blog/tests/test_logic_weather.py                                                         71      1    99%   94
 live_game_blog/tests/test_logic_wind.py                                                            10      0   100%
 live_game_blog/tests/test_models.py                                                                92      0   100%
 live_game_blog/tests/test_test_lgb_views_stadiums.py                                               27      0   100%
@@ -192,14 +192,18 @@ live_game_blog/views/add_team.py                                                
 live_game_blog/views/edit_blog_entry.py                                                            55      0   100%
 live_game_blog/views/edit_game_info.py                                                             41      0   100%
 live_game_blog/views/games.py                                                                      20      0   100%
-live_game_blog/views/live_game_blog.py                                                             59      0   100%
-live_game_blog/views/schedule.py                                                                   14      1    93%   13
+live_game_blog/views/live_game_blog.py                                                             56      0   100%
+live_game_blog/views/schedule.py                                                                   14      0   100%
 live_game_blog/views/stadiums.py                                                                   16      0   100%
 player_tracking/__init__.py                                                                         0      0   100%
 player_tracking/admin.py                                                                           38      0   100%
 player_tracking/apps.py                                                                             4      0   100%
 player_tracking/choices.py                                                                         25      0   100%
-player_tracking/forms.py                                                                           82      0   100%
+player_tracking/forms.py                                                                           93      0   100%
+player_tracking/logic/player_props.py                                                             106      0   100%
+player_tracking/logic/projection.py                                                                92      2    98%   94-95
+player_tracking/logic/red_belts.py                                                                 17      0   100%
+player_tracking/logic/rosters.py                                                                   14      0   100%
 player_tracking/migrations/0001_initial.py                                                          7      0   100%
 player_tracking/migrations/0002_rename_jersey_number_annualroster_jersey_and_more.py                4      0   100%
 player_tracking/migrations/0003_transaction_citation.py                                             4      0   100%
@@ -252,16 +256,16 @@ player_tracking/models.py                                                       
 player_tracking/tests/fall_views/__init__.py                                                        0      0   100%
 player_tracking/tests/fall_views/test_fall_all_eligible.py                                         61      0   100%
 player_tracking/tests/fall_views/test_fall_landing.py                                              60      0   100%
-player_tracking/tests/fall_views/test_fall_projection.py                                          154      0   100%
+player_tracking/tests/fall_views/test_fall_projection.py                                          165      0   100%
 player_tracking/tests/fixtures/__init__.py                                                          0      0   100%
 player_tracking/tests/fixtures/accolades.py                                                        17      0   100%
 player_tracking/tests/fixtures/annual_rosters.py                                                   41      0   100%
 player_tracking/tests/fixtures/form_data.py                                                        19      0   100%
 player_tracking/tests/fixtures/mlb_draft_date.py                                                   30      0   100%
-player_tracking/tests/fixtures/players.py                                                          28      0   100%
+player_tracking/tests/fixtures/players.py                                                          26      0   100%
 player_tracking/tests/fixtures/prof_org.py                                                         10      0   100%
 player_tracking/tests/fixtures/summer.py                                                           26      0   100%
-player_tracking/tests/fixtures/transactions.py                                                     48      0   100%
+player_tracking/tests/fixtures/transactions.py                                                     44      0   100%
 player_tracking/tests/test_pt_accolades.py                                                         20      0   100%
 player_tracking/tests/test_pt_model.py                                                             27      0   100%
 player_tracking/tests/test_pt_views_add_accolade.py                                               104      0   100%
@@ -273,31 +277,34 @@ player_tracking/tests/test_pt_views_all_players.py                              
 player_tracking/tests/test_pt_views_delete_player_data.py                                          97      0   100%
 player_tracking/tests/test_pt_views_depth_charts.py                                                29      0   100%
 player_tracking/tests/test_pt_views_draft_combine.py                                               29      0   100%
-player_tracking/tests/test_pt_views_draft_transactions.py                                          38      0   100%
+player_tracking/tests/test_pt_views_draft_transactions.py                                          41      0   100%
 player_tracking/tests/test_pt_views_drafted_players.py                                             47      0   100%
 player_tracking/tests/test_pt_views_edit_accolade.py                                              141      0   100%
 player_tracking/tests/test_pt_views_edit_player.py                                                 56      0   100%
 player_tracking/tests/test_pt_views_edit_roster_year.py                                           100      0   100%
 player_tracking/tests/test_pt_views_edit_summer_assignment.py                                     101      0   100%
 player_tracking/tests/test_pt_views_edit_transaction.py                                           113      0   100%
+player_tracking/tests/test_pt_views_enter_fall_roster.py                                           57      0   100%
 player_tracking/tests/test_pt_views_exhausted_players.py                                           26      0   100%
 player_tracking/tests/test_pt_views_incoming_players.py                                            43      0   100%
-player_tracking/tests/test_pt_views_index.py                                                       38      0   100%
-player_tracking/tests/test_pt_views_iu_rosters.py                                                  62      0   100%
-player_tracking/tests/test_pt_views_red_belt_entry.py                                             128      0   100%
-player_tracking/tests/test_pt_views_set_player_properties.py                                      179      0   100%
+player_tracking/tests/test_pt_views_index.py                                                      130      0   100%
+player_tracking/tests/test_pt_views_iu_rosters.py                                                 168      0   100%
+player_tracking/tests/test_pt_views_red_belt_entry.py                                             131      0   100%
+player_tracking/tests/test_pt_views_red_belt_leaderboard.py                                       112      0   100%
+player_tracking/tests/test_pt_views_set_player_properties.py                                      276      0   100%
 player_tracking/tests/test_pt_views_single_player_page.py                                         229      0   100%
 player_tracking/tests/test_pt_views_summer_assign.py                                               20      0   100%
-player_tracking/tests/test_pt_views_transfers.py                                                   41      0   100%
+player_tracking/tests/test_pt_views_transfers.py                                                   49      0   100%
 player_tracking/urls.py                                                                             4      0   100%
 player_tracking/views/__init__.py                                                                   0      0   100%
 player_tracking/views/accolades.py                                                                  6      0   100%
 player_tracking/views/add_accolade.py                                                              30      0   100%
 player_tracking/views/add_player.py                                                                39      0   100%
-player_tracking/views/add_roster_year.py                                                           31      0   100%
+player_tracking/views/add_roster_year.py                                                           29      0   100%
 player_tracking/views/add_summer_assignment.py                                                     23      0   100%
 player_tracking/views/add_transaction.py                                                           25      0   100%
 player_tracking/views/all_players.py                                                                9      0   100%
+player_tracking/views/create_spring_roster.py                                                      46      2    96%   87, 90
 player_tracking/views/delete_player_data.py                                                        52      0   100%
 player_tracking/views/depth_charts.py                                                              15      0   100%
 player_tracking/views/draft_combine.py                                                             25      0   100%
@@ -307,19 +314,20 @@ player_tracking/views/edit_player.py                                            
 player_tracking/views/edit_roster_year.py                                                          33      0   100%
 player_tracking/views/edit_summer_assignment.py                                                    31      0   100%
 player_tracking/views/edit_transaction.py                                                          36      0   100%
+player_tracking/views/enter_fall_roster.py                                                         20      0   100%
 player_tracking/views/exhausted_players.py                                                         10      0   100%
-player_tracking/views/fall/__init__.py                                                              0      0   100%
-player_tracking/views/fall/fall_all_eligible.py                                                    16      0   100%
-player_tracking/views/fall/fall_landing.py                                                         24      0   100%
-player_tracking/views/fall/fall_projection.py                                                     103      2    98%   61-62
+player_tracking/views/fall_all_eligible.py                                                         16      0   100%
+player_tracking/views/fall_landing.py                                                              24      0   100%
+player_tracking/views/fall_projection.py                                                           12      0   100%
 player_tracking/views/incoming_players.py                                                          21      0   100%
 player_tracking/views/iu_rosters.py                                                                26      0   100%
 player_tracking/views/player_locations.py                                                           6      0   100%
-player_tracking/views/pt_index.py                                                                   7      0   100%
-player_tracking/views/red_belt_entry.py                                                            38      0   100%
-player_tracking/views/set_player_properties.py                                                     94      0   100%
+player_tracking/views/pt_index.py                                                                  14      0   100%
+player_tracking/views/red_belt_entry.py                                                            25      0   100%
+player_tracking/views/red_belt_leaderboard.py                                                      25      0   100%
+player_tracking/views/set_player_properties.py                                                     12      0   100%
 player_tracking/views/single_player_page.py                                                        21      0   100%
 player_tracking/views/summer_assignments.py                                                        10      0   100%
-player_tracking/views/transfer_portal.py                                                           14      0   100%
+player_tracking/views/transfer_portal.py                                                           17      0   100%
 -----------------------------------------------------------------------------------------------------------------------------
-TOTAL                                                                                            8035     40    99%
+TOTAL                                                                                            8723     30    99%

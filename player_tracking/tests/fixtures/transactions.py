@@ -174,16 +174,6 @@ def transactions(players, prof_orgs, teams):
         trans_event="Entered Transfer Portal",
         trans_date=date(year=2022, month=12, day=11),
     )
-    ja_verbal = Transaction.objects.create(
-        player=players.jason_amalbert,
-        trans_event="Verbal Commitment from High School",
-        trans_date=date(year=this_year - 2, month=9, day=26),
-    )
-    ja_decommit = Transaction.objects.create(
-        player=players.jason_amalbert,
-        trans_event="Decommit",
-        trans_date=date(year=this_year, month=2, day=5),
-    )
     pd_commit = Transaction.objects.create(
         player=players.peter_dubie,
         trans_event="Verbal Commitment from College",
@@ -219,8 +209,6 @@ def transactions(players, prof_orgs, teams):
         "oo_verbal",
         "em_verbal",
         "em_portal",
-        "ja_verbal",
-        "ja_decommit",
         "pd_commit",
     ]
     TransObj = namedtuple("TransObj", trans_list)
@@ -254,7 +242,5 @@ def transactions(players, prof_orgs, teams):
         oo_verbal=oo_verbal,
         em_verbal=em_verbal,
         em_portal=em_portal,
-        ja_verbal=ja_verbal,
-        ja_decommit=ja_decommit,
         pd_commit=pd_commit,
     )

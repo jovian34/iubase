@@ -554,21 +554,30 @@ def test_high_school_decommit_before_enrollment_has_no_eligibility_dates():
 
 
 @pytest.mark.django_db
-def test_set_player_properties_properly_sets_no_starts_for_future_year_decommit(
-    client,
-    players,
-    annual_rosters,
-    transactions,
-):
-    amalbert = Player.objects.get(pk=players.jason_amalbert.pk)
-    assert not amalbert.first_spring
-    assert not amalbert.last_spring
-    assert amalbert.first == "Jason"
+def test_future_year_decommit_clears_eligibility_dates():
+    player = Player.objects.create(
+        first="Future",
+        last="Decommit",
+        hsgrad_year=2028,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2025, 9, 26),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Decommit",
+        trans_date=date(2026, 2, 5),
+    )
+
+    assert player.first_spring is None
+    assert player.last_spring is None
     player_props.set_player_props_get_errors()
-    amalbert = Player.objects.get(pk=players.jason_amalbert.pk)
-    assert amalbert.first == "Jason"
-    assert amalbert.first_spring == None
-    assert amalbert.last_spring == None
+
+    player.refresh_from_db()
+    assert player.first_spring is None
+    assert player.last_spring is None
 
 
 @pytest.mark.django_db

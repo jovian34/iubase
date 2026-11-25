@@ -123,13 +123,6 @@ def players():
         bats="Right",
         throws="Right",
     )
-    jason_amalbert = Player.objects.create(
-        first="Jason",
-        last="Amalbert",
-        hsgrad_year=this_year + 2,
-        bats="Right",
-        throws="Right",
-    )
     peter_dubie = Player.objects.create(
         first="Peter",
         last="Dubie",
@@ -153,7 +146,6 @@ def players():
         "xavier_carrera",
         "owen_ten_oever",
         "evan_mac",
-        "jason_amalbert",
         "peter_dubie",
     ]    
     PlayerObj = namedtuple("PlayerObj", player_list,)
@@ -173,6 +165,5 @@ def players():
         xavier_carrera=xavier_carrera,
         owen_ten_oever=owen_ten_oever,
         evan_mac=evan_mac,
-        jason_amalbert=jason_amalbert,
         peter_dubie=peter_dubie,
     )

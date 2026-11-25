@@ -1,10 +1,9 @@
-from django import shortcuts
-from django import http
+from django import http, shortcuts
 
+from conference import models as conf_models
 from index.views import save_traffic_data
 from live_game_blog import models as lgb_models
 from live_game_blog.logic import wind
-from conference import models as conf_models
 
 
 def view(request, game_pk):
@@ -77,9 +76,7 @@ def is_game_over(game_pk):
     latest_scoreboard = lgb_models.Scoreboard.objects.filter(game=game_pk).order_by(
         "-update_time"
     )[0]
-    if latest_scoreboard.game_status in ["final", "cancelled", "post-game"]:
-        return True
-    return False
+    return latest_scoreboard.game_status in ["final", "cancelled", "post-game"]
 
 
 def get_wind_dir(game):

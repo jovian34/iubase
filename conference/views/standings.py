@@ -1,7 +1,9 @@
 from decimal import Decimal
+
 from django import shortcuts
-from conference.logic import resolve_ties, get_standings_data
+
 from conference import models as conf_models
+from conference.logic import get_standings_data, resolve_ties
 
 
 def view(request, spring_year):

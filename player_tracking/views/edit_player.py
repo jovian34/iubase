@@ -1,8 +1,8 @@
 from django import http, shortcuts, urls
 from django.contrib.auth import decorators as auth
 
-from player_tracking.models import Player
 from player_tracking import forms
+from player_tracking.models import Player
 from player_tracking.views import single_player_page
 
 

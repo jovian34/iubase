@@ -1,9 +1,9 @@
-import os
 import math
-from datetime import timedelta, datetime
+import os
+from datetime import datetime, timedelta
 
-from django.utils import timezone
 import requests
+from django.utils import timezone
 
 from live_game_blog import models as lgb_models
 from live_game_blog.logic import location, wind
@@ -26,7 +26,7 @@ def get_and_set_weather_data_daily():
         api_url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={long}&exclude=current,minutely,alerts&appid={api_key}&units=imperial"
         data_dict = get_weather_data_dict(api_url)
         delta = game.first_pitch - timezone.now()
-        days_out = int(math.floor(delta.total_seconds() / 86400))
+        days_out = math.floor(delta.total_seconds() / 86400)
         game.first_pitch_temp = data_dict["daily"][days_out]["temp"]["day"]
         game.first_pitch_feels_like = data_dict["daily"][days_out]["feels_like"]["day"]
         game.first_pitch_wind_speed = data_dict["daily"][days_out]["wind_speed"]

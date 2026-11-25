@@ -1,7 +1,17 @@
 from django import urls
 
-from conference.views import conf_year, add_series, conf_schedule, add_win, standings, conf_index, pickem_index, pickem_register, my_pickem, crpi
-
+from conference.views import (
+    add_series,
+    add_win,
+    conf_index,
+    conf_schedule,
+    conf_year,
+    crpi,
+    my_pickem,
+    pickem_index,
+    pickem_register,
+    standings,
+)
 
 urlpatterns = [
     urls.path("index/", conf_index.view, name="conf_index"),

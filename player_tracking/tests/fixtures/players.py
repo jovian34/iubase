@@ -102,13 +102,6 @@ def players():
         bats="Right",
         throws="Right",
     )
-    gibson_sinke = Player.objects.create(
-        first="Gibson",
-        last="Sinke",
-        hsgrad_year=this_year,
-        bats="Right",
-        throws="Right",
-    )
     xavier_carrera = Player.objects.create(
         first="Xavier",
         last="Carrera",
@@ -127,13 +120,6 @@ def players():
         first="Evan",
         last="Macintyre",
         hsgrad_year=2022,
-        bats="Right",
-        throws="Right",
-    )
-    jason_amalbert = Player.objects.create(
-        first="Jason",
-        last="Amalbert",
-        hsgrad_year=this_year + 2,
         bats="Right",
         throws="Right",
     )
@@ -157,11 +143,9 @@ def players():
         "cole_gilley",
         "nate_ball",
         "holton_compton",
-        "gibson_sinke",
         "xavier_carrera",
         "owen_ten_oever",
         "evan_mac",
-        "jason_amalbert",
         "peter_dubie",
     ]    
     PlayerObj = namedtuple("PlayerObj", player_list,)
@@ -178,10 +162,8 @@ def players():
         cole_gilley=cole_gilley,
         nate_ball=nate_ball,
         holton_compton=holton_compton,
-        gibson_sinke=gibson_sinke,
         xavier_carrera=xavier_carrera,
         owen_ten_oever=owen_ten_oever,
         evan_mac=evan_mac,
-        jason_amalbert=jason_amalbert,
         peter_dubie=peter_dubie,
     )

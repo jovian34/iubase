@@ -1,12 +1,11 @@
-from decimal import Decimal
 from collections import defaultdict
-from typing import List, Tuple, Dict, Set
+from decimal import Decimal
 
 from django.db.models import (
-    Sum,
-    Value,
     DecimalField,
     Q,
+    Sum,
+    Value,
 )
 from django.db.models.functions import Coalesce
 
@@ -21,10 +20,10 @@ def pair_series_between(team_a_pk: int, team_b_pk: int, spring_year: int):
         home_team_id=team_a_pk, away_team_id=team_b_pk, start_date__year=spring_year
     ).aggregate(
         a_home_wins=Coalesce(
-            Sum("home_wins"), Value(Decimal("0")), output_field=DecimalField()
+            Sum("home_wins"), Value(Decimal(0)), output_field=DecimalField()
         ),
         a_home_losses=Coalesce(
-            Sum("away_wins"), Value(Decimal("0")), output_field=DecimalField()
+            Sum("away_wins"), Value(Decimal(0)), output_field=DecimalField()
         ),
     )
     # a as away, b as home
@@ -32,10 +31,10 @@ def pair_series_between(team_a_pk: int, team_b_pk: int, spring_year: int):
         away_team_id=team_a_pk, home_team_id=team_b_pk, start_date__year=spring_year
     ).aggregate(
         a_away_wins=Coalesce(
-            Sum("away_wins"), Value(Decimal("0")), output_field=DecimalField()
+            Sum("away_wins"), Value(Decimal(0)), output_field=DecimalField()
         ),
         a_away_losses=Coalesce(
-            Sum("home_wins"), Value(Decimal("0")), output_field=DecimalField()
+            Sum("home_wins"), Value(Decimal(0)), output_field=DecimalField()
         ),
     )
     a_wins = Decimal(home_series["a_home_wins"]) + Decimal(away_series["a_away_wins"])
@@ -47,14 +46,14 @@ def pair_series_between(team_a_pk: int, team_b_pk: int, spring_year: int):
 
 
 def aggregate_vs_group(
-    team_pk: int, group_pks: Set[int], spring_year: int
-) -> Tuple[Decimal, Decimal]:
-    wins = Decimal("0")
-    losses = Decimal("0")
+    team_pk: int, group_pks: set[int], spring_year: int
+) -> tuple[Decimal, Decimal]:
+    wins = Decimal(0)
+    losses = Decimal(0)
     for opp in group_pks:
         if opp == team_pk:
             continue
-        a_wins, a_losses, games = pair_series_between(team_pk, opp, spring_year)
+        a_wins, a_losses, _games = pair_series_between(team_pk, opp, spring_year)
         wins += a_wins
         losses += a_losses
     return wins, losses
@@ -69,12 +68,12 @@ def have_two_teams_played(team_a_pk: int, team_b_pk: int, spring_year: int) -> b
 
 
 def get_and_sum_wins_losses_vs_opponents(
-    team_pk: int, opponent_pks: Set[int], spring_year: int
-) -> Tuple[Decimal, Decimal]:
-    wins = Decimal("0")
-    losses = Decimal("0")
+    team_pk: int, opponent_pks: set[int], spring_year: int
+) -> tuple[Decimal, Decimal]:
+    wins = Decimal(0)
+    losses = Decimal(0)
     for opp in opponent_pks:
-        a_wins, a_losses, games = pair_series_between(team_pk, opp, spring_year)
+        a_wins, a_losses, _games = pair_series_between(team_pk, opp, spring_year)
         wins += a_wins
         losses += a_losses
     return wins, losses
@@ -88,8 +87,8 @@ def calculate_win_percentage(wins: Decimal, losses: Decimal) -> float:
 
 
 def get_top_eight_reference_team_ids(
-    team_list: List[dict], excluded_team_ids: Set[int]
-) -> Tuple[int, ...]:
+    team_list: list[dict], excluded_team_ids: set[int]
+) -> tuple[int, ...]:
     """
     Return the first eight teams in the current ordered standings, excluding the tied block
     being resolved.
@@ -108,7 +107,7 @@ def get_top_eight_reference_team_ids(
     return tuple(reference_team_ids)
 
 
-def resolve_ties(team_list: List[dict], spring_year: int) -> List[dict]:
+def resolve_ties(team_list: list[dict], spring_year: int) -> list[dict]:
     for team in team_list:
         team.setdefault("tiebreaker", None)
 
@@ -121,7 +120,7 @@ def resolve_ties(team_list: List[dict], spring_year: int) -> List[dict]:
         team_list, key=lambda t: (-key_win_pct(t), t.get("rpi_rank") or 999999)
     )
 
-    result: List[dict] = []
+    result: list[dict] = []
     i = 0
     num_of_teams = len(team_list)
 
@@ -148,8 +147,8 @@ def resolve_ties(team_list: List[dict], spring_year: int) -> List[dict]:
 
 
 def resolve_block(
-    block: List[dict], spring_year: int, team_list: List[dict], depth: int = 0
-) -> List[dict]:
+    block: list[dict], spring_year: int, team_list: list[dict], depth: int = 0
+) -> list[dict]:
     """
     Resolve ordering for a block of tied teams (same primary win_pct).
     Returns ordered list of team dicts (fully resolved). Annotates placed teams'
@@ -203,14 +202,14 @@ def resolve_block(
             h2h_map[t["pk"]] = (pct, wins, losses)
 
         # group by pct (rounded)
-        groups: Dict[float, List[dict]] = defaultdict(list)
+        groups: dict[float, list[dict]] = defaultdict(list)
         for t in block:
             pct = round(h2h_map[t["pk"]][0], 8)
             groups[pct].append(t)
 
         # sort pct groups descending
         sorted_pcts = sorted(groups.keys(), reverse=True)
-        out: List[dict] = []
+        out: list[dict] = []
         for pct in sorted_pcts:
             grp = groups[pct]
             if len(grp) == 1:
@@ -314,7 +313,7 @@ def resolve_block(
             top8_pct_map[t["pk"]] = (pct, wins, losses)
 
         # Group by pct (rounded) and recursively resolve ties inside each group
-        groups: Dict[float, List[dict]] = defaultdict(list)
+        groups: dict[float, list[dict]] = defaultdict(list)
         for t in block:
             pct = round(top8_pct_map[t["pk"]][0], 8)
             groups[pct].append(t)

@@ -1,11 +1,10 @@
 import datetime
+
 import pytz
-
 from django import shortcuts
-from live_game_blog import models as lgb_models
-
 from django.db.models import Q
 
+from live_game_blog import models as lgb_models
 
 eastern = pytz.timezone("America/New_York")
 spring_year = datetime.date.today().year

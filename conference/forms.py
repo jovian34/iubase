@@ -1,8 +1,8 @@
 from django import forms
 
 from conference import models as conf_models
-from live_game_blog import models as lgb_models
 from conference.views import conf_year
+from live_game_blog import models as lgb_models
 
 
 class AddConferenceSeriesForm(forms.Form):
@@ -27,7 +27,7 @@ class AddConferenceSeriesForm(forms.Form):
             spring_year, conference, all_conf_teams
         )
         pks = [team.pk for team in this_conf_teams]
-        super(AddConferenceSeriesForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["home_team"].queryset = lgb_models.Team.objects.filter(
             pk__in=pks
         ).order_by("team_name")

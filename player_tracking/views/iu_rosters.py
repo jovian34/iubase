@@ -1,5 +1,7 @@
 from datetime import date
+
 from django import shortcuts, urls
+
 from index import views as index_views
 from player_tracking import choices
 from player_tracking import models as pt_models

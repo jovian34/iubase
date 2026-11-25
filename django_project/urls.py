@@ -1,7 +1,9 @@
+import os
+
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import base
-import os
+
 from django_project import views
 
 urlpatterns = [

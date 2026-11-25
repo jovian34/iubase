@@ -1,7 +1,8 @@
+from datetime import datetime
+
+import pytz
 from django import shortcuts
 from django.contrib.auth import decorators as auth
-from datetime import datetime
-import pytz
 
 from index import models as index_models
 

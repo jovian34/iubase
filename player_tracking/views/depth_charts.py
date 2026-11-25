@@ -1,9 +1,9 @@
-from django.shortcuts import render
 from django.db.models.functions import Lower
+from django.shortcuts import render
 
 from index.views import save_traffic_data
-from player_tracking.models import AnnualRoster
 from player_tracking import choices
+from player_tracking.models import AnnualRoster
 from player_tracking.views.player_locations import (
     calculate_outside_indiana_percentage,
 )

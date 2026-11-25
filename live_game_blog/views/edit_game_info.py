@@ -1,5 +1,5 @@
-from django.contrib.auth import decorators as auth
 from django import http, shortcuts, urls
+from django.contrib.auth import decorators as auth
 
 from live_game_blog import forms as lgb_forms
 from live_game_blog import models as lgb_models

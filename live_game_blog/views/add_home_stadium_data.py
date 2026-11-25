@@ -1,7 +1,7 @@
-from django import shortcuts, http, urls
+from django import http, shortcuts, urls
 
-from live_game_blog import models as lgb_models
 from live_game_blog import forms
+from live_game_blog import models as lgb_models
 
 
 def view(request, team_pk):

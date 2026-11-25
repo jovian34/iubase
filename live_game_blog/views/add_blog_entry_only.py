@@ -1,5 +1,6 @@
+from django import shortcuts, urls
 from django.core.exceptions import PermissionDenied
-from django import http, shortcuts, urls
+
 from accounts import models as acc_models
 from live_game_blog import forms as lgb_forms
 from live_game_blog import models as lgb_models

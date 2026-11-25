@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from django.db.models.functions import Lower
+from django.shortcuts import render
 
-from player_tracking.models import SummerAssign, Accolade
 from index.views import save_traffic_data
+from player_tracking.models import Accolade, SummerAssign
 
 
 def view(request, summer_year):

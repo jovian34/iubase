@@ -1,14 +1,12 @@
-from django import shortcuts
-from django.contrib.auth import decorators as auth
-from django import http, urls
-
 import datetime
 
-from player_tracking import forms as pt_forms
-from player_tracking.views import set_player_properties
-from player_tracking.views import single_player_page
-from player_tracking import models as pt_models
+from django import http, shortcuts, urls
+from django.contrib.auth import decorators as auth
+
 from live_game_blog import models as lgb_models
+from player_tracking import forms as pt_forms
+from player_tracking import models as pt_models
+from player_tracking.views import set_player_properties, single_player_page
 
 
 @auth.login_required

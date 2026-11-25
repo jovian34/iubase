@@ -1,37 +1,70 @@
-from django.shortcuts import render, redirect
-from django.db.models.functions import Lower
-
 from datetime import date
-
-from player_tracking.models import AnnualRoster, MLBDraftDate, Player, Transaction
+from django.db.models.functions import Lower
 from player_tracking.choices import DRAFT_POTENTIAL
+from player_tracking.models import AnnualRoster, MLBDraftDate, Player, Transaction
 from player_tracking.views.player_locations import (
     calculate_outside_indiana_percentage,
 )
 
+def sort_by_positions(players):
+    lhp = {
+        "position": "Left Handed Pitcher",
+        "players": [],
+    }
+    rhp = {
+        "position": "Right Handed Pitcher",
+        "players": [],
+    }
+    catcher = {
+        "position": "Catcher",
+        "players": [],
+    }
+    infielder = {
+        "position": "Infielder",
+        "players": [],
+    }
+    outfielder = {
+        "position": "Outfielder",
+        "players": [],
+    }
+    dh = {
+        "position": "Designated Hitter",
+        "players": [],
+    }
+    infield_positions = [
+        "First Base",
+        "Second Base",
+        "Third Base",
+        "Shortstop",
+    ]
+    for player in players:
+        if player.group == "Prospect":
+            continue
+        if player.throws == "Left" and player.position == "Pitcher":
+            lhp["players"].append(player)
+        elif player.throws == "Right" and player.position == "Pitcher":
+            rhp["players"].append(player)
+        elif player.position == "Catcher":
+            catcher["players"].append(player)
+        elif player.position in infield_positions:
+            infielder["players"].append(player)
+        elif player.position in ["Centerfield", "Corner Outfield"]:
+            outfielder["players"].append(player)
+        else:
+            dh["players"].append(player)
+    positions = [lhp, rhp, catcher, infielder, outfielder, dh]
+    for position in positions:
+        position["count"] = len(position["players"])
+    return positions
 
-def projected_depth(request, fall_year):
-    if request.META.get("HTTP_HX_REQUEST"):
-        context = set_projected_players(fall_year)
-        return render(
-            request,
-            "player_tracking/partials/projected_players_fall_depth.html",
-            context,
-        )
-    else:
-        return redirect("fall_players", fall_year=fall_year)
 
-
-def projected_alpha(request, fall_year):
-    if request.META.get("HTTP_HX_REQUEST"):
-        context = set_projected_players(fall_year)
-        return render(
-            request,
-            "player_tracking/partials/projected_players_fall_alpha.html",
-            context,
-        )
-    else:
-        return redirect("fall_players", fall_year=fall_year)
+def is_draft_pending(draft_date):
+    draft_pending = True
+    if draft_date.latest_draft_day < date.today():
+        draft_pending = False
+    if draft_date.draft_complete:
+        draft_pending = False
+    return draft_pending
 
 
 def set_projected_players(fall_year):
@@ -73,15 +106,6 @@ def set_fall_player_projection_info(fall_year):
     draft_pending = is_draft_pending(draft_date)
     set_player_info(fall_year, draft_date, draft_pending, players)
     return players
-
-
-def is_draft_pending(draft_date):
-    draft_pending = True
-    if draft_date.latest_draft_day < date.today():
-        draft_pending = False
-    if draft_date.draft_complete:
-        draft_pending = False
-    return draft_pending
 
 
 def set_player_info(fall_year, draft_date, draft_pending, players):
@@ -135,55 +159,3 @@ def set_draft_prospect(fall_year, player):
     for transaction in transactions:
         if transaction.trans_event in DRAFT_POTENTIAL:
             player.group = "Prospect"
-
-
-def sort_by_positions(players):
-    lhp = {
-        "position": "Left Handed Pitcher",
-        "players": [],
-    }
-    rhp = {
-        "position": "Right Handed Pitcher",
-        "players": [],
-    }
-    catcher = {
-        "position": "Catcher",
-        "players": [],
-    }
-    infielder = {
-        "position": "Infielder",
-        "players": [],
-    }
-    outfielder = {
-        "position": "Outfielder",
-        "players": [],
-    }
-    dh = {
-        "position": "Designated Hitter",
-        "players": [],
-    }
-    infield_positions = [
-        "First Base",
-        "Second Base",
-        "Third Base",
-        "Shortstop",
-    ]
-    for player in players:
-        if player.group == "Prospect":
-            continue
-        if player.throws == "Left" and player.position == "Pitcher":
-            lhp["players"].append(player)
-        elif player.throws == "Right" and player.position == "Pitcher":
-            rhp["players"].append(player)
-        elif player.position == "Catcher":
-            catcher["players"].append(player)
-        elif player.position in infield_positions:
-            infielder["players"].append(player)
-        elif player.position in ["Centerfield", "Corner Outfield"]:
-            outfielder["players"].append(player)
-        else:
-            dh["players"].append(player)
-    positions = [lhp, rhp, catcher, infielder, outfielder, dh]
-    for position in positions:
-        position["count"] = len(position["players"])
-    return positions

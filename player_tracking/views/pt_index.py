@@ -1,8 +1,10 @@
+from datetime import date
+
 from django.shortcuts import render
 
-from datetime import date
 from index.views import save_traffic_data
-from player_tracking import choices, models as pt_models
+from player_tracking import choices
+from player_tracking import models as pt_models
 
 
 def view(request):

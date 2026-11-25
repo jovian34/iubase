@@ -1,11 +1,11 @@
-from django.shortcuts import render
 from django.db.models.functions import Lower
+from django.shortcuts import render
 
+from index.views import save_traffic_data
 from player_tracking.models import Player, Transaction
 from player_tracking.views.player_locations import (
     calculate_outside_indiana_percentage,
 )
-from index.views import save_traffic_data
 
 
 def view(request, fall_year):

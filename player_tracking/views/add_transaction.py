@@ -1,12 +1,12 @@
-from django.contrib.auth import decorators as auth
+from datetime import date
+
 from django import http, shortcuts, urls
+from django.contrib.auth import decorators as auth
 
 from player_tracking.forms import TransactionForm
-from player_tracking.views.set_player_properties import set_player_props_get_errors
-from player_tracking.views import single_player_page
 from player_tracking.models import Player, Transaction
-
-from datetime import date
+from player_tracking.views import single_player_page
+from player_tracking.views.set_player_properties import set_player_props_get_errors
 
 
 @auth.login_required

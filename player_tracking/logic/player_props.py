@@ -57,27 +57,28 @@ def calc_last_spring():
             errors.append(f"missing transaction for {player.first} {player.last}")
             continue
         if last_effective_transaction.trans_event in LEFT:
-            set_leaving_player(this_player, last_effective_transaction)
-            continue
-        if this_player.hsgrad_year >= FIRST_NEW_RULES_HS_GRAD_YEAR:
-            eligibility_start_spring = get_eligibility_start_spring(player)
-            if eligibility_start_spring is not None:
-                this_player.last_spring = eligibility_start_spring + 4
-                this_player.save()
-                continue
-        rosters = AnnualRoster.objects.filter(player=player).order_by("spring_year")
-        if not rosters:
-            old_last_spring = player.hsgrad_year + 4
-            this_player.last_spring = transition_last_spring(
-                player, old_last_spring
+            eligibility_end = calculate_last_spring([], player)
+            set_leaving_player(
+                this_player, last_effective_transaction, eligibility_end
             )
-            this_player.save()
             continue
-        total_years = calc_total_years_eligible(errors, player, rosters)
-        old_last_spring = player.hsgrad_year + total_years
-        this_player.last_spring = transition_last_spring(player, old_last_spring)
+        this_player.last_spring = calculate_last_spring(errors, player)
         this_player.save()
     return errors
+
+
+def calculate_last_spring(errors, player):
+    if player.hsgrad_year >= FIRST_NEW_RULES_HS_GRAD_YEAR:
+        eligibility_start_spring = get_eligibility_start_spring(player)
+        return eligibility_start_spring + 4
+
+    rosters = AnnualRoster.objects.filter(player=player).order_by("spring_year")
+    if not rosters:
+        old_last_spring = player.hsgrad_year + 4
+    else:
+        total_years = calc_total_years_eligible(errors, player, rosters)
+        old_last_spring = player.hsgrad_year + total_years
+    return transition_last_spring(player, old_last_spring)
 
 
 def transition_last_spring(player, old_last_spring):
@@ -121,12 +122,12 @@ def determine_last_effective_transaction(players_transactions):
     return last_effective_transaction
 
 
-def set_leaving_player(this_player, last_effective_transaction):
-    last_spring = last_effective_transaction.trans_date.year
+def set_leaving_player(this_player, last_effective_transaction, eligibility_end):
+    departure_spring = last_effective_transaction.trans_date.year
     if last_effective_transaction.trans_date.month > 8:
-        last_spring = last_effective_transaction.trans_date.year + 1
-    this_player.last_spring = last_spring
-    if this_player.hsgrad_year >= last_spring:
+        departure_spring = last_effective_transaction.trans_date.year + 1
+    this_player.last_spring = min(departure_spring, eligibility_end)
+    if this_player.hsgrad_year >= this_player.last_spring:
         this_player.first_spring = None
         this_player.last_spring = None
     this_player.via_exhaust = False

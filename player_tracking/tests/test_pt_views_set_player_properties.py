@@ -159,6 +159,88 @@ def test_drafted_player_ends_eligibility_in_draft_year():
 
 
 @pytest.mark.django_db
+def test_later_undrafted_contract_does_not_extend_exhausted_player():
+    player = Player.objects.create(
+        first="Ty",
+        last="Bothwell",
+        hsgrad_year=2018,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2016, 7, 19),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="National Letter of Intent Signed",
+        trans_date=date(2018, 2, 19),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Signed Professional Contract",
+        trans_date=date(2025, 1, 22),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Signed Professional Contract - Undrafted",
+        trans_date=date(2026, 1, 21),
+    )
+    roster_statuses = (
+        "Not on Spring roster",
+        "Played but granted eligibility waiver",
+        "Spring Roster",
+        "Spring Roster",
+        "Spring Roster",
+        "Spring Roster",
+    )
+    for spring_year, status in zip(range(2019, 2025), roster_statuses):
+        AnnualRoster.objects.create(
+            spring_year=spring_year,
+            player=player,
+            status=status,
+            primary_position="Pitcher",
+        )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2019
+    assert player.last_spring == 2024
+
+
+@pytest.mark.django_db
+def test_new_rules_later_pro_contract_does_not_extend_five_year_eligibility():
+    player = Player.objects.create(
+        first="FiveYear",
+        last="Player",
+        hsgrad_year=2026,
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Verbal Commitment from High School",
+        trans_date=date(2025, 6, 1),
+    )
+    Transaction.objects.create(
+        player=player,
+        trans_event="Signed Professional Contract - Undrafted",
+        trans_date=date(2033, 1, 15),
+    )
+    for spring_year in range(2027, 2032):
+        AnnualRoster.objects.create(
+            spring_year=spring_year,
+            player=player,
+            status="Spring Roster",
+            primary_position="Pitcher",
+        )
+
+    player_props.set_player_props_get_errors()
+
+    player.refresh_from_db()
+    assert player.first_spring == 2027
+    assert player.last_spring == 2031
+
+
+@pytest.mark.django_db
 def test_old_rules_limit_redshirt_years():
     """
     The player uses one redshirt and receives one clock waiver. A second

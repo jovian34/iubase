@@ -219,7 +219,7 @@ SECURE_HSTS_PRELOAD = True
 
 SESSION_COOKIE_SECURE = True
 
-STATIC_ROOT = os.path.join(BASE_DIR, "django_project/static/")
+STATIC_ROOT = "/var/www/iubase/static/"
 
 SECURE_SSL_REDIRECT = True
 
